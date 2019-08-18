@@ -1,0 +1,126 @@
+/* --- CRUDKit specific rules --- */
+.crudkit-description
+{
+	white-space: normal;
+	font-weight: normal;
+}
+
+#crudkit-qrcode-tooltip-container .tooltip-inner,
+#crudkit-qrcode-tooltip-container .tooltip-arrow
+{
+	background-color: transparent;
+	border: none;
+	opacity: 1;
+}
+
+#crudkit-qrcode-tooltip-container .tooltip
+{
+	opacity: 1;
+}
+
+#crudkit-page-title
+{
+	margin-top: 0;
+}
+
+.crudkit-row
+{
+	margin-bottom: 20px;
+}
+
+.crudkit-action
+{
+	display: inline;
+}
+
+.crudkit-action-button, .crudkit-button
+{
+	margin-left: 5px;
+}
+
+/* --- AdminLTE / Bootstrap specific rules --- */
+.main-sidebar
+{
+	position: fixed;
+}
+
+.main-header .logo
+{
+	position: fixed;
+}
+
+.content-header
+{
+	padding-top: 25px;
+}
+
+body.sidebar-collapse .main-header .logo
+{
+	position: static;
+}
+
+.sidebar-menu .treeview-menu li a
+{
+	font-size: inherit;
+	padding: 8px 5px 8px 16px;
+}
+
+.form-control
+{
+	font-size: inherit;
+	padding: 0px 12px;
+}
+
+/* --- Crudkit Chart and Filter specific rules --- */
+#crudkit-filter-reference /*Reference instance for new filters*/
+{
+	display: none;
+}
+
+#crudkit-chart-wrapper
+{
+	width: 100%;
+	max-width: 1280px;
+	height: 80%;
+}
+
+.crudkit-filter
+{
+	margin-bottom: 10px;
+}
+
+#crudkit-chart-loader
+{
+	margin-left: 50%; 
+	color: #3c8dbc;
+}
+
+/* --- Custom Checkboxes ---*/
+input.crudkit-checkbox
+{ 
+	display:none; 
+}
+
+input.crudkit-checkbox + label.crudkit-checkbox-label:before 
+{
+  font-family: FontAwesome;
+  display: inline-block;
+  font-size: 2.5em;
+  font-weight: normal;
+  line-height: 1;
+  transition: color 800ms;
+  -webkit-transition: color 800ms;
+
+}
+
+input.crudkit-checkbox + label.crudkit-checkbox-label:before 
+{
+	content: "\f096"; /* unchecked icon fa-square-o */
+	color: #555;
+} 
+
+input.crudkit-checkbox:checked + label.crudkit-checkbox-label:before 
+{ 
+	content: "\f046"; /* checked icon "fa-check-square-o" */
+	color: #4a4;
+} 

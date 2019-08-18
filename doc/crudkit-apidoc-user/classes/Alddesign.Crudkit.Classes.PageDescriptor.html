@@ -1,0 +1,2979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>CRUDKit User API Doc</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">CRUDKit User API Doc</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Alddesign.html">\Alddesign</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">468</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-48106357"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-48106357" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2018888525"></a>
+                                <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
+            </div>
+            <div id="namespace-2018888525" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1341023590"></a>
+                                <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
+            </div>
+            <div id="namespace-1341023590" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-105143957"></a>
+                                <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
+            </div>
+            <div id="namespace-105143957" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.AuthHelper.html">AuthHelper</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.CrudkitUser.html">CrudkitUser</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.DataProcessor.html">DataProcessor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html">EnumType</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.ExceptionHandler.html">ExceptionHandler</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Filter.html">Filter</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.FilterDefinition.html">FilterDefinition</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Generator.html">Generator</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html">PageDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.PageStore.html">PageStore</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.RestrictionSet.html">RestrictionSet</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html">SQLColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLManyToOneColumn.html">SQLManyToOneColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLOneToManyColumn.html">SQLOneToManyColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Startpage.html">Startpage</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">TableDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.XMLSerializer.html">XMLSerializer</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html">CrudkitServiceProvider</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Alddesign.Crudkit.Classes.html">\Alddesign\Crudkit\Classes</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Alddesign\Crudkit\Classes</small>PageDescriptor</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getName" class="">getName()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getId" class="">getId()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_createAllowed" class="">createAllowed()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_allowCreate" class="">allowCreate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_denyCreate" class="">denyCreate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_updateAllowed" class="">updateAllowed()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_allowUpdate" class="">allowUpdate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_denyUpdate" class="">denyUpdate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_deleteAllowed" class="">deleteAllowed()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_allowDelete" class="">allowDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_denyDelete" class="">denyDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_exportAllowed" class="">exportAllowed()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_allowExport" class="">allowExport()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_denyExport" class="">denyExport()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_chartAllowed" class="">chartAllowed()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_allowChart" class="">allowChart()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_denyChart" class="">denyChart()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getConfirmDelete" class="">getConfirmDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_confirmDelete" class="">confirmDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_setCategory" class="">setCategory()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getCategory" class="">getCategory()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_setIcon" class="">setIcon()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getIcon" class="">getIcon()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_addTitleText" class="">addTitleText()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getTitleText" class="">getTitleText()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_addOneToManyLink" class="">addOneToManyLink()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_addAction" class="">addAction()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_removeAction" class="">removeAction()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getActions" class="">getActions()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_addSection" class="">addSection()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getSections" class="">getSections()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_create" class="">create()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_update" class="">update()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_delete" class="">delete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_executeCallback" class="">executeCallback()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onOpenList" class="">onOpenList()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onOpenCard" class="">onOpenCard()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onOpenCreateCard" class="">onOpenCreateCard()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onOpenUpdateCard" class="">onOpenUpdateCard()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onOpenChartPage" class="">onOpenChartPage()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onBeforeCreate" class="">onBeforeCreate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onAfterCreate" class="">onAfterCreate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onBeforeUpdate" class="">onBeforeUpdate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onAfterUpdate" class="">onAfterUpdate()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onBeforeDelete" class="">onBeforeDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_onAfterDelete" class="">onAfterDelete()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getTable" class="">getTable()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_setSummaryColumnsAll" class="">setSummaryColumnsAll()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_setSummaryColumns" class="">setSummaryColumns()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getSummaryColumns" class="">getSummaryColumns()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_setCardLinkColumns" class="">setCardLinkColumns()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_getCardLinkColumns" class="">getCardLinkColumns()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_readRecord" class="">readRecord()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#method_readRecords" class="">readRecords()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_id" class="">$id</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_name" class="">$name</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_category" class="">$category</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_icon" class="">$icon</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_titleTexts" class="">$titleTexts</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_table" class="">$table</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_summaryColumns" class="">$summaryColumns</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_cardLinkColumns" class="">$cardLinkColumns</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_sections" class="">$sections</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_actions" class="">$actions</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_createAllowed" class="">$createAllowed</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_updateAllowed" class="">$updateAllowed</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_deleteAllowed" class="">$deleteAllowed</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_confirmDelete" class="">$confirmDelete</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_exportAllowed" class="">$exportAllowed</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_chartAllowed" class="">$chartAllowed</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onOpenListCallback" class="">$onOpenListCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onOpenCardCallback" class="">$onOpenCardCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onOpenUpdateCardCallback" class="">$onOpenUpdateCardCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onOpenCreateCardCallback" class="">$onOpenCreateCardCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onOpenChartPageCallback" class="">$onOpenChartPageCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onBeforeCreateCallback" class="">$onBeforeCreateCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onAfterCreateCallback" class="">$onAfterCreateCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onBeforeUpdateCallback" class="">$onBeforeUpdateCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onAfterUpdateCallback" class="">$onAfterUpdateCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onBeforeDeleteCallback" class="">$onBeforeDeleteCallback</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html#property_onAfterDeleteCallback" class="">$onAfterDeleteCallback</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Classes.PageDescriptor.html"><div class="path-wrapper">Classes\PageDescriptor.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Alddesign\Crudkit\Classes\PageDescriptor</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_id" name="property_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$id</h3>
+                <pre class="signature">$id : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_name" name="property_name" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$name</h3>
+                <pre class="signature">$name : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_category" name="property_category" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$category</h3>
+                <pre class="signature">$category : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_icon" name="property_icon" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$icon</h3>
+                <pre class="signature">$icon : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_titleTexts" name="property_titleTexts" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$titleTexts</h3>
+                <pre class="signature">$titleTexts : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_table" name="property_table" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$table</h3>
+                <pre class="signature">$table : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_summaryColumns" name="property_summaryColumns" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$summaryColumns</h3>
+                <pre class="signature">$summaryColumns : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_cardLinkColumns" name="property_cardLinkColumns" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$cardLinkColumns</h3>
+                <pre class="signature">$cardLinkColumns : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_sections" name="property_sections" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$sections</h3>
+                <pre class="signature">$sections : </pre>
+                <p><em>Displaying fields in separated areas called &quot;Sections.&quot;
+Format = [[&#039;title&#039; =&gt; &#039;&lt;title&gt;&#039;, &#039;from&#039; =&gt; &#039;&lt;fromField&gt;&#039;, &#039;to&#039; =&gt; &#039;&lt;toField&gt;&#039;],[.</em></p>
+                <p>..]]</p>
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_actions" name="property_actions" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$actions</h3>
+                <pre class="signature">$actions : </pre>
+                <p><em>Adding Buttons with special callback functions to listview/cardview
+Format = [&#039;&lt;name&gt;&#039; =&gt; [&#039;label&#039; =&gt; &#039;&lt;label&gt;&#039;, &#039;column-label&#039; =&gt; &#039;&lt;column-label&gt;&#039;, &#039;callback&#039; =&gt; callback, &#039;fa-icon&#039; =&gt; &#039;&lt;fa-icon&gt;&#039;, &#039;btn-class&#039; =&gt; &#039;&lt;btn-class&gt;&#039;, &#039;on-list&#039; =&gt; &lt;bool on-list&gt;, &#039;on-card&#039; =&gt; &lt;bool on-card&gt; ]]
+Parameters for the callback function are: $record, $pageDescriptor, $action (the action from this array)</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_createAllowed" name="property_createAllowed" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$createAllowed</h3>
+                <pre class="signature">$createAllowed : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_updateAllowed" name="property_updateAllowed" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$updateAllowed</h3>
+                <pre class="signature">$updateAllowed : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_deleteAllowed" name="property_deleteAllowed" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$deleteAllowed</h3>
+                <pre class="signature">$deleteAllowed : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_confirmDelete" name="property_confirmDelete" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$confirmDelete</h3>
+                <pre class="signature">$confirmDelete : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_exportAllowed" name="property_exportAllowed" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$exportAllowed</h3>
+                <pre class="signature">$exportAllowed : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_chartAllowed" name="property_chartAllowed" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$chartAllowed</h3>
+                <pre class="signature">$chartAllowed : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onOpenListCallback" name="property_onOpenListCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onOpenListCallback</h3>
+                <pre class="signature">$onOpenListCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onOpenCardCallback" name="property_onOpenCardCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onOpenCardCallback</h3>
+                <pre class="signature">$onOpenCardCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onOpenUpdateCardCallback" name="property_onOpenUpdateCardCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onOpenUpdateCardCallback</h3>
+                <pre class="signature">$onOpenUpdateCardCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onOpenCreateCardCallback" name="property_onOpenCreateCardCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onOpenCreateCardCallback</h3>
+                <pre class="signature">$onOpenCreateCardCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onOpenChartPageCallback" name="property_onOpenChartPageCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onOpenChartPageCallback</h3>
+                <pre class="signature">$onOpenChartPageCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onBeforeCreateCallback" name="property_onBeforeCreateCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onBeforeCreateCallback</h3>
+                <pre class="signature">$onBeforeCreateCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onAfterCreateCallback" name="property_onAfterCreateCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onAfterCreateCallback</h3>
+                <pre class="signature">$onAfterCreateCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onBeforeUpdateCallback" name="property_onBeforeUpdateCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onBeforeUpdateCallback</h3>
+                <pre class="signature">$onBeforeUpdateCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onAfterUpdateCallback" name="property_onAfterUpdateCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onAfterUpdateCallback</h3>
+                <pre class="signature">$onAfterUpdateCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onBeforeDeleteCallback" name="property_onBeforeDeleteCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onBeforeDeleteCallback</h3>
+                <pre class="signature">$onBeforeDeleteCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_onAfterDeleteCallback" name="property_onAfterDeleteCallback" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$onAfterDeleteCallback</h3>
+                <pre class="signature">$onAfterDeleteCallback : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Alddesign\Crudkit\Classes\string  <span class="argument">$name</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$id</span>, \Alddesign\Crudkit\Classes\TableDescriptor  <span class="argument">$table</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$category = &#039;&#039;</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$id </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">\Alddesign\Crudkit\Classes\TableDescriptor</a></td>
+                                <td>$table </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$category </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getName" name="method_getName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getName() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getId" name="method_getId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getId() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_createAllowed" name="method_createAllowed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">createAllowed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">createAllowed() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_allowCreate" name="method_allowCreate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">allowCreate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">allowCreate() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_denyCreate" name="method_denyCreate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">denyCreate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">denyCreate() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_updateAllowed" name="method_updateAllowed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">updateAllowed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">updateAllowed() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_allowUpdate" name="method_allowUpdate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">allowUpdate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">allowUpdate() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_denyUpdate" name="method_denyUpdate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">denyUpdate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">denyUpdate() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_deleteAllowed" name="method_deleteAllowed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">deleteAllowed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">deleteAllowed() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_allowDelete" name="method_allowDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">allowDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">allowDelete() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_denyDelete" name="method_denyDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">denyDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">denyDelete() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_exportAllowed" name="method_exportAllowed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">exportAllowed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">exportAllowed() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_allowExport" name="method_allowExport" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">allowExport()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">allowExport() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_denyExport" name="method_denyExport" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">denyExport()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">denyExport() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_chartAllowed" name="method_chartAllowed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">chartAllowed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">chartAllowed() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_allowChart" name="method_allowChart" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">allowChart()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">allowChart() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_denyChart" name="method_denyChart" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">denyChart()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">denyChart() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getConfirmDelete" name="method_getConfirmDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getConfirmDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getConfirmDelete() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_confirmDelete" name="method_confirmDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">confirmDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">confirmDelete(\Alddesign\Crudkit\Classes\bool  <span class="argument">$value = true</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\bool</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setCategory" name="method_setCategory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setCategory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setCategory(\Alddesign\Crudkit\Classes\string  <span class="argument">$category = null</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$category </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCategory" name="method_getCategory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getCategory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCategory() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setIcon" name="method_setIcon" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setIcon()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setIcon(\Alddesign\Crudkit\Classes\string  <span class="argument">$icon = null</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$icon </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getIcon" name="method_getIcon" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getIcon()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getIcon() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addTitleText" name="method_addTitleText" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addTitleText()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addTitleText(\Alddesign\Crudkit\Classes\string  <span class="argument">$text</span>, array  <span class="argument">$pageTypes = array()</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$text </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$pageTypes </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getTitleText" name="method_getTitleText" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getTitleText()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getTitleText(\Alddesign\Crudkit\Classes\string  <span class="argument">$pageType</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$pageType </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addOneToManyLink" name="method_addOneToManyLink" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addOneToManyLink()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addOneToManyLink(string  <span class="argument">$name</span>, string  <span class="argument">$label</span>, string  <span class="argument">$columnLabel</span>, string  <span class="argument">$toTable</span>, string  <span class="argument">$toPage</span>, array&lt;mixed,\Alddesign\Crudkit\Classes\FilterDefinition&gt;  <span class="argument">$filterDefinitions</span>, boolean  <span class="argument">$onList = true</span>, boolean  <span class="argument">$onCard = true</span>) </pre>
+                <p><em>Adds a button with a custom action to list/card pages.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>Unique name of this link</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$label </td>
+                                <td><p>Label of the link</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$columnLabel </td>
+                                <td><p>Label of the column in list view</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$toTable </td>
+                                <td><p>Linked to table id (crudkit table id)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$toPage </td>
+                                <td><p>Like to page id (crudkit page id)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.FilterDefinition.html">\Alddesign\Crudkit\Classes\FilterDefinition</a>&gt;</td>
+                                <td>$filterDefinitions </td>
+                                <td><p>Array of FilterDefinition describing the relation.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$onList </td>
+                                <td><p>Show on list page</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$onCard </td>
+                                <td><p>Show on card page</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            api
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addAction" name="method_addAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addAction(string  <span class="argument">$name</span>, string  <span class="argument">$label</span>, string  <span class="argument">$columnLabel</span>, callable  <span class="argument">$callback</span>, boolean  <span class="argument">$onList = true</span>, boolean  <span class="argument">$onCard = true</span>, string  <span class="argument">$faIcon = &#039;&#039;</span>, string  <span class="argument">$btnClass = &#039;&#039;</span>, string  <span class="argument">$position = &#039;&#039;</span>, boolean  <span class="argument">$disabled = false</span>) </pre>
+                <p><em>Add a button with a custom action to list/card pages.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>Unique name of this action</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$label </td>
+                                <td><p>Label of the button</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$columnLabel </td>
+                                <td><p>Label of the column in list view</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td><p>Callback function to execute when pressing the button. This callback has $record, $pageDescriptor, $action as parameters.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$onList </td>
+                                <td><p>Show on list page</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$onCard </td>
+                                <td><p>Show on card page</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$faIcon </td>
+                                <td><p>Icon for the Button. (Font Awesome icon name)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$btnClass </td>
+                                <td><p>''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$position </td>
+                                <td><p>'top'|'bottom'|'both'. Position on card pages.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$disabled </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeAction" name="method_removeAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeAction(\Alddesign\Crudkit\Classes\string  <span class="argument">$name</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getActions" name="method_getActions" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getActions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getActions(\Alddesign\Crudkit\Classes\string  <span class="argument">$name = &#039;&#039;</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addSection" name="method_addSection" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addSection()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addSection(\Alddesign\Crudkit\Classes\string  <span class="argument">$title</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$fromColumnName</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$toColumnName = &#039;&#039;</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$titleText = &#039;&#039;</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$title </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$fromColumnName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$toColumnName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$titleText </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSections" name="method_getSections" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSections()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSections() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_create" name="method_create" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">create()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">create(  <span class="argument">$recordData</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$recordData </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_update" name="method_update" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">update()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">update(array  <span class="argument">$primaryKeyValues</span>, array  <span class="argument">$columnValues</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$primaryKeyValues </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$columnValues </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_delete" name="method_delete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">delete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">delete(array  <span class="argument">$primaryKeyValues</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$primaryKeyValues </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_executeCallback" name="method_executeCallback" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">executeCallback()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">executeCallback(\Alddesign\Crudkit\Classes\string  <span class="argument">$name</span>,   <span class="argument">$param1 = null</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$param1 </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onOpenList" name="method_onOpenList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onOpenList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onOpenList(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onOpenCard" name="method_onOpenCard" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onOpenCard()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onOpenCard(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onOpenCreateCard" name="method_onOpenCreateCard" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onOpenCreateCard()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onOpenCreateCard(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onOpenUpdateCard" name="method_onOpenUpdateCard" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onOpenUpdateCard()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onOpenUpdateCard(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onOpenChartPage" name="method_onOpenChartPage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onOpenChartPage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onOpenChartPage(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onBeforeCreate" name="method_onBeforeCreate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onBeforeCreate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onBeforeCreate(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onAfterCreate" name="method_onAfterCreate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onAfterCreate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onAfterCreate(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onBeforeUpdate" name="method_onBeforeUpdate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onBeforeUpdate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onBeforeUpdate(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onAfterUpdate" name="method_onAfterUpdate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onAfterUpdate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onAfterUpdate(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onBeforeDelete" name="method_onBeforeDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onBeforeDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onBeforeDelete(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_onAfterDelete" name="method_onAfterDelete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">onAfterDelete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">onAfterDelete(callable  <span class="argument">$callback</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getTable" name="method_getTable" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getTable()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getTable() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSummaryColumnsAll" name="method_setSummaryColumnsAll" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSummaryColumnsAll()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSummaryColumnsAll() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSummaryColumns" name="method_setSummaryColumns" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSummaryColumns()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSummaryColumns(array  <span class="argument">$summaryColumns</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$summaryColumns </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSummaryColumns" name="method_getSummaryColumns" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSummaryColumns()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSummaryColumns(\Alddesign\Crudkit\Classes\bool  <span class="argument">$namesOnly = false</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\bool</td>
+                                <td>$namesOnly </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setCardLinkColumns" name="method_setCardLinkColumns" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setCardLinkColumns()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setCardLinkColumns(array  <span class="argument">$cardLinkColumns</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$cardLinkColumns </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCardLinkColumns" name="method_getCardLinkColumns" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getCardLinkColumns()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCardLinkColumns(\Alddesign\Crudkit\Classes\bool  <span class="argument">$namesOnly = false</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\bool</td>
+                                <td>$namesOnly </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_readRecord" name="method_readRecord" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">readRecord()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">readRecord(array  <span class="argument">$primaryKeyValues</span>, array  <span class="argument">$filters = array()</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$primaryKeyValues </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$filters </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                                                            <p>Data</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_readRecords" name="method_readRecords" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">readRecords()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">readRecords(\Alddesign\Crudkit\Classes\int  <span class="argument">$pageNumber = 1</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$searchColumnName = null</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$searchText = null</span>, array  <span class="argument">$filters = array()</span>, \Alddesign\Crudkit\Classes\bool  <span class="argument">$trimText = true</span>, \Alddesign\Crudkit\Classes\bool  <span class="argument">$rawData = false</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\int</td>
+                                <td>$pageNumber </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$searchColumnName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\string</td>
+                                <td>$searchText </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$filters </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\bool</td>
+                                <td>$trimText </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Alddesign\Crudkit\Classes\bool</td>
+                                <td>$rawData </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">PageDescriptor.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Classes\PageDescriptor.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Alddesign.html">\Alddesign</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 18th, 2019 at 21:59.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

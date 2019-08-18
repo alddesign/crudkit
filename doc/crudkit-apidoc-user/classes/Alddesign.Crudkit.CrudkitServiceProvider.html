@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>CRUDKit User API Doc</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">CRUDKit User API Doc</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Alddesign.html">\Alddesign</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">468</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2116391759"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2116391759" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1055604860"></a>
+                                <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
+            </div>
+            <div id="namespace-1055604860" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2048082496"></a>
+                                <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
+            </div>
+            <div id="namespace-2048082496" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1954732592"></a>
+                                <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
+            </div>
+            <div id="namespace-1954732592" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.AuthHelper.html">AuthHelper</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.CrudkitUser.html">CrudkitUser</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.DataProcessor.html">DataProcessor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html">EnumType</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.ExceptionHandler.html">ExceptionHandler</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Filter.html">Filter</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.FilterDefinition.html">FilterDefinition</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Generator.html">Generator</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html">PageDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.PageStore.html">PageStore</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.RestrictionSet.html">RestrictionSet</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html">SQLColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLManyToOneColumn.html">SQLManyToOneColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.SQLOneToManyColumn.html">SQLOneToManyColumn</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.Startpage.html">Startpage</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">TableDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.Classes.XMLSerializer.html">XMLSerializer</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html">CrudkitServiceProvider</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Alddesign.Crudkit.html">\Alddesign\Crudkit</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Alddesign\Crudkit</small>CrudkitServiceProvider</h1>
+                    <p><em>Main Entity do deal with. This class is used to create your application.</em></p>
+                    <p>Populate the following methods to build your application:</p>
+<p>defineTables()
+defineRelations()
+definePages()
+defineUsers()</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <em>No public methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html#method_defineTables" class="">defineTables()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html#method_defineRelations" class="">defineRelations()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html#method_definePages" class="">definePages()</a><br />
+                                                                    <a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html#method_defineUsers" class="">defineUsers()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/CrudkitServiceProvider.html"><div class="path-wrapper">CrudkitServiceProvider.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper">\Illuminate\Support\ServiceProvider</div>
+                                                                                                    <div class="namespace-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_defineTables" name="method_defineTables" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">defineTables()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">defineTables() : array&lt;mixed,\Alddesign\Crudkit\Classes\TableDescriptor&gt;</pre>
+                <p><em>Populate this methods to define the tables plus columns used by your application.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">\Alddesign\Crudkit\Classes\TableDescriptor</a>&gt;
+                                    				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">&lt;?php
+/** @ignore */
+function defineTables()
+{
+	//&lt;CRUDKIT-TABLES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
+	return 
+	[
+		&#039;author&#039; =&gt; (new TableDescriptor(&#039;author&#039;, [&#039;id&#039;], true))
+			-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [])
+			-&gt;addColumn(&#039;firstname&#039;, &#039;Firstname&#039;, &#039;string&#039;, [])
+			-&gt;addColumn(&#039;lastname&#039;, &#039;Lastname&#039;, &#039;string&#039;, [])
+			-&gt;addColumn(&#039;active&#039;, &#039;Active&#039;, &#039;boolean&#039;, [])
+			-&gt;addColumn(&#039;no_of_books&#039;, &#039;No. of Books&#039;, &#039;int&#039;, [])
+			,
+		&#039;book&#039; =&gt; (new TableDescriptor(&#039;book&#039;, [&#039;id&#039;], true))
+			-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [])
+			-&gt;addColumn(&#039;title&#039;, &#039;Title&#039;, &#039;string&#039;, [])
+			-&gt;addColumn(&#039;description&#039;, &#039;Description&#039;, &#039;string&#039;, [])
+			-&gt;addColumn(&#039;price&#039;, &#039;Price&#039;, &#039;float&#039;, [])
+			-&gt;addColumn(&#039;author_id&#039;, &#039;Author Id&#039;, &#039;integer&#039;, [])
+			,
+	];
+	//&lt;CRUDKIT-TABLES-END&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
+}
+?&gt;</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_defineRelations" name="method_defineRelations" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">defineRelations()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">defineRelations() </pre>
+                <p><em>Populate this methods to define table relations (1 to N and N ot 1).</em></p>
+                <p>Use &quot;$this-&gt;tables&quot; which you defined in method defineTables().</p>
+
+                
+                
+                				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">&lt;?php
+/** @ignore */
+private function defineRelations()
+{		
+	$this-&gt;tables[&#039;book&#039;]
+		-&gt;defineManyToOneColumn(&#039;author_id&#039;, &#039;author&#039;, &#039;id&#039;);	
+}
+?&gt;</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\TableDescriptor</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_definePages" name="method_definePages" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">definePages()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">definePages() : array&lt;mixed,\Alddesign\Crudkit\Classes\PageDescriptor&gt;</pre>
+                <p><em>Populate this methods to define the pages (views) according to the already definded tables.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html">\Alddesign\Crudkit\Classes\PageDescriptor</a>&gt;
+                                    				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">&lt;?php
+/** @ignore */
+private function definePages()
+{
+	//&lt;CRUDKIT-PAGES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
+	
+	//Function for custom action button
+	$showAuthor = function($record, $pageDescriptor, $action)
+	{
+		//this will open the list page, filtered to the book´s author
+		return 
+			Response::redirectToAction(&#039;\Alddesign\Crudkit\Controllers\AdminPanelController@listView&#039;, 
+		    [&#039;page-id&#039; =&gt; &#039;author&#039;, &#039;ff-0&#039; =&gt; &#039;id&#039;, &#039;fo-0&#039; =&gt; &#039;=&#039;, &#039;fv-0&#039; =&gt; $record[&#039;author_id&#039;]]);
+	};
+	
+	$test = function($record, $pageDescriptor, $action)
+	{
+		//will show the book´s title
+		echo $record[&quot;title&quot;];
+		die;
+	};
+	
+	return
+	[
+		&#039;author&#039; =&gt; (new PageDescriptor(&#039;Author&#039;, &#039;author&#039;, $this-&gt;tables[&#039;author&#039;]))
+			-&gt;setSummaryColumnsAll() //defines the columns which are shown on the list page (all in this case)
+			-&gt;setCardLinkColumns([&#039;id&#039;]) //clicking on these column(s) will open the card page
+			,
+		&#039;book&#039; =&gt; (new PageDescriptor(&#039;Title&#039;, &#039;title&#039;, $this-&gt;tables[&#039;title&#039;]))
+			-&gt;setSummaryColumnsAll()
+			-&gt;setCardLinkColumns([&#039;id&#039;])
+			-&gt;addAction(&#039;authors&#039;, &#039;Author&#039;, &#039;Show author...&#039;, $showAuthor,true, true, &#039;file-text&#039;, &#039;primary&#039;)
+			-&gt;addAction(&#039;test&#039;, &#039;Test&#039;, &#039;Click me&#039;, $test,true, true, &#039;file-text&#039;, &#039;primary&#039;)
+	];
+	//&lt;CRUDKIT-PAGES-END&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
+}
+?&gt;</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\PageDescriptor</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_defineUsers" name="method_defineUsers" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">defineUsers()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">defineUsers() : array&lt;mixed,\Alddesign\Crudkit\Classes\CrudkitUser&gt;</pre>
+                <p><em>Populate this methods to define the Logins for this application.</em></p>
+                <p>Optional: define RestrictionSet and/or Startpage for each User.
+Default login (administrator) is definded in crudkit config.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.CrudkitUser.html">\Alddesign\Crudkit\Classes\CrudkitUser</a>&gt;
+                                    				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">&lt;?php
+/** @ignore */
+private function defineUsers()
+{			
+	//Allows all, but create and delete books.
+	$restrictionSet = new RestrictionSet
+	(
+		&#039;allow-all&#039;, 
+		[
+			[&#039;page-id&#039; =&gt; &#039;book&#039;, &#039;action&#039; =&gt; &#039;create&#039;],
+			[&#039;page-id&#039; =&gt; &#039;author&#039;, &#039;action&#039; =&gt; &#039;delete&#039;]
+		]
+	);
+	
+	//Startpage is the book card of Book ID 5.
+	$startpage = new Startpage(&#039;books&#039;, &#039;card&#039;, [&#039;id&#039; =&gt; 1]);
+	
+	//Users
+	return
+	[
+		new CrudkitUser(&#039;johnsmith&#039;, &#039;pwd123&#039;),
+		new CrudkitUser(&#039;janedoe&#039;, &#039;pwd456&#039;, $startpage, $restrictionSet)
+	];	
+}
+?&gt;</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\CrudkitUser</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\Startpage</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\RestrictionSet</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">CrudkitServiceProvider.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/CrudkitServiceProvider.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Alddesign.html">\Alddesign</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 18th, 2019 at 21:59.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

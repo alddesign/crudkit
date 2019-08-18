@@ -1,0 +1,32 @@
+{
+    "name": "alddesign/crudkit",
+    "description": "CRUD Kit",
+    "keywords": ["crud","crudkit","laravel","laravel-crudkit","database","sql","sqlite","mvc","frontend","gui","interface","scaffold","framework"],
+    "type": "project",
+    "license": "MIT",
+    "version": "1.5.0-beta1",
+    "authors": [
+        {
+            "name": "Alexander Döpper",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "laravel/laravel": "5.5.*",
+        "doctrine/dbal": "^2.5",
+        "bacon/bacon-qr-code": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alddesign\\Crudkit\\": "src/"
+        }
+    },
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Alddesign\\Crudkit\\CrudkitServiceProvider"
+			]
+		}
+	}
+}
