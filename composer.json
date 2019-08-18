@@ -2,9 +2,8 @@
     "name": "alddesign/crudkit",
     "description": "CRUD Kit",
     "keywords": ["crud","crudkit","laravel","laravel-crudkit","database","sql","sqlite","mvc","frontend","gui","interface","scaffold","framework"],
-    "type": "project",
+    "type": "library",
     "license": "MIT",
-    "version": "1.5.0-beta1",
     "authors": [
         {
             "name": "Alexander Döpper",
