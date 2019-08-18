@@ -4,7 +4,7 @@
 * (optional) PHP composer installed
 
 # INSTALLATION
-* Method 1: via composer (more flexible)
+* Method 1: via composer (more flexible).
 	1. If not existig: create a new laravel project via composer. (this is your laravel root directory from now on)
 	`composer create-project laravel/laravel=5.5.* "yourProjectNameHere" --prefer-dist`
 	2. Add package "alddesign/crudkit" to the laravel project:
