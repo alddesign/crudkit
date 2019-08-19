@@ -4,13 +4,13 @@
 * (optional) PHP composer installed
 
 # INSTALLATION
-* Method 1: via composer (more flexible).
+* Method 1: via composer (more flexible)
 	1. If not existig: create a new laravel project via composer. (this is your laravel root directory from now on)
 	`composer create-project laravel/laravel=5.5.* "yourProjectNameHere" --prefer-dist`
 	2. Add package "alddesign/crudkit" to the laravel project:
 	Run `composer required aldesign/crudkit` (terminal/cmd in the laravel root directory)
 	3. Publish Crudkit config and assets
-	Run `php artisan vendor:publish --provider="Alddesign\Crudkit\CrudkitServiceProvider" --force` (terminal/cmd in the laravel root directory)
+	Run `php artisan vendor:publish --provider="Alddesign\Crudkit\CrudkitServiceProvider"` (terminal/cmd in the laravel root directory)
 
 * Method 2: Manual (easier)
 	-Extract/put the whole "crudkit" folder (this is your laravel root directory from now on) to your webservers root directory.

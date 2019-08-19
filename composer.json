@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
+        "laravel/framework": "5.5.*",
         "doctrine/dbal": "^2.5",
         "bacon/bacon-qr-code": "^1.0"
     },
