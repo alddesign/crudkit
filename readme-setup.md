@@ -1,20 +1,17 @@
 # PREREQUISITES
-* Webserver with PHP version >= 7.0 (PHP CLI should be available)
+* Webserver with PHP version >= 7.1 (PHP CLI should be available)
 * Database including driver for PHP (mysql and sqlite work out of the box)
-* (optional) PHP composer installed
+* PHP composer installed
 
 # INSTALLATION
-* Method 1: via composer (more flexible)
-	1. If not existig: create a new laravel project via composer. (this is your laravel root directory from now on)
-	`composer create-project laravel/laravel=5.5.* "yourProjectNameHere" --prefer-dist`
-	2. Add package "alddesign/crudkit" to the laravel project:
-	Run `composer required aldesign/crudkit` (terminal/cmd in the laravel root directory)
-	3. Publish Crudkit config and assets
-	Run `php artisan vendor:publish --provider="Alddesign\Crudkit\CrudkitServiceProvider"` (terminal/cmd in the laravel root directory)
+1. If not existig: create a new laravel project via composer. (this is your laravel root directory from now on)
+`composer create-project laravel/laravel=5.5.* "yourProjectNameHere" --prefer-dist`
 
-* Method 2: Manual (easier)
-	-Extract/put the whole "crudkit" folder (this is your laravel root directory from now on) to your webservers root directory.
-	 This is a ready to use package with Crudkit already integrated into Laravel.
+2. Add package "alddesign/crudkit" to the laravel project:
+Run `composer required aldesign/crudkit=dev-master` (terminal/cmd in the laravel root directory)
+
+3. Publish Crudkit config and assets
+Run `php artisan vendor:publish --provider="Alddesign\Crudkit\CrudkitServiceProvider"` (terminal/cmd in the laravel root directory)
 
 # SETUP
 1. Setup URL for the application:
@@ -22,9 +19,10 @@
 	Create a url/redirect/link/virtual-host, you name it, that points to the "<laravel-root-directory>/public" folder.
 	* Method 2 - not recommended: 
 	just access the application via http://yourhost/laravel-root-directory/public
-	
-	* However: remember this url as your APP_URL!
-2. Edit "<laravel-root-directory>/.env" file
+	* However: remember this url as your APP_URL
+
+# CONFIGURATION
+1. Edit "<laravel-root-directory>/.env" file
 	* Set at least these values:
 	APP_NAME=Laravel
 	APP_DEBUG		true if testing, false in production
@@ -35,9 +33,10 @@
 	DB_USERNAME		if needed
 	DB_PASSWORD		if needed
 
-3. Edit "<laravel-root-directory>/config/crudkit.php"
+2. Edit "<laravel-root-directory>/config/crudkit.php"
 	* Edit at least the the sections "Admin Login" and "General".
 	* Remember the "app_name_url" parameter
 
-4. Open crudkit by opening APP_URL/app_name_url in your browser
+# START
+Open crudkit by opening APP_URL/app_name_url in your browser
 	* Example: http://localhost/my-new-crudkit-app
