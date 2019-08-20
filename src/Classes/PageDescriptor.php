@@ -5,7 +5,7 @@ namespace Alddesign\Crudkit\Classes;
 use Response;
 use DB;
 use Exception;
-use Alddesign\Crudkit\Controllers\AdminPanelController;
+use Alddesign\Crudkit\Controllers\CrudkitController;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 //++AD
@@ -272,7 +272,7 @@ class PageDescriptor
 				}
 			}
 			
-			return Response::redirectToAction('\Alddesign\Crudkit\Controllers\AdminPanelController@listView', $urlParameters);
+			return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@listView', $urlParameters);
 		};
 		
 		$this->addAction($name, $label, $columnLabel, $callback, $onList, $onCard, '', 'primary', 'both', false);

@@ -55,7 +55,7 @@ class SQLOneToManyColumn extends SQLColumn
 						$filter->appendToUrlParams($urlParameters, $index);
 					}
 				}
-				return(URL::action('\Alddesign\Crudkit\Controllers\AdminPanelController@listView', $urlParameters));
+				return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', $urlParameters));
 			}
 		}
 

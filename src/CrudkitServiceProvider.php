@@ -1,7 +1,8 @@
 <?php
+/** Edit this file to create your application. (Laravel Service Provider) */
+
 namespace Alddesign\Crudkit;
 
-use Alddesign\Crudkit\Controllers\AdminPanelController;
 use Alddesign\Crudkit\Classes\AuthHelper;
 use Alddesign\Crudkit\Classes\CrudkitUser;
 use Alddesign\Crudkit\Classes\RestrictionSet;
@@ -14,7 +15,7 @@ use Alddesign\Crudkit\Classes\Filter;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /**
- * Main Entity do deal with. This class is used to create your application.
+ * This class is used to create your application.
  * 
  * Populate the following methods to build your application:
  *
@@ -45,7 +46,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/** @ignore */
     public function register()
     {
-        $this->app->resolving(AdminPanelController::class, function ($adminPanel, $app) 
+        $this->app->resolving(\Alddesign\Crudkit\Controllers\CrudkitController::class, function ($adminPanel, $app) 
 		{
 			// Table schema
 			$this->tables = $this->defineTables();

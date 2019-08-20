@@ -76,7 +76,7 @@ class SQLManyToOneColumn extends SQLColumn
 					$filter = $filterDefinition->toFilter($record);
 					$filter->appendToUrlParams($urlParameters, $index);
 				}
-				return(URL::action('\Alddesign\Crudkit\Controllers\AdminPanelController@cardView', $urlParameters));
+				return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@cardView', $urlParameters));
 			}
 		}
 		

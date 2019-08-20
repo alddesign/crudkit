@@ -127,7 +127,7 @@ class AuthHelper
 	
 	private function loginFailed(string $message = '')
 	{
-		Response::redirectToAction('\Alddesign\Crudkit\Controllers\AdminPanelController@loginView')
+		Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView')
 			->with('crudkit-login-message', $message)
 			->with('crudkit-login-message-type', 'danger')
 			->send();

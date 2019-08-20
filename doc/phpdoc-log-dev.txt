@@ -1,0 +1,566 @@
+Collecting files .. OK
+Initializing parser .. OK
+Parsing files
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\AuthHelper
+  Argument $crudkitUsers is missing from the Docblock of __construct
+  No summary for method __construct()
+  Argument $crudkitUser is missing from the Docblock of addUser
+  No summary for method addUser()
+  Argument $id is missing from the Docblock of addUserIdPassword
+  Argument $password is missing from the Docblock of addUserIdPassword
+  Argument $startpage is missing from the Docblock of addUserIdPassword
+  Argument $restrictionSet is missing from the Docblock of addUserIdPassword
+  No summary for method addUserIdPassword()
+  Argument $id is missing from the Docblock of userHasAccessTo
+  Argument $action is missing from the Docblock of userHasAccessTo
+  Argument $pageId is missing from the Docblock of userHasAccessTo
+  No summary for method userHasAccessTo()
+  Argument $callback is missing from the Docblock of onAfterLogin
+  No summary for method onAfterLogin()
+  Argument $name is missing from the Docblock of executeCallback
+  No summary for method executeCallback()
+  No summary for method checkStartpage()
+  Argument $action is missing from the Docblock of checkAuth
+  Argument $pageId is missing from the Docblock of checkAuth
+  Argument $noPermissionCheck is missing from the Docblock of checkAuth
+  Argument $loginAttempt is missing from the Docblock of checkAuth
+  No summary for method checkAuth()
+  Argument $message is missing from the Docblock of loginFailed
+  No summary for method loginFailed()
+  Argument $action is missing from the Docblock of checkPermissions
+  Argument $pageId is missing from the Docblock of checkPermissions
+  No summary for method checkPermissions()
+  No summary for method performLogin()
+  No summary for property $crudkitUsers
+  No summary for property $onAfterLogin
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\CrudkitUser
+  Argument $id is missing from the Docblock of __construct
+  Argument $password is missing from the Docblock of __construct
+  Argument $startpage is missing from the Docblock of __construct
+  Argument $restrictionSet is missing from the Docblock of __construct
+  No summary for method __construct()
+  Argument $startpage is missing from the Docblock of setStartpage
+  No summary for method setStartpage()
+  No summary for method getStartpage()
+  Argument $restrictionSet is missing from the Docblock of setRestrictionSet
+  No summary for method setRestrictionSet()
+  No summary for method getRestrictionSet()
+  No summary for method getId()
+  No summary for method getPassword()
+  Argument $action is missing from the Docblock of hasAccessTo
+  Argument $pageId is missing from the Docblock of hasAccessTo
+  No summary for method hasAccessTo()
+  No summary for property $id
+  No summary for property $password
+  No summary for property $startpage
+  No summary for property $restrictionSet
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\DataProcessor.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\DataProcessor
+  Argument $useDbDefault is missing from the Docblock of addData
+  Argument $recordData is missing from the Docblock of addData
+  Argument $columnName is missing from the Docblock of addData
+  Argument $data is missing from the Docblock of addData
+  Argument $options is missing from the Docblock of addData
+  Argument $requestData is missing from the Docblock of addData
+  Argument $actionType is missing from the Docblock of addData
+  Argument $dataExists is missing from the Docblock of addData
+  Argument $useDbDefault is missing from the Docblock of setDefault
+  Argument $fieldValue is missing from the Docblock of setDefault
+  Argument $defaultValue is missing from the Docblock of setDefault
+  Argument $fieldDatatype is missing from the Docblock of setDefault
+  Argument $columnName is missing from the Docblock of setDefault
+  Argument $fieldValue is missing from the Docblock of setEmpty
+  Argument $fieldDatatype is missing from the Docblock of setEmpty
+  Argument $columnName is missing from the Docblock of setEmpty
+  Argument $fieldValue is missing from the Docblock of setNull
+  Argument $fieldDatatype is missing from the Docblock of setNull
+  Argument $columnName is missing from the Docblock of setNull
+  No summary for method setNull()
+  Argument $fieldValue is missing from the Docblock of setData
+  Argument $fieldDatatype is missing from the Docblock of setData
+  Argument $columnName is missing from the Docblock of setData
+  No summary for method setData()
+  Argument $rawData is missing from the Docblock of postProcess
+  Name of argument $rawData does not match with the DocBlock's name $singleRecord in postProcess()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $rawData in postProcess()
+  Argument $columnName is missing from the Docblock of formatBoolean
+  Argument $columnValue is missing from the Docblock of formatBoolean
+  No summary for method formatBoolean()
+  Argument $columnName is missing from the Docblock of formatDecimal
+  Argument $columnValue is missing from the Docblock of formatDecimal
+  No summary for method formatDecimal()
+  Argument $columnName is missing from the Docblock of processBinaryData
+  Argument $columnValue is missing from the Docblock of processBinaryData
+  Argument $singleRecord is missing from the Docblock of processBinaryData
+  Argument $rawData is missing from the Docblock of processBinaryData
+  No summary for method processBinaryData()
+  Argument $bytes is missing from the Docblock of formatBytes
+  Argument $rawData is missing from the Docblock of formatBytes
+  Argument $precision is missing from the Docblock of formatBytes
+  No summary for method formatBytes()
+  Argument $columnName is missing from the Docblock of mapEnum
+  Argument $columnValue is missing from the Docblock of mapEnum
+  No summary for method mapEnum()
+  Argument $columnName is missing from the Docblock of formatDateAndTime
+  Argument $columnValue is missing from the Docblock of formatDateAndTime
+  No summary for method formatDateAndTime()
+  Argument $uploadedFile is missing from the Docblock of getUploadFileData
+  No summary for method getUploadFileData()
+  Argument $name is missing from the Docblock of text
+  Argument $language is missing from the Docblock of text
+  Argument $language is missing from the Docblock of getTexts
+  No summary for method noop()
+  No summary for method getCrudkitDbConfig()
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\EnumType.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\EnumType
+  Argument $fieldDeclaration is missing from the Docblock of getSQLDeclaration
+  Argument $platform is missing from the Docblock of getSQLDeclaration
+  No summary for method getSQLDeclaration()
+  Argument $value is missing from the Docblock of convertToPHPValue
+  Argument $platform is missing from the Docblock of convertToPHPValue
+  No summary for method convertToPHPValue()
+  Argument $value is missing from the Docblock of convertToDatabaseValue
+  Argument $platform is missing from the Docblock of convertToDatabaseValue
+  No summary for method convertToDatabaseValue()
+  No summary for method getName()
+  Argument $platform is missing from the Docblock of requiresSQLCommentHint
+  No summary for method requiresSQLCommentHint()
+  No summary for property $values
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\ExceptionHandler.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\ExceptionHandler
+  Argument $request is missing from the Docblock of render
+  Argument $exception is missing from the Docblock of render
+  No summary for method render()
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Filter.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\Filter
+  Argument $field is missing from the Docblock of __construct
+  Argument $operator is missing from the Docblock of __construct
+  Argument $value is missing from the Docblock of __construct
+  No summary for method __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $urlParams in appendToUrlParams()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filterNo in appendToUrlParams()
+  No summary for property $field
+  No summary for property $operator
+  No summary for property $value
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\FilterDefinition.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\FilterDefinition
+  Argument $field is missing from the Docblock of __construct
+  Argument $operator is missing from the Docblock of __construct
+  Argument $type is missing from the Docblock of __construct
+  Argument $fieldnameOrValue is missing from the Docblock of __construct
+  No summary for method __construct()
+  No summary for property $field
+  No summary for property $operator
+  No summary for property $type
+  No summary for property $fieldnameOrValue
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Generator.php
+  No summary was found for this file
+  No summary for method __construct()
+  No summary for method generateServiceProvider()
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescriptor.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\PageDescriptor
+  Argument $name is missing from the Docblock of __construct
+  Argument $id is missing from the Docblock of __construct
+  Argument $table is missing from the Docblock of __construct
+  Argument $category is missing from the Docblock of __construct
+  No summary for method __construct()
+  No summary for method getName()
+  No summary for method getId()
+  No summary for method createAllowed()
+  No summary for method allowCreate()
+  No summary for method denyCreate()
+  No summary for method updateAllowed()
+  No summary for method allowUpdate()
+  No summary for method denyUpdate()
+  No summary for method deleteAllowed()
+  No summary for method allowDelete()
+  No summary for method denyDelete()
+  No summary for method exportAllowed()
+  No summary for method allowExport()
+  No summary for method denyExport()
+  No summary for method chartAllowed()
+  No summary for method allowChart()
+  No summary for method denyChart()
+  No summary for method getConfirmDelete()
+  Argument $value is missing from the Docblock of confirmDelete
+  No summary for method confirmDelete()
+  Argument $category is missing from the Docblock of setCategory
+  No summary for method setCategory()
+  No summary for method getCategory()
+  Argument $icon is missing from the Docblock of setIcon
+  No summary for method setIcon()
+  No summary for method getIcon()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $text in addTitleText()
+  Argument $pageTypes is missing from the Docblock of addTitleText
+  Name of argument $pageTypes does not match with the DocBlock's name $text in addTitleText()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageTypes in addTitleText()
+  No summary for method addTitleText()
+  Argument $pageType is missing from the Docblock of getTitleText
+  No summary for method getTitleText()
+  Argument $name is missing from the Docblock of removeAction
+  No summary for method removeAction()
+  Argument $name is missing from the Docblock of getActions
+  No summary for method getActions()
+  Argument $title is missing from the Docblock of addSection
+  Argument $fromColumnName is missing from the Docblock of addSection
+  Argument $toColumnName is missing from the Docblock of addSection
+  Argument $titleText is missing from the Docblock of addSection
+  No summary for method addSection()
+  No summary for method getSections()
+  Argument $recordData is missing from the Docblock of create
+  No summary for method create()
+  Argument $primaryKeyValues is missing from the Docblock of update
+  Argument $columnValues is missing from the Docblock of update
+  No summary for method update()
+  Argument $primaryKeyValues is missing from the Docblock of delete
+  No summary for method delete()
+  Argument $name is missing from the Docblock of executeCallback
+  Argument $param1 is missing from the Docblock of executeCallback
+  No summary for method executeCallback()
+  Argument $callback is missing from the Docblock of onOpenList
+  No summary for method onOpenList()
+  Argument $callback is missing from the Docblock of onOpenCard
+  No summary for method onOpenCard()
+  Argument $callback is missing from the Docblock of onOpenCreateCard
+  No summary for method onOpenCreateCard()
+  Argument $callback is missing from the Docblock of onOpenUpdateCard
+  No summary for method onOpenUpdateCard()
+  Argument $callback is missing from the Docblock of onOpenChartPage
+  No summary for method onOpenChartPage()
+  Argument $callback is missing from the Docblock of onBeforeCreate
+  No summary for method onBeforeCreate()
+  Argument $callback is missing from the Docblock of onAfterCreate
+  No summary for method onAfterCreate()
+  Argument $callback is missing from the Docblock of onBeforeUpdate
+  No summary for method onBeforeUpdate()
+  Argument $callback is missing from the Docblock of onAfterUpdate
+  No summary for method onAfterUpdate()
+  Argument $callback is missing from the Docblock of onBeforeDelete
+  No summary for method onBeforeDelete()
+  Argument $callback is missing from the Docblock of onAfterDelete
+  No summary for method onAfterDelete()
+  No summary for method getTable()
+  No summary for method setSummaryColumnsAll()
+  Argument $summaryColumns is missing from the Docblock of setSummaryColumns
+  No summary for method setSummaryColumns()
+  Argument $namesOnly is missing from the Docblock of getSummaryColumns
+  No summary for method getSummaryColumns()
+  Argument $cardLinkColumns is missing from the Docblock of setCardLinkColumns
+  No summary for method setCardLinkColumns()
+  Argument $namesOnly is missing from the Docblock of getCardLinkColumns
+  No summary for method getCardLinkColumns()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $primaryKeyValues in readRecord()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filters in readRecord()
+  No summary for method readRecord()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageNumber in readRecords()
+  Argument $searchColumnName is missing from the Docblock of readRecords
+  Name of argument $searchColumnName does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $searchColumnName in readRecords()
+  Argument $searchText is missing from the Docblock of readRecords
+  Name of argument $searchText does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $searchText in readRecords()
+  Argument $filters is missing from the Docblock of readRecords
+  Name of argument $filters does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filters in readRecords()
+  Argument $trimText is missing from the Docblock of readRecords
+  Name of argument $trimText does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $trimText in readRecords()
+  Argument $rawData is missing from the Docblock of readRecords
+  Name of argument $rawData does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $rawData in readRecords()
+  No summary for method readRecords()
+  No summary for property $id
+  No summary for property $name
+  No summary for property $category
+  No summary for property $icon
+  No summary for property $titleTexts
+  No summary for property $table
+  No summary for property $summaryColumns
+  No summary for property $cardLinkColumns
+  No summary for property $createAllowed
+  No summary for property $updateAllowed
+  No summary for property $deleteAllowed
+  No summary for property $confirmDelete
+  No summary for property $exportAllowed
+  No summary for property $chartAllowed
+  No summary for property $onOpenListCallback
+  No summary for property $onOpenCardCallback
+  No summary for property $onOpenUpdateCardCallback
+  No summary for property $onOpenCreateCardCallback
+  No summary for property $onOpenChartPageCallback
+  No summary for property $onBeforeCreateCallback
+  No summary for property $onAfterCreateCallback
+  No summary for property $onBeforeUpdateCallback
+  No summary for property $onAfterUpdateCallback
+  No summary for property $onBeforeDeleteCallback
+  No summary for property $onAfterDeleteCallback
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageStore.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\PageStore
+  Argument $pageDescriptors is missing from the Docblock of __construct
+  No summary for method __construct()
+  Argument $pageDescriptor is missing from the Docblock of addPageDescriptor
+  No summary for method addPageDescriptor()
+  No summary for method getPageDescriptors()
+  Argument $pageId is missing from the Docblock of getPageDescriptor
+  Argument $errorIfPageNotFound is missing from the Docblock of getPageDescriptor
+  No summary for method getPageDescriptor()
+  No summary for method getPageMap()
+  No summary for property $pageDescriptors
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\RestrictionSet.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\RestrictionSet
+  Argument $type is missing from the Docblock of __construct
+  Argument $entries is missing from the Docblock of __construct
+  No summary for method __construct()
+  Argument $action is missing from the Docblock of hasAccessTo
+  Argument $pageId is missing from the Docblock of hasAccessTo
+  No summary for method hasAccessTo()
+  No summary for property $type
+  No summary for property $entries
+  No summary for property $allowedActions
+  No summary for property $allowedTypes
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\SQLColumn.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\SQLColumn
+  Argument $name is missing from the Docblock of __construct
+  Argument $label is missing from the Docblock of __construct
+  Argument $type is missing from the Docblock of __construct
+  Argument $options is missing from the Docblock of __construct
+  No summary for method __construct()
+  No summary for method getName()
+  No summary for method getLabel()
+  No summary for method getRelationType()
+  Argument $pageType is missing from the Docblock of isHidden
+  No summary for method isHidden()
+  No summary for property $name
+  No summary for property $label
+  No summary for property $type
+  No summary for property $options
+  No summary for property $relationType
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\SQLManyToOneColumn.php
+  No summary was found for this file
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $name in __construct()
+  Argument $label is missing from the Docblock of __construct
+  Name of argument $label does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $label in __construct()
+  Argument $type is missing from the Docblock of __construct
+  Name of argument $type does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $type in __construct()
+  Argument $foreignTableName is missing from the Docblock of __construct
+  Name of argument $foreignTableName does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $foreignTableName in __construct()
+  Argument $foreignColumnName is missing from the Docblock of __construct
+  Name of argument $foreignColumnName does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $foreignColumnName in __construct()
+  Argument $filterDefinitions is missing from the Docblock of __construct
+  Name of argument $filterDefinitions does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filterDefinitions in __construct()
+  Argument $options is missing from the Docblock of __construct
+  Name of argument $options does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $options in __construct()
+  Argument $clickable is missing from the Docblock of __construct
+  Name of argument $clickable does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $clickable in __construct()
+  Argument $record is missing from the Docblock of getManyToOneValues
+  No summary for method getManyToOneValues()
+  Argument $record is missing from the Docblock of getCardUrl
+  Argument $pageStore is missing from the Docblock of getCardUrl
+  No summary for method getCardUrl()
+  No summary for method getClickable()
+  No summary for method getRelationType()
+  No summary for property $foreignTableName
+  No summary for property $foreignColumnName
+  No summary for property $filterDefinitions
+  No summary for property $clickable
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\SQLOneToManyColumn.php
+  No summary was found for this file
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $name in __construct()
+  Argument $label is missing from the Docblock of __construct
+  Name of argument $label does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $label in __construct()
+  Argument $type is missing from the Docblock of __construct
+  Name of argument $type does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $type in __construct()
+  Argument $foreignTableName is missing from the Docblock of __construct
+  Name of argument $foreignTableName does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $foreignTableName in __construct()
+  Argument $filterDefinitions is missing from the Docblock of __construct
+  Name of argument $filterDefinitions does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filterDefinitions in __construct()
+  Argument $options is missing from the Docblock of __construct
+  Name of argument $options does not match with the DocBlock's name $name in __construct()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $options in __construct()
+  Argument $record is missing from the Docblock of getListUrl
+  Argument $pageStore is missing from the Docblock of getListUrl
+  No summary for method getListUrl()
+  No summary for method getRelationType()
+  No summary for property $foreignTableName
+  No summary for property $filterDefinitions
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Startpage.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\Startpage
+  No summary for method redirectTo()
+  No summary for property $pageId
+  No summary for property $type
+  No summary for property $parameters
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\TableDescriptor.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\TableDescriptor
+  Argument $name is missing from the Docblock of __construct
+  Argument $primaryKeyColumns is missing from the Docblock of __construct
+  Argument $hasAutoincrementKey is missing from the Docblock of __construct
+  No summary for method __construct()
+  No summary for method getName()
+  No summary for method getHasAutoincrementKey()
+  Argument $hasAutoincrementKey is missing from the Docblock of setHasAutoincrementKey
+  No summary for method setHasAutoincrementKey()
+  No summary for method getSoftDeleteColumn()
+  No summary for method getSoftDeletedValue()
+  No summary for method getSoftNotDeletedValue()
+  Argument $columnName is missing from the Docblock of hasColumn
+  No summary for method hasColumn()
+  Argument $namesOnly is missing from the Docblock of getAllColumns
+  No summary for method getAllColumns()
+  Argument $namesOnly is missing from the Docblock of getColumns
+  No summary for method getColumns()
+  Argument $namesOnly is missing from the Docblock of getPrimaryKeyColumns
+  No summary for method getPrimaryKeyColumns()
+  No summary for method getManyToOneColumnValues()
+  Argument $force is missing from the Docblock of fetchAllColumns
+  No summary for method fetchAllColumns()
+  Argument $name is missing from the Docblock of addColumn
+  Argument $label is missing from the Docblock of addColumn
+  Argument $type is missing from the Docblock of addColumn
+  Argument $options is missing from the Docblock of addColumn
+  No summary for method addColumn()
+  Argument $name is missing from the Docblock of defineManyToOneColumn
+  Argument $relationTableName is missing from the Docblock of defineManyToOneColumn
+  Argument $relationColumnName is missing from the Docblock of defineManyToOneColumn
+  Argument $filters is missing from the Docblock of defineManyToOneColumn
+  Argument $clickable is missing from the Docblock of defineManyToOneColumn
+  No summary for method defineManyToOneColumn()
+  Argument $name is missing from the Docblock of defineOneToManyColumn
+  Argument $relationTableName is missing from the Docblock of defineOneToManyColumn
+  Argument $filters is missing from the Docblock of defineOneToManyColumn
+  No summary for method defineOneToManyColumn()
+  Argument $name is missing from the Docblock of setSoftDeleteColumn
+  Argument $softDeletedValue is missing from the Docblock of setSoftDeleteColumn
+  Argument $softNotDeletedValue is missing from the Docblock of setSoftDeleteColumn
+  No summary for method setSoftDeleteColumn()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $primaryKeyValues in readRecord()
+  Argument $filters is missing from the Docblock of readRecord
+  Name of argument $filters does not match with the DocBlock's name $primaryKeyValues in readRecord()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filters in readRecord()
+  No summary for method readRecord()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageNumber in readRecords()
+  Argument $searchColumnName is missing from the Docblock of readRecords
+  Name of argument $searchColumnName does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $searchColumnName in readRecords()
+  Argument $searchText is missing from the Docblock of readRecords
+  Name of argument $searchText does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $searchText in readRecords()
+  Argument $filters is missing from the Docblock of readRecords
+  Name of argument $filters does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $filters in readRecords()
+  Argument $trimText is missing from the Docblock of readRecords
+  Name of argument $trimText does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $trimText in readRecords()
+  Argument $rawData is missing from the Docblock of readRecords
+  Name of argument $rawData does not match with the DocBlock's name $pageNumber in readRecords()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $rawData in readRecords()
+  No summary for method readRecords()
+  Argument $recordData is missing from the Docblock of createRecord
+  No summary for method createRecord()
+  Argument $primaryKeyValues is missing from the Docblock of updateRecord
+  Argument $columnValues is missing from the Docblock of updateRecord
+  No summary for method updateRecord()
+  Argument $primaryKeyValues is missing from the Docblock of deleteRecord
+  No summary for method deleteRecord()
+  Argument $columnName is missing from the Docblock of getDbSpecificColumnNameWithDelimiter
+  No summary for method getDbSpecificColumnNameWithDelimiter()
+  Argument $columnNameWithDelimiter is missing from the Docblock of getDbSpecificBlobLengthFunction
+  No summary for method getDbSpecificBlobLengthFunction()
+  Argument $expression is missing from the Docblock of getDbSpecificLikeCondition
+  Argument $type is missing from the Docblock of getDbSpecificLikeCondition
+  No summary for method getDbSpecificLikeCondition()
+  Argument $index is missing from the Docblock of array_insert
+  Argument $data is missing from the Docblock of array_insert
+  Argument $where is missing from the Docblock of array_insert
+  Argument $refIndex is missing from the Docblock of array_insert
+  Argument $array is missing from the Docblock of array_insert
+  No summary for method array_insert()
+  No summary for property $name
+  No summary for property $primaryKeyColumns
+  No summary for property $hasAutoincrementKey
+  No summary for property $columns
+  No summary for property $allColumns
+  No summary for property $allColumnsFetched
+  No summary for property $softDeleteColumn
+  No summary for property $softDeletedValue
+  No summary for property $softNotDeletedValue
+  No summary for property $dbconf
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\XmlSerializer.php
+  No summary was found for this file
+  No summary for class \Alddesign\Crudkit\Classes\XMLSerializer
+  No summary for method __construct()
+  Argument $object is missing from the Docblock of generateXmlFromObject
+  No summary for method generateXmlFromObject()
+  Argument $array is missing from the Docblock of generateXmlFromArray
+  No summary for method generateXmlFromArray()
+  Argument $array is missing from the Docblock of generateXml
+  Argument $level is missing from the Docblock of generateXml
+  No summary for method generateXml()
+  No summary for property $rootNodeName
+  No summary for property $defaultNodeName
+  No summary for property $indent
+  No summary for property $encoding
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Controllers\CrudkitController.php
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\CrudkitServiceProvider.php
+  No summary was found for this file
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\routes.php
+Storing cache in "C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\doc\crudkit-apidoc-dev" .. OK
+Load cache                                                         ..    0.021s
+Preparing template "clean"                                         ..    0.016s
+Preparing 17 transformations                                       ..    0.000s
+Build "elements" index                                             ..    0.002s
+Replace textual FQCNs with object aliases                          ..    0.032s
+Resolve @link and @see tags in descriptions                        ..    0.003s
+Enriches inline example tags with their sources                    ..    0.003s
+Build "packages" index                                             ..    0.003s
+Build "namespaces" index and add namespaces to "elements"          ..    0.001s
+Collect all markers embedded in tags                               ..    0.002s
+Transform analyzed project into artifacts                          .. 
+Applying 17 transformations
+  Initialize writer "phpDocumentor\Plugin\Core\Transformer\Writer\FileIo"
+  Initialize writer "phpDocumentor\Plugin\Twig\Writer\Twig"
+  Initialize writer "phpDocumentor\Plugin\Graphs\Writer\Graph"
+  Execute transformation using writer "FileIo"
+  Execute transformation using writer "FileIo"
+  Execute transformation using writer "FileIo"
+  Execute transformation using writer "FileIo"
+  Execute transformation using writer "FileIo"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "twig"
+  Execute transformation using writer "Graph"
+Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   2.412s
+Analyze results and write report to log                            ..    0.001s

@@ -1,7 +1,6 @@
 <?php
 namespace Alddesign\Crudkit;
 
-use Alddesign\Crudkit\Controllers\AdminPanelController;
 use Alddesign\Crudkit\Classes\AuthHelper;
 use Alddesign\Crudkit\Classes\CrudkitUser;
 use Alddesign\Crudkit\Classes\RestrictionSet;
@@ -45,7 +44,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/** @ignore */
     public function register()
     {
-        $this->app->resolving(AdminPanelController::class, function ($adminPanel, $app) 
+        $this->app->resolving(\Alddesign\Crudkit\Controllers\CrudkitController::class, function ($adminPanel, $app) 
 		{
 			// Table schema
 			$this->tables = $this->defineTables();
@@ -61,8 +60,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 
 			//Go!
             $this->start($adminPanel);
-        });
-					
+        });		
     }
 	
     /**

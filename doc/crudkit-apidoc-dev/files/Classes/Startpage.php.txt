@@ -34,7 +34,7 @@ class Startpage
 	
 	public function redirectTo()
 	{
-		$controller = '\Alddesign\Crudkit\Controllers\AdminPanelController@';
+		$controller = '\Alddesign\Crudkit\Controllers\CrudkitController@';
 		
 		$action = '';
 		switch($this->type)

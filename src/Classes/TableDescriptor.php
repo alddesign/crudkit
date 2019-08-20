@@ -7,7 +7,6 @@ use Schema;
 use Response;
 
 use \DateTime;
-use Alddesign\Crudkit\Controllers\AdminPanelController;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 class TableDescriptor
