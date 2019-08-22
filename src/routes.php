@@ -13,23 +13,23 @@ Route::group(['middleware' => 'web', 'namespace' => 'Alddesign\Crudkit\Controlle
 		$appNameUrl = 'app';
 	}
 
-	Route::get('/'.$appNameUrl, 'AdminPanelController@index');
-	Route::get('/'.$appNameUrl.'/list-view', 'AdminPanelController@listView');
-	Route::get('/'.$appNameUrl.'/card-view', 'AdminPanelController@cardView');
-	Route::get('/'.$appNameUrl.'/update-view', 'AdminPanelController@updateView');
-	Route::get('/'.$appNameUrl.'/create-view', 'AdminPanelController@createView');
-	Route::get('/'.$appNameUrl.'/chart-view', 'AdminPanelController@chartView');
-	Route::get('/'.$appNameUrl.'/message-view', 'AdminPanelController@messageView');
-	Route::get('/'.$appNameUrl.'/login-view', 'AdminPanelController@loginView');
-	Route::get('/'.$appNameUrl.'/export-records-csv', 'AdminPanelController@exportRecordsCsv');
-	Route::get('/'.$appNameUrl.'/export-records-xml', 'AdminPanelController@exportRecordsXml');
-	Route::get('/'.$appNameUrl.'/auto-generate', 'AdminPanelController@autoGenerate');
+	Route::get('/'.$appNameUrl, 'CrudkitController@index');
+	Route::get('/'.$appNameUrl.'/list-view', 'CrudkitController@listView');
+	Route::get('/'.$appNameUrl.'/card-view', 'CrudkitController@cardView');
+	Route::get('/'.$appNameUrl.'/update-view', 'CrudkitController@updateView');
+	Route::get('/'.$appNameUrl.'/create-view', 'CrudkitController@createView');
+	Route::get('/'.$appNameUrl.'/chart-view', 'CrudkitController@chartView');
+	Route::get('/'.$appNameUrl.'/message-view', 'CrudkitController@messageView');
+	Route::get('/'.$appNameUrl.'/login-view', 'CrudkitController@loginView');
+	Route::get('/'.$appNameUrl.'/export-records-csv', 'CrudkitController@exportRecordsCsv');
+	Route::get('/'.$appNameUrl.'/export-records-xml', 'CrudkitController@exportRecordsXml');
+	Route::get('/'.$appNameUrl.'/auto-generate', 'CrudkitController@autoGenerate');
 	
-	Route::get('/'.$appNameUrl.'/api/delete-record', 'AdminPanelController@deleteRecord');
-	Route::post('/'.$appNameUrl.'/api/create-record', 'AdminPanelController@createRecord');
-	Route::post('/'.$appNameUrl.'/api/update-record', 'AdminPanelController@updateRecord');
-	Route::post('/'.$appNameUrl.'/api/login', 'AdminPanelController@login');
-	Route::get('/'.$appNameUrl.'/api/logout', 'AdminPanelController@logout');
-	Route::post('/'.$appNameUrl.'/api/action', 'AdminPanelController@action');
-	Route::post('/'.$appNameUrl.'/api/get-chart-data', 'AdminPanelController@getChartData');
+	Route::get('/'.$appNameUrl.'/api/delete-record', 'CrudkitController@deleteRecord');
+	Route::post('/'.$appNameUrl.'/api/create-record', 'CrudkitController@createRecord');
+	Route::post('/'.$appNameUrl.'/api/update-record', 'CrudkitController@updateRecord');
+	Route::post('/'.$appNameUrl.'/api/login', 'CrudkitController@login');
+	Route::get('/'.$appNameUrl.'/api/logout', 'CrudkitController@logout');
+	Route::post('/'.$appNameUrl.'/api/action', 'CrudkitController@action');
+	Route::post('/'.$appNameUrl.'/api/get-chart-data', 'CrudkitController@getChartData');
 });

@@ -1,5 +1,4 @@
 <?php
-/** @ignore */
 private function definePages()
 {
 	//<CRUDKIT-PAGES-START> please do not remove this line - otherwise /admin-panel/auto-generate will not work
@@ -34,4 +33,3 @@ private function definePages()
 	];
 	//<CRUDKIT-PAGES-END> please do not remove this line - otherwise /admin-panel/auto-generate will not work
 }
-?>

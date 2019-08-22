@@ -4,28 +4,31 @@ namespace Alddesign\Crudkit\Classes;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 
-
 class RestrictionSet
-{
+{	
+	const ALLOWED_TYPES = ['allow-all', 'deny-all'];
+
 	private $type = 'allow-all'; //'allow-all' = allow all, deny with entries | 'deny-all' = deny all, allow with entries
-	private $entries = []; //Format = [0 => ['action' => <'list,card,c,u,d' | ''>, 'page-id' => <'page-id' | ''>], 1 => ...]
-	static $allowedActions = ['list', 'card', 'create', 'update', 'delete', 'export', 'chart', '']; 
-	static $allowedTypes =['allow-all', 'deny-all'];
+	private $entries = [];
 	
+	/**
+	 * Creates new set of restrictions (permissions).
+	 * 
+	 * @param string $type 'allow-all' = allow everything except the entries you define, 'deny-all' = deny everything except the entries you define
+	 * @param RestrictionSetEntry[] $entries Array of entires
+	 */
     public function __construct(string $type, array $entries = [])
     {
-		if(!in_array($type, self::allowedTypes, true))
+		if(!in_array($type, self::ALLOWED_TYPES, true))
 		{
-			throw new Exception(sprintf('Restriction Set constructor: invalid type "%s".', $type));
+			dp::crudkitException('Invalid restriction set type "%s".', __CLASS__, __FUNCTION__, $type);
 		}
-		
+
 		foreach($entries as $entry)
 		{
-			if(!isset($entry['action']) || !isset($entry['page-id']) || !in_array($entry['action'], self::$allowedActions ,true))
+			if(gettype($entry) !== 'object' || get_class($entry) !== 'RestrictionSetEntry')
 			{
-				$locAction = isset($entry['action']) ? $entry['action'] : '';
-				$locPageId = isset($entry['page-id']) ? $entry['page-id'] : '';
-				throw new Exception(sprintf('Restriction Set constructor: invalid entry. Action "%s", Page ID "%s".', $locAction, $locPageId));
+				dp::crudkitException('Array of RestrictionSetEntry objects expected.', __CLASS__, __FUNCTION__);
 			}
 		}
 		
@@ -33,13 +36,14 @@ class RestrictionSet
 		$this->entries = $entries;
     }
 	
+	/** @internal */
 	public function hasAccessTo(string $action, string $pageId)
 	{
 		$entryFound = false;
 		
 		foreach($this->entries as $entry)
 		{
-			if( ($action === $entry['action'] || $entry['action'] === '' || $action === '') && ($pageId === $entry['page-id'] || $entry['page-id'] === '') )
+			if( ($action === $entry->action || $entry->action === '' || $action === '') && ($pageId === $entry->pageId || $entry->pageId  === '') )
 			{
 				$entryFound = true;
 			}

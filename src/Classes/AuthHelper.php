@@ -1,18 +1,35 @@
 <?php
+/** User/permisson handling */
 namespace Alddesign\Crudkit\Classes;
 
-use Alddesign\Crudkit\Classes\DataProcessor as DP;
+use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 use Response;
 
+/** 
+ * Provides functionality for user/permisson handling.
+ */
 class AuthHelper
 {
+	/** @var CurdkitUser[] $crudkitUsers 
+	 * @internal 
+	 */
 	private $crudkitUsers = [];
+
+	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
+	 * @internal 
+	 */
+	private $callbacks = [];
 	
-	private $onAfterLogin = null; //After successfull login (credentials are valid). Parameters: string $username, string $password, bool $isAdmin
-	
+	/** 
+	 * Constructor
+	 * 
+	 * @param CrudkitUser[] $crudkitUsers (optional)
+	 * @internal
+	 */
     public function __construct(array $crudkitUsers = [])
     {
+		//dp::crudkitException('test',__CLASS__,__FUNCTION__);
 		if(!dp::e($crudkitUsers))
 		{
 			foreach($crudkitUsers as $crudkitUser)
@@ -22,47 +39,75 @@ class AuthHelper
 		}
     }
 	
-	public function addUser(CrudkitUser $crudkitUser)
+	/**
+	 * Adds a new Crudkit user.
+	 * @internal
+	 */
+	public function addCrudkitUser(CrudkitUser $crudkitUser)
 	{
 		$this->crudkitUsers[$crudkitUser->getId()] = $crudkitUser;
 	}
 	
-	public function addUserIdPassword(string $id, string $password, Startpage $startpage = null, RestrictionSet $restrictionSet = null)
+	/**
+	 * Defines a new User.
+	 * 
+	 * @param string $id The user ID
+	 * @param string $password The password for this user
+	 * @param Startpage $startpage (optional) The startpage for this user
+	 * @param RestrictionSet $restrictionSet (optional) The restriction set (permissions) for this user
+	 */
+	public function addUser(string $id, string $password, Startpage $startpage = null, RestrictionSet $restrictionSet = null)
 	{			
 		$this->crudkitUsers[$id] = new CrudkitUser($id, $password, $startpage, $restrictionSet);
 		return $this;
 	}
 	
-	public function userHasAccessTo(string $id, string $action, string $pageId)
+	/**
+	 * Checks if a certains user has access to a certain page/action
+	 * @param string $action ['list', 'card', 'create', 'update', 'delete', 'export', 'chart', '']
+	 * @internal
+	 */
+	public function userHasAccessTo(string $userId, string $action, string $pageId)
 	{
-		if(isset($this->crudkitUsers[$id]))
+		if(isset($this->crudkitUsers[$userId]))
 		{
-			return $this->crudkitUsers[$id]->hasAccessTo($action, $pageId);
+			return $this->crudkitUsers[$userId]->hasAccessTo($action, $pageId);
 		}
 		
 		return false;
 	}
 	
+	/**
+	 * Register event handler. Occours after a user has logged in successfully.
+	 * 
+	 * ```php
+	 * $f = function(string $username, bool $isAdmin){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onAfterLogin(callable $callback)
 	{
-		$this->onAfterLogin = $callback;
+		$this->callbacks['onafterlogin'] = $callback;
 		return $this;
 	}
 	
-	public function executeCallback(string $name)
+	/**
+	 * Triggers an event.
+	 * @param string $name Name of the Event
+	 * @internal
+	 */
+	public function triggerEvent(string $name)
 	{
-		$callback = null;
-		$name = strtolower($name);
+		$name = mb_strtolower($name);
 		
-		switch($name)
+		if(!isset($this->callbacks[$name]) || !is_callable($this->callbacks[$name]))
 		{
-			case 'onafterlogin' : $callback = $this->onAfterLogin; break;
-			default : throw new Exception(sprintf('AuthHelper Callback: Ungültiger Callback "%s".', $name)); break;
+			return;
 		}
-		if($callback !== null)
-		{
-			return call_user_func_array($callback, array(session('crudkit-username',''), session('crudkit-admin-user',false)));
-		}
+
+		return call_user_func_array($this->callbacks[$name], [session('crudkit-username',''), session('crudkit-admin-user',false)]);
 	}
 	
 	// ### STARTPAGE #########################################################################################################################################
@@ -86,7 +131,7 @@ class AuthHelper
 		}
 		
 		//No Startpage
-		throw new Exception('Keine Startseite definiert.');
+		dp::crudkitException('No startpage defined.', __CLASS__, __FUNCTION__);
 	}
 	
 	// ### LOGIN #############################################################################################################################################

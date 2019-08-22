@@ -30,7 +30,7 @@
 					<!-- Pages -->
 					@foreach ($pageMap['pages'] as $menuPageId => $menuPageName) 
 						<li role="presentation" @if( $menuPageId === $pageId)class="active"@endif>
-							<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\AdminPanelController@listView', ['page-id' => $menuPageId]) }}"><i class="fa fa-lg fa-book"></i> &nbsp;{{ $menuPageName }}</a>
+							<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $menuPageId]) }}"><i class="fa fa-lg fa-book"></i> &nbsp;{{ $menuPageName }}</a>
 						</li>
 					@endforeach
 					<!-- Category Pages -->
@@ -40,7 +40,7 @@
 							<ul class="treeview-menu">
 							@foreach($categoryPages as $categoryPageId => $categoryPageName)
 								<li role="presentation">
-									<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\AdminPanelController@listView', ['page-id' => $categoryPageId]) }}"><i class="fa fa-lg fa-book"></i> &nbsp;{{ $categoryPageName }}</a>
+									<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $categoryPageId]) }}"><i class="fa fa-lg fa-book"></i> &nbsp;{{ $categoryPageName }}</a>
 								</li>
 							@endforeach
 							</ul>
@@ -58,7 +58,7 @@
 							<span id="">{{session('crudkit-username', '')}}</span>
 						</li>
 						<li role="presentation">
-							<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\AdminPanelController@logout') }}"> <i class="fa fa-lg fa-sign-out"></i> &nbsp;Logout</a>
+							<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@logout') }}"> <i class="fa fa-lg fa-sign-out"></i> &nbsp;Logout</a>
 						</li>
 					@endif
 				</ul>

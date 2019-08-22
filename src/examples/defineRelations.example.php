@@ -1,5 +1,4 @@
 <?php
-/** @ignore */
 private function defineRelations()
 {		
 	$this->tables['book']

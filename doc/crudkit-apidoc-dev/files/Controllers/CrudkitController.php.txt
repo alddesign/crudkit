@@ -86,7 +86,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId); //Get Page per name, or first page
 		$pageId 		= $pageDescriptor->getId();
-		$this->authHelper->checkAuth('list', $pageId); //_auth
+		$this->authHelper->checkAuth('list', $pageId); //check-authentication
 		
 		//Load Data from Request
 
@@ -110,7 +110,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Process DB Data
 		$paginationUrls = $this->getPaginationUrls($pageNumber, $pageId, $records['total'], $searchText, $searchColumnName, $filters);
 		
-		$pageDescriptor->executeCallback('onOpenList', $records['records']); //_callback
+		$pageDescriptor->triggerEvent('onOpenList', $records['records']); //event-trigger
 
         return( view('crudkit::list-records', 
 		[
@@ -157,7 +157,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
-		$this->authHelper->checkAuth('card', $pageId); //_auth
+		$this->authHelper->checkAuth('card', $pageId); //check-authentication
 		
 		//Load Data from Request
 		$primaryKeyValues 	= $this->getPrimaryKeyValuesFromRequest($request);
@@ -175,7 +175,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Process DB Data
 		//*nothing*
 		
-		$pageDescriptor->executeCallback('onOpenCard', $record); //_callback
+		$pageDescriptor->triggerEvent('onOpenCard', $record); //event-trigger
 		
         return view('crudkit::card-record', [
 			'pageType' 				=> 'card',
@@ -213,7 +213,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
-		$this->authHelper->checkAuth('update', $pageId); //_auth
+		$this->authHelper->checkAuth('update', $pageId); //check-authentication
 		
 		//Load Data from Request
         $pageId 			= request('page-id', '');
@@ -229,7 +229,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Process DB Data
 		//*nothing*
 		
-		$pageDescriptor->executeCallback('onOpenUpdateCard', $record); //_callback_
+		$pageDescriptor->triggerEvent('onOpenUpdateCard', $record); //event-trigger_
 
         return view('crudkit::create-update-record', [
             'pageType' 				=> 'update',
@@ -259,7 +259,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
-		$this->authHelper->checkAuth('create', $pageId); //_auth
+		$this->authHelper->checkAuth('create', $pageId); //check-authentication
 		
 		//Load Data from Request
         //*nothing*
@@ -274,7 +274,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Process DB Data
 		//*nothing*
 		
-		$pageDescriptor->executeCallback('onOpenCreateCard', $columns); //_callback
+		$pageDescriptor->triggerEvent('onOpenCreateCard', $columns); //event-trigger
 		
         return view('crudkit::create-update-record', [
             'pageType' 				=> 'create',
@@ -302,7 +302,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
-		$this->authHelper->checkAuth('chart', $pageId); //_auth
+		$this->authHelper->checkAuth('chart', $pageId); //check-authentication
 		
 		//Load Data from Request
 		$filters = $this->getFiltersFromRequest($request);
@@ -330,7 +330,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Process DB Data
 		//*nothing*
 		
-		$pageDescriptor->executeCallback('onOpenChartPage'); //_callback			
+		$pageDescriptor->triggerEvent('onOpenChartPage'); //event-trigger			
 		
         return view('crudkit::chart-records', 
 		[
@@ -430,16 +430,16 @@ class CrudkitController extends \App\Http\Controllers\Controller
     {
 		//Load Data from Request
         $pageId = request('page-id', null);
-		$this->authHelper->checkAuth('delete', $pageId); //_auth
+		$this->authHelper->checkAuth('delete', $pageId); //check-authentication
 
 		//Prepare Reqest Data
 		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
         $pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 
 		//Delete
-		$pageDescriptor->executeCallback('onBeforeDelete', $primaryKeyValues); //_callback
+		$pageDescriptor->triggerEvent('onBeforeDelete', $primaryKeyValues); //event-trigger
         $pageDescriptor->delete($primaryKeyValues);
-		$pageDescriptor->executeCallback('onAfterDelete', $primaryKeyValues); //_callback
+		$pageDescriptor->triggerEvent('onAfterDelete', $primaryKeyValues); //event-trigger
 
 		//Redirect
         return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $pageId]);
@@ -456,16 +456,16 @@ class CrudkitController extends \App\Http\Controllers\Controller
     {
 		//Load Data from Request
         $pageId = request('page-id', '');
-		$this->authHelper->checkAuth('create', $pageId); //_auth
+		$this->authHelper->checkAuth('create', $pageId); //check-authentication
 		
 		//Prepare Reqest Data
         $pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$recordData = (new DataProcessor($pageDescriptor->getTable()))->preProcess($request->all(), 'create');
 
 		//Insert
-		$pageDescriptor->executeCallback('onBeforeCreate', $recordData); //_callback
+		$pageDescriptor->triggerEvent('onBeforeCreate', $recordData); //event-trigger
         $primaryKeyValues = $pageDescriptor->create($recordData);
-		$pageDescriptor->executeCallback('onAfterCreate', $primaryKeyValues); //_callback
+		$pageDescriptor->triggerEvent('onAfterCreate', $primaryKeyValues); //event-trigger
 		
 		//Redirect
 		$url = $this::getCardPageUrl($primaryKeyValues, $pageId);
@@ -483,7 +483,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
     {
 		//Load Data from Request
         $pageId = request('page-id', null);
-		$this->authHelper->checkAuth('update', $pageId); //_auth
+		$this->authHelper->checkAuth('update', $pageId); //check-authentication
 		$requestData = $request->all();
 		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
 		
@@ -493,9 +493,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$recordData = $dp->preProcess($requestData, 'update');
 		
 		//Update
-		$pageDescriptor->executeCallback('onBeforeUpdate', $recordData); //_callback
+		$pageDescriptor->triggerEvent('onBeforeUpdate', $recordData); //event-trigger
 		$primaryKeyValues = $pageDescriptor->update($primaryKeyValues, $recordData);
-		$pageDescriptor->executeCallback('onAfterUpdate', $primaryKeyValues); //_callback
+		$pageDescriptor->triggerEvent('onAfterUpdate', $primaryKeyValues); //event-trigger
 		
 		//Redirect
 		$url = $this::getCardPageUrl($primaryKeyValues, $pageId);
@@ -515,8 +515,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$loginAttempt = request('crudkit-login-attempt', '') === '1';
 		
 		session()->flush();
-		$this->authHelper->checkAuth('', '', true, $loginAttempt); //_auth		
-		$this->authHelper->executeCallback('onafterlogin');
+		$this->authHelper->checkAuth('', '', true, $loginAttempt); //check-authentication		
+		$this->authHelper->triggerEvent('onafterlogin');
 		
 		return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@index');
 	}
@@ -548,7 +548,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{		
 		//Load Request Data
 		$pageId = request('page-id', null);
-		$this->authHelper->checkAuth('', $pageId); //_auth
+		$this->authHelper->checkAuth('', $pageId); //check-authentication
 		
 		$actionName = request('action-name', null);
 		if($actionName === null)
@@ -562,7 +562,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
 		$record = $pageDescriptor->readRecord($primaryKeyValues);
 		
-		$result = call_user_func($action['callback'], $record, $pageDescriptor, $action); //_callback
+		$result = call_user_func($action['callback'], $record, $pageDescriptor, $action); //event-trigger
 		if($result instanceof \Illuminate\Http\RedirectResponse)
 		{
 			return $result;
@@ -581,7 +581,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{
 		//Load Data from Request
 		$pageId = request('page-id', '');
-		$this->authHelper->checkAuth('export', $pageId); //_auth
+		$this->authHelper->checkAuth('export', $pageId); //check-authentication
 		$searchText = request('search-text', '');
 		$searchColumnName = request('search-column-name', '');
 		
@@ -675,7 +675,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{
 		//Load Data from Request
 		$pageId = request('page-id', '');
-		$this->authHelper->checkAuth('export', $pageId); //_auth
+		$this->authHelper->checkAuth('export', $pageId); //check-authentication
 		$searchText = request('search-text', '');
 		$searchColumnName = request('search-column-name', '');
 		
@@ -761,7 +761,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{
 		//Load Data from Request
 		$pageId = request('page-id', '');
-		$this->authHelper->checkAuth('', $pageId); //_auth
+		$this->authHelper->checkAuth('', $pageId); //check-authentication
 		$searchText = request('search-text', '');
 		$searchColumnName = request('search-column-name', '');
 		$filters = $this->getFiltersFromRequest($request);

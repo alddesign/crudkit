@@ -42,7 +42,7 @@
 				$btnClass .= $action['disabled'] ? ' disabled' : '';
 			@endphp
 
-			<form action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@action')}}" class="crudkit-action" method="post">
+			<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" class="crudkit-action" method="post">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 				<input type="hidden" name="page-id" value="{{ $pageId }}" />
 				<input type="hidden" name="action-name" value="{{ $actionName }}" />
@@ -250,7 +250,7 @@
 					$btnClass = !empty($action['btn-class']) ? 'btn btn-'.$action['btn-class'] : 'btn btn-default';	
 					$btnClass .= $action['disabled'] ? ' disabled' : '';
 				@endphp
-				<form action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@action')}}" method="post" class="pull-right crudkit-action">
+				<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" method="post" class="pull-right crudkit-action">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 					<input type="hidden" name="page-id" value="{{ $pageId }}" />
 					<input type="hidden" name="action-name" value="{{ $actionName }}" />

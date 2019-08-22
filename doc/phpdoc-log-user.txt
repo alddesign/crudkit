@@ -2,25 +2,6 @@ Collecting files .. OK
 Initializing parser .. OK
 Parsing files
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.php
-  No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\AuthHelper
-  Argument $crudkitUsers is missing from the Docblock of __construct
-  No summary for method __construct()
-  Argument $crudkitUser is missing from the Docblock of addUser
-  No summary for method addUser()
-  Argument $id is missing from the Docblock of addUserIdPassword
-  Argument $password is missing from the Docblock of addUserIdPassword
-  Argument $startpage is missing from the Docblock of addUserIdPassword
-  Argument $restrictionSet is missing from the Docblock of addUserIdPassword
-  No summary for method addUserIdPassword()
-  Argument $id is missing from the Docblock of userHasAccessTo
-  Argument $action is missing from the Docblock of userHasAccessTo
-  Argument $pageId is missing from the Docblock of userHasAccessTo
-  No summary for method userHasAccessTo()
-  Argument $callback is missing from the Docblock of onAfterLogin
-  No summary for method onAfterLogin()
-  Argument $name is missing from the Docblock of executeCallback
-  No summary for method executeCallback()
   No summary for method checkStartpage()
   Argument $action is missing from the Docblock of checkAuth
   Argument $pageId is missing from the Docblock of checkAuth
@@ -33,8 +14,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.
   Argument $pageId is missing from the Docblock of checkPermissions
   No summary for method checkPermissions()
   No summary for method performLogin()
-  No summary for property $crudkitUsers
-  No summary for property $onAfterLogin
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\CrudkitUser
@@ -167,9 +146,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   No summary for method update()
   Argument $primaryKeyValues is missing from the Docblock of delete
   No summary for method delete()
-  Argument $name is missing from the Docblock of executeCallback
-  Argument $param1 is missing from the Docblock of executeCallback
-  No summary for method executeCallback()
   Argument $callback is missing from the Docblock of onOpenList
   No summary for method onOpenList()
   Argument $callback is missing from the Docblock of onOpenCard
@@ -236,17 +212,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   No summary for property $confirmDelete
   No summary for property $exportAllowed
   No summary for property $chartAllowed
-  No summary for property $onOpenListCallback
-  No summary for property $onOpenCardCallback
-  No summary for property $onOpenUpdateCardCallback
-  No summary for property $onOpenCreateCardCallback
-  No summary for property $onOpenChartPageCallback
-  No summary for property $onBeforeCreateCallback
-  No summary for property $onAfterCreateCallback
-  No summary for property $onBeforeUpdateCallback
-  No summary for property $onAfterUpdateCallback
-  No summary for property $onBeforeDeleteCallback
-  No summary for property $onAfterDeleteCallback
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageStore.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\PageStore
@@ -263,16 +228,10 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageStore.p
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\RestrictionSet.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\RestrictionSet
-  Argument $type is missing from the Docblock of __construct
-  Argument $entries is missing from the Docblock of __construct
-  No summary for method __construct()
-  Argument $action is missing from the Docblock of hasAccessTo
-  Argument $pageId is missing from the Docblock of hasAccessTo
-  No summary for method hasAccessTo()
   No summary for property $type
   No summary for property $entries
-  No summary for property $allowedActions
-  No summary for property $allowedTypes
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\RestrictionSetEntry.php
+Parse Error: Syntax error, unexpected T_CONST, expecting T_FUNCTION on line 8  No summary was found for this file
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\SQLColumn.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\SQLColumn
@@ -470,16 +429,15 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\XmlSerializ
   No summary for property $encoding
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Controllers\CrudkitController.php
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\CrudkitServiceProvider.php
-  No summary was found for this file
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\routes.php
 Storing cache in "C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\doc\crudkit-apidoc-user" .. OK
-Load cache                                                         ..    0.019s
-Preparing template "clean"                                         ..    0.015s
+Load cache                                                         ..    0.021s
+Preparing template "clean"                                         ..    0.016s
 Preparing 17 transformations                                       ..    0.000s
 Build "elements" index                                             ..    0.002s
 Replace textual FQCNs with object aliases                          ..    0.029s
 Resolve @link and @see tags in descriptions                        ..    0.003s
-Enriches inline example tags with their sources                    ..    0.003s
+Enriches inline example tags with their sources                    ..    0.002s
 Build "packages" index                                             ..    0.003s
 Build "namespaces" index and add namespaces to "elements"          ..    0.001s
 Collect all markers embedded in tags                               ..    0.001s
@@ -505,5 +463,5 @@ Applying 17 transformations
   Execute transformation using writer "twig"
   Execute transformation using writer "twig"
   Execute transformation using writer "Graph"
-Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.395s
+Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.334s
 Analyze results and write report to log                            ..    0.001s

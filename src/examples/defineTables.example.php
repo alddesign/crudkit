@@ -1,5 +1,4 @@
 <?php
-/** @ignore */
 function defineTables()
 {
 	//<CRUDKIT-TABLES-START> please do not remove this line - otherwise /admin-panel/auto-generate will not work

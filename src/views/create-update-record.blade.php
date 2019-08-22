@@ -4,10 +4,10 @@
 		$texts = Alddesign\Crudkit\Classes\DataProcessor::getTexts();
 	@endphp
 	@if($pageType === 'create')                                                                                
-		<form id="create-form" class="create-update-form" name="create-form" method="post" action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@createRecord')}}" enctype="multipart/form-data" novalidate="novalidate">
+		<form id="create-form" class="create-update-form" name="create-form" method="post" action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@createRecord')}}" enctype="multipart/form-data" novalidate="novalidate">
 	@endif
 	@if($pageType === 'update')
-		<form id="update-form" class="create-update-form" name="update-form" method="post" action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@updateRecord')}}" enctype="multipart/form-data" novalidate="novalidate">
+		<form id="update-form" class="create-update-form" name="update-form" method="post" action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@updateRecord')}}" enctype="multipart/form-data" novalidate="novalidate">
 		@foreach($primaryKeyColumns as $index => $primaryKeyColumn)
 			<input type="hidden" name="pk-{{$index}}" value="{{$record[$primaryKeyColumn]}}" />
 		@endforeach

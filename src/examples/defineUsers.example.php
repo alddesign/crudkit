@@ -1,5 +1,4 @@
 <?php
-/** @ignore */
 private function defineUsers()
 {			
 	//Allows all, but create and delete books.

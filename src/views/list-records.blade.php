@@ -21,7 +21,7 @@
 
 	<div class="row crudkit-search crudkit-row">
 		<!-- Search From -->
-		<form id="search-form" name="search-form" action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@listView')}}" method="GET">
+		<form id="search-form" name="search-form" action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@listView')}}" method="GET">
 			<input type="hidden" name="page-id" value="{{ $pageId }}" />
 			@foreach ($filters as $index => $filter)
 				<!-- Apply all Filters -->
@@ -256,7 +256,7 @@
 							$btnClass .= $action['disabled'] ? ' disabled' : '';							
 						@endphp
 						<td>
-							<form action="{{action('\Alddesign\Crudkit\Controllers\AdminPanelController@action')}}" method="post" class="crudkit-line-action">
+							<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" method="post" class="crudkit-line-action">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 								<input type="hidden" name="page-id" value="{{ $pageId }}" />
 								<input type="hidden" name="action-name" value="{{ $actionName }}" />

@@ -467,6 +467,40 @@ class DataProcessor
 	}
 
 	/** 
+	 * Shorthand call of throw new Exception(); with up to 8 placeholders, plus classname and method.
+	 * 
+	 * ```
+	 * //Example usage:
+	 * DataProcessor::crudkitException("%d errors while trying to delete user '%s'.", __CLASS__, __METHOD__ 4, "admin"); 
+	 * ```
+	 * 
+	 * @param string $message The Exception message to show
+	 * @param string $classOrFilename Classname or Filename
+	 * @param string $methodOrFunctionName Method or Function name
+	 * @param mixed $p1 (optional) placeholder
+	 * @param mixed $p2 (optional) placeholder
+	 * @param mixed $p3 (optional) placeholder
+	 * @param mixed $p4 (optional) placeholder
+	 * @param mixed $p5 (optional) placeholder
+	 * @param mixed $p6 (optional) placeholder
+	 * @param mixed $p7 (optional) placeholder
+	 * @param mixed $p8 (optional) placeholder
+	 * @internal
+	 */
+	public static function crudkitException(string $message, string $classOrFilename, string $methodOrFunctionName, $p1 = '', $p2 = '', $p3 = '', $p4 = '', $p5 = '', $p6 = '', $p7 = '', $p8 = '')
+	{
+		throw new Exception
+		(
+			sprintf("%s %s\n%s\n%s",
+				'Crudkit Error:',
+				sprintf($message, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8),
+				sprintf('Class/File name: %s', $classOrFilename),
+				sprintf('Method/Function name: %s', $methodOrFunctionName)
+			)
+		);
+	}
+
+	/** 
 	 * A better implementation of PHP function var_dump();
 	 * 
 	 * Provides syntax-highlighted insight even into nested objects,arrays, etc.

@@ -45,18 +45,10 @@ class PageDescriptor
 	private $exportAllowed = true;
 	private $chartAllowed = true;	
 
-	//Callbacks
-	private $onOpenListCallback = null; //Parameters $pageDescriptor, $tableDescriptor, $records
-	private $onOpenCardCallback = null; //Parameters $pageDescriptor, $tableDescriptor, $record
-	private $onOpenUpdateCardCallback = null; //Parameters $pageDescriptor, $tableDescriptor, $record
-	private $onOpenCreateCardCallback = null; //Parameters $pageDescriptor, $tableDescriptor, $columns
-	private $onOpenChartPageCallback = null; //Parameters $pageDescriptor, $tableDescriptor
-	private $onBeforeCreateCallback = null; //Parameters $pageDescriptor, $tableDescriptor, $recordData
-	private $onAfterCreateCallback = null;//Parameters $pageDescriptor, $tableDescriptor, $primaryKeyValues
-	private $onBeforeUpdateCallback = null;//Parameters $pageDescriptor, $tableDescriptor, $recordData
-	private $onAfterUpdateCallback = null;//Parameters $pageDescriptor, $tableDescriptor, $primaryKeyValues
-	private $onBeforeDeleteCallback = null;//Parameters $pageDescriptor, $tableDescriptor, $primaryKeyValues
-	private $onAfterDeleteCallback = null;//Parameters $pageDescriptor, $tableDescriptor, $primaryKeyValues
+	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
+	 * @internal 
+	 */
+	private $callbacks = [];
 
     public function __construct(string $name, string $id, TableDescriptor $table, string $category = '')
     {
@@ -435,96 +427,88 @@ class PageDescriptor
 		$this->getTable()->deleteRecord($primaryKeyValues);
     }
 	
-// ### CALLBACKS #########################################################################################
-	public function executeCallback(string $name, &$param1 = null)
+// ### Events #########################################################################################
+	/**
+	 * Triggers an event.
+	 * @param string $name Name of the Event
+	 * @param mixed &$param1 Additional parameter
+	 * @internal
+	 */
+	public function triggerEvent(string $name, &$param1 = null)
 	{
-		$callback = null;
-		$name = strtolower($name);
-			
-		switch($name)
-		{
-			case 'onopenlist' 		: $callback = $this->onOpenListCallback; break;
-			case 'onopencard' 		: $callback = $this->onOpenCardCallback; break;
-			case 'onopencreatecard' : $callback = $this->onOpenCreateCardCallback; break;
-			case 'onopenupdatecard' : $callback = $this->onOpenUpdateCardCallback; break;
-			case 'onopenchartpage'	: $callback = $this->onOpenChartPageCallback; break;
-			case 'onbeforecreate' 	: $callback = $this->onBeforeCreateCallback; break;
-			case 'onaftercreate' 	: $callback = $this->onAfterCreateCallback; break;
-			case 'onbeforeupdate' 	: $callback = $this->onBeforeUpdateCallback; break;
-			case 'onafterupdate' 	: $callback = $this->onAfterUpdateCallback; break;
-			case 'onbeforedelete' 	: $callback = $this->onBeforeDeleteCallback; break;
-			case 'onafterdelete' 	: $callback = $this->onAfterDeleteCallback; break;
-			default : throw new Exception(sprintf('Page - execute callback: invalid callback "%s".', $name)); break;
-		}
+		$name = mb_strtolower($name);
 		
-		if(!dp::e($callback))
+		if(!isset($this->callbacks[$name]) || !is_callable($this->callbacks[$name]))
 		{
-			call_user_func_array($callback, array(&$this, &$this->table, &$param1));
+			return;
 		}
+			
+		return call_user_func_array($this->callbacks[$name], array(&$this, &$this->table, &$param1));
 	}
+	
 	public function onOpenList(callable $callback)
 	{
-		$this->onOpenListCallback = $callback;
+		$this->callbacks['onopenlist'] = $callback;
 		return $this;
 	}
 	
 	public function onOpenCard(callable $callback)
 	{
-		$this->onOpenCardCallback = $callback;
+		$this->callbacks['onopencard'] = $callback;
 		return $this;
 	}
 	
 	public function onOpenCreateCard(callable $callback)
 	{
-		$this->onOpenCreateCardCallback = $callback;
+		$this->callbacks['onopencreatecard'] = $callback;;
 		return $this;
 	}
 	
 	public function onOpenUpdateCard(callable $callback)
 	{
-		$this->onOpenUpdateCardCallback = $callback;
+		$this->callbacks['onopenupdatecard'] = $callback;
 		return $this;
 	}
 	
 	public function onOpenChartPage(callable $callback)
 	{
-		$this->onOpenChartPageCallback = $callback;
+		$this->callbacks['onopenchartpage'] = $callback;
 		return $this;
 	}
 	
 	public function onBeforeCreate(callable $callback)
 	{
-		$this->onBeforeCreateCallback = $callback;
+		$this->callbacks['onbeforecreate'] = $callback;
 		return $this;
 	}
 	
 	public function onAfterCreate(callable $callback)
 	{
-		$this->onAfterCreateCallback = $callback;
+		$this->callbacks['onaftercreate'] = $callback;
 		return $this;
 	}
 	
 	public function onBeforeUpdate(callable $callback)
 	{
-		$this->onBeforeUpdateCallback = $callback;
+		$this->callbacks['onbeforeupdate'] = $callback;
 		return $this;
 	}
 	
 	public function onAfterUpdate(callable $callback)
 	{
-		$this->onAfterUpdateCallback = $callback;
+		$this->callbacks['onafterupdate'] = $callback;
 		return $this;
 	}
 	
 	public function onBeforeDelete(callable $callback)
 	{
-		$this->onBeforeDeleteCallback = $callback;
+		$this->callbacks['onbeforedelete'] = $callback;
 		return $this;
 	}
 	
 	public function onAfterDelete(callable $callback)
 	{
-		$this->onAfterDeleteCallback = $callback;
+		$this->callbacks['onafterdelete'] = $callback;
 		return $this;
 	}
 	
