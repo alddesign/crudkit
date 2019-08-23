@@ -26,9 +26,9 @@ class RestrictionSet
 
 		foreach($entries as $entry)
 		{
-			if(gettype($entry) !== 'object' || get_class($entry) !== 'RestrictionSetEntry')
+			if(gettype($entry) !== 'object' || get_class($entry) !== 'Alddesign\Crudkit\Classes\RestrictionSetEntry')
 			{
-				dp::crudkitException('Array of RestrictionSetEntry objects expected.', __CLASS__, __FUNCTION__);
+				dp::crudkitException('Array of "Alddesign\Crudkit\Classes\RestrictionSetEntry" objects expected.', __CLASS__, __FUNCTION__);
 			}
 		}
 		

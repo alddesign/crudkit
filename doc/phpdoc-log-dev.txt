@@ -14,7 +14,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.
   Argument $pageId is missing from the Docblock of checkAuth
   Argument $noPermissionCheck is missing from the Docblock of checkAuth
   Argument $loginAttempt is missing from the Docblock of checkAuth
-  No summary for method checkAuth()
   Argument $message is missing from the Docblock of loginFailed
   No summary for method loginFailed()
   Argument $action is missing from the Docblock of checkPermissions
@@ -23,7 +22,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.
   No summary for method performLogin()
   No summary for property $crudkitUsers
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser.php
-  No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\CrudkitUser
   Argument $id is missing from the Docblock of __construct
   Argument $password is missing from the Docblock of __construct
@@ -211,28 +209,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   No summary for method update()
   Argument $primaryKeyValues is missing from the Docblock of delete
   No summary for method delete()
-  Argument $callback is missing from the Docblock of onOpenList
-  No summary for method onOpenList()
-  Argument $callback is missing from the Docblock of onOpenCard
-  No summary for method onOpenCard()
-  Argument $callback is missing from the Docblock of onOpenCreateCard
-  No summary for method onOpenCreateCard()
-  Argument $callback is missing from the Docblock of onOpenUpdateCard
-  No summary for method onOpenUpdateCard()
-  Argument $callback is missing from the Docblock of onOpenChartPage
-  No summary for method onOpenChartPage()
-  Argument $callback is missing from the Docblock of onBeforeCreate
-  No summary for method onBeforeCreate()
-  Argument $callback is missing from the Docblock of onAfterCreate
-  No summary for method onAfterCreate()
-  Argument $callback is missing from the Docblock of onBeforeUpdate
-  No summary for method onBeforeUpdate()
-  Argument $callback is missing from the Docblock of onAfterUpdate
-  No summary for method onAfterUpdate()
-  Argument $callback is missing from the Docblock of onBeforeDelete
-  No summary for method onBeforeDelete()
-  Argument $callback is missing from the Docblock of onAfterDelete
-  No summary for method onAfterDelete()
   No summary for method getTable()
   No summary for method setSummaryColumnsAll()
   Argument $summaryColumns is missing from the Docblock of setSummaryColumns
@@ -499,14 +475,14 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Controllers\Crudkit
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\CrudkitServiceProvider.php
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\routes.php
 Storing cache in "C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\doc\crudkit-apidoc-dev" .. OK
-Load cache                                                         ..    0.023s
-Preparing template "clean"                                         ..    0.016s
+Load cache                                                         ..    0.022s
+Preparing template "clean"                                         ..    0.015s
 Preparing 17 transformations                                       ..    0.000s
-Build "elements" index                                             ..    0.003s
-Replace textual FQCNs with object aliases                          ..    0.034s
+Build "elements" index                                             ..    0.002s
+Replace textual FQCNs with object aliases                          ..    0.035s
 Resolve @link and @see tags in descriptions                        ..    0.003s
 Enriches inline example tags with their sources                    ..    0.003s
-Build "packages" index                                             ..    0.004s
+Build "packages" index                                             ..    0.003s
 Build "namespaces" index and add namespaces to "elements"          ..    0.001s
 Collect all markers embedded in tags                               ..    0.002s
 Transform analyzed project into artifacts                          .. 
@@ -531,5 +507,5 @@ Applying 17 transformations
   Execute transformation using writer "twig"
   Execute transformation using writer "twig"
   Execute transformation using writer "Graph"
-Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.414s
+Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.388s
 Analyze results and write report to log                            ..    0.001s

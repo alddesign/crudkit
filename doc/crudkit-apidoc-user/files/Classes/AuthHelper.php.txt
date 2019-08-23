@@ -82,7 +82,7 @@ class AuthHelper
 	 * 
 	 * ```php
 	 * $f = function(string $username, bool $isAdmin){...};
-	 * AuthHelper->onAfterLogin($f);
+	 * authHelper->onAfterLogin($f);
 	 * ``` 
 	 * @param callable $callback Callback function which is beeing called if this event occours.
 	 * @event
@@ -111,6 +111,7 @@ class AuthHelper
 	}
 	
 	// ### STARTPAGE #########################################################################################################################################
+	/** @internal */
 	public function checkStartpage()
 	{
 		$username = session('crudkit-username', '');
@@ -135,6 +136,10 @@ class AuthHelper
 	}
 	
 	// ### LOGIN #############################################################################################################################################
+	/**
+	 * Checks if user is logged in and his permissions to the current page/action. 
+	 * @internal 
+	 */
 	public function checkAuth(string $action, string $pageId, bool $noPermissionCheck = false, bool $loginAttempt = false)
 	{		
 		//Login
@@ -170,6 +175,7 @@ class AuthHelper
 		return true; //Everything ok
 	}
 	
+	/** @internal */
 	private function loginFailed(string $message = '')
 	{
 		Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView')
@@ -178,6 +184,7 @@ class AuthHelper
 			->send();
 	}
 	
+	/** @internal */
 	private function checkPermissions(string $action, string $pageId)
 	{
 		if(session('crudkit-admin-user', false) === true)
@@ -193,7 +200,8 @@ class AuthHelper
 		
 		return false;
 	}
-		
+	
+	/** @internal */
 	private function performLogin()
 	{
 

@@ -1,24 +1,41 @@
 <?php
-private function defineUsers()
+function defineUsers()
 {			
-	//Allows all, but create and delete books.
-	$restrictionSet = new RestrictionSet
-	(
-		'allow-all', 
-		[
-			['page-id' => 'book', 'action' => 'create'],
-			['page-id' => 'author', 'action' => 'delete']
+	/*
+	allow everything except 
+	-updating/delete books
+	-access to authors in general
+	*/
+	$restrictionSet1 = 
+	new RestrictionSet
+	('allow-all', 
+		[	
+			new RestrictionSetEntry('update', 'book'), 
+			new RestrictionSetEnty('delete', 'book'),
+			new RestrictionSetEntry('', 'author')
 		]
 	);
-	
-	//Startpage is the book card of Book ID 5.
-	$startpage = new Startpage('books', 'card', ['id' => 1]);
-	
-	//Users
-	return
+
+	/*
+	deny everything except 
+	-viewing list of books and authors
+	*/
+	$restrictionSet2 = 
+	new RestrictionSet
+	('deny-all', 
+		[	
+			new RestrictionSetEntry('list', 'book'), 
+			new RestrictionSetEnty('list', 'author')
+		]
+	);
+
+	$users = 
 	[
-		new CrudkitUser('johnsmith', 'pwd123'),
-		new CrudkitUser('janedoe', 'pwd456', $startpage, $restrictionSet)
-	];	
+		new User('the-admin', 'M0stS@ecurPwd4This1'), //has all rights
+		new User('janedoe', 'P@ssw0rd', $restrictionSet1), //restricted
+		new User('johndoe', 'jd123', $restrictionSet2) //restricted
+	];
+	
+	return new AuthHelper($users);	
 }
 ?>

@@ -35,11 +35,11 @@
 	<!-- Actions Top -->
 	<span id="crudkit-actions-top">
 	@foreach ($actions as $actionName => $action)
-		@if($action['on-card'] && ($action['position'] === 'top' || $action['position'] === 'both'))
+		@if($action->onCard && ($action->position === 'top' || $action->position === 'both'))
 			@php 
-				$faIconClass = !empty($action['fa-icon']) ? 'fa fa-'.$action['fa-icon'] : '';	
-				$btnClass = !empty($action['btn-class']) ? 'btn btn-'.$action['btn-class'] : 'btn btn-default';	
-				$btnClass .= $action['disabled'] ? ' disabled' : '';
+				$faIconClass = !empty($action->faIcon) ? 'fa fa-'.$action->faIcon : '';	
+				$btnClass = !empty($action->btnClass) ? 'btn btn-'.$action->btnClass : 'btn btn-default';	
+				$btnClass .= !$action->enabled ? ' disabled' : '';
 			@endphp
 
 			<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" class="crudkit-action" method="post">
@@ -53,7 +53,7 @@
 					@if($faIconClass !== '')
 					<i class="{{$faIconClass}}"></i> &nbsp;
 					@endif
-					{{ $action['label'] }}
+					{{ $action->label}}
 				</button>
 			</form>
 		@endif
@@ -71,10 +71,10 @@
 			@endphp
 			<!-- Section Start -->
 			@foreach($sections as $section)
-				@if($section['from'] === $columnName)
+				@if($section->from === $columnName)
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<div class="panel-title"><a data-toggle="collapse" href="#collapse-{{ $loop->index }}">{{ $section['title'] }}</a></div>
+							<div class="panel-title"><a data-toggle="collapse" href="#collapse-{{ $loop->index }}">{{ $section->title }}</a></div>
 						</div>
 						<div id="collapse-{{ $loop->index }}" class="panel-collapse collapse in">
 							<div class="panel-body">
@@ -234,7 +234,7 @@
 				</div>
 			@endif
 			@foreach($sections as $section)
-				@if($section['to'] === $columnName)
+				@if($section->to === $columnName)
 							</div>
 						</div>
 					</div>
@@ -244,11 +244,11 @@
 		<!-- Actions Bottom -->
 		<div id="crudkit-actions-bottom">
 		@foreach ($actions as $actionName => $action)
-			@if($action['on-card'] && ($action['position'] === 'bottom' || $action['position'] === 'both'))
+			@if($action->onCard && ($action->position === 'bottom' || $action->position === 'both'))
 				@php 
-					$faIconClass = !empty($action['fa-icon']) ? 'fa fa-'.$action['fa-icon'] : '';	
-					$btnClass = !empty($action['btn-class']) ? 'btn btn-'.$action['btn-class'] : 'btn btn-default';	
-					$btnClass .= $action['disabled'] ? ' disabled' : '';
+					$faIconClass = !empty($action->faIcon) ? 'fa fa-'.$action->faIcon : '';	
+					$btnClass = !empty($action->btnClass) ? 'btn btn-'.$action->btnClass : 'btn btn-default';	
+					$btnClass .= !$action->enabled ? ' disabled' : '';
 				@endphp
 				<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" method="post" class="pull-right crudkit-action">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -259,7 +259,7 @@
 					@endforeach
 					<button type="submit" class="{{$btnClass}} pull-right crudkit-action-button">
 						@if($faIconClass != '')<i class="{{$faIconClass}}"></i> &nbsp;@endif
-						{{ $action['label'] }}
+						{{ $action->label}}
 					</button>
 				</form>
 			@endif

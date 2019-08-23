@@ -11,7 +11,7 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -55,7 +55,7 @@
 								<i class="fa fa-lg fa-user"></i>
 							@endif
 							&nbsp;
-							<span id="">{{session('crudkit-username', '')}}</span>
+							<span id="">{{session('crudkit-userid', '')}}</span>
 						</li>
 						<li role="presentation">
 							<a href="{{ URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@logout') }}"> <i class="fa fa-lg fa-sign-out"></i> &nbsp;Logout</a>
@@ -69,9 +69,6 @@
         @yield('core-admin-panel')
     </div>
     <footer class="main-footer">
-		<div class="pull-right hidden-xs">
-			<b>{{ $texts['version'] }}</b> {{ config('crudkit.version') }}
-		</div>
 	  {!! $texts['footer_html'] !!}
   </footer>
 </div>

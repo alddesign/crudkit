@@ -46,7 +46,7 @@ class Generator
 		//Create output file
 		$dateTime = new DateTime();
 		$srcFile = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.php';
-		$outputFilename = storage_path('app' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.' . 'auto-generated.' . Session::getId() . '.php');
+		$outputFilename = storage_path('crudkit' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.' . 'auto-generated.' . '.php');
 		
 		//Replace Code
 		$lines = file($srcFile);
@@ -60,11 +60,13 @@ class Generator
 				{
 					$discardLines = false;
 					$outputContent .= $this->tablesCode . "\n";
+					$outputContent .= $line . "\n";
 				}
 				if(strpos($line, self::PAGES_END) !== false)
 				{
 					$discardLines = false;
 					$outputContent .= $this->pagesCode . "\n";
+					$outputContent .= $line . "\n";
 				}
 			}
 			else
@@ -72,6 +74,7 @@ class Generator
 				if(strpos($line, self::TABLES_START) !== false || strpos($line, self::PAGES_START) !== false) 
 				{
 					$discardLines = true;
+					$outputContent .= $line . "\n";
 					$outputContent .= "\t\t" . self::CRUDKIT_AUTO_GENERATE_COMMENT . "\n";
 				}
 				else

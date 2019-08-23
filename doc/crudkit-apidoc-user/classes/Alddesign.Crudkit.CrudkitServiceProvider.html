@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">408</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">355</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-790852290"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1691045967"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-790852290" class="accordion-body collapse in">
+            <div id="namespace-1691045967" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-399864206"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-922198798"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-399864206" class="accordion-body collapse ">
+            <div id="namespace-922198798" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-715007225"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-489768864"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-715007225" class="accordion-body collapse ">
+            <div id="namespace-489768864" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1556709274"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1760525157"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-1556709274" class="accordion-body collapse ">
+            <div id="namespace-1760525157" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -205,10 +205,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-616497323"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1033462781"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-616497323" class="accordion-body collapse ">
+            <div id="namespace-1033462781" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -369,7 +369,6 @@ defineUsers()</p>
                                                             <h4>Examples</h4>
                                                                 <h5></h5>
                         <pre class="pre-scrollable">&lt;?php
-/** @ignore */
 function defineTables()
 {
 	//&lt;CRUDKIT-TABLES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
@@ -422,8 +421,7 @@ function defineTables()
                                                             <h4>Examples</h4>
                                                                 <h5></h5>
                         <pre class="pre-scrollable">&lt;?php
-/** @ignore */
-private function defineRelations()
+function defineRelations()
 {		
 	$this-&gt;tables[&#039;book&#039;]
 		-&gt;defineManyToOneColumn(&#039;author_id&#039;, &#039;author&#039;, &#039;id&#039;);	
@@ -462,8 +460,7 @@ private function defineRelations()
                                                             <h4>Examples</h4>
                                                                 <h5></h5>
                         <pre class="pre-scrollable">&lt;?php
-/** @ignore */
-private function definePages()
+function definePages()
 {
 	//&lt;CRUDKIT-PAGES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
 	
@@ -496,8 +493,7 @@ private function definePages()
 			-&gt;addAction(&#039;test&#039;, &#039;Test&#039;, &#039;Click me&#039;, $test,true, true, &#039;file-text&#039;, &#039;primary&#039;)
 	];
 	//&lt;CRUDKIT-PAGES-END&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
-}
-?&gt;</pre>
+}</pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
@@ -532,8 +528,7 @@ Default login (administrator) is definded in crudkit config.</p>
                                                             <h4>Examples</h4>
                                                                 <h5></h5>
                         <pre class="pre-scrollable">&lt;?php
-/** @ignore */
-private function defineUsers()
+function defineUsers()
 {			
 	//Allows all, but create and delete books.
 	$restrictionSet = new RestrictionSet
@@ -623,7 +618,7 @@ private function defineUsers()
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on August 22nd, 2019 at 12:42.
+                    on August 22nd, 2019 at 13:27.
                 </section>
             </section>
         </section>

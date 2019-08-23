@@ -18,7 +18,6 @@ return [
 	'qrcode_size' => 1.0,
 	
 	//### Technical ###
-	'version' => 'dev-master',
 	'use_custom_error_page' => false, //Displays a fancy Error Page
 	'csv_export_with_bom' => true, //Add Byte Order Mark (BOM) to CSV Files
 	'export_enum_label' => true,//true = Exports the Enum label, false = Exports the actual value

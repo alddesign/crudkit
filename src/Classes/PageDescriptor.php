@@ -8,42 +8,38 @@ use Exception;
 use Alddesign\Crudkit\Controllers\CrudkitController;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
-//++AD
-// Modified this Class and other files to support multiple primary key columns
-//Removed all Log::debug();
-//--AD
-
 class PageDescriptor
 {
-    private $id = '';
-	private $name = '';
-	private $category = '';
-	private $icon = '';
-	private $titleTexts = [];
+	const PAGE_TYPES = ['list', 'card', 'create', 'update', 'chart'];
 	
-    private $table = null;
-	private $summaryColumns = [];
-	private $cardLinkColumns = [];
+    /** @internal */ private $id = '';
+	/** @internal */ private $name = '';
+	/** @internal */ private $category = '';
+	/** @internal */ private $icon = '';
+	/** @internal */ private $titleTexts = [];
+	
+    /** @internal */ private $table = null;
+	/** @internal */ private $summaryColumns = [];
+	/** @internal */ private $cardLinkColumns = [];
 	
 	/**
-	* Displaying fields in separated areas called "Sections." 
-	* Format = [['title' => '<title>', 'from' => '<fromField>', 'to' => '<toField>'],[...]]
-	*/
+	 * @var Section[] $sections Displaying fields in separated areas called "Sections." 
+	 * @internal
+	 */
 	private $sections = []; 
 	
-	/**
-	* Adding Buttons with special callback functions to listview/cardview
-	* Format = ['<name>' => ['label' => '<label>', 'column-label' => '<column-label>', 'callback' => callback, 'fa-icon' => '<fa-icon>', 'btn-class' => '<btn-class>', 'on-list' => <bool on-list>, 'on-card' => <bool on-card> ]]
-	* Parameters for the callback function are: $record, $pageDescriptor, $action (the action from this array)
-	*/
+	/** 
+	 * @var Action[] $actions Adding Buttons with special callback functions to listview/cardview
+	 * @internal
+	 */
 	private $actions = []; 
 	
-    private $createAllowed = true;
-    private $updateAllowed = true;
-    private $deleteAllowed = true;
-	private $confirmDelete = true;
-	private $exportAllowed = true;
-	private $chartAllowed = true;	
+    /** @internal */ private $createAllowed = true;
+    /** @internal */ private $updateAllowed = true;
+    /** @internal */ private $deleteAllowed = true;
+	/** @internal */ private $confirmDelete = true;
+	/** @internal */ private $exportAllowed = true;
+	/** @internal */ private $chartAllowed = true;	
 
 	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
 	 * @internal 
@@ -59,157 +55,70 @@ class PageDescriptor
 
 		if(dp::e($id) || !preg_match('/^[a-zA-Z0-9_-]*$/', $id))
 		{
-			throw new Exception('Page - constructor: please provide a valid id for this page. Allowed characters: a-z, A-Z, 0-9, "_", "-"');
+			dp::crudkitException('Please provide a valid id for this page. Allowed characters: a-z, A-Z, 0-9, "_", "-"', __CLASS__, __FUNCTION__);
 		}
 		
 		if(dp::e($name))
 		{
-			throw new Exception('Page - constructor: please provide a valid name this page.');
+			dp::crudkitException('Please provide an id for this page.', __CLASS__, __FUNCTION__);
 		}
 		
 		if(dp::e($table))
 		{
-			throw new Exception(sprintf('Page - constructor: please provide a valid table for page "%s".', $id));
+			dp::crudkitException('Please provide a table for this page.', __CLASS__, __FUNCTION__);
 		}
     }
 	
-// ### GET/SET ###################################################################################################################################################################################
- 	
-	public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-	
-    public function createAllowed()
-    {
-        return $this->createAllowed;
-    }
-    
-	public function allowCreate()	
-	{ 
-		$this->createAllowed = true;
-		return $this; 
-	}
-	
-	public function denyCreate()
-	{ 
-		$this->createAllowed = false; 
-		return $this; 
-	}
-
-    public function updateAllowed()
-    {
-        return $this->updateAllowed;
-    }
-	
-	public function allowUpdate()	
-	{ 
-		$this->updateAllowed = true; 
-		return $this; 
-	}
-	
-	public function denyUpdate()	
-	{ 
-		$this->updateAllowed = false; 
-		return $this; 
-	}
-
-    public function deleteAllowed()
-    {
-        return $this->deleteAllowed;
-    }
-    
-	public function allowDelete()	
-	{ 
-		$this->deleteAllowed = true; 
-		return $this; 
-	}
-	
-	public function denyDelete()
-	{ 
-		$this->deleteAllowed = false; 
-		return $this; 
-	}
-
-	public function exportAllowed()
-    {
-        return $this->exportAllowed;
-    }
-	
-    public function allowExport()	
-	{ 
-		$this->exportAllowed = true; 
-		return $this; 
-	}
-	
-	public function denyExport()
-	{ 
-		$this->exportAllowed = false; 
-		return $this; 
-	}
-	
-	public function chartAllowed()
-    {
-        return $this->chartAllowed;
-    }
-    
-	public function allowChart()	
-	{ 
-		$this->chartAllowed = true; 
-		return $this; 
-	}
-	
-	public function denyChart()		
-	{ 
-		$this->chartAllowed = false; 
-		return $this; 
-	}
-	
-	public function getConfirmDelete()
+// ### GET ###################################################################################################################################################################################
+	public function getName()    			{return $this->name;}
+    public function getId()    				{return $this->id;}
+    public function getCreateAllowed()		{return $this->createAllowed;}
+	public function getUpdateAllowed()    	{return $this->updateAllowed;}
+	public function getDeleteAllowed()   	{return $this->deleteAllowed;}
+	public function getExportAllowed()    	{return $this->exportAllowed;}
+	public function getChartAllowed()    	{return $this->chartAllowed;}
+	public function getConfirmDelete()		{return $this->confirmDelete;}
+	public function getCategory()			{return $this->category;}
+	public function getIcon()				{return $this->icon;}	
+	public function getSections()			{return $this->sections;}
+	public function getActions(string $name = '')
 	{
-		return $this->confirmDelete;
+		if(!dp::e($name))
+		{
+			if(isset($this->actions[$name])) 
+			{
+				return $this->actions[$name]; 
+			}
+			dp::curdkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
+		}
+		return $this->actions;
 	}
-	
-	public function confirmDelete(bool $value = true)
-	{
-		$this->confirmDelete = $value;
-	}
-	
-	public function setCategory(string $category = null)
-	{
-		$this->category = $category;
-		return $this;
-	}
-	
-	public function getCategory()
-	{
-		return $this->category;
-	}
-	
-	public function setIcon(string $icon = null)
-	{
-		$this->icon = $icon;
-		return $this;
-	}
-	
-	public function getIcon()
-	{
-		return $this->icon;
-	}	
+// ### SET ###################################################################################################################################################################################
+	public function allowCreate()	{ $this->createAllowed = true;		return $this; }
+	public function denyCreate()	{ $this->createAllowed = false;		return $this; }
+	public function allowUpdate()	{ $this->updateAllowed = true;		return $this; }
+	public function denyUpdate()	{ $this->updateAllowed = false;		return $this; }
+	public function allowDelete()	{ $this->deleteAllowed = true;		return $this; }
+	public function denyDelete()	{ $this->deleteAllowed = false;		return $this; }
+    public function allowExport()	{ $this->exportAllowed = true;		return $this; }
+	public function denyExport()	{ $this->exportAllowed = false;		return $this; }
+	public function allowChart()	{ $this->chartAllowed = true;		return $this; }
+	public function denyChart()		{ $this->chartAllowed = false;		return $this; }
+	public function confirmDelete(bool $value = true) 	{ $this->confirmDelete = $value;	return $this; }
+	public function category(string $category = '')		{$this->category = $category;		return $this; }
+	public function icon(string $icon = '')				{$this->icon = $icon;				return $this;}
 	
 	/**
-	* @param pageTypes specifies on which page types ('list', 'card', 'create', 'update', 'chart') this text will be shown.
-	*/
+	 * Defines the title text for specific page types
+	 * @param pageTypes specifies on which page types ('list', 'card', 'create', 'update', 'chart') this text will be shown.
+	 * @return PageDescriptor Returns $this
+	 * @stackable
+	 */
 	public function addTitleText(string $text, array $pageTypes = [])
 	{
 		if($pageTypes !== [])
 		{
-			$pageTypesNotFound = array_diff($pageTypes, ['list', 'card', 'create', 'update', 'chart']);
+			$pageTypesNotFound = array_diff($pageTypes, self::PAGE_TYPES);
 			if($pageTypesNotFound !== [])
 			{
 				throw new Exception(sprintf('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', implode($pageTypesNotFound, ', '), $this->id));
@@ -225,7 +134,6 @@ class PageDescriptor
 	{
 		foreach($this->titleTexts as $titleText)
 		{
-			//Empty ['pageTypes'] means: for all pages
 			if($titleText['page-types'] === [] || in_array($pageType, $titleText['page-types'], true))
 			{
 				return $titleText['text'];
@@ -246,7 +154,7 @@ class PageDescriptor
 	* @param FilterDefinition[] $filterDefinitions Array of FilterDefinition describing the relation.
 	* @param bool $onList Show on list page
 	* @param bool $onCard Show on card page
-	* @api
+	* @stackable
 	*/
 	public function addOneToManyLink(string $name, string $label, string $columnLabel, string $toTable, string $toPage, array $filterDefinitions, bool $onList = true, bool $onCard = true)
 	{
@@ -254,10 +162,10 @@ class PageDescriptor
 		{
 			$c = 0;
 			$urlParameters = [];
-			$urlParameters['page-id'] = $action['to-page'];
+			$urlParameters['page-id'] = $action->data['to-page'];
 			if(!dp::e($action['filter-definitions']))
 			{
-				foreach($action['filter-definitions'] as $index => $filterDefinition)
+				foreach($action->data['filter-definitions'] as $index => $filterDefinition)
 				{
 					$filter = $filterDefinition->toFilter($record);
 					$filter->appendToUrlParams($urlParameters, $index);
@@ -270,9 +178,9 @@ class PageDescriptor
 		$this->addAction($name, $label, $columnLabel, $callback, $onList, $onCard, '', 'primary', 'both', false);
 		
 		//Additional data for this type of action:
-		$this->actions[$name]['to-table'] = $toTable;
-		$this->actions[$name]['to-page'] = $toPage;
-		$this->actions[$name]['filter-definitions'] = $filterDefinitions;
+		$this->actions[$name]->data['to-table'] = $toTable;
+		$this->actions[$name]->data['to-page'] = $toPage;
+		$this->actions[$name]->data['filter-definitions'] = $filterDefinitions;
 		
 		return $this;
 	}
@@ -283,43 +191,27 @@ class PageDescriptor
 	* @param string $label Label of the button
 	* @param string $columnLabel Label of the column in list view
 	* @param callable $callback Callback function to execute when pressing the button. This callback has $record, $pageDescriptor, $action as parameters.
-	* @param bool $onList Show on list page
-	* @param bool $onCard Show on card page
-	* @param string $faIcon Icon for the Button. (Font Awesome icon name)
-	* @param string $btnClass ''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)
-	* @param string $position 'top'|'bottom'|'both'. Position on card pages.
-	* @param bool $disabled 
+	* @param bool $onList (optional) Show on list page
+	* @param bool $onCard (optional) Show on card page
+	* @param string $faIcon (optional) Icon for the Button. (Font Awesome icon name)
+	* @param string $btnClass (optional) ''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)
+	* @param string $position (optional) 'top'|'bottom'|'both'. Position on card pages.
+	* @param bool $enabled (optional) Enabled by default
 	*/
-	public function addAction($name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = '', string $position = '', bool $disabled = false)
+	public function addAction($name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = '', string $position = '', bool $enabled = true)
 	{
 		//Callback functions parameters: $record, $pageDescriptor, $action
 		if(dp::e($name))
 		{
-			throw new Exception('Page - add action: Provide a name form the action.');
+			dp::curdkitException('Provide a name form the action.', __CLASS__, __FUNCTION__);
 		}
 		
 		if(isset($this->actions[$name]))
 		{
-			throw new Exception(sprintf('Page - add action: aktion "%s" already exists on page "%s"!', $name, $this->id));
+			dp::curdkitException('Action "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
-		if(!in_array($position, ['top','bottom','both'], true))
-		{
-			$position = 'both';
-		}
-		
-		$this->actions[$name] = 
-		[
-			'label' => $label,
-			'column-label' => $columnLabel,
-			'callback' => $callback,
-			'on-list' => $onList,
-			'on-card' => $onCard,
-			'fa-icon' => $faIcon,
-			'btn-class' => $btnClass,
-			'position' => $position,
-			'disabled' => $disabled
-		];
+		$this->actions[$name] = new Action($name, $label, $columnLabel, $callback, $onList, $onCard, $faIcon, $btnClass, $position, $enabled);
 		
 		return $this;
 	}
@@ -332,19 +224,7 @@ class PageDescriptor
 		}
 		
 		unset($this->actions[$name]);
-	}
-	
-	public function getActions(string $name = '')
-	{
-		if(!dp::e($name))
-		{
-			if(isset($this->actions[$name])) 
-			{
-				return $this->actions[$name]; 
-			}
-			throw new Exception(sprintf('Get action failed: action "%s" cannot be found on page "%s".', $name, $this->id));
-		}
-		return $this->actions;
+		return $this;
 	}
 	
 	//Call after you have set the tabel
@@ -354,17 +234,17 @@ class PageDescriptor
 		$columns = $this->table->getColumns(true);
 		if(dp::e($columns))
 		{
-			throw new Exception(sprintf('Add secion: no columns found in table "%s".', $this->table->getName()));
+			dp::curdkitException('No columns found in table "%s".', __CLASS__, __FUNCTION__, $this->table->getName());
 		}
 		
 		//Test if Columns exist
 		if(!in_array($fromColumnName, $columns, true))
 		{
-			throw new Exception(sprintf('Add section: from-column "%s" was not found in table "%s".', $fromColumnName, $this->table->getName()));
+			dp::curdkitException('From-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
 		}
 		if(!dp::e($toColumnName) && !in_array($toColumnName, $columns, true))
 		{
-			throw new Exception(sprintf('Add section: to-column "%s" was not found in table "%s".', $toColumnName, $this->table->getName()));
+			dp::curdkitException('To-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
 		}
 		
 		//Get Last Column, if not specified
@@ -375,40 +255,29 @@ class PageDescriptor
 		$to = array_search($toColumnName, $columns);
 		if($from >= $to)
 		{
-			throw new Exception(sprintf('Add section: from-column "%s" has to be before to-column "%s".', $fromColumnName, $toColumnName));
+			dp::curdkitException('From-column "%s" has to be before to-column "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $toColumnName);
 		}
 		
 		//Test crossings
 		foreach($this->sections as $section)
 		{
-			$xfrom = array_search($section['from'], $columns);
-			$xto = array_search($section['to'], $columns);
+			$xfrom = array_search($section->from, $columns);
+			$xto = array_search($section->to, $columns);
 			if(
 			   ($from >= $xfrom && $from <= $xto) || 
 			   ($to >= $xfrom && $to <= $xfrom) ||
 			   ($from <= $xfrom && $to >= $xto)
 			  )
 			{
-				throw new Exception(sprintf('Add section: sections "%s" and "%s" overlap each other.', $section['title'], $title));
+				dp::curdkitException('Sections "%s" and "%s" overlap each other.', __CLASS__, __FUNCTION__, $section['title'], $title);
 			}
 		}
 		
 		//Finally ok:
-		$this->sections[] = 
-		[
-			'title' => $title, 
-			'from' => $fromColumnName, 
-			'to' => $toColumnName,
-			'title-text' => $titleText
-		];
+		$this->sections[] = new Section($title, $fromColumnName, $toColumnName);
 		
 		return $this;
 		
-	}
-	
-	public function getSections()
-	{
-		return $this->sections;
 	}
 
 // ### CURD Functions ###################################################################################################################################################################################

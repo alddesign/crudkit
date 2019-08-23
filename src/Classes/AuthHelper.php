@@ -1,20 +1,17 @@
 <?php
-/** User/permisson handling */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 use Response;
 
-/** 
- * Provides functionality for user/permisson handling.
- */
+/** Provides functionality for user/permisson handling. */
 class AuthHelper
 {
-	/** @var CurdkitUser[] $crudkitUsers 
+	/** @var CurdkitUser[] $users 
 	 * @internal 
 	 */
-	private $crudkitUsers = [];
+	private $users = [];
 
 	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
 	 * @internal 
@@ -24,28 +21,36 @@ class AuthHelper
 	/** 
 	 * Constructor
 	 * 
-	 * @param CrudkitUser[] $crudkitUsers (optional)
-	 * @internal
+	 * @param User[] $users (optional)
 	 */
-    public function __construct(array $crudkitUsers = [])
+    public function __construct(array $users = [])
     {
-		//dp::crudkitException('test',__CLASS__,__FUNCTION__);
-		if(!dp::e($crudkitUsers))
+		foreach($users as $user)
 		{
-			foreach($crudkitUsers as $crudkitUser)
+			if(gettype($user) !== 'object' || get_class($user) !== 'Alddesign\Crudkit\Classes\User')
 			{
-				$this->addUser($crudkitUser);
+				dp::crudkitException('Array of "Alddesign\Crudkit\Classes\User" expected.', __CLASS__, __FUNCTION__);
 			}
 		}
+
+		$this->users = $users;
     }
 	
 	/**
-	 * Adds a new Crudkit user.
-	 * @internal
+	 * Defines a new User.
+	 * 
+	 * @param User $user The user Object.
+	 * @stackable
 	 */
-	public function addCrudkitUser(CrudkitUser $crudkitUser)
+	public function addUserObject(User $user)
 	{
-		$this->crudkitUsers[$crudkitUser->getId()] = $crudkitUser;
+		$this->users[$user->getId()] = $user;
+		return $this;
+	}
+
+	public function getUsers()
+	{
+		return $this->users;
 	}
 	
 	/**
@@ -55,10 +60,11 @@ class AuthHelper
 	 * @param string $password The password for this user
 	 * @param Startpage $startpage (optional) The startpage for this user
 	 * @param RestrictionSet $restrictionSet (optional) The restriction set (permissions) for this user
+	 * @stackable
 	 */
-	public function addUser(string $id, string $password, Startpage $startpage = null, RestrictionSet $restrictionSet = null)
+	public function addUser(string $id, string $password, RestrictionSet $restrictionSet = null, Startpage $startpage = null)
 	{			
-		$this->crudkitUsers[$id] = new CrudkitUser($id, $password, $startpage, $restrictionSet);
+		$this->users[$id] = new User($id, $password, $startpage, $restrictionSet);
 		return $this;
 	}
 	
@@ -69,9 +75,9 @@ class AuthHelper
 	 */
 	public function userHasAccessTo(string $userId, string $action, string $pageId)
 	{
-		if(isset($this->crudkitUsers[$userId]))
+		if(isset($this->users[$userId]))
 		{
-			return $this->crudkitUsers[$userId]->hasAccessTo($action, $pageId);
+			return $this->users[$userId]->hasAccessTo($action, $pageId);
 		}
 		
 		return false;
@@ -86,6 +92,7 @@ class AuthHelper
 	 * ``` 
 	 * @param callable $callback Callback function which is beeing called if this event occours.
 	 * @event
+	 * @stackable
 	 */
 	public function onAfterLogin(callable $callback)
 	{
@@ -107,18 +114,19 @@ class AuthHelper
 			return;
 		}
 
-		return call_user_func_array($this->callbacks[$name], [session('crudkit-username',''), session('crudkit-admin-user',false)]);
+		return call_user_func_array($this->callbacks[$name], [session('crudkit-userid',''), session('crudkit-admin-user',false)]);
 	}
 	
 	// ### STARTPAGE #########################################################################################################################################
+	/** @internal */
 	public function checkStartpage()
 	{
-		$username = session('crudkit-username', '');
+		$username = session('crudkit-userid', '');
 	
 		//User Level
-		if(isset($this->crudkitUsers[$username]) && !empty($this->crudkitUsers[$username]->getStartpage()))
+		if(isset($this->users[$username]) && !empty($this->users[$username]->getStartpage()))
 		{
-			$this->crudkitUsers[$username]->getStartpage()->redirectTo();
+			$this->users[$username]->getStartpage()->redirectTo();
 			return;
 		}
 		
@@ -135,6 +143,10 @@ class AuthHelper
 	}
 	
 	// ### LOGIN #############################################################################################################################################
+	/**
+	 * Checks if user is logged in and his permissions to the current page/action. 
+	 * @internal 
+	 */
 	public function checkAuth(string $action, string $pageId, bool $noPermissionCheck = false, bool $loginAttempt = false)
 	{		
 		//Login
@@ -170,6 +182,7 @@ class AuthHelper
 		return true; //Everything ok
 	}
 	
+	/** @internal */
 	private function loginFailed(string $message = '')
 	{
 		Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView')
@@ -178,6 +191,7 @@ class AuthHelper
 			->send();
 	}
 	
+	/** @internal */
 	private function checkPermissions(string $action, string $pageId)
 	{
 		if(session('crudkit-admin-user', false) === true)
@@ -185,20 +199,21 @@ class AuthHelper
 			return true;
 		}
 		
-		$username = session('crudkit-username', null);
-		if(isset($this->crudkitUsers[$username]) && $this->crudkitUsers[$username] instanceof CrudkitUser)
+		$username = session('crudkit-userid', null);
+		if(isset($this->users[$username]) && $this->users[$username] instanceof User)
 		{
-			return($this->crudkitUsers[$username]->hasAccessTo($action, $pageId));
+			return($this->users[$username]->hasAccessTo($action, $pageId));
 		}
 		
 		return false;
 	}
-		
+	
+	/** @internal */
 	private function performLogin()
 	{
 
 		//Load data from request
-		$username = (request('crudkit-username', null) === null) ? '' : request('crudkit-username', null);
+		$username = (request('crudkit-userid', null) === null) ? '' : request('crudkit-userid', null);
 		$password = (request('crudkit-password', null) === null) ? '' : request('crudkit-password', null);
 			
 		// ### Admin Login: ###
@@ -208,22 +223,24 @@ class AuthHelper
 		if($username === $adminUsername && $password === $adminPassword)
 		{
 			session()->flush();
+			session()->start();
 			session(['crudkit-logged-in' => true]);
-			session(['crudkit-username' => $adminUsername]);
+			session(['crudkit-userid' => $adminUsername]);
 			session(['crudkit-admin-user' => true]);
 			
 			return true; //Login ok
 		}
 		
 		// ### User Login ###
-		if(isset($this->crudkitUsers[$username]) && $this->crudkitUsers[$username] instanceof CrudkitUser)
+		if(isset($this->users[$username]) && $this->users[$username] instanceof User)
 		{
-			$user = $this->crudkitUsers[$username];
+			$user = $this->users[$username];
 			if($user->getId() === $username && $user->getPassword() === $password)
 			{
 				session()->flush();
+				session()->start();
 				session(['crudkit-logged-in' => true]);
-				session(['crudkit-username' => $user->getId()]);
+				session(['crudkit-userid' => $user->getId()]);
 				session(['crudkit-admin-user' => false]);
 				
 				return true;//Login ok

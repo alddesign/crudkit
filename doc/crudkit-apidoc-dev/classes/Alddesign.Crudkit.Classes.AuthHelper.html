@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">476</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">452</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2010350414"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-992019142"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-2010350414" class="accordion-body collapse in">
+            <div id="namespace-992019142" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-207366112"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-935851781"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-207366112" class="accordion-body collapse ">
+            <div id="namespace-935851781" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1871269105"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-392057128"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-1871269105" class="accordion-body collapse ">
+            <div id="namespace-392057128" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-88998045"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1025228580"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-88998045" class="accordion-body collapse ">
+            <div id="namespace-1025228580" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -205,10 +205,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1677618886"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-494872688"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-1677618886" class="accordion-body collapse ">
+            <div id="namespace-494872688" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -613,7 +613,7 @@
                 <pre class="signature" style="margin-right: 54px;">onAfterLogin(callable  <span class="argument">$callback</span>) </pre>
                 <p><em>Register event handler. Occours after a user has logged in successfully.</em></p>
                 <pre><code class="language-php">$f = function(string $username, bool $isAdmin){...};
-AuthHelper-&gt;onAfterLogin($f);</code></pre>
+authHelper-&gt;onAfterLogin($f);</code></pre>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
@@ -708,7 +708,14 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            internal
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -720,7 +727,7 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                 <h3 class="public ">checkAuth()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">checkAuth(\Alddesign\Crudkit\Classes\string  <span class="argument">$action</span>, \Alddesign\Crudkit\Classes\string  <span class="argument">$pageId</span>, \Alddesign\Crudkit\Classes\bool  <span class="argument">$noPermissionCheck = false</span>, \Alddesign\Crudkit\Classes\bool  <span class="argument">$loginAttempt = false</span>) </pre>
-                <p><em></em></p>
+                <p><em>Checks if user is logged in and his permissions to the current page/action.</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -757,7 +764,14 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            internal
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -791,7 +805,14 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            internal
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -830,7 +851,14 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            internal
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -856,7 +884,14 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            internal
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -911,7 +946,7 @@ AuthHelper-&gt;onAfterLogin($f);</code></pre>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on August 22nd, 2019 at 12:42.
+                    on August 22nd, 2019 at 13:27.
                 </section>
             </section>
         </section>

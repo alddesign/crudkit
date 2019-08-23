@@ -42,7 +42,7 @@
 					<span class="input-group-btn">
 						<button id="search-button" class="btn btn-default" type="submit"><i class="fa fa-search"></i> &nbsp;{{$texts['search']}}</button>
 						@if($hasSearch)
-							<button name="reset-search" value="1" id="reset-search-button" class="btn btn-default" type="submit" ><i class="fa fa-undo"></i> &nbsp;{{$texts['reset_search']}}</button>
+							<button name="reset-search" value="true" id="reset-search-button" class="btn btn-default" type="submit" ><i class="fa fa-undo"></i> &nbsp;{{$texts['reset_search']}}</button>
 						@endif
 					</span>
 				</div>
@@ -77,10 +77,10 @@
 					</th>
 				@endif
 			@endforeach
-			@foreach ($actions as $actionName => $action)
-				@if($action['on-list'])
+			@foreach ($actions as $action)
+				@if($action->onList)
 					<th>
-						<i>{{$action['column-label']}}</i>
+						<i>{{$action->columnLabel}}</i>
 					</th>	
 				@endif
 			@endforeach
@@ -248,24 +248,24 @@
 					@endif
 				@endforeach
 				<!-- Line Actions -->
-				@foreach ($actions as $actionName => $action)
-					@if($action['on-list'])
+				@foreach ($actions as $action)
+					@if($action->onList)
 						@php 
-							$faIconClass = !empty($action['fa-icon']) ? 'fa fa-'.$action['fa-icon'] : '';	
-							$btnClass = !empty($action['btn-class']) ? 'btn btn-'.$action['btn-class'] : 'btn btn-default';
-							$btnClass .= $action['disabled'] ? ' disabled' : '';							
+							$faIconClass = !empty($action->faIcon) ? 'fa fa-'.$action->faIcon : '';	
+							$btnClass = !empty($action->btnClass) ? 'btn btn-'.$action->btnClass: 'btn btn-default';
+							$btnClass .= !$action->enabled ? ' disabled' : '';							
 						@endphp
 						<td>
 							<form action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@action')}}" method="post" class="crudkit-line-action">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 								<input type="hidden" name="page-id" value="{{ $pageId }}" />
-								<input type="hidden" name="action-name" value="{{ $actionName }}" />
+								<input type="hidden" name="action-name" value="{{ $action->name }}" />
 								@foreach ($primaryKeyColumns as $primaryKeyColumnName => $primaryKeyColumn)
 									<input type="hidden" name="pk-{!! $loop->index !!}" value="{{ $record[$primaryKeyColumnName] }}" />
 								@endforeach
 								<button type="submit" class="{{$btnClass}} crudkit-line-action-button">
 									@if($faIconClass != '')<i class="{{$faIconClass}}"></i> &nbsp;@endif
-									{{ $action['label'] }}
+									{{ $action->label }}
 								</button>
 							</form>
 						</td>	

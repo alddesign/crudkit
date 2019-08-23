@@ -15,8 +15,8 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
-					<label for="crudkit-username">Benutzername: </label>
-					<input type="text" id="crudkit-username" name="crudkit-username" class="form-control"/>
+					<label for="crudkit-userid">Benutzername: </label>
+					<input type="text" id="crudkit-userid" name="crudkit-userid" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<label for="crudkit-password">Passwort: </label>

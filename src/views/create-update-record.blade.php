@@ -17,10 +17,10 @@
 			<dl class="dl-horizontal">
 				@foreach ($columns as $column)
 					@foreach($sections as $section)
-						@if($section['from'] === $column->name)
+						@if($section->from === $column->name)
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<div class="panel-title"><a data-toggle="collapse" href="#collapse-{{ $loop->index }}">{{ $section['title'] }}</a></div>
+									<div class="panel-title"><a data-toggle="collapse" href="#collapse-{{ $loop->index }}">{{ $section->title }}</a></div>
 								</div>
 								<div id="collapse-{{ $loop->index }}" class="panel-collapse collapse in">
 									<div class="panel-body">
@@ -123,7 +123,7 @@
 						</div>
 					@endif
 					@foreach($sections as $section)
-						@if($section['to'] === $column->name)
+						@if($section->to === $column->name)
 									</div>
 								</div>
 							</div>

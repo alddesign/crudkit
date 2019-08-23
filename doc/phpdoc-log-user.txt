@@ -2,20 +2,7 @@ Collecting files .. OK
 Initializing parser .. OK
 Parsing files
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.php
-  No summary for method checkStartpage()
-  Argument $action is missing from the Docblock of checkAuth
-  Argument $pageId is missing from the Docblock of checkAuth
-  Argument $noPermissionCheck is missing from the Docblock of checkAuth
-  Argument $loginAttempt is missing from the Docblock of checkAuth
-  No summary for method checkAuth()
-  Argument $message is missing from the Docblock of loginFailed
-  No summary for method loginFailed()
-  Argument $action is missing from the Docblock of checkPermissions
-  Argument $pageId is missing from the Docblock of checkPermissions
-  No summary for method checkPermissions()
-  No summary for method performLogin()
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser.php
-  No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\CrudkitUser
   Argument $id is missing from the Docblock of __construct
   Argument $password is missing from the Docblock of __construct
@@ -33,10 +20,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser
   Argument $action is missing from the Docblock of hasAccessTo
   Argument $pageId is missing from the Docblock of hasAccessTo
   No summary for method hasAccessTo()
-  No summary for property $id
-  No summary for property $password
-  No summary for property $startpage
-  No summary for property $restrictionSet
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\DataProcessor.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\DataProcessor
@@ -146,28 +129,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   No summary for method update()
   Argument $primaryKeyValues is missing from the Docblock of delete
   No summary for method delete()
-  Argument $callback is missing from the Docblock of onOpenList
-  No summary for method onOpenList()
-  Argument $callback is missing from the Docblock of onOpenCard
-  No summary for method onOpenCard()
-  Argument $callback is missing from the Docblock of onOpenCreateCard
-  No summary for method onOpenCreateCard()
-  Argument $callback is missing from the Docblock of onOpenUpdateCard
-  No summary for method onOpenUpdateCard()
-  Argument $callback is missing from the Docblock of onOpenChartPage
-  No summary for method onOpenChartPage()
-  Argument $callback is missing from the Docblock of onBeforeCreate
-  No summary for method onBeforeCreate()
-  Argument $callback is missing from the Docblock of onAfterCreate
-  No summary for method onAfterCreate()
-  Argument $callback is missing from the Docblock of onBeforeUpdate
-  No summary for method onBeforeUpdate()
-  Argument $callback is missing from the Docblock of onAfterUpdate
-  No summary for method onAfterUpdate()
-  Argument $callback is missing from the Docblock of onBeforeDelete
-  No summary for method onBeforeDelete()
-  Argument $callback is missing from the Docblock of onAfterDelete
-  No summary for method onAfterDelete()
   No summary for method getTable()
   No summary for method setSummaryColumnsAll()
   Argument $summaryColumns is missing from the Docblock of setSummaryColumns
@@ -198,20 +159,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   Name of argument $rawData does not match with the DocBlock's name $pageNumber in readRecords()
   The type hint of the argument is incorrect for the type definition of the @param tag with argument $rawData in readRecords()
   No summary for method readRecords()
-  No summary for property $id
-  No summary for property $name
-  No summary for property $category
-  No summary for property $icon
-  No summary for property $titleTexts
-  No summary for property $table
-  No summary for property $summaryColumns
-  No summary for property $cardLinkColumns
-  No summary for property $createAllowed
-  No summary for property $updateAllowed
-  No summary for property $deleteAllowed
-  No summary for property $confirmDelete
-  No summary for property $exportAllowed
-  No summary for property $chartAllowed
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageStore.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\PageStore
@@ -435,10 +382,10 @@ Load cache                                                         ..    0.021s
 Preparing template "clean"                                         ..    0.016s
 Preparing 17 transformations                                       ..    0.000s
 Build "elements" index                                             ..    0.002s
-Replace textual FQCNs with object aliases                          ..    0.029s
+Replace textual FQCNs with object aliases                          ..    0.028s
 Resolve @link and @see tags in descriptions                        ..    0.003s
-Enriches inline example tags with their sources                    ..    0.002s
-Build "packages" index                                             ..    0.003s
+Enriches inline example tags with their sources                    ..    0.003s
+Build "packages" index                                             ..    0.004s
 Build "namespaces" index and add namespaces to "elements"          ..    0.001s
 Collect all markers embedded in tags                               ..    0.001s
 Transform analyzed project into artifacts                          .. 
@@ -463,5 +410,5 @@ Applying 17 transformations
   Execute transformation using writer "twig"
   Execute transformation using writer "twig"
   Execute transformation using writer "Graph"
-Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.334s
+Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.312s
 Analyze results and write report to log                            ..    0.001s

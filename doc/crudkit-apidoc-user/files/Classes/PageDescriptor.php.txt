@@ -15,35 +15,36 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 class PageDescriptor
 {
-    private $id = '';
-	private $name = '';
-	private $category = '';
-	private $icon = '';
-	private $titleTexts = [];
+    /** @internal */ private $id = '';
+	/** @internal */ private $name = '';
+	/** @internal */ private $category = '';
+	/** @internal */ private $icon = '';
+	/** @internal */ private $titleTexts = [];
 	
-    private $table = null;
-	private $summaryColumns = [];
-	private $cardLinkColumns = [];
+    /** @internal */ private $table = null;
+	/** @internal */ private $summaryColumns = [];
+	/** @internal */ private $cardLinkColumns = [];
 	
 	/**
-	* Displaying fields in separated areas called "Sections." 
-	* Format = [['title' => '<title>', 'from' => '<fromField>', 'to' => '<toField>'],[...]]
-	*/
+	 * @var array $sections Displaying fields in separated areas called "Sections." 
+	 * 
+	 * Format = [['title' => '<title>', 'from' => '<fromField>', 'to' => '<toField>'],[...]]
+	 * @internal
+	 */
 	private $sections = []; 
 	
-	/**
-	* Adding Buttons with special callback functions to listview/cardview
-	* Format = ['<name>' => ['label' => '<label>', 'column-label' => '<column-label>', 'callback' => callback, 'fa-icon' => '<fa-icon>', 'btn-class' => '<btn-class>', 'on-list' => <bool on-list>, 'on-card' => <bool on-card> ]]
-	* Parameters for the callback function are: $record, $pageDescriptor, $action (the action from this array)
-	*/
+	/** 
+	 * @var array $actions Adding Buttons with special callback functions to listview/cardview
+	 * @internal
+	 */
 	private $actions = []; 
 	
-    private $createAllowed = true;
-    private $updateAllowed = true;
-    private $deleteAllowed = true;
-	private $confirmDelete = true;
-	private $exportAllowed = true;
-	private $chartAllowed = true;	
+    /** @internal */ private $createAllowed = true;
+    /** @internal */ private $updateAllowed = true;
+    /** @internal */ private $deleteAllowed = true;
+	/** @internal */ private $confirmDelete = true;
+	/** @internal */ private $exportAllowed = true;
+	/** @internal */ private $chartAllowed = true;	
 
 	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
 	 * @internal 
@@ -431,7 +432,7 @@ class PageDescriptor
 	/**
 	 * Triggers an event.
 	 * @param string $name Name of the Event
-	 * @param mixed &$param1 Additional parameter
+	 * @param mixed $param1 Additional parameter
 	 * @internal
 	 */
 	public function triggerEvent(string $name, &$param1 = null)
@@ -446,66 +447,186 @@ class PageDescriptor
 		return call_user_func_array($this->callbacks[$name], array(&$this, &$this->table, &$param1));
 	}
 	
+	/**
+	 * Register event handler. Occours when a list page is beeing openend.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$records){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onOpenList(callable $callback)
 	{
 		$this->callbacks['onopenlist'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours when a card page is beeing openend.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$record){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onOpenCard(callable $callback)
 	{
 		$this->callbacks['onopencard'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours when a card page (for creating a new record) is beeing openend.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$columns){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onOpenCreateCard(callable $callback)
 	{
 		$this->callbacks['onopencreatecard'] = $callback;;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours when a card page (for editing a record) is beeing openend..
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$record){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onOpenUpdateCard(callable $callback)
 	{
 		$this->callbacks['onopenupdatecard'] = $callback;
 		return $this;
 	}
-	
+
+	/**
+	 * Register event handler. Occours when a page is beeing openend as a Chart.
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onOpenChartPage(callable $callback)
 	{
 		$this->callbacks['onopenchartpage'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours before a record is beeing inserted into the database.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$recordData){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onBeforeCreate(callable $callback)
 	{
 		$this->callbacks['onbeforecreate'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours after a record is beeing inserted into the database.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, $primaryKeyValues){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onAfterCreate(callable $callback)
 	{
 		$this->callbacks['onaftercreate'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours before a record is beeing updated.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$recordData){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onBeforeUpdate(callable $callback)
 	{
 		$this->callbacks['onbeforeupdate'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours after a record is beeing updated.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$primaryKeyValues){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onAfterUpdate(callable $callback)
 	{
 		$this->callbacks['onafterupdate'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours before a record is beeing deleted from the database.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$primaryKeyValues){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onBeforeDelete(callable $callback)
 	{
 		$this->callbacks['onbeforedelete'] = $callback;
 		return $this;
 	}
 	
+	/**
+	 * Register event handler. Occours after a record is beeing deleted from the database.
+	 * 
+	 * ```php
+	 * //Reference parametes (&) can be modified inside the function. Very powerfull.
+	 * $f = function(&$pageDescriptor, &$tableDescriptor, &$primaryKeyValues){...};
+	 * authHelper->onAfterLogin($f);
+	 * ``` 
+	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @event
+	 */
 	public function onAfterDelete(callable $callback)
 	{
 		$this->callbacks['onafterdelete'] = $callback;
