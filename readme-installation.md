@@ -14,7 +14,7 @@ Run `composer required aldesign/crudkit=dev-master` (terminal/cmd in the laravel
 3. Publish Crudkit config and assets
 Run `php artisan vendor:publish --provider="Alddesign\Crudkit\CrudkitServiceProvider"` (terminal/cmd in the laravel root directory)
 
-# SETUP ON WEBSERVER
+## SETUP ON WEBSERVER
 Setup the URL for the application:
 * Method 1 - recommended: 
 Create a url/redirect/link/virtual-host, you name it, that points to the "<laravel-root-directory>/public" folder.
@@ -22,7 +22,7 @@ Create a url/redirect/link/virtual-host, you name it, that points to the "<larav
 just access the application via http://yourhost/laravel-root-directory/public
 * However: remember this url as your APP_URL
 
-# CONFIGURATION
+## CONFIGURATION
 1. Edit "<laravel-root-directory>/.env" file
 Set at least these values:
 * APP_NAME=Laravel
@@ -40,5 +40,8 @@ Set at least these values:
 * Edit at least the the sections "Admin Login" and "General".
 * Remember the "app_name_url" parameter
 
-# START
-Open crudkit by opening APP_URL/app_name_url in your browser
+## NEXT STEP
+Check out how to actually build webpages with crudkit and customize them: [readme-howto](./readme-howto.md) 
+
+## START
+When you think youre good, open crudkit by opening APP_URL/app_name_url in your browser.
