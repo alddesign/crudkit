@@ -12,7 +12,7 @@ class RestrictionSetEntry
 
 	public function __construct(string $action, string $pageId)
     {
-		if(!in_array($action, self::$ALLOWED_ACTIONS ,true))
+		if(!in_array($action, self::ALLOWED_ACTIONS ,true))
 		{
 			dp::crudkitException('Invalid action: "%s".', __CLASS__, __FUNCTION__, $action);
 		}

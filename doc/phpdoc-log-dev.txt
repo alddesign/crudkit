@@ -1,8 +1,15 @@
 Collecting files .. OK
 Initializing parser .. OK
 Parsing files
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Action.php
+Parse Error: Syntax error, unexpected T_CONST, expecting T_FUNCTION on line 13  No summary was found for this file
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.php
-  Argument $crudkitUser is missing from the Docblock of addCrudkitUser
+  No summary was found for this file
+  No summary for method getUsers()
+  Name of argument $restrictionSet does not match with the DocBlock's name $startpage in addUser()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $restrictionSet in addUser()
+  Name of argument $startpage does not match with the DocBlock's name $restrictionSet in addUser()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $startpage in addUser()
   Name of argument $userId does not match with the DocBlock's name $action in userHasAccessTo()
   The type hint of the argument is incorrect for the type definition of the @param tag with argument $userId in userHasAccessTo()
   Argument $action is missing from the Docblock of userHasAccessTo
@@ -20,32 +27,9 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\AuthHelper.
   Argument $pageId is missing from the Docblock of checkPermissions
   No summary for method checkPermissions()
   No summary for method performLogin()
-  No summary for property $crudkitUsers
-Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\CrudkitUser.php
-  No summary for class \Alddesign\Crudkit\Classes\CrudkitUser
-  Argument $id is missing from the Docblock of __construct
-  Argument $password is missing from the Docblock of __construct
-  Argument $startpage is missing from the Docblock of __construct
-  Argument $restrictionSet is missing from the Docblock of __construct
-  No summary for method __construct()
-  Argument $startpage is missing from the Docblock of setStartpage
-  No summary for method setStartpage()
-  No summary for method getStartpage()
-  Argument $restrictionSet is missing from the Docblock of setRestrictionSet
-  No summary for method setRestrictionSet()
-  No summary for method getRestrictionSet()
-  No summary for method getId()
-  No summary for method getPassword()
-  Argument $action is missing from the Docblock of hasAccessTo
-  Argument $pageId is missing from the Docblock of hasAccessTo
-  No summary for method hasAccessTo()
-  No summary for property $id
-  No summary for property $password
-  No summary for property $startpage
-  No summary for property $restrictionSet
+  No summary for property $users
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\DataProcessor.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\DataProcessor
   Argument $useDbDefault is missing from the Docblock of addData
   Argument $recordData is missing from the Docblock of addData
   Argument $columnName is missing from the Docblock of addData
@@ -103,33 +87,22 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\DataProcess
   No summary for method getCrudkitDbConfig()
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\EnumType.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\EnumType
   Argument $fieldDeclaration is missing from the Docblock of getSQLDeclaration
   Argument $platform is missing from the Docblock of getSQLDeclaration
-  No summary for method getSQLDeclaration()
   Argument $value is missing from the Docblock of convertToPHPValue
   Argument $platform is missing from the Docblock of convertToPHPValue
-  No summary for method convertToPHPValue()
   Argument $value is missing from the Docblock of convertToDatabaseValue
   Argument $platform is missing from the Docblock of convertToDatabaseValue
-  No summary for method convertToDatabaseValue()
   No summary for method getName()
   Argument $platform is missing from the Docblock of requiresSQLCommentHint
   No summary for method requiresSQLCommentHint()
   No summary for property $values
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\ExceptionHandler.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\ExceptionHandler
   Argument $request is missing from the Docblock of render
   Argument $exception is missing from the Docblock of render
-  No summary for method render()
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Filter.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\Filter
-  Argument $field is missing from the Docblock of __construct
-  Argument $operator is missing from the Docblock of __construct
-  Argument $value is missing from the Docblock of __construct
-  No summary for method __construct()
   The type hint of the argument is incorrect for the type definition of the @param tag with argument $urlParams in appendToUrlParams()
   The type hint of the argument is incorrect for the type definition of the @param tag with argument $filterNo in appendToUrlParams()
   No summary for property $field
@@ -137,12 +110,6 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Filter.php
   No summary for property $value
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\FilterDefinition.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\FilterDefinition
-  Argument $field is missing from the Docblock of __construct
-  Argument $operator is missing from the Docblock of __construct
-  Argument $type is missing from the Docblock of __construct
-  Argument $fieldnameOrValue is missing from the Docblock of __construct
-  No summary for method __construct()
   No summary for property $field
   No summary for property $operator
   No summary for property $type
@@ -150,58 +117,45 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\FilterDefin
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Generator.php
   No summary was found for this file
   No summary for method __construct()
-  No summary for method generateServiceProvider()
+  Argument $tables is missing from the Docblock of generateTablesCode
+  Argument $tables is missing from the Docblock of generatePagesCode
+  Argument $value is missing from the Docblock of l
+  Argument $level is missing from the Docblock of i
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescriptor.php
   No summary was found for this file
-  No summary for class \Alddesign\Crudkit\Classes\PageDescriptor
-  Argument $name is missing from the Docblock of __construct
-  Argument $id is missing from the Docblock of __construct
-  Argument $table is missing from the Docblock of __construct
-  Argument $category is missing from the Docblock of __construct
-  No summary for method __construct()
   No summary for method getName()
   No summary for method getId()
-  No summary for method createAllowed()
-  No summary for method allowCreate()
-  No summary for method denyCreate()
-  No summary for method updateAllowed()
-  No summary for method allowUpdate()
-  No summary for method denyUpdate()
-  No summary for method deleteAllowed()
-  No summary for method allowDelete()
-  No summary for method denyDelete()
-  No summary for method exportAllowed()
-  No summary for method allowExport()
-  No summary for method denyExport()
-  No summary for method chartAllowed()
-  No summary for method allowChart()
-  No summary for method denyChart()
+  No summary for method getCreateAllowed()
+  No summary for method getUpdateAllowed()
+  No summary for method getDeleteAllowed()
+  No summary for method getExportAllowed()
+  No summary for method getChartAllowed()
   No summary for method getConfirmDelete()
-  Argument $value is missing from the Docblock of confirmDelete
-  No summary for method confirmDelete()
-  Argument $category is missing from the Docblock of setCategory
-  No summary for method setCategory()
   No summary for method getCategory()
-  Argument $icon is missing from the Docblock of setIcon
-  No summary for method setIcon()
   No summary for method getIcon()
-  The type hint of the argument is incorrect for the type definition of the @param tag with argument $text in addTitleText()
-  Argument $pageTypes is missing from the Docblock of addTitleText
-  Name of argument $pageTypes does not match with the DocBlock's name $text in addTitleText()
-  The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageTypes in addTitleText()
-  No summary for method addTitleText()
+  No summary for method getSections()
+  Argument $name is missing from the Docblock of getActions
+  Argument $value is missing from the Docblock of setAllowCreate
+  Argument $value is missing from the Docblock of setAllowUpdate
+  Argument $value is missing from the Docblock of setAllowDelete
+  Argument $value is missing from the Docblock of setAllowExport
+  Argument $value is missing from the Docblock of setAllowChart
+  Argument $value is missing from the Docblock of setConfirmDelete
+  Argument $value is missing from the Docblock of setCategory
+  Argument $value is missing from the Docblock of setIcon
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $text in setTitleText()
+  Argument $pageTypes is missing from the Docblock of setTitleText
+  Name of argument $pageTypes does not match with the DocBlock's name $text in setTitleText()
+  The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageTypes in setTitleText()
   Argument $pageType is missing from the Docblock of getTitleText
   No summary for method getTitleText()
   Argument $name is missing from the Docblock of removeAction
   No summary for method removeAction()
-  Argument $name is missing from the Docblock of getActions
-  No summary for method getActions()
   Argument $title is missing from the Docblock of addSection
   Argument $fromColumnName is missing from the Docblock of addSection
   Argument $toColumnName is missing from the Docblock of addSection
   Argument $titleText is missing from the Docblock of addSection
   No summary for method addSection()
-  No summary for method getSections()
   Argument $recordData is missing from the Docblock of create
   No summary for method create()
   Argument $primaryKeyValues is missing from the Docblock of update
@@ -210,13 +164,8 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\PageDescrip
   Argument $primaryKeyValues is missing from the Docblock of delete
   No summary for method delete()
   No summary for method getTable()
-  No summary for method setSummaryColumnsAll()
-  Argument $summaryColumns is missing from the Docblock of setSummaryColumns
-  No summary for method setSummaryColumns()
   Argument $namesOnly is missing from the Docblock of getSummaryColumns
   No summary for method getSummaryColumns()
-  Argument $cardLinkColumns is missing from the Docblock of setCardLinkColumns
-  No summary for method setCardLinkColumns()
   Argument $namesOnly is missing from the Docblock of getCardLinkColumns
   No summary for method getCardLinkColumns()
   The type hint of the argument is incorrect for the type definition of the @param tag with argument $primaryKeyValues in readRecord()
@@ -276,6 +225,11 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Restriction
   No summary for property $entries
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\RestrictionSetEntry.php
 Parse Error: Syntax error, unexpected T_CONST, expecting T_FUNCTION on line 8  No summary was found for this file
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\Section.php
+  No summary was found for this file
+  No summary for property $title
+  No summary for property $from
+  No summary for property $to
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\SQLColumn.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\SQLColumn
@@ -456,6 +410,29 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\TableDescri
   No summary for property $softDeletedValue
   No summary for property $softNotDeletedValue
   No summary for property $dbconf
+Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\User.php
+  No summary was found for this file
+  Argument $id is missing from the Docblock of __construct
+  Argument $password is missing from the Docblock of __construct
+  Argument $restrictionSet is missing from the Docblock of __construct
+  Argument $startpage is missing from the Docblock of __construct
+  No summary for method __construct()
+  Argument $startpage is missing from the Docblock of setStartpage
+  No summary for method setStartpage()
+  No summary for method getStartpage()
+  Argument $restrictionSet is missing from the Docblock of setRestrictionSet
+  No summary for method setRestrictionSet()
+  No summary for method getRestrictionSet()
+  No summary for method getId()
+  No summary for method getPassword()
+  Argument $action is missing from the Docblock of hasAccessTo
+  Argument $pageId is missing from the Docblock of hasAccessTo
+  No summary for method hasAccessTo()
+  No summary for property $id
+  No summary for property $password
+  No summary for property $fullname
+  No summary for property $startpage
+  No summary for property $restrictionSet
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Classes\XmlSerializer.php
   No summary was found for this file
   No summary for class \Alddesign\Crudkit\Classes\XMLSerializer
@@ -475,14 +452,14 @@ Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\Controllers\Crudkit
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\CrudkitServiceProvider.php
 Parsing C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\src\routes.php
 Storing cache in "C:\xampp\htdocs\crudkit\vendor\alddesign\crudkit\doc\crudkit-apidoc-dev" .. OK
-Load cache                                                         ..    0.022s
-Preparing template "clean"                                         ..    0.015s
+Load cache                                                         ..    0.024s
+Preparing template "clean"                                         ..    0.016s
 Preparing 17 transformations                                       ..    0.000s
-Build "elements" index                                             ..    0.002s
-Replace textual FQCNs with object aliases                          ..    0.035s
+Build "elements" index                                             ..    0.003s
+Replace textual FQCNs with object aliases                          ..    0.039s
 Resolve @link and @see tags in descriptions                        ..    0.003s
 Enriches inline example tags with their sources                    ..    0.003s
-Build "packages" index                                             ..    0.003s
+Build "packages" index                                             ..    0.004s
 Build "namespaces" index and add namespaces to "elements"          ..    0.001s
 Collect all markers embedded in tags                               ..    0.002s
 Transform analyzed project into artifacts                          .. 
@@ -507,5 +484,5 @@ Applying 17 transformations
   Execute transformation using writer "twig"
   Execute transformation using writer "twig"
   Execute transformation using writer "Graph"
-Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.388s
-Analyze results and write report to log                            ..    0.001s
+Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?   1.631s
+Analyze results and write report to log                            ..    0.002s

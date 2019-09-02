@@ -8,12 +8,14 @@ use Response;
 /** Provides functionality for user/permisson handling. */
 class AuthHelper
 {
-	/** @var CurdkitUser[] $users 
+	/** 
+	 * @var CurdkitUser[] $users 
 	 * @internal 
 	 */
 	private $users = [];
 
-	/** @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
+	/** 
+	 * @var callable[] $callbacks Event callback function. [Key => Event name, Value => Callback function ]
 	 * @internal 
 	 */
 	private $callbacks = [];
@@ -22,6 +24,8 @@ class AuthHelper
 	 * Constructor
 	 * 
 	 * @param User[] $users (optional)
+	 * @return AuthHelper
+	 * @stackable
 	 */
     public function __construct(array $users = [])
     {
@@ -34,12 +38,14 @@ class AuthHelper
 		}
 
 		$this->users = $users;
+		return $this;
     }
 	
 	/**
 	 * Defines a new User.
 	 * 
 	 * @param User $user The user Object.
+	 * @return AuthHelper
 	 * @stackable
 	 */
 	public function addUserObject(User $user)
@@ -60,6 +66,7 @@ class AuthHelper
 	 * @param string $password The password for this user
 	 * @param Startpage $startpage (optional) The startpage for this user
 	 * @param RestrictionSet $restrictionSet (optional) The restriction set (permissions) for this user
+	 * @return AuthHelper
 	 * @stackable
 	 */
 	public function addUser(string $id, string $password, RestrictionSet $restrictionSet = null, Startpage $startpage = null)
@@ -71,6 +78,7 @@ class AuthHelper
 	/**
 	 * Checks if a certains user has access to a certain page/action
 	 * @param string $action ['list', 'card', 'create', 'update', 'delete', 'export', 'chart', '']
+	 * @return bool
 	 * @internal
 	 */
 	public function userHasAccessTo(string $userId, string $action, string $pageId)
@@ -91,6 +99,7 @@ class AuthHelper
 	 * authHelper->onAfterLogin($f);
 	 * ``` 
 	 * @param callable $callback Callback function which is beeing called if this event occours.
+	 * @return AuthHelper
 	 * @event
 	 * @stackable
 	 */
@@ -211,7 +220,6 @@ class AuthHelper
 	/** @internal */
 	private function performLogin()
 	{
-
 		//Load data from request
 		$username = (request('crudkit-userid', null) === null) ? '' : request('crudkit-userid', null);
 		$password = (request('crudkit-password', null) === null) ? '' : request('crudkit-password', null);

@@ -1,31 +1,37 @@
 <?php 
-/** Represents a user account (login) */ 
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 
-class CrudkitUser
+/** Represents a user account (login) */ 
+class User
 {	
 	/** @internal */ private $id = '';
 	/** @internal */ private $password = '';
+	/** @internal */ private $fullname = '';
+ 	/**
+	 * @var Startpage $startpage 
+	 * @internal 
+	 */ 
+	private $startpage = null;
 	/**
-	 *  
-	 * @internal */ 
-	private $startpage = null; //Instance of Class Startpage
-	/** @internal */ private $restrictionSet = null; //Instance of Class RestrictionSet
+	 * @var RestrictionSet $restrictionSet 
+	 * @internal 
+	 */  
+	private $restrictionSet = null;
 	
-    public function __construct(string $id, string $password, Startpage $startpage = null, RestrictionSet $restrictionSet = null)
+    public function __construct(string $id, string $password, RestrictionSet $restrictionSet = null, Startpage $startpage = null)
     {
 		if(dp::e($id))
 		{
-			dp::ex('CrudkitUser - __construct: user ID must not be empty or null.');
+			dp::crudkitException('User ID must not be empty or null.', __CLASS__, __FUNCTION__);
 		}
 		
 		if(dp::e($password))
 		{
-			dp::ex('CrudkitUser - __construct: password must not be empty or null.');
+			dp::crudkitException('Password must not be empty or null.', __CLASS__, __FUNCTION__);
 		}
 		
 		$this->id = $id;
@@ -34,36 +40,43 @@ class CrudkitUser
 		$this->restrictionSet = $restrictionSet;
     }
 	
+	/** @internal */
 	public function setStartpage(Startpage $startpage)
 	{
 		$this->startpage = $startpage;
 	}
 	
+	/** @internal */
 	public function getStartpage()
 	{
 		return $this->startpage;
 	}
-	
+
+	/** @internal */
 	public function setRestrictionSet(RestrictionSet $restrictionSet)
 	{
 		$this->restrictionSet = $restrictionSet;
 	}
 	
+	/** @internal */
 	public function getRestrictionSet()
 	{
 		return $this->restrictionSet;
 	}
-	
+
+	/** @internal */
 	public function getId()
 	{
 		return((string)$this->id);
 	}
 	
+	/** @internal */
 	public function getPassword()
 	{
 		return((string)$this->password);
 	}
 
+	/** @internal */
 	public function hasAccessTo(string $action, string $pageId)
 	{
 		return ($this->restrictionSet === null) ? true : ($this->restrictionSet->hasAccessTo($action, $pageId));

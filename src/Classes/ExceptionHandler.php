@@ -7,12 +7,18 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 use View;
 
+/**
+ * Should replace default error handling. 
+ * Take a look at /app/Exceptions/Handler.php -> render(). Best way is to return a view.
+ * 
+ * @internal
+ */
 abstract class ExceptionHandler
 {
-	/* 
-	* Should replace default error handling. Take a look at /app/Exceptions/Handler.php -> render() 
-	* Best way is to return a view.
-	*/
+	/** 
+	 * Replaces Handler.php -> render()
+     * @return \Illuminate\Http\Response
+	 */
 	public static function render(Request $request, Exception $exception)
 	{
 		try

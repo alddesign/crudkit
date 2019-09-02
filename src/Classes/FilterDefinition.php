@@ -3,6 +3,10 @@ namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
+/** 
+ * Represents a filter definition on a record.
+ * @internal
+ */
 class FilterDefinition
 {
 	public $field = '';
@@ -13,6 +17,13 @@ class FilterDefinition
 	const VALID_OPERATORS = ['>','<','>=','<=','=','!=','contains','startswith','endswith'];
 	const VALID_TYPES = ['const','field'];
 	
+	/**
+	 * Constructor.
+	 * @param string $field The field to apply the filter
+	 * @param string $operator ['>','<','>=','<=','=','!=','contains','startswith','endswith']
+	 * @param string $type ['const','field']. 'const' = fixed value, 'field' = the fieldname which provides the value.
+	 * @param string $fieldnameOrValue
+	 */
     public function __construct(string $field, string $operator, string $type, $fieldnameOrValue)
     {
 		if(!in_array($operator, self::VALID_OPERATORS, true))
@@ -38,7 +49,6 @@ class FilterDefinition
 	*/
 	public function toFilter($record = [])
 	{
-		//xout($record);
 		if($this->type === 'const')
 		{
 			return new Filter($this->field, $this->operator, $this->fieldnameOrValue);

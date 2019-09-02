@@ -6,15 +6,20 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 use DB;
 
+/**
+ * Creating a custom Enum type for integration with doctrine/dbal
+ * 
+ * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/custom-mapping-types.html
+ * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/mysql-enums.html
+ * @internal
+ */
 class EnumType extends Type
 {
     const TYPENAME = 'enum';
     protected $values = array();
 	
 	/**
-	* Creating custom type to deal with ENUM
-	* http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/custom-mapping-types.html
-	* http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/mysql-enums.html
+	* Creating custom type to deal with ENUM.
 	*/
 	public static function registerDoctrineEnumMapping()
 	{
@@ -25,7 +30,7 @@ class EnumType extends Type
 		}
 	}
 
-	// return the SQL used to create your column type. To create a portable column type, use the $platform.
+	/** return the SQL used to create your column type. To create a portable column type, use the $platform. */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         $values = array_map(function($val) { return "'".$val."'"; }, $this->values);
@@ -33,13 +38,13 @@ class EnumType extends Type
         return "ENUM(".implode(", ", $values).")";
     }
 
-	// This is executed when the value is read from the database. Make your conversions here, optionally using the $platform.
+	/** This is executed when the value is read from the database. Make your conversions here, optionally using the $platform. */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         return $value;
     }
 
-	// This is executed when the value is written to the database. Make your conversions here, optionally using the $platform.
+	/** This is executed when the value is written to the database. Make your conversions here, optionally using the $platform. */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if (!in_array($value, $this->values)) {

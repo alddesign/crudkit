@@ -238,7 +238,7 @@ class TableDescriptor
 	
 	// ### CRUD OPERATIONS ###########################################################################################
 	/**
-	* @param Filter[] filters
+	* @param Filter[] $filters
 	*/
 	public function readRecord(array $primaryKeyValues, array $filters = [])
 	{

@@ -4,6 +4,11 @@ namespace Alddesign\Crudkit\Classes;
 use \DateTime;
 use \Exception;
 	 
+/**
+ * Holds a set of methods which are usefull.
+ * 
+ * In most cases the static methods are all you need. An instance of this Object is only needed by Crudkit itself.
+ */
 class DataProcessor
 {
 	/** @ignore */ private $table = null;
@@ -144,7 +149,6 @@ class DataProcessor
 	}
 	
 	/**
-	 *
 	 * We can get the default value here, but most important: 
 	 * we set $useDbDefault to TRUE, so we can exclude this field form INSERT, UPDATE statement...
 	 * 
@@ -471,7 +475,7 @@ class DataProcessor
 	 * 
 	 * ```
 	 * //Example usage:
-	 * DataProcessor::crudkitException("%d errors while trying to delete user '%s'.", __CLASS__, __METHOD__ 4, "admin"); 
+	 * DataProcessor::crudkitException("%d errors while trying to delete user '%s'.", __CLASS__, __FUNCTION__ 4, "admin"); 
 	 * ```
 	 * 
 	 * @param string $message The Exception message to show

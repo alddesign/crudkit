@@ -81,7 +81,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	 * @view
      */
     public function listView(Request $request)
-    {					
+    {	
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId); //Get Page per name, or first page
@@ -137,9 +137,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'recordsPerPage' 		=> (int)config('crudkit.records_per_page', 8),
 			'pageNumber' 			=> $pageNumber,
 			'paginationUrls' 		=> $paginationUrls,
-			'chartAllowed' 			=> $pageDescriptor->chartAllowed(),
-			'createAllowed' 		=> $pageDescriptor->createAllowed(),
-			'exportAllowed' 		=> $pageDescriptor->exportAllowed(),
+			'chartAllowed' 			=> $pageDescriptor->getChartAllowed(),
+			'createAllowed' 		=> $pageDescriptor->getCreateAllowed(),
+			'exportAllowed' 		=> $pageDescriptor->getExportAllowed(),
             'pageMap' 				=> $this->pageStore->getPageMap(),
 			'qrCode' 				=> $qrCode,
         ]));
@@ -165,7 +165,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		
 		//Process Reqest Data
 		$qrCode 				= $this->getQrCodeTag($request);
-		$listPageUrl 			= $this->authHelper->userHasAccessTo(session('crudkit-username'), $pageId, 'list') ? URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $pageId]) : '';
+		$listPageUrl 			= $this->authHelper->userHasAccessTo(session('crudkit-userid'), $pageId, 'list') ? URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $pageId]) : '';
 		$deleteUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@deleteRecord', $this->getUrlParameters($pageId, null, null, null, null, $primaryKeyValues));
 		$updateUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@updateView', $this->getUrlParameters($pageId, null, null, null, null, $primaryKeyValues));
 		
@@ -181,8 +181,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'pageType' 				=> 'card',
             'pageId' 				=> $pageId,
 			'pageTitleText' 		=> $pageDescriptor->getTitleText('card'),
-            'updateAllowed' 		=> $pageDescriptor->updateAllowed(),
-            'deleteAllowed' 		=> $pageDescriptor->deleteAllowed(),
+            'updateAllowed' 		=> $pageDescriptor->getUpdateAllowed(),
+            'deleteAllowed' 		=> $pageDescriptor->getDeleteAllowed(),
 			'confirmDelete'			=> $pageDescriptor->confirmDelete(),
             'primaryKeyColumns' 	=> $pageDescriptor->getTable()->getPrimaryKeyColumns(true),
 			'primaryKeyValues' 		=> $primaryKeyValues,
@@ -318,7 +318,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'endswith' => dp::text('endswith'), 
 			'contains' => dp::text('contains')
 		];
-		$listPageUrl 							= $this->authHelper->userHasAccessTo(session('crudkit-username'), $pageId, 'list') ? URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $pageId]) : '';
+		$listPageUrl 							= $this->authHelper->userHasAccessTo(session('crudkit-userid'), $pageId, 'list') ? URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $pageId]) : '';
 		$getChartDataUrlParamters 				= $this->getUrlParameters($pageId); //Dont include filters here - JS will load them from DOM. Search is disabled.
 		$getChartDataUrlParamters['_token'] 	= csrf_token();
 		$getChartDataUrlParamters 				= json_encode((object)$getChartDataUrlParamters);
@@ -405,7 +405,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$loginMessageType 	= session('crudkit-login-message-type', '');
 		session()->forget('crudkit-login-message');
 		session()->forget('crudkit-login-message-type');
-		
+
 		return view('crudkit::login', 
 		[
 			'pageType' 			=> 'login',
@@ -515,9 +515,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$loginAttempt = request('crudkit-login-attempt', '') === '1';
 		
 		session()->flush();
-		$this->authHelper->checkAuth('', '', true, $loginAttempt); //check-authentication		
+		$this->authHelper->checkAuth('', '', true, $loginAttempt); //check-authentication	
 		$this->authHelper->triggerEvent('onafterlogin');
-		
+
 		return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@index');
 	}
 	
@@ -531,10 +531,10 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	public function logout(Request $request)
 	{
 		session()->flush();
-		session(['curdkit-login-message' => 'Logout erfolgreich.']);
-		session(['curdkit-login-message-type' => 'success']);
 		
-		return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView');
+		return Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView')
+				->with('curdkit-login-message','Logout erfolgreich.')
+				->with('curdkit-login-message-type', 'success');
 	}
 	
 	/**

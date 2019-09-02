@@ -3,6 +3,10 @@ namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
+/** 
+ * Represents an actual filter (with values) on a record.
+ * @internal
+ */
 class Filter
 {
 	public $field;
@@ -10,7 +14,12 @@ class Filter
 	public $value;
 	
 	const VALID_OPERATORS = ['>','<','>=','<=','=','!=','contains','startswith','endswith'];
-	
+	/**
+	 * Constructor.
+	 * @param string $field The field to apply the filter
+	 * @param string $operator ['>','<','>=','<=','=','!=','contains','startswith','endswith']
+	 * @param string $value The value
+	 */
     public function __construct(string $field, string $operator, string $value)
     {
 		if(!in_array($operator, self::VALID_OPERATORS, true))

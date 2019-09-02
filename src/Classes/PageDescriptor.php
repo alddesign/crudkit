@@ -8,9 +8,20 @@ use Exception;
 use Alddesign\Crudkit\Controllers\CrudkitController;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
+/**
+ * Definition of a page.
+ * 
+ * Important: all methods marked with "stackable" (like the constructor and all set methods) can be used like this: [easy]
+ * ```php
+ * $page = new PageDesriptor(...)
+ * 		->setTitleText(...)
+ * 		->addAction()
+ * 		->...
+ * ``` 
+ */
 class PageDescriptor
 {
-	const PAGE_TYPES = ['list', 'card', 'create', 'update', 'chart'];
+	/** @internal */ const PAGE_TYPES = ['list', 'card', 'create', 'update', 'chart'];
 	
     /** @internal */ private $id = '';
 	/** @internal */ private $name = '';
@@ -46,6 +57,15 @@ class PageDescriptor
 	 */
 	private $callbacks = [];
 
+	/**
+	 * Constructor
+	 * 
+	 * @param string $name Display name
+	 * @param string $id Unique name of the page. Allowed characters: a-z, A-Z, 0-9, "_", "-"
+	 * @param TableDescriptor $table Table which is the basis of this page
+	 * @param string $category (optional) Name of the category in the menu where this page will be shown
+	 * @stackable
+	 */
     public function __construct(string $name, string $id, TableDescriptor $table, string $category = '')
     {
         $this->name = $name;
@@ -67,20 +87,29 @@ class PageDescriptor
 		{
 			dp::crudkitException('Please provide a table for this page.', __CLASS__, __FUNCTION__);
 		}
+
+		$this->summaryColumns = $this->table->getColumns(true);
+		$this->cardLinkColumns = isset($this->table->getPrimaryKeyColumns()[0]) ? [$this->table->getPrimaryKeyColumns()[0]] : [];
     }
+
+/* #region GET */
+	/** @internal */ public function getName()    			{return $this->name;}
+    /** @internal */ public function getId()    			{return $this->id;}
+    /** @internal */ public function getCreateAllowed()		{return $this->createAllowed;}
+	/** @internal */ public function getUpdateAllowed()    	{return $this->updateAllowed;}
+	/** @internal */ public function getDeleteAllowed()   	{return $this->deleteAllowed;}
+	/** @internal */ public function getExportAllowed()    	{return $this->exportAllowed;}
+	/** @internal */ public function getChartAllowed()    	{return $this->chartAllowed;}
+	/** @internal */ public function getConfirmDelete()		{return $this->confirmDelete;}
+	/** @internal */ public function getCategory()			{return $this->category;}
+	/** @internal */ public function getIcon()				{return $this->icon;}	
+	/** @internal */ public function getSections()			{return $this->sections;}
 	
-// ### GET ###################################################################################################################################################################################
-	public function getName()    			{return $this->name;}
-    public function getId()    				{return $this->id;}
-    public function getCreateAllowed()		{return $this->createAllowed;}
-	public function getUpdateAllowed()    	{return $this->updateAllowed;}
-	public function getDeleteAllowed()   	{return $this->deleteAllowed;}
-	public function getExportAllowed()    	{return $this->exportAllowed;}
-	public function getChartAllowed()    	{return $this->chartAllowed;}
-	public function getConfirmDelete()		{return $this->confirmDelete;}
-	public function getCategory()			{return $this->category;}
-	public function getIcon()				{return $this->icon;}	
-	public function getSections()			{return $this->sections;}
+	/**
+	 * Retruns on or all actions for this page.
+	 * @return Action[]
+	 * @internal  
+	 */ 
 	public function getActions(string $name = '')
 	{
 		if(!dp::e($name))
@@ -93,20 +122,122 @@ class PageDescriptor
 		}
 		return $this->actions;
 	}
-// ### SET ###################################################################################################################################################################################
-	public function allowCreate()	{ $this->createAllowed = true;		return $this; }
-	public function denyCreate()	{ $this->createAllowed = false;		return $this; }
-	public function allowUpdate()	{ $this->updateAllowed = true;		return $this; }
-	public function denyUpdate()	{ $this->updateAllowed = false;		return $this; }
-	public function allowDelete()	{ $this->deleteAllowed = true;		return $this; }
-	public function denyDelete()	{ $this->deleteAllowed = false;		return $this; }
-    public function allowExport()	{ $this->exportAllowed = true;		return $this; }
-	public function denyExport()	{ $this->exportAllowed = false;		return $this; }
-	public function allowChart()	{ $this->chartAllowed = true;		return $this; }
-	public function denyChart()		{ $this->chartAllowed = false;		return $this; }
-	public function confirmDelete(bool $value = true) 	{ $this->confirmDelete = $value;	return $this; }
-	public function category(string $category = '')		{$this->category = $category;		return $this; }
-	public function icon(string $icon = '')				{$this->icon = $icon;				return $this;}
+
+	/**
+	 * Get the table to this page.
+	 * @return TableDescriptor
+	 * @internal
+	 */
+	public function getTable()
+    {
+        return $this->table;
+    }
+
+
+	/**
+	 * Gets either an array of column names or SqlColumn objects with the list page columns.
+	 * @return string[]|SQLColumn[]
+	 * @internal
+	 */
+    public function getSummaryColumns(bool $namesOnly = false)
+    {
+		if($namesOnly)
+		{
+			return $this->summaryColumns;
+		}
+		
+        $columns = [];
+		$tableColumns = $this->table->getColumns();
+        foreach($this->summaryColumns as $columnName)
+        {
+            $columns[$columnName] = $tableColumns[$columnName];
+        }
+
+        return $columns;
+    }
+	
+	/**
+	 * Gets either an array of column names or SqlColumn objects with the card link columns.
+	 * @return string[]|SQLColumn[]
+	 * @internal
+	 */
+    public function getCardLinkColumns(bool $namesOnly = false)
+    {
+		if($namesOnly)
+		{
+			return $this->cardLinkColumns;
+		}
+		
+        $columns = [];
+		$tableColumns = $this->table->getColumns();
+        foreach($this->cardLinkColumns as $columnName)
+        {
+            $columns[$column->name] = $tableColumns[$columnName];
+        }
+
+        return $columns;
+    }
+/* #endregion */
+
+/* #region SET and ADD methods*/
+	/** Allow/deny to create new records (default = true) 
+	 * @stackable */
+	public function setAllowCreate(bool $value = true)	{ $this->createAllowed = true;		return $this; }
+	/** Allow/deny to update records (default = true) 
+	 * @stackable*/
+	public function setAllowUpdate(bool $value = true)	{ $this->updateAllowed = true;		return $this; }
+	/** Allow/deny to delete records (default = true) 
+	 * @stackable*/
+	public function setAllowDelete(bool $value = true)	{ $this->deleteAllowed = true;		return $this; }
+	/** Allow/deny to export records to csv/xml (default = true) 
+	 * @stackable*/
+	public function setAllowExport(bool $value = true)	{ $this->exportAllowed = true;		return $this; }
+	/** Allow/deny to show records as chart (default = true) 
+	 * @stackable */
+	public function setAllowChart(bool $value = true)	{ $this->chartAllowed = true;		return $this; }
+	/** Show confirmation dialog before deleting a record (default = true) 
+	 * @stackable */
+	public function setConfirmDelete(bool $value = true) 	{ $this->confirmDelete = $value;	return $this; }
+	/** Name of the category in the menu where this page will be shown 
+	 * @stackable */
+	public function setCategory(string $value = '')			{ $this->category = $value;			return $this; }
+	/** Fowt Awesome icon name of this page (visible in menu) 
+	 * @stackable */
+	public function setIcon(string $value = '')				{ $this->icon = $value;				return $this; }
+
+	/** Defines which columns are shown on list pages (defaul = all) 
+	 * @param string[] $summaryColumnNames
+	 * @stackable*/
+    public function setSummaryColumns(array $summaryColumnNames)
+    {
+		$columnsNotFound = array_diff($summaryColumnNames, $this->table->getColumns(true));
+		
+		if(!dp::e($columnsNotFound))
+        {
+            dp::crudkitException('Page - set summary columns: following summary columns were not found on page "%s" (table "%s"): "%s"', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
+        }
+		
+		$this->summaryColumns = $summaryColumnNames;
+		
+        return $this;
+	}
+
+	/** Defines which columns are shown as link form list to card page (defaul = first column of Tables PK)
+	 * @param string[] $cardLinkColumnNames
+	 * @stackable*/
+	public function setCardLinkColumns(array $cardLinkColumnNames)
+    {
+		$columnsNotFound = array_diff($cardLinkColumnNames, array_keys($this->table->getColumns()));
+		
+		if(!dp::e($columnsNotFound))
+        {
+            dp::crudkitException('Page - set card link columns: following card link columns were not found on page "%s" (table "%s"): "%s": ', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
+        }
+		
+		$this->cardLinkColumns = $cardLinkColumnNames;
+		
+        return $this;
+    }
 	
 	/**
 	 * Defines the title text for specific page types
@@ -114,7 +245,7 @@ class PageDescriptor
 	 * @return PageDescriptor Returns $this
 	 * @stackable
 	 */
-	public function addTitleText(string $text, array $pageTypes = [])
+	public function setTitleText(string $text, array $pageTypes = [])
 	{
 		if($pageTypes !== [])
 		{
@@ -197,6 +328,7 @@ class PageDescriptor
 	* @param string $btnClass (optional) ''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)
 	* @param string $position (optional) 'top'|'bottom'|'both'. Position on card pages.
 	* @param bool $enabled (optional) Enabled by default
+	* @stackable
 	*/
 	public function addAction($name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = '', string $position = '', bool $enabled = true)
 	{
@@ -279,9 +411,10 @@ class PageDescriptor
 		return $this;
 		
 	}
-
-// ### CURD Functions ###################################################################################################################################################################################
-    public function create($recordData)
+/* #endregion */
+	
+/* #region CRUD */
+	public function create($recordData)
     {
 		return $this->getTable()->createRecord($recordData);
     }
@@ -295,8 +428,9 @@ class PageDescriptor
     {
 		$this->getTable()->deleteRecord($primaryKeyValues);
     }
-	
-// ### Events #########################################################################################
+/* #endregion */	
+
+/* #region EVENTS */
 	/**
 	 * Triggers an event.
 	 * @param string $name Name of the Event
@@ -500,88 +634,16 @@ class PageDescriptor
 		$this->callbacks['onafterdelete'] = $callback;
 		return $this;
 	}
+/* #endregion */
 	
-// ### SCHEMA ############################################################################################
-    public function getTable()
-    {
-        return $this->table;
-    }
-	
-	public function setSummaryColumnsAll()
-	{
-		$this->summaryColumns = $this->table->getColumns(true);
-		
-		return $this;
-	}
+/* #region DATA	*/
 
-    public function setSummaryColumns(array $summaryColumns)
-    {
-		$columnsNotFound = array_diff($summaryColumns, $this->table->getColumns(true));
-		
-		if(!dp::e($columnsNotFound))
-        {
-            throw new Exception(sprintf('Page - set summary columns: following summary columns were not found on page "%s" (table "%s"): "%s"', $this->id, $this->table->getName(), implode(', ',$columnsNotFound)));
-        }
-		
-		$this->summaryColumns = $summaryColumns;
-		
-        return $this;
-    }
-
-    public function getSummaryColumns(bool $namesOnly = false)
-    {
-		if($namesOnly)
-		{
-			return $this->summaryColumns;
-		}
-		
-        $columns = [];
-		$tableColumns = $this->table->getColumns();
-        foreach($this->summaryColumns as $columnName)
-        {
-            $columns[$columnName] = $tableColumns[$columnName];
-        }
-
-        return $columns;
-    }
-	
-	public function setCardLinkColumns(array $cardLinkColumns)
-    {
-		$columnsNotFound = array_diff($cardLinkColumns, array_keys($this->table->getColumns()));
-		
-		if(!dp::e($columnsNotFound))
-        {
-            throw new Exception(sprinft('Page - set card link columns: following card link columns were not found on page "%s" (table "%s"): "%s": ', $this->id, $this->table->getName(), implode(', ',$columnsNotFound)));
-        }
-		
-		$this->cardLinkColumns = $cardLinkColumns;
-		
-        return $this;
-    }
-
-    public function getCardLinkColumns(bool $namesOnly = false)
-    {
-		if($namesOnly)
-		{
-			return $this->cardLinkColumns;
-		}
-		
-        $columns = [];
-		$tableColumns = $this->table->getColumns();
-        foreach($this->cardLinkColumns as $columnName)
-        {
-            $columns[$column->name] = $tableColumns[$columnName];
-        }
-
-        return $columns;
-    }
-	
-// ### DATA ############################################################################################		
 	/**
-	* @param [] primaryKeyValues Array with value(s) of the primary key field(s) 
-	* @param Filter[] filters
-	* @package Data
-	*/
+	 * Reads a record from the table of this page
+	 * @param string[] $primaryKeyValues
+	 * @param Filter[] $filters
+	 * @return 
+	 */
     public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
 		return $this->table->readRecord($primaryKeyValues, $filters);
@@ -594,4 +656,5 @@ class PageDescriptor
 	{
 		return $this->table->readRecords($pageNumber, $searchColumnName, $searchText, $filters, $trimText, $rawData);
 	}
+/* #endregion */
 }

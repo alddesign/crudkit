@@ -1,5 +1,4 @@
 <?php
-
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
@@ -12,6 +11,7 @@ use \DateTime;
  * Automatically generates a "CrudkitServiceProvider.php" file based on the configured database in .env
  * 
  * To use this functionality setup and configur Laravel and Crudkit and open http://<UrlToCrudKit>/auto-gererate
+ * @internal
  */
 class Generator
 {
@@ -33,7 +33,7 @@ class Generator
 
     }
 	
-	/** @internal */
+	/** Generates the CrudkitServiceProvider.php */
 	public function generateServiceProvider()
 	{		
 		\Alddesign\Crudkit\Classes\EnumType::registerDoctrineEnumMapping();
@@ -91,7 +91,7 @@ class Generator
 			->deleteFileAfterSend(true);	
 	}
 	
-	/** @ignore */
+	/** Generates PHP codes for the tables */
 	private function generateTablesCode(array $tables)
 	{
 		$this->setReference($this->tablesCode);
@@ -141,7 +141,7 @@ class Generator
 		return null;
 	}
 	
-	/** @ignore */
+	/** Generates PHP codes for the pages */
 	private function generatePagesCode(array $tables)
 	{
 		$this->setReference($this->pagesCode);
@@ -168,7 +168,6 @@ class Generator
 			$this->l('\''.$table->getName().'\' => (new PageDescriptor(\''.studly_case($table->getName()).'\', \''.$table->getName().'\', $this->tables[\''.$table->getName().'\']))');
 			
 			$this->i(4);
-			$this->l('->setSummaryColumnsAll()');
 			if(!dp::e($firstPrimaryKeyColumnName))
 			{
 				$this->l('->setCardLinkColumns([\''.$firstPrimaryKeyColumnName.'\'])');
@@ -182,11 +181,8 @@ class Generator
 		return null;
 	}
 	
-	
 	/**
 	 * Write line
-	 *  
-	 * @ignore 
 	 */
 	private function l(string $value = '')
 	{
@@ -195,8 +191,6 @@ class Generator
 	
 	/**
 	 * Sets the indention level
-	 *  
-	 * @ignore 
 	 */
 	private function i(int $level = 0) 
 	{
