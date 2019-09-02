@@ -3,7 +3,7 @@
 Crudkit is a laravel based project which lets you create Ui Webpages from a given Database within minutes.
 
 ## Getting started
-For the first steps checkout
+For the first steps check out:
 1. [readme-installation](./readme-installation.md)
 2. [readme-howto](./readme-howto.md)
 
