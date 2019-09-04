@@ -20,7 +20,7 @@ Setup the URL for the application:
 Create a url/redirect/link/virtual-host, you name it, that points to the "<laravel-root-directory>/public" folder.
 * Method 2 - not recommended: 
 just access the application via http://yourhost/laravel-root-directory/public
-* However: remember this url as your APP_URL
+* However: remember this url as your **APP_URL**
 
 ## CONFIGURATION
 1. Edit "<laravel-root-directory>/.env" file
@@ -38,10 +38,13 @@ Set at least these values:
 
 2. Edit "<laravel-root-directory>/config/crudkit.php"
 * Edit at least the the sections "Admin Login" and "General".
-* Remember the "app_name_url" parameter
+* Remember the **app_name_url** parameter
 
 ## NEXT STEP
 Check out how to actually build webpages with crudkit and customize them: [readme-howto](./readme-howto.md) 
 
 ## START
-When you think youre good, open crudkit by opening APP_URL/app_name_url in your browser.
+When you think youre good, open crudkit by opening `http://<APP_URL>/<app_name_url>` in your browser.
+Default login:
+User: `admin`
+Password: `admin`
