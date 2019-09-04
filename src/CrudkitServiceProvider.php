@@ -125,11 +125,9 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		return 
 		[
 			'author' => (new PageDescriptor('Author', 'author', $this->tables['author']))
-				->setSummaryColumnsAll()
 				->setCardLinkColumns(['id'])
 				,
 			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
-				->setSummaryColumnsAll()
 				->setCardLinkColumns(['id'])
 				->addOneToManyLink('authors', 'Autor', 'Autor', 'author', 'author', [(new FilterDefinition('id', '=', 'field', 'author_id'))])
 				,

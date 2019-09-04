@@ -1,15 +1,26 @@
 <?php
+declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 
+/**
+ * Defines a set of restrictions or rights to access pages and specific actions on pages.
+ * 
+ * The $type defines the behavior. A RestrictionSet belongs to a User.
+ */
 class RestrictionSet
 {	
+	/** 
+	 * Options for $type
+	 * @var string[] ALLOWED_TYPES  
+	 * @internal
+	*/
 	const ALLOWED_TYPES = ['allow-all', 'deny-all'];
 
-	private $type = 'allow-all'; //'allow-all' = allow all, deny with entries | 'deny-all' = deny all, allow with entries
-	private $entries = [];
+	/** @internal */ private $type = 'allow-all'; 
+	/** @internal */ private $entries = [];
 	
 	/**
 	 * Creates new set of restrictions (permissions).
@@ -36,7 +47,12 @@ class RestrictionSet
 		$this->entries = $entries;
     }
 	
-	/** @internal */
+	/**
+	 * Checks if this permission set has access to a specific page/action
+	 * @param string $action
+	 * @param string $pageId 
+	 * @internal 
+	 */
 	public function hasAccessTo(string $action, string $pageId)
 	{
 		$entryFound = false;

@@ -238,8 +238,11 @@ class TableDescriptor
 	
 	// ### CRUD OPERATIONS ###########################################################################################
 	/**
-	* @param Filter[] $filters
-	*/
+	 * Reads a record from the DB
+	 * @param string[] $primaryKeyValues
+	 * @param Filter[] $filters
+	 * @return array Array with a single element
+	 */
 	public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
 		//Test Parameters
@@ -302,13 +305,19 @@ class TableDescriptor
 		else
 		{
 			$record = (new DataProcessor($this))->postProcess($record[0], true);
-			return((array)$record);
+			return [$record];
 		}
 	}
 	
 	/**
-	* @param Filter[] filters
-	*/
+	 * Reads multiple records from the DB
+	 * @param int $pageNumber Pagination offset
+	 * @param string $searchColumnName The column name to apply the $searchText (if existing)
+	 * @param string $searchText The search text (if existing)
+	 * @param Filter[] $filters
+	 * @param bool $trimText Trim text >50 chars
+	 * @param bool $rawData Get the data unprocessed from the DB (watch out here!)
+	 */
 	public function readRecords(int $pageNumber = 1, string $searchColumnName = '', string $searchText = '', array $filters = [], bool $trimText = true, bool $rawData = false)
 	{
 		//To load all records (within search and filter) set $pageNumber to 0
@@ -415,12 +424,17 @@ class TableDescriptor
 			$query->offset(($pageNumber-1)*$itemsPerPage)
 				  ->limit($itemsPerPage);	
 		}
-		//dp::xout($query->toSql());
 		$records['records'] = $query->get();
 		$records['records'] = (new DataProcessor($this))->postProcess($records['records'], false, $rawData);  
         return $records;
 	}
 	
+	/** 
+	 * Creates a record in the DB
+	 * @param array $recordData (preprocessed)
+	 * @return array The primary key values
+	 * @internal
+	 */
     public function createRecord($recordData)
     {
         $primaryKeyValues = [];
@@ -446,6 +460,13 @@ class TableDescriptor
         return $primaryKeyValues;
     }
 	
+	/** 
+	 * Updates a record in DB
+	 * @param array $primaryKeyValues (preprocessed)
+	 * @param array $columnValues (preprocessed)
+	 * @return array The (maybe) new primary key values
+	 * @internal
+	 */
 	public function updateRecord(array $primaryKeyValues, array $columnValues)
     {
 		$query = DB::table($this->name);

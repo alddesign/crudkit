@@ -11,13 +11,14 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 /**
  * Definition of a page.
  * 
- * Important: all methods marked with "stackable" (like the constructor and all set methods) can be used like this: [easy]
+ * Important: all methods marked with "@stackable" (like the constructor and all set methods) can be used like this
  * ```php
  * $page = new PageDesriptor(...)
  * 		->setTitleText(...)
  * 		->addAction()
  * 		->...
  * ``` 
+ * ..easy
  */
 class PageDescriptor
 {
@@ -252,7 +253,7 @@ class PageDescriptor
 			$pageTypesNotFound = array_diff($pageTypes, self::PAGE_TYPES);
 			if($pageTypesNotFound !== [])
 			{
-				throw new Exception(sprintf('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', implode($pageTypesNotFound, ', '), $this->id));
+				dp::crudkitException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', __CLASS__, __FUNCTION__, implode($pageTypesNotFound, ', '), $this->id);
 			}
 		}
 		
@@ -352,7 +353,7 @@ class PageDescriptor
 	{
 		if(!isset($this->actions[$name]))
 		{
-			throw new Exception(sprintf('Remove action failed: action "%s" cannot be found on page "%s".', $name, $this->id));
+			dp::curdkitException('Remove action failed: action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
 		unset($this->actions[$name]);
@@ -413,23 +414,6 @@ class PageDescriptor
 	}
 /* #endregion */
 	
-/* #region CRUD */
-	public function create($recordData)
-    {
-		return $this->getTable()->createRecord($recordData);
-    }
-
-    public function update(array $primaryKeyValues, array $columnValues)
-    {
-		 return $this->table->updateRecord($primaryKeyValues, $columnValues);
-    }
-
-    public function delete(array $primaryKeyValues)
-    {
-		$this->getTable()->deleteRecord($primaryKeyValues);
-    }
-/* #endregion */	
-
 /* #region EVENTS */
 	/**
 	 * Triggers an event.
@@ -635,14 +619,47 @@ class PageDescriptor
 		return $this;
 	}
 /* #endregion */
-	
-/* #region DATA	*/
+
+/* #region CRUD */
+	/** 
+	 * Creates a record in the table of this page
+	 * @param array $recordData (preprocessed)
+	 * @return array The primary key values
+	 * @internal
+	 */
+	public function create(array $recordData)
+	{
+		return $this->getTable()->createRecord($recordData);
+	}
+
+	/** 
+	 * Updates a record from the table of this page
+	 * @param array $primaryKeyValues (preprocessed)
+	 * @param array $columnValues (preprocessed)
+	 * @return array The (maybe) new primary key values
+	 * @internal
+	 */
+	public function update(array $primaryKeyValues, array $columnValues)
+	{
+		return $this->table->updateRecord($primaryKeyValues, $columnValues);
+	}
+
+	/**
+	 * Deletes a record from the table of this page
+	 * @param array $primaryKeyValues (preprocessed)
+	 * @return bool Success
+	 */
+	public function delete(array $primaryKeyValues)
+	{
+		return $this->getTable()->deleteRecord($primaryKeyValues);
+	}
 
 	/**
 	 * Reads a record from the table of this page
-	 * @param string[] $primaryKeyValues
+	 * @param array $primaryKeyValues
 	 * @param Filter[] $filters
-	 * @return 
+	 * @return array Array with a single element
+	 * @internal
 	 */
     public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
@@ -650,8 +667,15 @@ class PageDescriptor
 	}
 	
 	/**
-	* @param Filter[] filters
-	*/
+	 * Reads multiple records from the table of this page
+	 * @param int $pageNumber Pagination offset
+	 * @param string $searchColumnName The column name to apply the $searchText (if existing)
+	 * @param string $searchText The search text (if existing)
+	 * @param Filter[] $filters
+	 * @param bool $trimText Trim text >50 chars
+	 * @param bool $rawData Get the data unprocessed from the DB (watch out here!)
+	 * @internal
+	 */
 	public function readRecords(int $pageNumber = 1, string $searchColumnName = null, string $searchText = null, array $filters = [], bool $trimText = true, bool $rawData = false)
 	{
 		return $this->table->readRecords($pageNumber, $searchColumnName, $searchText, $filters, $trimText, $rawData);
