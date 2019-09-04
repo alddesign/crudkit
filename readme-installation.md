@@ -45,3 +45,6 @@ Check out how to actually build webpages with crudkit and customize them: [readm
 
 ## START
 When you think youre good, open crudkit by opening APP_URL/app_name_url in your browser.
+Default login:
+User: `admin`
+Password: `admin`
