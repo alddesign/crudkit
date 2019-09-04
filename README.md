@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # README
-=======
-# README
->>>>>>> 97b2630e6e31a78feb34294eeef4a79a5aa4ebe7
 ## About crudkit
 Crudkit is a laravel based project which lets you create Ui Webpages from a given Database within minutes.
 
