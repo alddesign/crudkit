@@ -38,7 +38,10 @@ To do this:
 - Open and login into Crudkit
 
 ## Writing a custom CrudkitServiceProvider.php
-Comming soon
+...comming soon
+
+## API Documentation
+Hence it is no possible to explan everthing here have a look at: [readme-apidoc](./readme-apidoc.md)
 
 
 
