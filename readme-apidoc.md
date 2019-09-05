@@ -12,7 +12,7 @@ There are two versions
 - `doc/crudkit-apidoc-user` contains documentation about all the Classes/methods you need as a "user" to build webpages with crudkit
 - `doc/crudkit-apidoc-dev` contains all the things that are in the user doc + a basic documenatation about the rest of crudkit
 
-# Open the apidoc
+## Open the apidoc
 Although the apidocs are html/css webpages make sure you access the via a webserver.
 As you need a webserver to run crudkit this is no big deal:
 
