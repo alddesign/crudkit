@@ -23,7 +23,7 @@ Out of the box `CrudkitServiceProvider.php` is populated with example code to di
 All you need to do is:
 - Configure Lavarvel to use the Demo DB by editing your .env ([readme-installation](./readme-installation.md) for details)
 `DB_CONNECTION=sqlite
-DB_DATABASE=./vendor/alddesign/crudkit/src/demo-database/db.sqlite`
+DB_DATABASE=</absolute/path/your/laravel/root>/vendor/alddesign/crudkit/src/demo-database/db.sqlite`
 -Login to Crudkit with admin:admin
 -Maybe check out and play around with `CrudkitServiceProvider.php`
 
