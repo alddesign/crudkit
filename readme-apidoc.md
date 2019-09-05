@@ -16,6 +16,6 @@ There are two versions
 Although the apidocs are html/css webpages make sure you access the via a webserver.
 As you need a webserver to run crudkit this is no big deal:
 
-**To do so:**
+**To do so:** (already done in crudkit-standalone)
 - Copy the folders `crudkit-apidoc-user` and/or `crudkit-apidoc-user` to `<laravel root director>/public` directory.
-- Now they are accessible by opening `http://<APP_URL>/crudkit-apidoc-user/index.html` / `http://<APP_URL>/crudkit-apidoc-dev/index.html` 
+- Now they are accessible by opening `http://<APP_URL>/crudkit-apidoc-user/index.html` or `http://<APP_URL>/crudkit-apidoc-dev/index.html` 
