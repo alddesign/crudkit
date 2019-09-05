@@ -4,7 +4,7 @@ namespace Alddesign\Crudkit\Classes;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 use DB;
-use Session;
+use File;
 use \DateTime;
 
 /**
@@ -46,7 +46,13 @@ class Generator
 		//Create output file
 		$dateTime = new DateTime();
 		$srcFile = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.php';
-		$outputFilename = storage_path('crudkit' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.' . 'auto-generated.' . '.php');
+
+		//Check if dir exists
+		if(!File::exists(storage_path('crudkit')))
+		{
+			File::makeDirectory(storage_path('crudkit'));
+		}		
+		$outputFilename = storage_path('crudkit' . DIRECTORY_SEPARATOR . 'CrudkitServiceProvider.auto-generated.php');
 		
 		//Replace Code
 		$lines = file($srcFile);

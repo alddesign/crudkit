@@ -11,13 +11,14 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 /**
  * Definition of a page.
  * 
- * Important: all methods marked with "stackable" (like the constructor and all set methods) can be used like this: [easy]
+ * Important: all methods marked with "@stackable" (like the constructor and all set methods) can be used like this
  * ```php
  * $page = new PageDesriptor(...)
  * 		->setTitleText(...)
  * 		->addAction()
  * 		->...
  * ``` 
+ * ..easy
  */
 class PageDescriptor
 {
@@ -91,8 +92,8 @@ class PageDescriptor
 		$this->summaryColumns = $this->table->getColumns(true);
 		$this->cardLinkColumns = isset($this->table->getPrimaryKeyColumns()[0]) ? [$this->table->getPrimaryKeyColumns()[0]] : [];
     }
-	
-// ### GET ###################################################################################################################################################################################
+
+/* #region GET */
 	/** @internal */ public function getName()    			{return $this->name;}
     /** @internal */ public function getId()    			{return $this->id;}
     /** @internal */ public function getCreateAllowed()		{return $this->createAllowed;}
@@ -122,7 +123,64 @@ class PageDescriptor
 		}
 		return $this->actions;
 	}
-// ### SET ###################################################################################################################################################################################
+
+	/**
+	 * Get the table to this page.
+	 * @return TableDescriptor
+	 * @internal
+	 */
+	public function getTable()
+    {
+        return $this->table;
+    }
+
+
+	/**
+	 * Gets either an array of column names or SqlColumn objects with the list page columns.
+	 * @return string[]|SQLColumn[]
+	 * @internal
+	 */
+    public function getSummaryColumns(bool $namesOnly = false)
+    {
+		if($namesOnly)
+		{
+			return $this->summaryColumns;
+		}
+		
+        $columns = [];
+		$tableColumns = $this->table->getColumns();
+        foreach($this->summaryColumns as $columnName)
+        {
+            $columns[$columnName] = $tableColumns[$columnName];
+        }
+
+        return $columns;
+    }
+	
+	/**
+	 * Gets either an array of column names or SqlColumn objects with the card link columns.
+	 * @return string[]|SQLColumn[]
+	 * @internal
+	 */
+    public function getCardLinkColumns(bool $namesOnly = false)
+    {
+		if($namesOnly)
+		{
+			return $this->cardLinkColumns;
+		}
+		
+        $columns = [];
+		$tableColumns = $this->table->getColumns();
+        foreach($this->cardLinkColumns as $columnName)
+        {
+            $columns[$column->name] = $tableColumns[$columnName];
+        }
+
+        return $columns;
+    }
+/* #endregion */
+
+/* #region SET and ADD methods*/
 	/** Allow/deny to create new records (default = true) 
 	 * @stackable */
 	public function setAllowCreate(bool $value = true)	{ $this->createAllowed = true;		return $this; }
@@ -195,7 +253,7 @@ class PageDescriptor
 			$pageTypesNotFound = array_diff($pageTypes, self::PAGE_TYPES);
 			if($pageTypesNotFound !== [])
 			{
-				throw new Exception(sprintf('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', implode($pageTypesNotFound, ', '), $this->id));
+				dp::crudkitException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', __CLASS__, __FUNCTION__, implode($pageTypesNotFound, ', '), $this->id);
 			}
 		}
 		
@@ -295,7 +353,7 @@ class PageDescriptor
 	{
 		if(!isset($this->actions[$name]))
 		{
-			throw new Exception(sprintf('Remove action failed: action "%s" cannot be found on page "%s".', $name, $this->id));
+			dp::curdkitException('Remove action failed: action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
 		unset($this->actions[$name]);
@@ -354,24 +412,9 @@ class PageDescriptor
 		return $this;
 		
 	}
-
-// ### CURD Functions ###################################################################################################################################################################################
-    public function create($recordData)
-    {
-		return $this->getTable()->createRecord($recordData);
-    }
-
-    public function update(array $primaryKeyValues, array $columnValues)
-    {
-		 return $this->table->updateRecord($primaryKeyValues, $columnValues);
-    }
-
-    public function delete(array $primaryKeyValues)
-    {
-		$this->getTable()->deleteRecord($primaryKeyValues);
-    }
+/* #endregion */
 	
-// ### Events #########################################################################################
+/* #region EVENTS */
 	/**
 	 * Triggers an event.
 	 * @param string $name Name of the Event
@@ -575,67 +618,68 @@ class PageDescriptor
 		$this->callbacks['onafterdelete'] = $callback;
 		return $this;
 	}
-	
-// ### SCHEMA ############################################################################################
-    public function getTable()
-    {
-        return $this->table;
-    }
+/* #endregion */
 
+/* #region CRUD */
+	/** 
+	 * Creates a record in the table of this page
+	 * @param array $recordData (preprocessed)
+	 * @return array The primary key values
+	 * @internal
+	 */
+	public function create(array $recordData)
+	{
+		return $this->getTable()->createRecord($recordData);
+	}
 
-    public function getSummaryColumns(bool $namesOnly = false)
-    {
-		if($namesOnly)
-		{
-			return $this->summaryColumns;
-		}
-		
-        $columns = [];
-		$tableColumns = $this->table->getColumns();
-        foreach($this->summaryColumns as $columnName)
-        {
-            $columns[$columnName] = $tableColumns[$columnName];
-        }
+	/** 
+	 * Updates a record from the table of this page
+	 * @param array $primaryKeyValues (preprocessed)
+	 * @param array $columnValues (preprocessed)
+	 * @return array The (maybe) new primary key values
+	 * @internal
+	 */
+	public function update(array $primaryKeyValues, array $columnValues)
+	{
+		return $this->table->updateRecord($primaryKeyValues, $columnValues);
+	}
 
-        return $columns;
-    }
-	
-
-
-    public function getCardLinkColumns(bool $namesOnly = false)
-    {
-		if($namesOnly)
-		{
-			return $this->cardLinkColumns;
-		}
-		
-        $columns = [];
-		$tableColumns = $this->table->getColumns();
-        foreach($this->cardLinkColumns as $columnName)
-        {
-            $columns[$column->name] = $tableColumns[$columnName];
-        }
-
-        return $columns;
-    }
-	
-// ### DATA ############################################################################################		
 	/**
-	* @param [] primaryKeyValues Array with value(s) of the primary key field(s) 
-	* @param Filter[] filters
-	* @package Data
-	*/
+	 * Deletes a record from the table of this page
+	 * @param array $primaryKeyValues (preprocessed)
+	 * @return bool Success
+	 */
+	public function delete(array $primaryKeyValues)
+	{
+		return $this->getTable()->deleteRecord($primaryKeyValues);
+	}
+
+	/**
+	 * Reads a record from the table of this page
+	 * @param array $primaryKeyValues
+	 * @param Filter[] $filters
+	 * @return array Array with a single element
+	 * @internal
+	 */
     public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
 		return $this->table->readRecord($primaryKeyValues, $filters);
 	}
 	
 	/**
-	* @param Filter[] filters
-	*/
+	 * Reads multiple records from the table of this page
+	 * @param int $pageNumber Pagination offset
+	 * @param string $searchColumnName The column name to apply the $searchText (if existing)
+	 * @param string $searchText The search text (if existing)
+	 * @param Filter[] $filters
+	 * @param bool $trimText Trim text >50 chars
+	 * @param bool $rawData Get the data unprocessed from the DB (watch out here!)
+	 * @internal
+	 */
 	public function readRecords(int $pageNumber = 1, string $searchColumnName = null, string $searchText = null, array $filters = [], bool $trimText = true, bool $rawData = false)
 	{
 		return $this->table->readRecords($pageNumber, $searchColumnName, $searchText, $filters, $trimText, $rawData);
 	}
+/* #endregion */
 }
 
