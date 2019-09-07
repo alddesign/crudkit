@@ -37,7 +37,8 @@ class Generator
 	public function generateServiceProvider()
 	{		
 		\Alddesign\Crudkit\Classes\EnumType::registerDoctrineEnumMapping();
-		$tables = DB:: getDoctrineSchemaManager()->listTables();
+		/** @var Doctrine\DBAL\Schema\Table[] $tables */
+		$tables = DB::getDoctrineSchemaManager()->listTables();
 		
 		//Generate PHP Code
 		$this->generateTablesCode($tables);
@@ -97,7 +98,10 @@ class Generator
 			->deleteFileAfterSend(true);	
 	}
 	
-	/** Generates PHP codes for the tables */
+	/** 
+	 * Generates the PHP code for method defineTalbes() 
+	 * @param Doctrine\DBAL\Schema\Table[] $tables
+	 */
 	private function generateTablesCode(array $tables)
 	{
 		$this->setReference($this->tablesCode);
@@ -147,7 +151,10 @@ class Generator
 		return null;
 	}
 	
-	/** Generates PHP codes for the pages */
+	/** 
+	 * Generates the PHP code for method definePages() 
+	 * @param Doctrine\DBAL\Schema\Table[] $tables
+	*/
 	private function generatePagesCode(array $tables)
 	{
 		$this->setReference($this->pagesCode);
@@ -187,17 +194,13 @@ class Generator
 		return null;
 	}
 	
-	/**
-	 * Write line
-	 */
+	/** Write line */
 	private function l(string $value = '')
 	{
 		$this->reference .= $this->indent . $value . "\n";
 	}
 	
-	/**
-	 * Sets the indention level
-	 */
+	/** Sets the indention level */
 	private function i(int $level = 0) 
 	{
 		$this->indent = str_pad('', $level, "\t");

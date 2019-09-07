@@ -21,8 +21,11 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
  * Populate the following methods to build your application:
  *
  * defineTables()
+ * 
  * defineRelations()
+ * 
  * definePages()
+ * 
  * defineUsers()
 */
 class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -71,12 +74,12 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	
     /**
      * Populate this methods to define the tables plus columns used by your application.
-	 * @example ".\examples\defineTables.example.php"
+	 * @example ".\CrudkitServiceProvider.php" 80 22 Example
      * @return TableDescriptor[]
      */
 	private function defineTables()
 	{
-		//### Example code - works with the demo database ################################################################################
+		//### Example code - works with the demo database ###
 		//<CRUDKIT-TABLES-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!! 	
 		return 
 		[
@@ -90,7 +93,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				->addColumn('id', 'Id', 'integer', [])
 				->addColumn('name', 'Name', 'text', [])
 				->addColumn('description', 'Description', 'text', [])
-				->addColumn('author_id', 'AuthorId', 'integer', [])
+				->addColumn('author_id', 'Author id', 'integer', [])
 				->addColumn('cover', 'Cover', 'image', [])
 				->addColumn('price', 'Price', 'float', [])
 				,
@@ -99,37 +102,62 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	}
 
 	/**
-     * Populate this methods to define table relations (1 to N and N ot 1).
+     * Populate this methods to define table relations (mostly many to one).
 	 * 
-     * Use "$this->tables" which you defined in method defineTables().
+     * Use "$this->tables" which you have defined in method defineTables().
 	 * 
-	 * @example ".\examples\defineRelations.example.php"
+	 * @example ".\CrudkitServiceProvider.php" 112 6 Example
 	 * @see TableDescriptor
      */
 	private function defineRelations()
 	{
-		//### Example code - works with the demo database ################################################################################	
+		//### Example code - works with the demo database ###
+		$this->tables['book']
+		->defineManyToOneColumn('author_id', 'author', 'id'); //Column name, reference table name, reference field name
 	}
 
 	/**
      * Populate this methods to define the pages (views) according to the already definded tables.
 	 * 
-	 * @example ".\examples\definePages.example.php"
+	 * @example ".\CrudkitServiceProvider.php" 126 39 Example with usage of page events and custom actions:
 	 * @return PageDescriptor[]
 	 * @see PageDescriptor 
      */
 	private function definePages()
 	{
-		//### Example code - works with the demo database ################################################################################
+		//### Example code - works with the demo database ###
 		//<CRUDKIT-PAGES-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+		
+		//Custom action
+		$seachCallback = function($record, $pageDescriptor, $action)
+		{
+			$authorName = urlencode($record['name']);
+			header('Location: ' . 'https://wikipedia.org/wiki/Special:Search?search=' . $authorName);
+			die();
+		};
+
+		//Show prices only to the CEO
+		$onOpenAuthorListCallback = function(&$pageDescriptor, &$tableDescriptor, &$records)
+		{
+			if(session('crudkit-userid') !== 'CEO')
+			{
+				$cols = $pageDescriptor->getSummaryColumns(true); //get columns
+				unset($cols['price']); //remove price column
+				$pageDescriptor->setSummaryColumns($cols); //set columns
+			}
+		};
+
+		//Main code
 		return 
 		[
 			'author' => (new PageDescriptor('Author', 'author', $this->tables['author']))
 				->setCardLinkColumns(['id'])
+				->addAction('search-on-wikipedia', 'Search on Wikipedia', 'Search', $seachCallback)
 				,
 			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
 				->setCardLinkColumns(['id'])
-				->addOneToManyLink('authors', 'Autor', 'Autor', 'author', 'author', [(new FilterDefinition('id', '=', 'field', 'author_id'))])
+				->addOneToManyLink('author', 'Author', 'Author', 'author', 'author', [(new FilterDefinition('id', '=', 'field', 'author_id'))])
+				->onOpenList($onOpenAuthorListCallback)
 				,
 		];
 		//<CRUDKIT-PAGES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
@@ -137,10 +165,11 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	
 	/**
      * Populate this methods to define the Logins for this application.
+	 * 
 	 * Optional: define RestrictionSet and/or Startpage for each User.
 	 * Default login (administrator) is definded in crudkit config.
 	 * 
-	 * @example ".\examples\defineUsers.example.php"
+	 * @example ".\CrudkitServiceProvider.php" 178 34 Example
 	 * @return AuthHelper
 	 * @see CrudkitUser
 	 * @see Startpage
@@ -148,12 +177,9 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
      */
 	private function defineUsers()
 	{	
-		//### Example code - works with the demo database ################################################################################
-		/*
-		allow everything except 
-		-updating/delete books
-		-access to authors in general
-		*/
+		//### Example code - works with the demo database ###
+
+		//allow everything except: -updating/delete books, -access to authors in general
 		$restrictionSet1 = 
 		new RestrictionSet
 		('allow-all', 
@@ -164,10 +190,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 			]
 		);
 
-		/*
-		deny everything except 
-		-viewing list of books and authors
-		*/
+		//deny everything except: -viewing list of books and authors
 		$restrictionSet2 = 
 		new RestrictionSet
 		('deny-all', 
@@ -179,7 +202,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 
 		$users = 
 		[
-			new User('the-admin', 'M0stS@ecurPwd4This1'), //has all rights
+			new User('admin2', 'M0stS@ecurPwd4This1'), //has all rights
 			new User('janedoe', 'P@ssw0rd', $restrictionSet1), //restricted
 			new User('johndoe', 'jd123', $restrictionSet2) //restricted
 		];

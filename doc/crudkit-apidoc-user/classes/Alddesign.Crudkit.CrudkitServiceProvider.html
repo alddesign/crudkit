@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">236</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">229</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-304087692"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-675567776"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-304087692" class="accordion-body collapse in">
+            <div id="namespace-675567776" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-44009250"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-604886059"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-44009250" class="accordion-body collapse ">
+            <div id="namespace-604886059" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-966835593"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-300120673"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-966835593" class="accordion-body collapse ">
+            <div id="namespace-300120673" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1670593741"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2002166867"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-1670593741" class="accordion-body collapse ">
+            <div id="namespace-2002166867" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -206,10 +206,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1887626240"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1808331854"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-1887626240" class="accordion-body collapse ">
+            <div id="namespace-1808331854" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -260,10 +260,10 @@
                     <h1><small>\Alddesign\Crudkit</small>CrudkitServiceProvider</h1>
                     <p><em>This class is used to create your application.</em></p>
                     <p>Populate the following methods to build your application:</p>
-<p>defineTables()
-defineRelations()
-definePages()
-defineUsers()</p>
+<p>defineTables()</p>
+<p>defineRelations()</p>
+<p>definePages()</p>
+<p>defineUsers()</p>
                     
                                         
                     <section id="summary">
@@ -368,31 +368,30 @@ defineUsers()</p>
                     array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">\Alddesign\Crudkit\Classes\TableDescriptor</a>&gt;
                                     				
                                                             <h4>Examples</h4>
-                                                                <h5></h5>
-                        <pre class="pre-scrollable">&lt;?php
-function defineTables()
-{
-	//&lt;CRUDKIT-TABLES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
-	return 
-	[
-		&#039;author&#039; =&gt; (new TableDescriptor(&#039;author&#039;, [&#039;id&#039;], true))
-			-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [])
-			-&gt;addColumn(&#039;firstname&#039;, &#039;Firstname&#039;, &#039;string&#039;, [])
-			-&gt;addColumn(&#039;lastname&#039;, &#039;Lastname&#039;, &#039;string&#039;, [])
-			-&gt;addColumn(&#039;active&#039;, &#039;Active&#039;, &#039;boolean&#039;, [])
-			-&gt;addColumn(&#039;no_of_books&#039;, &#039;No. of Books&#039;, &#039;int&#039;, [])
-			,
-		&#039;book&#039; =&gt; (new TableDescriptor(&#039;book&#039;, [&#039;id&#039;], true))
-			-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [])
-			-&gt;addColumn(&#039;title&#039;, &#039;Title&#039;, &#039;string&#039;, [])
-			-&gt;addColumn(&#039;description&#039;, &#039;Description&#039;, &#039;string&#039;, [])
-			-&gt;addColumn(&#039;price&#039;, &#039;Price&#039;, &#039;float&#039;, [])
-			-&gt;addColumn(&#039;author_id&#039;, &#039;Author Id&#039;, &#039;integer&#039;, [])
-			,
-	];
-	//&lt;CRUDKIT-TABLES-END&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
-}
-?&gt;</pre>
+                                                                <h5>Example</h5>
+                        <pre class="pre-scrollable">	private function defineTables()
+	{
+		//### Example code - works with the demo database ###
+		//&lt;CRUDKIT-TABLES-START&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!! 	
+		return 
+		[
+			&#039;author&#039; =&gt; (new TableDescriptor(&#039;author&#039;, [&#039;id&#039;], true))
+				-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [&#039;readonly&#039; =&gt; true])
+				-&gt;addColumn(&#039;name&#039;, &#039;Name&#039;, &#039;text&#039;, [])
+				-&gt;addColumn(&#039;birthday&#039;, &#039;Birthday&#039;, &#039;date&#039;, [])
+				-&gt;addColumn(&#039;active&#039;, &#039;Active&#039;, &#039;bool&#039;, [])
+				,
+			&#039;book&#039; =&gt; (new TableDescriptor(&#039;book&#039;, [&#039;id&#039;], true))
+				-&gt;addColumn(&#039;id&#039;, &#039;Id&#039;, &#039;integer&#039;, [])
+				-&gt;addColumn(&#039;name&#039;, &#039;Name&#039;, &#039;text&#039;, [])
+				-&gt;addColumn(&#039;description&#039;, &#039;Description&#039;, &#039;text&#039;, [])
+				-&gt;addColumn(&#039;author_id&#039;, &#039;Author id&#039;, &#039;integer&#039;, [])
+				-&gt;addColumn(&#039;cover&#039;, &#039;Cover&#039;, &#039;image&#039;, [])
+				-&gt;addColumn(&#039;price&#039;, &#039;Price&#039;, &#039;float&#039;, [])
+				,
+		];
+		//&lt;CRUDKIT-TABLES-END&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+</pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
@@ -413,21 +412,21 @@ function defineTables()
                 <h3 class="private ">defineRelations()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">defineRelations() </pre>
-                <p><em>Populate this methods to define table relations (1 to N and N ot 1).</em></p>
-                <p>Use &quot;$this-&gt;tables&quot; which you defined in method defineTables().</p>
+                <p><em>Populate this methods to define table relations (mostly many to one).</em></p>
+                <p>Use &quot;$this-&gt;tables&quot; which you have defined in method defineTables().</p>
 
                 
                 
                 				
                                                             <h4>Examples</h4>
-                                                                <h5></h5>
-                        <pre class="pre-scrollable">&lt;?php
-function defineRelations()
-{		
-	$this-&gt;tables[&#039;book&#039;]
-		-&gt;defineManyToOneColumn(&#039;author_id&#039;, &#039;author&#039;, &#039;id&#039;);	
-}
-?&gt;</pre>
+                                                                <h5>Example</h5>
+                        <pre class="pre-scrollable">	private function defineRelations()
+	{
+		//### Example code - works with the demo database ###
+		$this-&gt;tables[&#039;book&#039;]
+		-&gt;defineManyToOneColumn(&#039;author_id&#039;, &#039;author&#039;, &#039;id&#039;); //Column name, reference table name, reference field name
+	}
+</pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
@@ -459,42 +458,47 @@ function defineRelations()
                     array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html">\Alddesign\Crudkit\Classes\PageDescriptor</a>&gt;
                                     				
                                                             <h4>Examples</h4>
-                                                                <h5></h5>
-                        <pre class="pre-scrollable">&lt;?php
-function definePages()
-{
-	//&lt;CRUDKIT-PAGES-START&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
-	
-	//Function for custom action button
-	$showAuthor = function($record, $pageDescriptor, $action)
+                                                                <h5>Example with usage of page events and custom actions:</h5>
+                        <pre class="pre-scrollable">	private function definePages()
 	{
-		//this will open the list page, filtered to the book´s author
+		//### Example code - works with the demo database ###
+		//&lt;CRUDKIT-PAGES-START&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+		
+		//Custom action
+		$seachCallback = function($record, $pageDescriptor, $action)
+		{
+			$authorName = urlencode($record[&#039;name&#039;]);
+			header(&#039;Location: &#039; . &#039;https://wikipedia.org/wiki/Special:Search?search=&#039; . $authorName);
+			die();
+		};
+
+		//Show prices only to the CEO
+		$onOpenAuthorListCallback = function(&amp;$pageDescriptor, &amp;$tableDescriptor, &amp;$records)
+		{
+			if(session(&#039;crudkit-userid&#039;) !== &#039;CEO&#039;)
+			{
+				$cols = $pageDescriptor-&gt;getSummaryColumns(true); //get columns
+				unset($cols[&#039;price&#039;]); //remove price column
+				$pageDescriptor-&gt;setSummaryColumns($cols); //set columns
+			}
+		};
+
+		//Main code
 		return 
-			Response::redirectToAction(&#039;\Alddesign\Crudkit\Controllers\AdminPanelController@listView&#039;, 
-		    [&#039;page-id&#039; =&gt; &#039;author&#039;, &#039;ff-0&#039; =&gt; &#039;id&#039;, &#039;fo-0&#039; =&gt; &#039;=&#039;, &#039;fv-0&#039; =&gt; $record[&#039;author_id&#039;]]);
-	};
-	
-	$test = function($record, $pageDescriptor, $action)
-	{
-		//will show the book´s title
-		echo $record[&quot;title&quot;];
-		die;
-	};
-	
-	return
-	[
-		&#039;author&#039; =&gt; (new PageDescriptor(&#039;Author&#039;, &#039;author&#039;, $this-&gt;tables[&#039;author&#039;]))
-			-&gt;setSummaryColumnsAll() //defines the columns which are shown on the list page (all in this case)
-			-&gt;setCardLinkColumns([&#039;id&#039;]) //clicking on these column(s) will open the card page
-			,
-		&#039;book&#039; =&gt; (new PageDescriptor(&#039;Title&#039;, &#039;title&#039;, $this-&gt;tables[&#039;title&#039;]))
-			-&gt;setSummaryColumnsAll()
-			-&gt;setCardLinkColumns([&#039;id&#039;])
-			-&gt;addAction(&#039;authors&#039;, &#039;Author&#039;, &#039;Show author...&#039;, $showAuthor,true, true, &#039;file-text&#039;, &#039;primary&#039;)
-			-&gt;addAction(&#039;test&#039;, &#039;Test&#039;, &#039;Click me&#039;, $test,true, true, &#039;file-text&#039;, &#039;primary&#039;)
-	];
-	//&lt;CRUDKIT-PAGES-END&gt; please do not remove this line - otherwise /admin-panel/auto-generate will not work
-}</pre>
+		[
+			&#039;author&#039; =&gt; (new PageDescriptor(&#039;Author&#039;, &#039;author&#039;, $this-&gt;tables[&#039;author&#039;]))
+				-&gt;setCardLinkColumns([&#039;id&#039;])
+				-&gt;addAction(&#039;search-on-wikipedia&#039;, &#039;Search on Wikipedia&#039;, &#039;Search&#039;, $seachCallback)
+				,
+			&#039;book&#039; =&gt; (new PageDescriptor(&#039;Book&#039;, &#039;book&#039;, $this-&gt;tables[&#039;book&#039;]))
+				-&gt;setCardLinkColumns([&#039;id&#039;])
+				-&gt;addOneToManyLink(&#039;author&#039;, &#039;Author&#039;, &#039;Author&#039;, &#039;author&#039;, &#039;author&#039;, [(new FilterDefinition(&#039;id&#039;, &#039;=&#039;, &#039;field&#039;, &#039;author_id&#039;))])
+				-&gt;onOpenList($onOpenAuthorListCallback)
+				,
+		];
+		//&lt;CRUDKIT-PAGES-END&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+	}
+</pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
@@ -527,48 +531,42 @@ Default login (administrator) is definded in crudkit config.</p>
                     <a href="../classes/Alddesign.Crudkit.Classes.AuthHelper.html">\Alddesign\Crudkit\Classes\AuthHelper</a>
                                     				
                                                             <h4>Examples</h4>
-                                                                <h5></h5>
-                        <pre class="pre-scrollable">&lt;?php
-function defineUsers()
-{			
-	/*
-	allow everything except 
-	-updating/delete books
-	-access to authors in general
-	*/
-	$restrictionSet1 = 
-	new RestrictionSet
-	(&#039;allow-all&#039;, 
-		[	
-			new RestrictionSetEntry(&#039;update&#039;, &#039;book&#039;), 
-			new RestrictionSetEnty(&#039;delete&#039;, &#039;book&#039;),
-			new RestrictionSetEntry(&#039;&#039;, &#039;author&#039;)
-		]
-	);
+                                                                <h5>Example</h5>
+                        <pre class="pre-scrollable">	private function defineUsers()
+	{	
+		//### Example code - works with the demo database ###
 
-	/*
-	deny everything except 
-	-viewing list of books and authors
-	*/
-	$restrictionSet2 = 
-	new RestrictionSet
-	(&#039;deny-all&#039;, 
-		[	
-			new RestrictionSetEntry(&#039;list&#039;, &#039;book&#039;), 
-			new RestrictionSetEnty(&#039;list&#039;, &#039;author&#039;)
-		]
-	);
+		//allow everything except: -updating/delete books, -access to authors in general
+		$restrictionSet1 = 
+		new RestrictionSet
+		(&#039;allow-all&#039;, 
+			[	
+				new RestrictionSetEntry(&#039;update&#039;, &#039;book&#039;), 
+				new RestrictionSetEntry(&#039;delete&#039;, &#039;book&#039;),
+				new RestrictionSetEntry(&#039;&#039;, &#039;author&#039;)
+			]
+		);
 
-	$users = 
-	[
-		new User(&#039;the-admin&#039;, &#039;M0stS@ecurPwd4This1&#039;), //has all rights
-		new User(&#039;janedoe&#039;, &#039;P@ssw0rd&#039;, $restrictionSet1), //restricted
-		new User(&#039;johndoe&#039;, &#039;jd123&#039;, $restrictionSet2) //restricted
-	];
-	
-	return new AuthHelper($users);	
-}
-?&gt;</pre>
+		//deny everything except: -viewing list of books and authors
+		$restrictionSet2 = 
+		new RestrictionSet
+		(&#039;deny-all&#039;, 
+			[	
+				new RestrictionSetEntry(&#039;list&#039;, &#039;book&#039;), 
+				new RestrictionSetEntry(&#039;list&#039;, &#039;author&#039;)
+			]
+		);
+
+		$users = 
+		[
+			new User(&#039;admin2&#039;, &#039;M0stS@ecurPwd4This1&#039;), //has all rights
+			new User(&#039;janedoe&#039;, &#039;P@ssw0rd&#039;, $restrictionSet1), //restricted
+			new User(&#039;johndoe&#039;, &#039;jd123&#039;, $restrictionSet2) //restricted
+		];
+		
+		return new AuthHelper($users);
+	}
+</pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
@@ -636,7 +634,7 @@ function defineUsers()
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 6th, 2019 at 20:29.
+                    on September 7th, 2019 at 20:35.
                 </section>
             </section>
         </section>

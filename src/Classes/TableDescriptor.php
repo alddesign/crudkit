@@ -93,7 +93,7 @@ class TableDescriptor
     {
 		if($namesOnly)
 		{
-			return array_keys($this->columns);
+			return array_combine(array_keys($this->columns), array_keys($this->columns)); //This is easier to access than numeric indexes
 		}
 		else
 		{
@@ -171,7 +171,7 @@ class TableDescriptor
         return $this;
     }
 	
-	public function defineManyToOneColumn(string $name, string $relationTableName, string $relationColumnName, array $filters = [], bool $clickable = true)
+	public function defineManyToOneColumn(string $name, string $relationTableName, string $relationColumnName, array $filterDefinitions = [], bool $clickable = true)
 	{
 		if(!isset($this->columns[$name]))
 		{
@@ -179,7 +179,7 @@ class TableDescriptor
 		}
 		
 		$column = $this->columns[$name];
-		$this->columns[$name] = new SQLManyToOneColumn($column->name, $column->label, $column->type, $relationTableName, $relationColumnName, $filters, $column->options, $clickable);
+		$this->columns[$name] = new SQLManyToOneColumn($column->name, $column->label, $column->type, $relationTableName, $relationColumnName, $filterDefinitions, $column->options, $clickable);
 		
 		return $this;
 	}
@@ -241,7 +241,7 @@ class TableDescriptor
 	 * Reads a record from the DB
 	 * @param string[] $primaryKeyValues
 	 * @param Filter[] $filters
-	 * @return array Array with a single element
+	 * @return array Record data as array
 	 */
 	public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
@@ -305,7 +305,7 @@ class TableDescriptor
 		else
 		{
 			$record = (new DataProcessor($this))->postProcess($record[0], true);
-			return [$record];
+			return $record;
 		}
 	}
 	

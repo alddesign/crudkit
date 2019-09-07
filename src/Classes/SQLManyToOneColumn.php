@@ -20,7 +20,7 @@ class SQLManyToOneColumn extends SQLColumn
 	
 	/**
 	* Creates a new One to Many Column.
-	* @param FilterDefinition filterDefinitions.
+	* @param FilterDefinition[] $filterDefinitions.
 	*/
     public function __construct(string $name, string $label, string $type, string $foreignTableName, string $foreignColumnName, array $filterDefinitions = [], array $options = [], bool $clickable = true)
     {

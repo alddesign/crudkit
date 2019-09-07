@@ -183,7 +183,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'pageTitleText' 		=> $pageDescriptor->getTitleText('card'),
             'updateAllowed' 		=> $pageDescriptor->getUpdateAllowed(),
             'deleteAllowed' 		=> $pageDescriptor->getDeleteAllowed(),
-			'confirmDelete'			=> $pageDescriptor->confirmDelete(),
+			'confirmDelete'			=> $pageDescriptor->getConfirmDelete(),
             'primaryKeyColumns' 	=> $pageDescriptor->getTable()->getPrimaryKeyColumns(true),
 			'primaryKeyValues' 		=> $primaryKeyValues,
 			'deleteUrl'				=> $deleteUrl,
@@ -561,8 +561,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$action = $pageDescriptor->getActions($actionName);
 		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
 		$record = $pageDescriptor->readRecord($primaryKeyValues);
-		
-		$result = call_user_func($action['callback'], $record, $pageDescriptor, $action); //event-trigger
+
+		$result = call_user_func($action->callback, $record, $pageDescriptor, $action); //event-trigger
 		if($result instanceof \Illuminate\Http\RedirectResponse)
 		{
 			return $result;

@@ -15,7 +15,7 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
  * ```php
  * $page = new PageDesriptor(...)
  * 		->setTitleText(...)
- * 		->addAction()
+ * 		->addAction(...)
  * 		->...
  * ``` 
  * ..easy
@@ -177,7 +177,25 @@ class PageDescriptor
         }
 
         return $columns;
-    }
+	}
+	
+	/** @internal */
+	public function getTitleText(string $pageType)
+	{
+		//Exact
+		foreach($this->titleTexts as $titleText)
+		{
+			if(in_array($pageType, $titleText['page-types'], true)) return $titleText['text'];
+		}
+
+		//Default
+		foreach($this->titleTexts as $titleText)
+		{
+			if($titleText['page-types'] === []) return $titleText['text'];
+		}
+		
+		return $this->name;
+	}
 /* #endregion */
 
 /* #region SET and ADD methods*/
@@ -217,15 +235,22 @@ class PageDescriptor
         {
             dp::crudkitException('Page - set summary columns: following summary columns were not found on page "%s" (table "%s"): "%s"', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
         }
-		
-		$this->summaryColumns = $summaryColumnNames;
-		
+
+		//$this->summaryColumns = ['id' => 'id', 'description' => 'description'];
+		$this->summaryColumns = array_combine($summaryColumnNames, $summaryColumnNames);//This is easier to access, than a numeric index.
+
         return $this;
 	}
 
-	/** Defines which columns are shown as link form list to card page (defaul = first column of Tables PK)
+	/** 
+	 * Defines which columns are shown as link form list to card page (defaul = first column of Tables PK)
+	 * 
+	 * ```php
+	 * $pageDescriptor->setCardLinkColumns(["id", "name"]);
+	 * ```
 	 * @param string[] $cardLinkColumnNames
-	 * @stackable*/
+	 * @stackable
+	 */
 	public function setCardLinkColumns(array $cardLinkColumnNames)
     {
 		$columnsNotFound = array_diff($cardLinkColumnNames, array_keys($this->table->getColumns()));
@@ -242,7 +267,14 @@ class PageDescriptor
 	
 	/**
 	 * Defines the title text for specific page types
-	 * @param pageTypes specifies on which page types ('list', 'card', 'create', 'update', 'chart') this text will be shown.
+	 * 
+	 * ```php
+	 * $pageDescriptor
+	 * ->setTitleText('Book'); //For all pages
+	 * ->setTitleText('New Book', ['create']); //Specific page
+	 * ```
+	 * @param string $text The text to display
+	 * @param string[] $pageTypes (optional) specifies on which page types ('list', 'card', 'create', 'update', 'chart') this text will be shown.
 	 * @return PageDescriptor Returns $this
 	 * @stackable
 	 */
@@ -262,32 +294,24 @@ class PageDescriptor
 		return $this;
 	}
 	
-	public function getTitleText(string $pageType)
-	{
-		foreach($this->titleTexts as $titleText)
-		{
-			if($titleText['page-types'] === [] || in_array($pageType, $titleText['page-types'], true))
-			{
-				return $titleText['text'];
-			}
-		}
-		
-		return '';
-	}
-	
 	/**
-	* Adds a button with a custom action to list/card pages.
-	*
-	* @param string $name Unique name of this link
-	* @param string $label Label of the link
-	* @param string $columnLabel Label of the column in list view
-	* @param string $toTable Linked to table id (crudkit table id)
-	* @param string $toPage Like to page id (crudkit page id)
-	* @param FilterDefinition[] $filterDefinitions Array of FilterDefinition describing the relation.
-	* @param bool $onList Show on list page
-	* @param bool $onCard Show on card page
-	* @stackable
-	*/
+	 * Adds a button to the page that acts as a link to related records.
+	 * 
+	 * Example: link from author(one) to his books(many):
+	 * ```php
+	 * $pageDescriptor->addOneToManyLink('author-books', 'Books', 'Book Link', 'book', [new FilterDefinition('author_id', '=', 'field', 'id')], true, true);
+	 * //Think in sql: select * from book where author_id = author.id;
+	 * ```
+	 * @param string $name Unique name of this link
+	 * @param string $label Label of the link
+	 * @param string $columnLabel Label of the column in list view
+	 * @param string $toTable Linked to table id (crudkit table id)
+	 * @param string $toPage Like to page id (crudkit page id)
+	 * @param FilterDefinition[] $filterDefinitions Array of FilterDefinition describing the relation.
+	 * @param bool $onList Show on list page
+	 * @param bool $onCard Show on card page
+	 * @stackable
+	 */
 	public function addOneToManyLink(string $name, string $label, string $columnLabel, string $toTable, string $toPage, array $filterDefinitions, bool $onList = true, bool $onCard = true)
 	{
 		$callback = function($record, $pageDescriptor, $action)
@@ -318,20 +342,40 @@ class PageDescriptor
 	}
 	
 	/**
-	* Add a button with a custom action to list/card pages.
-	* @param string $name Unique name of this action
-	* @param string $label Label of the button
-	* @param string $columnLabel Label of the column in list view
-	* @param callable $callback Callback function to execute when pressing the button. This callback has $record, $pageDescriptor, $action as parameters.
-	* @param bool $onList (optional) Show on list page
-	* @param bool $onCard (optional) Show on card page
-	* @param string $faIcon (optional) Icon for the Button. (Font Awesome icon name)
-	* @param string $btnClass (optional) ''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)
-	* @param string $position (optional) 'top'|'bottom'|'both'. Position on card pages.
-	* @param bool $enabled (optional) Enabled by default
-	* @stackable
+	 * Add a button with a custom action to this page.
+	 *
+	 * Be creative, but take care. Your can write you own php code and use all of crudkits api to manipulate data, etc... (see apidoc-dev):
+	 * ```php
+	 * $callback = function($record, $pageDescriptor, $action) { mail('ceo@mydomain.com', 'Book info', 'Check out our new book: '. $record["name"]); };
+	 * $pageDescriptor->addAction('mail', 'Send book-info mail', 'Mail', $callback, true, true, envelope, 'info');
+	 * //Next thing: drop table studends;
+	 * ```
+	 * @param string $name Unique name of this action
+	 * @param string $label Label of the button
+	 * @param string $columnLabel Label of the column in list view
+	 * @param callable $callback Callback function to execute when pressing the button. This callback has $record, $pageDescriptor, $action(this is what you definde here) as parameters.
+	 * @param bool $onList (optional) Show on list page
+	 * @param bool $onCard (optional) Show on card page
+	 * @param string $faIcon (optional) Icon for the Button. (Font Awesome icon name)
+	 * @param string $btnClass (optional) ''|'default'|'primary'|'info'|'success'|'danger'|'warning'. (Admin LTE Button class)
+	 * @param string $position (optional) 'top'|'bottom'|'both'. Position on card pages.
+	 * @param bool $enabled (optional) Enabled by default
+	 * @stackable
 	*/
-	public function addAction($name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = '', string $position = '', bool $enabled = true)
+	public function addAction(string $name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = '', string $position = '', bool $enabled = true)
+	{
+		$this->addActionObject($name, new Action($name, $label, $columnLabel, $callback, $onList, $onCard, $faIcon, $btnClass, $position, $enabled));
+		return $this;
+	}
+
+	/**
+	 * Add a button with a custom action to this page.
+	 * 
+	 * @param string $name Unique name of this action
+	 * @param Action $action The Action
+	 * @stackable
+	 */
+	public function addActionObject(string $name, Action $action)
 	{
 		//Callback functions parameters: $record, $pageDescriptor, $action
 		if(dp::e($name))
@@ -344,19 +388,22 @@ class PageDescriptor
 			dp::curdkitException('Action "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
-		$this->actions[$name] = new Action($name, $label, $columnLabel, $callback, $onList, $onCard, $faIcon, $btnClass, $position, $enabled);
-		
+		$this->actions[$name] = $action;
 		return $this;
 	}
 	
+	/**
+	 * Removes a custom action from this page.
+	 */
 	public function removeAction(string $name)
 	{
 		if(!isset($this->actions[$name]))
 		{
-			dp::curdkitException('Remove action failed: action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
+			dp::curdkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
 		unset($this->actions[$name]);
+
 		return $this;
 	}
 	

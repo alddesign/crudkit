@@ -32,9 +32,10 @@ class Action
     public $btnClass = '';
     /** @var string $position Position on card page: 'top'|'bottom'|'both' */
     public $position = '';
-    /** @var bool $enabled Default = true.*/
+    /** @var bool $enabled Default = true. Disabled actions are gray buttons and cannot be clicked.*/
     public $enabled = true; 
-    
+    /** @var bool $visible Default = true.*/
+    public $visible = true;
     /** @var array $data Additional data which can be set when creatig the action. (Can be accessed in the callback function) */
     public $data = [];
 
@@ -43,7 +44,7 @@ class Action
      * 
      * Params basically the properies of this class.
      */
-    public function __construct(string $name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = 'default', string $position = 'both', bool $enabled = true)
+    public function __construct(string $name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = 'default', string $position = 'both')
     {	
         if(!in_array($position, self::POSITIONS, true))
 		{
@@ -64,7 +65,6 @@ class Action
         $this->faIcon = $faIcon;
         $this->btnClass = $btnClass;
         $this->position = $position;
-        $this->enabled = $enabled;
     }
 }
 
