@@ -8,41 +8,51 @@ use DB;
 use URL;
 
 /**
-* Alllows to define One to Many Columns
-* The scenarios requiring such a coumn are very rare.
-* Example: Table 'author', Column 'number_of_books' would be a one to many column, but this is bad practice.
-*/
+ * !!! EXPERIMENTAL !!!
+ * 
+ * Allows to define One to Many Columns
+ * The scenarios requiring such columns are very rare.
+ * Example: Table 'author' -> column 'number_of_books' (int) would be a one to many column, but this is bad practice.
+ * @internal
+ */
 class SQLOneToManyColumn extends SQLColumn
 {
-    private $foreignTableName = null;
+    private $foreignTableId = null;
 	private $filterDefinitions = [];
 
 	/**
-	* Creates a new One to Many Column.
-	* @param FilterDefinition filterDefinitions.
-	*/
-    public function __construct(string $name, string $label, string $type, string $foreignTableName, array $filterDefinitions, array $options = [])
+	 * Creates a new One to Many Column.
+	 * @param FilterDefinition[] $filterDefinitions 
+	 */
+    public function __construct(string $name, string $label, string $type, string $foreignTableId, array $filterDefinitions, array $options = [])
     {
 		if(in_array($type, ['textlong', 'image', 'blob'], true))
 		{
-			throw new Exception(sprintf('Datentyp "%s" kann nicht als Foreign Key definiert werden!'));
+			dp::crudkitException('Column of type "%s" cannot be defined One to Many Column.', __CLASS__, __FUNCTION__, $type);
 		}
 		
         parent::__construct($name, $label, $type, $options);
 		
-		$this->foreignTableName = $foreignTableName;
+		$this->foreignTableId = $foreignTableId;
 		$this->filterDefinitions = $filterDefinitions;
 		
 		$this->relationType = 'onetomany';
     }
 	
+	/**
+	 * Gets the url to the list page of the related records.
+	 * 
+	 * @param array $record Record data
+	 * @param PageStore $pageStore
+	 * @return string
+	 */
 	public function getListUrl($record, $pageStore)
 	{
 		$pageDescriptors = $pageStore->getPageDescriptors();
 		foreach($pageDescriptors as $pageDescriptor)
 		{
 			//Found a Page!
-			if($pageDescriptor->getTable()->getName() === $this->foreignTableName)
+			if($pageDescriptor->getTable()->getName() === $this->foreignTableId)
 			{
 				$c = 0;
 				$urlParameters = [];
@@ -59,13 +69,7 @@ class SQLOneToManyColumn extends SQLColumn
 			}
 		}
 
-		throw new Exception(sprintf('Keine Page mit Tabelle "%s" vorhanden.', $this->foreignTableName));	
-	}
-	
-	//Override Base Class Method
-	public function getRelationType()
-	{
-		return 'onetomany';
+		dp::crudkitException('Table "%s" not found.', __CLASS__, __FUNCTION__, $this->foreignTableId);	
 	}
 }
 

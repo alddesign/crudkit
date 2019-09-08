@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">351</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">303</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-698032172"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1794164483"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-698032172" class="accordion-body collapse in">
+            <div id="namespace-1794164483" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-916796109"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1128342249"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-916796109" class="accordion-body collapse ">
+            <div id="namespace-1128342249" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-264291482"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-557181537"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-264291482" class="accordion-body collapse ">
+            <div id="namespace-557181537" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-533654706"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1297067689"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-533654706" class="accordion-body collapse ">
+            <div id="namespace-1297067689" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -206,10 +206,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1633316957"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1899565559"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-1633316957" class="accordion-body collapse ">
+            <div id="namespace-1899565559" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -386,8 +386,8 @@
 				-&gt;addColumn(&#039;name&#039;, &#039;Name&#039;, &#039;text&#039;, [])
 				-&gt;addColumn(&#039;description&#039;, &#039;Description&#039;, &#039;text&#039;, [])
 				-&gt;addColumn(&#039;author_id&#039;, &#039;Author id&#039;, &#039;integer&#039;, [])
-				-&gt;addColumn(&#039;cover&#039;, &#039;Cover&#039;, &#039;image&#039;, [])
 				-&gt;addColumn(&#039;price&#039;, &#039;Price&#039;, &#039;float&#039;, [])
+				-&gt;addColumn(&#039;cover&#039;, &#039;Cover&#039;, &#039;image&#039;, [])
 				,
 		];
 		//&lt;CRUDKIT-TABLES-END&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
@@ -482,7 +482,7 @@
 				$pageDescriptor-&gt;setSummaryColumns($cols); //set columns
 			}
 		};
-
+		//dp::xout($this-&gt;tables[&#039;book&#039;]-&gt;getColumns(true));
 		//Main code
 		return 
 		[
@@ -492,6 +492,7 @@
 				,
 			&#039;book&#039; =&gt; (new PageDescriptor(&#039;Book&#039;, &#039;book&#039;, $this-&gt;tables[&#039;book&#039;]))
 				-&gt;setCardLinkColumns([&#039;id&#039;])
+				-&gt;addSection(&#039;Additional Data&#039;, &#039;cover&#039;, &#039;price&#039;)
 				-&gt;addOneToManyLink(&#039;author&#039;, &#039;Author&#039;, &#039;Author&#039;, &#039;author&#039;, &#039;author&#039;, [(new FilterDefinition(&#039;id&#039;, &#039;=&#039;, &#039;field&#039;, &#039;author_id&#039;))])
 				-&gt;onOpenList($onOpenAuthorListCallback)
 				,
@@ -634,7 +635,7 @@ Default login (administrator) is definded in crudkit config.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 7th, 2019 at 20:36.
+                    on September 8th, 2019 at 17:00.
                 </section>
             </section>
         </section>

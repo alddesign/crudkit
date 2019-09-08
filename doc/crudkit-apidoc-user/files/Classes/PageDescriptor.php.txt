@@ -119,7 +119,7 @@ class PageDescriptor
 			{
 				return $this->actions[$name]; 
 			}
-			dp::curdkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
+			dp::crudkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		return $this->actions;
 	}
@@ -224,16 +224,18 @@ class PageDescriptor
 	 * @stackable */
 	public function setIcon(string $value = '')				{ $this->icon = $value;				return $this; }
 
-	/** Defines which columns are shown on list pages (defaul = all) 
+	/** 
+	 * Defines which columns are shown in which order on list pages (defaul = all, order = as defined in tables). 
 	 * @param string[] $summaryColumnNames
-	 * @stackable*/
+	 * @stackable
+	 */
     public function setSummaryColumns(array $summaryColumnNames)
     {
 		$columnsNotFound = array_diff($summaryColumnNames, $this->table->getColumns(true));
 		
 		if(!dp::e($columnsNotFound))
         {
-            dp::crudkitException('Page - set summary columns: following summary columns were not found on page "%s" (table "%s"): "%s"', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
+            dp::crudkitException('Following summary columns were not found on page "%s" (table "%s"): "%s"', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
         }
 
 		//$this->summaryColumns = ['id' => 'id', 'description' => 'description'];
@@ -380,12 +382,12 @@ class PageDescriptor
 		//Callback functions parameters: $record, $pageDescriptor, $action
 		if(dp::e($name))
 		{
-			dp::curdkitException('Provide a name form the action.', __CLASS__, __FUNCTION__);
+			dp::crudkitException('Provide a name form the action.', __CLASS__, __FUNCTION__);
 		}
 		
 		if(isset($this->actions[$name]))
 		{
-			dp::curdkitException('Action "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $name, $this->id);
+			dp::crudkitException('Action "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $name, $this->id);
 		}
 		
 		$this->actions[$name] = $action;
@@ -393,63 +395,55 @@ class PageDescriptor
 	}
 	
 	/**
-	 * Removes a custom action from this page.
+	 * Adds a section (foldable area with a title) to the card page.
+	 * 
+	 * Make sure multiple sections do no overlap. Order of from/toColumnName are interchangeable.
+	 * 
+	 * @param string $title The title to display (unique)
+	 * @param string $fromColumnName
+	 * @param string $toColumnName
 	 */
-	public function removeAction(string $name)
-	{
-		if(!isset($this->actions[$name]))
-		{
-			dp::curdkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
-		}
-		
-		unset($this->actions[$name]);
-
-		return $this;
-	}
-	
-	//Call after you have set the tabel
-	public function addSection(string $title, string $fromColumnName, string $toColumnName = '', string $titleText = '')
+	public function addSection(string $title, string $fromColumnName, string $toColumnName = '')
 	{
 		//Test if columns exists
 		$columns = $this->table->getColumns(true);
 		if(dp::e($columns))
 		{
-			dp::curdkitException('No columns found in table "%s".', __CLASS__, __FUNCTION__, $this->table->getName());
+			dp::crudkitException('No columns found in table "%s".', __CLASS__, __FUNCTION__, $this->table->getName());
 		}
 		
 		//Test if Columns exist
 		if(!in_array($fromColumnName, $columns, true))
 		{
-			dp::curdkitException('From-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
+			dp::crudkitException('From-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
 		}
 		if(!dp::e($toColumnName) && !in_array($toColumnName, $columns, true))
 		{
-			dp::curdkitException('To-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
+			dp::crudkitException('To-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
 		}
 		
 		//Get Last Column, if not specified
-		$toColumnName = dp::e($toColumnName) ? $columns[count($columns)-1] : $toColumnName;
+		$toColumnName = dp::e($toColumnName) ? end($columns) : $toColumnName;
 		
-		//Test order
-		$from = array_search($fromColumnName, $columns);
-		$to = array_search($toColumnName, $columns);
-		if($from >= $to)
+		//Swap if order is wrong
+		$fromIndex = array_search($fromColumnName, array_keys($columns));
+		$toIndex = array_search($toColumnName, array_keys($columns));
+		if($fromIndex > $toIndex)
 		{
-			dp::curdkitException('From-column "%s" has to be before to-column "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $toColumnName);
+			dp::swap($fromIndex, $toIndex);
+			dp::swap($fromColumnName, $toColumnName);
 		}
 		
-		//Test crossings
+		//Test crossings of sections
 		foreach($this->sections as $section)
 		{
-			$xfrom = array_search($section->from, $columns);
-			$xto = array_search($section->to, $columns);
-			if(
-			   ($from >= $xfrom && $from <= $xto) || 
-			   ($to >= $xfrom && $to <= $xfrom) ||
-			   ($from <= $xfrom && $to >= $xto)
-			  )
+			$fromIndex2 = array_search($section->from, array_keys($columns));
+			$toIndex2 = array_search($section->to, array_keys($columns));
+			if(($fromIndex >= $fromIndex2 && $fromIndex <= $toIndex2) || 
+			   ($toIndex >= $fromIndex2 && $toIndex <= $fromIndex2) ||
+			   ($fromIndex <= $fromIndex2 && $toIndex >= $toIndex2))
 			{
-				dp::curdkitException('Sections "%s" and "%s" overlap each other.', __CLASS__, __FUNCTION__, $section['title'], $title);
+				dp::crudkitException('Sections "%s" and "%s" overlap each other.', __CLASS__, __FUNCTION__, $section['title'], $title);
 			}
 		}
 		

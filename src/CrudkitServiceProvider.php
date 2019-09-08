@@ -94,8 +94,8 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				->addColumn('name', 'Name', 'text', [])
 				->addColumn('description', 'Description', 'text', [])
 				->addColumn('author_id', 'Author id', 'integer', [])
-				->addColumn('cover', 'Cover', 'image', [])
 				->addColumn('price', 'Price', 'float', [])
+				->addColumn('cover', 'Cover', 'image', [])
 				,
 		];
 		//<CRUDKIT-TABLES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
@@ -119,7 +119,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/**
      * Populate this methods to define the pages (views) according to the already definded tables.
 	 * 
-	 * @example ".\CrudkitServiceProvider.php" 126 39 Example with usage of page events and custom actions:
+	 * @example ".\CrudkitServiceProvider.php" 126 40 Example with usage of page events and custom actions:
 	 * @return PageDescriptor[]
 	 * @see PageDescriptor 
      */
@@ -146,7 +146,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				$pageDescriptor->setSummaryColumns($cols); //set columns
 			}
 		};
-
+		//dp::xout($this->tables['book']->getColumns(true));
 		//Main code
 		return 
 		[
@@ -156,6 +156,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				,
 			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
 				->setCardLinkColumns(['id'])
+				->addSection('Additional Data', 'cover', 'price')
 				->addOneToManyLink('author', 'Author', 'Author', 'author', 'author', [(new FilterDefinition('id', '=', 'field', 'author_id'))])
 				->onOpenList($onOpenAuthorListCallback)
 				,
@@ -169,7 +170,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	 * Optional: define RestrictionSet and/or Startpage for each User.
 	 * Default login (administrator) is definded in crudkit config.
 	 * 
-	 * @example ".\CrudkitServiceProvider.php" 178 34 Example
+	 * @example ".\CrudkitServiceProvider.php" 179 34 Example
 	 * @return AuthHelper
 	 * @see CrudkitUser
 	 * @see Startpage

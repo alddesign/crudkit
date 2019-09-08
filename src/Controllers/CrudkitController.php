@@ -630,7 +630,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			fputcsv($fileHandle, [dp::text('restricted_by_filter'), dp::text('column'),dp::text('operator'),dp::text('value')], ';');
 			foreach($filters as $index => $filter)
 			{
-				fputcsv($fileHandle, [dp::text('filter') . ' ' . ($index + 1), sprintf('%s (%s)', $columns[$filter->field]->getLabel(), $filter->field), $filter->operator, $filter->value], ';');
+				fputcsv($fileHandle, [dp::text('filter') . ' ' . ($index + 1), sprintf('%s (%s)', $columns[$filter->field]->label, $filter->field), $filter->operator, $filter->value], ';');
 			}
 		}
 
@@ -640,7 +640,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$header = [];
 		foreach($columns as $name => $column)
 		{
-			$header[] = $column->getLabel();
+			$header[] = $column->label;
 		}
 		fputcsv($fileHandle, $header, ';');
 		
@@ -961,11 +961,11 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		
 		foreach($columns as $column)
 		{
-			if($relationType === $column->getRelationType())
+			if($relationType === $column->relationType)
 			{
 				foreach($records as $index => $record)
 				{
-					$result[$index][$column->getName()] = ($relationType === 'manytoone') ? $column->getCardUrl($record, $this->pageStore) : $column->getListUrl($record, $this->pageStore);
+					$result[$index][$column->name] = ($relationType === 'manytoone') ? $column->getCardUrl($record, $this->pageStore) : $column->getListUrl($record, $this->pageStore);
 				}
 			}
 		}

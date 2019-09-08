@@ -5,8 +5,11 @@ namespace Alddesign\Crudkit\Classes;
 /** 
  * Defines a section on a Card page. 
  * 
- * Sections are a group of fields (from - to). Each Section is labeled with a title an can be openend/closed on UI.
- * Add Sections to a PageDescriptor Object via ->addSection()
+ * Sections are a group of fields (from - to) on a page. 
+ * 
+ * Each Section is labeled with a title an can be folded (show/hide). Add Sections to a PageDescriptor Object via ->addSection()
+ * @see PageDescriptor
+ * @internal
  */
 class Section
 {
