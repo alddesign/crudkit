@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
 use DB;
@@ -9,24 +10,43 @@ use Response;
 use \DateTime;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
+/**
+ * Definition of a database table.
+ * 
+ * Examples for usage are provided in the documentation for CrudkitServiceProvider.
+ * Important: all methods marked with "@stackable" (like the constructor and all set methods) can be used like this
+ * ```php
+ * $page = new TableDesriptor(...)
+ * 		->addColumn(...)
+ * 		->setSoftDeleteColumn(...)
+ * 		->...
+ * ``` 
+ * ...easy
+ * @see \Alddesign\Crudkit\CrudkitServiceProvider
+ */
 class TableDescriptor
 {
-    private $name = null;
-	private $primaryKeyColumns = [];
-	private $hasAutoincrementKey = false;
-    private $columns = [];
+    /** @ignore */ private $name = null;
+	/** @ignore */ private $primaryKeyColumns = [];
+	/** @ignore */ private $hasAutoincrementKey = false;
+    /** @ignore */ private $columns = [];
 	
-	private $allColumns = []; //Array of all table columns. Needed for inserts. Fetched by Doctrine DBAL.
-	private $allColumnsFetched 	= false;
+	/** @ignore */ private $allColumns = []; //Array of all table columns. Needed for inserts. Fetched by Doctrine DBAL.
+	/** @ignore */ private $allColumnsFetched 	= false;
     
-	private $softDeleteColumn = null;
-	private $softDeletedValue = true;
-	private $softNotDeletedValue = false;
+	/** @ignore */ private $softDeleteColumn = null;
+	/** @ignore */ private $softDeletedValue = true;
+	/** @ignore */ private $softNotDeletedValue = false;
 	
-	private $dbconf = null;
+	/** @ignore */ private $dbconf = null;
 	
-	// ### INITIAL ###################################################################################################################################################################################
-	//AD You must specify the primary key columns
+	/**
+	 * Constructor
+	 * 
+	 * @param string $name Name of the table (as defined in the database)
+	 * @param string[] $primaryKeyColumns String array of column names, which define the primary key of this table, or at least identify a single record. Remember: if no column is a PK, every column is a PK!
+	 * @param bool $hasAutoincrementKey (default = false) Set this to TRUE if you have a column like and integer ID, which will be generated (MySQL Auto increment, MSSQL identity)
+	 */
     public function __construct(string $name, array $primaryKeyColumns, bool $hasAutoincrementKey = false)
     {
         $this->name = $name;
@@ -36,42 +56,56 @@ class TableDescriptor
 		$this->dbconf = dp::getCrudkitDbConfig();
     }
 
-	// ### GET / SET ###################################################################################################################################################################################
-    public function getName()
+	/* #region GET */
+	/** @return string Name of the table (as defined in the database) */
+	public function getName()
     {
         return $this->name;
     }
 	
+	/** @return bool */
 	public function getHasAutoincrementKey()
 	{
 		return $this->$hasAutoincrementKey;
 	}
 	
-	public function setHasAutoincrementKey(bool $hasAutoincrementKey = false)
-	{
-		$this->$hasAutoincrementKey = $hasAutoincrementKey;
-	}
-	
+	/** @return string Name of the soft delte column (soft delete is a pseudo delete) */
     public function getSoftDeleteColumn()
     {
         return $this->softDeleteColumn;
     }
 	
+	/** @return mixed Value of the soft delete Column that indicates that the record IS deleted */
 	public function getSoftDeletedValue()
 	{
 		return $this->softDeletedValue;
 	}
 	
+	/** @return mixed Value of the soft delete Column that indicates that the record is NOT deleted. */
 	public function getSoftNotDeletedValue()
 	{
 		return $this->softNotDeletedValue;
 	}
 
-    public function hasColumn($columnName)
+	/**
+	 * Checks if a column with a specific name exists in this table. 
+	 * 
+	 * @param string $columnName The name of the column to check
+	 * @return bool
+	 */
+    public function hasColumn(string $columnName)
     {
         return array_key_exists($columnName, $this->columns);
     }
 	 
+	/**
+	 * Returns an array of this tables columns, including extended information from Doctrine DBAL.
+	 * 
+	 * Make sure to call fetchAllColumns() at least once before calling this method.
+	 * 
+	 * @param bool $namesOnly (default = FALSE) TRUE = retruns string[] array with the column names, FALSE = return and array of SQLColumn[] objects
+	 * @return string[]|SQLColumn[]
+	 */
 	public function getAllColumns(bool $namesOnly = false)
 	{
 		if(!$this->allColumnsFetched)
@@ -89,6 +123,12 @@ class TableDescriptor
 		}
 	}
 	 
+	/**
+	 * Returns an array of this tables columns
+	 * 
+	 * @param bool $namesOnly (default = FALSE) TRUE = retruns string[] array with the column names, FALSE = return and array of SQLColumn[] objects
+	 * @return string[]|SQLColumn[]
+	 */
     public function getColumns(bool $namesOnly = false)
     {
 		if($namesOnly)
@@ -101,6 +141,12 @@ class TableDescriptor
 		}
     }
 	
+	/**
+	 * Returns an array of this tables primary key columns
+	 * 
+	 * @param bool $namesOnly (default = FALSE) TRUE = retruns string[] array with the column names, FALSE = return and array of SQLColumn[] objects
+	 * @return string[]|SQLColumn[]
+	 */
 	public function getPrimaryKeyColumns(bool $namesOnly = false)
     {
 		if($namesOnly)
@@ -116,12 +162,20 @@ class TableDescriptor
 		return $columns;
     }
 	
+	/**
+	 * Returns values for each many-to-one column of this table (values from related tables)
+	 * 
+ 	 * ```php
+	 * ['column-name-1' => ['value-1', 'value-2'], 'column-name-2' => [...]] 
+	 * ```
+	 * @return array
+	 */
 	public function getManyToOneColumnValues()
 	{
 		$result = [];
 		foreach($this->columns as $name => $column)
 		{
-			if($column->getRelationType() == 'manytoone')
+			if($column->getRelationType() === 'manytoone')
 			{
 				$result[$name] = $column->getManyToOneValues();
 			}
@@ -129,7 +183,16 @@ class TableDescriptor
 		
 		return $result;
 	}
+	/* #endregion */
 	
+	/**
+	 * This method fetches $allColumns via Doctrine\DBAL (get extended information about columns)
+	 * 
+	 * This is a compute intensive workload - so it should only be used by CRUDKit internally, and only when needed.
+	 * 
+	 * @param bool $fore Force a re-fetch.
+	 * @internal
+	 */
 	public function fetchAllColumns(bool $force = false)
 	{		
 		if(!$force && $this->allColumnsFetched)
@@ -158,8 +221,8 @@ class TableDescriptor
 		$this->allColumnsFetched = true;
 	}
 	
-	// ### METHODS ################################################################################################################################################################################
-    public function addColumn(string $name, string $label, string $type, $options = [])
+	/* #region SET and ADD Methods */
+	public function addColumn(string $name, string $label, string $type, $options = [])
     {
 		if($name === $this->softDeleteColumn)
 		{
@@ -212,10 +275,10 @@ class TableDescriptor
     }
 
 	/**
-	* Sets the position of a Column
-	* @param $columnName Defines the column to be set to a specific position.
-	* @param $where Is either 'before' or 'after'
-	* @param $referenceColumnName Before or after this Column the $columnName will be placed
+	 * Sets the position of a Column
+	 * @param $columnName Defines the column to be set to a specific position.
+	 * @param $where Is either 'before' or 'after'
+	 * @param $referenceColumnName Before or after this Column the $columnName will be placed
 	*/
 	public function setColumnPosition(string $columnName, string $where, string $referenceColumnName)
 	{
@@ -235,8 +298,9 @@ class TableDescriptor
 		
 		return $this;
 	}
-	
-	// ### CRUD OPERATIONS ###########################################################################################
+	/* #endregion */
+
+	/* #region CRUD  */
 	/**
 	 * Reads a record from the DB
 	 * @param string[] $primaryKeyValues
@@ -499,8 +563,9 @@ class TableDescriptor
 		
 		return true;
     }
-
-	// ### HELPER METHODS #############################################################################################################################################	
+	/* #endregion */
+	
+	/* #region Helpers */
 	private function getDbSpecificColumnNameWithDelimiter(string $columnName)
 	{
 		$d = $this->dbconf['delimiters'];
@@ -560,4 +625,5 @@ class TableDescriptor
 			array_slice($array, $pos)
 		);
 	}
+	/* #endregion */
 }

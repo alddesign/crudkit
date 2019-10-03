@@ -1,30 +1,43 @@
 <?php 
-/** @ignore */
 namespace Alddesign\Crudkit\Classes;
 
-/** @ignore */
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 use Response;
 
-/** @ignore */
+/**
+ * Defines a startpage for users.
+ * 
+ * Startpages can be assigned to users to override the default startpage.
+ * 
+ * @see AuthHelper
+ * @see User
+ */
 class Startpage
 {	
-	private $pageId = null;
-	private $type = null;
-	private $parameters = [];
+	/** @ignore */ private $pageId = "";
+	/** @ignore */ private $type = "";
+	/** @ignore */ private $parameters = [];
+
+	private const ALLOWED_TYPES = ['list', 'card', 'create', 'update']; 
 	
-	/** @ignore */
+	/**
+	 * Constructor
+	 * 
+	 * @param string $pageId Page to display.
+	 * @param string $type Which specific type of the page (list, card, create, update)
+	 * @param array $parameters Parameters when calling this page. For example primary key values when calling a card page.
+	 */
     public function __construct(string $pageId, string $type, array $parameters = [])
     {
 		if(dp::e($pageId))
 		{
-			dp::ex('Startpage - __construct: no page ID provided.');
+			dp::crudkitException('No page id provided.', __CLASS__, __FUNCTION__);
 		}
 		
-		if(!in_array($type, ['list', 'card', 'create', 'update'], true))
+		if(!in_array($type, self::ALLOWED_TYPES, true))
 		{
-			dp::ex('Startpage - __construct: invalid type "%s"', $type);
+			dp::crudkitException('Invalid type "%s".', __CLASS__, __FUNCTION__, $type);
 		}
 		
 		$this->pageId = $pageId;
@@ -32,6 +45,9 @@ class Startpage
 		$this->parameters = $parameters;
     }
 	
+	/**
+	 * Performs a redirect to the Startpage.
+	 */
 	public function redirectTo()
 	{
 		$controller = '\Alddesign\Crudkit\Controllers\CrudkitController@';
@@ -49,7 +65,5 @@ class Startpage
 		$params = array_merge(['page-id' => $this->pageId], $this->parameters);
 		
 		Response::redirectToAction($controller.$action, $params)->send();
-			
-		return;
 	}
 }
