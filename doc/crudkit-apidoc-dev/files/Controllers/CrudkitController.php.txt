@@ -12,7 +12,6 @@ use Alddesign\Crudkit\Classes\PageStore;
 use Alddesign\Crudkit\Classes\AuthHelper;
 use Alddesign\Crudkit\Classes\Filter;
 use Alddesign\Crudkit\Classes\FilterDefinition;
-use \XML_Serializer;
 
 use DB;
 use Response;
@@ -732,8 +731,6 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		
 		//Create XML
 		$XmlSerializer = new \Alddesign\Crudkit\Classes\XmlSerializer();
-		$XmlSerializer->indent = "\t";
-		$XmlSerializer->defaultNodeName = 'record';
 		$xml = $XmlSerializer->generateXmlFromArray($data);
 		
 		//Write to file
@@ -897,7 +894,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$renderer->setBackgroundColor(new \BaconQrCode\Renderer\Color\Rgb(255,255,255));
 		
 		$writer = new \BaconQrCode\Writer($renderer);
-		return('<img src="data:image/png;base64,' . base64_encode($writer->writeString($request->fullUrl())) . '" id="crudkit-qrcode" />');
+		$base64data = base64_encode($writer->writeString($request->fullUrl()));
+		return('<img src="data:image/png;base64,' . $base64data . '" id="crudkit-qrcode" />');
 	}
 	
 	/** @ignore */

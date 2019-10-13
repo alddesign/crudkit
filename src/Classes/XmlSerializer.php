@@ -1,17 +1,18 @@
 <?php
 namespace Alddesign\Crudkit\Classes;
 
-class XMLSerializer 
+/** @ignore */
+class XmlSerializer 
 {
-
-	public $rootNodeName = 'nodes';
-	public $defaultNodeName = 'defaultnode';
-	public $indent = '';
-	public $encoding = 'UTF-8';
+	private $rootNodeName = 'nodes';
+	private $defaultNodeName = '';
+	private $indent = '';
+	private $encoding = 'UTF-8';
 	
-	public function __construct()
+	public function __construct(string $defaultNodeName = 'record')
 	{
-		
+		$this->defaultNodeName = $defaultNodeName;
+		$this->indent = "\t";
 	}
 	
     public function generateXmlFromObject(stdClass $object) 

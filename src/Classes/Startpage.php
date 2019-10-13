@@ -15,11 +15,12 @@ use Response;
  */
 class Startpage
 {	
-	/** @ignore */ private $pageId = "";
-	/** @ignore */ private $type = "";
-	/** @ignore */ private $parameters = [];
 
-	private const ALLOWED_TYPES = ['list', 'card', 'create', 'update']; 
+	/** @internal */ const ALLOWED_TYPES = ['list', 'card', 'create', 'update']; 
+
+	/** @internal */ private $pageId = "";
+	/** @internal */ private $type = "";
+	/** @internal */ private $parameters = [];
 	
 	/**
 	 * Constructor
@@ -35,7 +36,7 @@ class Startpage
 			dp::crudkitException('No page id provided.', __CLASS__, __FUNCTION__);
 		}
 		
-		if(!in_array($type, self::ALLOWED_TYPES, true))
+		if(!in_array($type, $this->allowedTypes, true))
 		{
 			dp::crudkitException('Invalid type "%s".', __CLASS__, __FUNCTION__, $type);
 		}
@@ -47,6 +48,8 @@ class Startpage
 	
 	/**
 	 * Performs a redirect to the Startpage.
+	 * 
+	 * @internal
 	 */
 	public function redirectTo()
 	{

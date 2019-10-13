@@ -146,7 +146,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				$pageDescriptor->setSummaryColumns($cols); //set columns
 			}
 		};
-		//dp::xout($this->tables['book']->getColumns(true));
+
 		//Main code
 		return 
 		[

@@ -110,7 +110,7 @@ class TableDescriptor
 	{
 		if(!$this->allColumnsFetched)
 		{ 
-			throw new Exception(sprintf('Table Descriptor - get all columns: please call function fetchAllColumns() first. (Notice: fetchAllColumns() has a major performance impact.)'));
+			dp::crudkitException('Please call fetchAllColumns() first. (Note: performance impact)', __CLASS__, __FUNCTION__);
 		}
 	
 		if($namesOnly)
@@ -183,7 +183,6 @@ class TableDescriptor
 		
 		return $result;
 	}
-	/* #endregion */
 	
 	/**
 	 * This method fetches $allColumns via Doctrine\DBAL (get extended information about columns)
@@ -220,13 +219,26 @@ class TableDescriptor
 		
 		$this->allColumnsFetched = true;
 	}
-	
+	/* #endregion */
+
 	/* #region SET and ADD Methods */
+	/**
+	 * Adds a sql column to this table.
+	 * 
+	 * You dont need to add every column that exists in the table, only those you need.
+	 * 
+	 * @param string $name The name of the column like its defined in the Database
+	 * @param string $label The label to display the column on UI.
+	 * @param string $type The datatype - for details see SQLColumn Class doc
+	 * @param array $options (optional) - for details see SQLColumn Class doc
+	 * 
+	 * @see SQLColumn
+	 */
 	public function addColumn(string $name, string $label, string $type, $options = [])
     {
-		if($name === $this->softDeleteColumn)
+		if(isset($this->columns[$name]) || $name === $this->softDeleteColumn)
 		{
-			dp::ex('TableDescriptor - addColumn: You cannot add colum "%s" to table "%s". It is set as soft delete column.', $name, $this->name);
+			dp::crudkitException('Cannot add column "%s" to talbe "%s". Column already exists.', __CLASS__, __FUNCTION__, $name, $this->name);
 		}
 		
         $this->columns[$name] = new SQLColumn($name, $label, $type, $options);
@@ -234,11 +246,25 @@ class TableDescriptor
         return $this;
     }
 	
+	/**
+	 * Defines an existing column as a many-to-on relation to another Table.
+	 * 
+	 * Example: book.author_id is a many to one column. Related table.field is author.id
+	 * Example code: see CrudkitServiceProvider doc
+	 * 
+	 * @param string $name Name of the column
+	 * @param string $relationTableName The name of the related table
+	 * @param string $relationColumnName The name of the column in the related table
+	 * @param FilterDefinition[] $filterDefinitions (optional) Array of FilterDefinitions that is beeing applied to the related table (relation only to a subset of records)
+	 * @param bool $clickable (default = true) Show this column as clickable link (to a card page)
+	 * 
+	 * @see \Alddesign\Crudkit\CrudkitServiceProvider
+	 */
 	public function defineManyToOneColumn(string $name, string $relationTableName, string $relationColumnName, array $filterDefinitions = [], bool $clickable = true)
 	{
 		if(!isset($this->columns[$name]))
 		{
-			throw new Exception(sprintf('Table Descriptor - define many to one column: column "%s" was not found in table "%s".', $name, $this->name));
+			dp::crudkitException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
 		}
 		
 		$column = $this->columns[$name];
@@ -247,48 +273,75 @@ class TableDescriptor
 		return $this;
 	}
 	
-	public function defineOneToManyColumn(string $name, string $relationTableName, array $filters)
+	/**
+	 * !!! Experimental !!!
+	 * 
+	 * @param string $name Name of the column
+	 * @param string $relationTableName The name of the related table
+	 * @param FilterDefinition[] $filterDefinitions Array of FilterDefinitions that is beeing applied to the related table.
+	 * @internal
+	 */
+	public function defineOneToManyColumn(string $name, string $relationTableName, array $filterDefinitions)
 	{
 		if(!isset($this->columns[$name]))
 		{
-			throw new Exception(sprintf('Table Descriptor - define one to many column: column "%s" was not found in table "%s".', $name, $this->name));
+			dp::crudkitException('Cannot define column "%s" as one-to-many column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
 		}
 		
 		$column = $this->columns[$name];
-		$this->columns[$name] = new SQLOneToManyColumn($column->name, $column->label, $column->type, $relationTableName, $filters, $column->options);
+		$this->columns[$name] = new SQLOneToManyColumn($column->name, $column->label, $column->type, $relationTableName, $filterDefinitions, $column->options);
 		
 		return $this;
 	}
 	
-    public function setSoftDeleteColumn(string $name, $softDeletedValue = true, $softNotDeletedValue = false)
+	/**
+	 * Defines a column as an indicator if the record is deleted or not.
+	 * 
+	 * Important: the soft delete column must not be added as normal column to the table, cause this will make things hard (espcially for users)
+	 * When a soft delete column is defined, and a user deletes a record on the webpage, the record wont be deleted.
+	 * Only thing happen is that the value of the soft delete column will be changed, and crudkit wont display this record anymore. - Cool, isnt it?
+	 * 
+	 * @param string $name The name of the column
+	 * @param mixed $deleted (default = TRUE) The value of this column that indicates the record IS delteted
+	 * @param mixed $deleted (default = FALSE) The value of this column that indicates the record is NOT delteted
+	 */
+    public function setSoftDeleteColumn(string $name, $deleted = true, $notDeleted = false)
     {
 		if(isset($this->columns[$name]))
 		{
-			dp::ex('TableDescriptor - addColumn: You cannot set "%s" as soft delete column. It is already a normal column of table "%s".', $name, $this->name);
+			dp::crudkitException('Cannot set "%s" as soft delete column. It is already a normal column of table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
 		}
 
         $this->softDeleteColumn = $name;
-		$this->softDeletedValue = $softDeletedValue;
-		$this->softNotDeletedValue = $softNotDeletedValue;
+		$this->softDeletedValue = $deleted;
+		$this->softNotDeletedValue = $notDeleted;
         
 		return $this;
     }
 
 	/**
-	 * Sets the position of a Column
+	 * Sets the position of a column (display order)
+	 * 
+	 * ```php
+	 * $table->setColumnPosition('name', 'after', 'id'); //easy
+	 * ```
+	 * 
 	 * @param $columnName Defines the column to be set to a specific position.
 	 * @param $where Is either 'before' or 'after'
 	 * @param $referenceColumnName Before or after this Column the $columnName will be placed
 	*/
 	public function setColumnPosition(string $columnName, string $where, string $referenceColumnName)
 	{
+		$where = mb_strtolower($where);
+		$where = in_array($where, ['before', 'after'], true) ? $where : 'before';
+
 		if(!isset($this->columns[$columnName]))
 		{
-			throw new Exception(sprintf('Set column position: column "%s" was not found in table "%s".', $columnName, $this->name));
+			dp::crudkitException('Column (to move) "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $columnName, $this->name);
 		}
 		if(!isset($this->columns[$referenceColumnName]))
 		{
-			throw new Exception(sprintf('Set column position: column "%s" was not found in table "%s".', $referenceColumnName, $this->name));
+			dp::crudkitException('Reference column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $referenceColumnName, $this->name);
 		}
 	
 		$helper = ($this->columns[$columnName]);
@@ -312,7 +365,7 @@ class TableDescriptor
 		//Test Parameters
 		if((dp::e($primaryKeyValues) && dp::e($filters)) || (!dp::e($primaryKeyValues) && !dp::e($filters)))
 		{
-			throw new Exception('Read record: Please specify either primary key values or filters');
+			dp::crudkitException('Please specify either primary key values or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
 		}
 		
 		//Test Primary Keys
@@ -322,7 +375,7 @@ class TableDescriptor
 			$c2 = count($primaryKeyValues); 
 			if($c1 !== $c2)
 			{
-				throw new Exception(sprintf('Read record: The table "%s" has "%d" primary key fields. "%d" given.', $this->name, $c1, $c2));
+				dp::crudkitException('The table "%s" has "%d" primary key fields. "%d" given.', __CLASS__, __FUNCTION__, $this->name, $c1, $c2);
 			}
 		}
 		
@@ -364,7 +417,7 @@ class TableDescriptor
 		
 		if(count($record) !== 1)
 		{
-			throw new Exception(sprintf('Read record: Query return more than one record. %d records returned. Check primary key and filter parameters.', count($record)));
+			dp::crudkitException('Read record query returned %d records (only one expected). Check primary key and filter parameters. Table "%s".', __CLASS__, __FUNCTION__, count($record), $this->name);
 		}
 		else
 		{
@@ -411,7 +464,7 @@ class TableDescriptor
 					$searchTerm = $searchText;
 				default :
 					$searchType = 'contains';
-					$searchTerm = $this->getDbSpecificLikeCondition($searchText); 
+					$searchTerm = $this->getDbSpecificLikeCondition('contains',$searchText); 
 			}
         }
 		
@@ -465,13 +518,13 @@ class TableDescriptor
 									$query->where($filter->field, $filter->operator, $filter->value);
 									break;
 								case 'startswith'	:
-									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition($filter->value, 'startswith'));
+									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition('startswith', $filter->value));
 									break;
 								case 'endswith' 	:
-									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition($filter->value, 'endswith'));
+									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition('endswith', $filter->value));
 									break;
 								case 'contains' 	:
-									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition($filter->value, 'contains'));
+									$query->where($filter->field, 'like', $this->getDbSpecificLikeCondition('contains', $filter->value));
 									break;
 								default				: 
 									throw new Exception(sprintf('Read records: invalid filter operator "%s".', $filter->operator));
@@ -566,12 +619,26 @@ class TableDescriptor
 	/* #endregion */
 	
 	/* #region Helpers */
+	/**
+	 * Gets the SQL column name sourrounded with the DB specififc field delimiter. (defined in crudkit-db.config)
+	 * 
+	 * @param string $columnName The name of the SQL column
+	 * @return string
+	 * @internal
+	 */
 	private function getDbSpecificColumnNameWithDelimiter(string $columnName)
 	{
 		$d = $this->dbconf['delimiters'];
 		return sprintf("%s%s%s", $d[0], str_replace($d[1], $d[1].$d[1], $columnName), $d[1]); //enclose with delimiters, and mask delimiters inside.
 	}
 
+	/**
+	 * Gets the DB specific functions for the size of a blob field (lentgh).
+	 * 
+	 * @param string $columnNameWithDelimiter The name of the SQL column (already sorrounded by delimiters)
+	 * @return string
+	 * @internal
+	 */
 	private function getDbSpecificBlobLengthFunction(string $columnNameWithDelimiter)
 	{
 		$dbtype = config('database.default','');
@@ -582,7 +649,15 @@ class TableDescriptor
 		}
 	}
 
-	private function getDbSpecificLikeCondition(string $expression, string $type = '')
+	/**
+	 * Gets the DB specific like condition for a given expression (search term)
+	 * 
+	 * @param string $expression The "search term"
+	 * @param string $type Either "contains"|"startswith"|"endswith"
+	 * @return string
+	 * @internal
+	 */
+	private function getDbSpecificLikeCondition(string $type, string $expression)
 	{
 		$dbtype = config('database.default','');
 		$pre = false;
@@ -590,9 +665,9 @@ class TableDescriptor
 		
 		switch($type)
 		{
-			case 'startswith' 	: $pre = true; $post = false; break;
+			case 'startswith' 	: $pre = true; 	$post = false; break;
 			case 'endswith' 	: $pre = false; $post = true; break;
-			default				: $pre = true; $post = true; break;
+			default				: $pre = true; 	$post = true; break; //contains 
 		}
 		
 		switch($dbtype)
@@ -613,6 +688,7 @@ class TableDescriptor
 		
 	}
 	
+	/** @ignore */
 	private function array_insert(string $index, $data,  string $where, string $refIndex, array &$array)
 	{
 		$offset = $where === 'before' ? 0 : 1;

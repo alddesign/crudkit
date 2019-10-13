@@ -5,7 +5,7 @@ use \DateTime;
 use \Exception;
 	 
 /**
- * Holds a set of methods which are usefull.
+ * Holds a set of usefull methods.
  * 
  * In most cases the static methods are all you need. An instance of this Object is only needed by Crudkit itself.
  */
@@ -609,10 +609,10 @@ class DataProcessor
 	/** @internal */
 	public static function getCrudkitDbConfig()
 	{
-		$dbtype = config('database.default','___generic___');
+		$dbtype = config('database.default','__default__');
 		$dbconfig = config('crudkit-db');
 		
-		return isset($dbconfig[$dbtype]) ? $dbconfig[$dbtype] : $dbconfig['___generic___'];
+		return isset($dbconfig[$dbtype]) ? $dbconfig[$dbtype] : $dbconfig['__default__'];
 	}
 
 	/** 

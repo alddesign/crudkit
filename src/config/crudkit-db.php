@@ -49,8 +49,7 @@ return [
 			'time' => '00:00:00'
 		],
 	],
-	//do not change or delete the generic configuration
-	'___generic___' =>
+	'__default__' => //do not change or delete the default configuration
 	[
 		'delimiters' => ['"'. '"'],
 		'formats' => 	

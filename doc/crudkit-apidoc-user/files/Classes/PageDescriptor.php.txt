@@ -9,8 +9,9 @@ use Alddesign\Crudkit\Controllers\CrudkitController;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /**
- * Definition of a page.
+ * Definition of a webpage (UI).
  * 
+ * Examples for usage are provided in the documentation for CrudkitServiceProvider.
  * Important: all methods marked with "@stackable" (like the constructor and all set methods) can be used like this
  * ```php
  * $page = new PageDesriptor(...)
@@ -18,7 +19,8 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
  * 		->addAction(...)
  * 		->...
  * ``` 
- * ..easy
+ * ...easy
+ * @see \Alddesign\Crudkit\CrudkitServiceProvider
  */
 class PageDescriptor
 {

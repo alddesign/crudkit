@@ -1,5 +1,4 @@
 <?php
-
 namespace Alddesign\Crudkit\Classes;
 
 use \Exception;
@@ -13,6 +12,7 @@ use URL;
  * Allows to define One to Many Columns
  * The scenarios requiring such columns are very rare.
  * Example: Table 'author' -> column 'number_of_books' (int) would be a one to many column, but this is bad practice.
+ * 
  * @internal
  */
 class SQLOneToManyColumn extends SQLColumn

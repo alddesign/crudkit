@@ -11,27 +11,43 @@ class User
 	/** @internal */ private $id = '';
 	/** @internal */ private $password = '';
 	/** @internal */ private $fullname = '';
+
  	/**
 	 * @var Startpage $startpage 
 	 * @internal 
 	 */ 
 	private $startpage = null;
+	
 	/**
-	 * @var RestrictionSet $restrictionSet 
+	 * @var RestrictionSet $restrictionSet (default = null, no restrictions)
 	 * @internal 
 	 */  
 	private $restrictionSet = null;
 	
+	/**
+	 * Constructor.
+	 * 
+	 * See CrudkitServiceProvider documentation for how to define Users.
+	 * 
+	 * @param string $id The (unique) id of the user
+	 * @param string $password The users password
+	 * @param RestrictionSet $restrictionSet (optional)
+	 * @param Startpage $startpage (optional) 
+	 * 
+	 * @see \Alddesign\Crudkit\CrudkitServiceProvider
+	 * @see RestrictionSet
+	 * @see Startpage
+	 */
     public function __construct(string $id, string $password, RestrictionSet $restrictionSet = null, Startpage $startpage = null)
     {
 		if(dp::e($id))
 		{
-			dp::crudkitException('User ID must not be empty or null.', __CLASS__, __FUNCTION__);
+			dp::crudkitException('User ID must be provided.', __CLASS__, __FUNCTION__);
 		}
 		
 		if(dp::e($password))
 		{
-			dp::crudkitException('Password must not be empty or null.', __CLASS__, __FUNCTION__);
+			dp::crudkitException('Password must be provided for user "%s".', __CLASS__, __FUNCTION__, $id);
 		}
 		
 		$this->id = $id;

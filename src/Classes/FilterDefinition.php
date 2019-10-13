@@ -5,7 +5,6 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /** 
  * Represents a filter definition on a record.
- * @internal
  */
 class FilterDefinition
 {

@@ -10,9 +10,9 @@ namespace Alddesign\Crudkit\Classes;
 class Action
 {
     /** @internal */
-    private const POSITIONS = ['top','bottom','both'];
+    const POSITIONS = ['top','bottom','both'];
     /** @internal */
-    private const BTNCLASSES = ['default','primary','info','success','danger','warning'];
+    const BTNCLASSES = ['default','primary','info','success','danger','warning'];
 
     /** @var string $name Unique name of the action. */
     public $name = '';

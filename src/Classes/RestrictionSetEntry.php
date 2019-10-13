@@ -15,11 +15,7 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
  */
 class RestrictionSetEntry
 {	
-	/**
-	 * @var string[] ALLOWED_ACTIONS
-	 * @internal
-	 */
-	private const ALLOWED_ACTIONS = ['list', 'card', 'create', 'update', 'delete', 'export', 'chart', '']; 
+	/** @internal */ const ALLOWED_ACTIONS = ['list', 'card', 'create', 'update', 'delete', 'export', 'chart', '']; 
 
 	/** @internal */ public $action = '';
 	/** @internal */ public $pageId = '';

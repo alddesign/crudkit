@@ -5,3 +5,5 @@ src/.vscode/
 doc/**.txt
 doc/**.cmd
 doc/**.phar
+doc/**.ps1
+doc/**.css

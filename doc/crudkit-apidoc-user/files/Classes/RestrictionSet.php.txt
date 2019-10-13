@@ -12,13 +12,7 @@ use \Exception;
  */
 class RestrictionSet
 {	
-	/** 
-	 * Options for $type
-	 * @var string[] ALLOWED_TYPES  
-	 * @internal
-	*/
-	const ALLOWED_TYPES = ['allow-all', 'deny-all'];
-
+	/** @internal */ const ALLOWED_TYPES = ['allow-all', 'deny-all'];
 	/** @internal */ private $type = 'allow-all'; 
 	/** @internal */ private $entries = [];
 	
