@@ -36,7 +36,7 @@ class Startpage
 			dp::crudkitException('No page id provided.', __CLASS__, __FUNCTION__);
 		}
 		
-		if(!in_array($type, $this->allowedTypes, true))
+		if(!in_array($type, self::ALLOWED_TYPES, true))
 		{
 			dp::crudkitException('Invalid type "%s".', __CLASS__, __FUNCTION__, $type);
 		}
