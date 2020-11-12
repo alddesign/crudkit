@@ -1,11 +1,11 @@
 <?php
+/**
+ * Class PageDescriptor
+ */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use Response;
-use DB;
-use Exception;
-use Alddesign\Crudkit\Controllers\CrudkitController;
+use Illuminate\Support\Facades\Response;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /**
@@ -110,7 +110,7 @@ class PageDescriptor
 	
 	/**
 	 * Retruns on or all actions for this page.
-	 * @return Action[]
+	 * @return Action|Action[]
 	 * @internal  
 	 */ 
 	public function getActions(string $name = '')
@@ -175,7 +175,7 @@ class PageDescriptor
 		$tableColumns = $this->table->getColumns();
         foreach($this->cardLinkColumns as $columnName)
         {
-            $columns[$column->name] = $tableColumns[$columnName];
+            $columns[$columnName] = $tableColumns[$columnName];
         }
 
         return $columns;
@@ -289,7 +289,7 @@ class PageDescriptor
 			$pageTypesNotFound = array_diff($pageTypes, self::PAGE_TYPES);
 			if($pageTypesNotFound !== [])
 			{
-				dp::crudkitException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', __CLASS__, __FUNCTION__, implode($pageTypesNotFound, ', '), $this->id);
+				dp::crudkitException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', __CLASS__, __FUNCTION__, implode(', ', $pageTypesNotFound), $this->id);
 			}
 		}
 		

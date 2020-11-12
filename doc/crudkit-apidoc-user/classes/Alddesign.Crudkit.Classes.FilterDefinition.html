@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">49</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">20</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-12008990"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1240028528"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-12008990" class="accordion-body collapse in">
+            <div id="namespace-1240028528" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1934614261"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-545069012"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-1934614261" class="accordion-body collapse ">
+            <div id="namespace-545069012" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-399233446"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-572114278"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-399233446" class="accordion-body collapse ">
+            <div id="namespace-572114278" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-647637910"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1963942269"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-647637910" class="accordion-body collapse ">
+            <div id="namespace-1963942269" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -307,7 +307,7 @@
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -329,7 +329,7 @@
             <a id="constant_VALID_OPERATORS" name="constant_VALID_OPERATORS" class="anchor"></a>
             <article id="constant_VALID_OPERATORS" class="constant">
                 <h3 class="">VALID_OPERATORS</h3>
-                <pre class="signature">VALID_OPERATORS</pre>
+                <pre class="signature">VALID_OPERATORS = array(&#039;&gt;&#039;, &#039;&lt;&#039;, &#039;&gt;=&#039;, &#039;&lt;=&#039;, &#039;=&#039;, &#039;!=&#039;, &#039;contains&#039;, &#039;startswith&#039;, &#039;endswith&#039;)</pre>
                 <p><em></em></p>
                 
             </article>
@@ -350,7 +350,7 @@
             <a id="constant_VALID_TYPES" name="constant_VALID_TYPES" class="anchor"></a>
             <article id="constant_VALID_TYPES" class="constant">
                 <h3 class="">VALID_TYPES</h3>
-                <pre class="signature">VALID_TYPES</pre>
+                <pre class="signature">VALID_TYPES = array(&#039;const&#039;, &#039;field&#039;)</pre>
                 <p><em></em></p>
                 
             </article>
@@ -380,13 +380,13 @@
             <a id="property_field" name="property_field" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$field</h3>
-                <pre class="signature">$field : </pre>
+                <pre class="signature">$field : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; The field to filter                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -404,13 +404,13 @@
             <a id="property_operator" name="property_operator" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$operator</h3>
-                <pre class="signature">$operator : </pre>
+                <pre class="signature">$operator : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; The comparison operator                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -428,13 +428,13 @@
             <a id="property_type" name="property_type" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$type</h3>
-                <pre class="signature">$type : </pre>
+                <pre class="signature">$type : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Type of the filter (&#039;const&#039; or &#039;field&#039;)                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -452,13 +452,13 @@
             <a id="property_fieldnameOrValue" name="property_fieldnameOrValue" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$fieldnameOrValue</h3>
-                <pre class="signature">$fieldnameOrValue : </pre>
+                <pre class="signature">$fieldnameOrValue : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; The value, or the reference field name                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -513,13 +513,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.FilterDefinition.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\FilterDefinition</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -550,13 +552,15 @@
                                     <h4>Returns</h4>
                     \Alddesign\Crudkit\Classes\Filter
                                             &mdash; <p>Returns ready to use filter.</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.FilterDefinition.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\FilterDefinition</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -614,7 +618,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 18th, 2019 at 22:08.
+                    on November 12th, 2020 at 22:42.
                 </section>
             </section>
         </section>

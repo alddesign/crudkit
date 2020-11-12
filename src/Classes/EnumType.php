@@ -4,7 +4,7 @@ namespace Alddesign\Crudkit\Classes;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Creating a custom Enum type for integration with doctrine/dbal

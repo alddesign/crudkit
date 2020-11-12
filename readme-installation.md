@@ -20,7 +20,8 @@ Setup the URL for the application:
 Create a url/redirect/link/virtual-host, you name it, that points to the "<laravel-root-directory>/public" folder.
 * Method 2 - not recommended: 
 just access the application via http://yourhost/laravel-root-directory/public
-* However: remember this url as your **APP_URL**
+* Remember this url as your **APP_URL**
+* How to setup a virtual host on Apache: [Link](https://www.thegeekstuff.com/2011/07/apache-virtual-host/)
 
 ## CONFIGURATION
 1. Edit "<laravel-root-directory>/.env" file

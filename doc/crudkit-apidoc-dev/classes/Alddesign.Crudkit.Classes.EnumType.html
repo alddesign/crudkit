@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">238</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">206</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1541941431"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-529605248"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1541941431" class="accordion-body collapse in">
+            <div id="namespace-529605248" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-480079355"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2064096917"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-480079355" class="accordion-body collapse ">
+            <div id="namespace-2064096917" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2082709474"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-73020693"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-2082709474" class="accordion-body collapse ">
+            <div id="namespace-73020693" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-463605034"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1562301154"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-463605034" class="accordion-body collapse ">
+            <div id="namespace-1562301154" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,10 +207,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-899249099"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-157289225"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-899249099" class="accordion-body collapse ">
+            <div id="namespace-157289225" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -337,7 +337,7 @@
                                                                             <dt>See also</dt>
                                                                                         <dd><a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/custom-mapping-types.html"><span class="namespace-wrapper">http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/custom-mapping-types.html</span></a></dd>
                                                             <dd><a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/mysql-enums.html"><span class="namespace-wrapper">http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/mysql-enums.html</span></a></dd>
-                                                    
+                                                                            
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -346,7 +346,7 @@
                                 internal
                             </th>
                             <td>
-                                                                    
+                                                                                                        
                                                             </td>
                         </tr>
                                         </table>
@@ -366,7 +366,7 @@
             <a id="constant_TYPENAME" name="constant_TYPENAME" class="anchor"></a>
             <article id="constant_TYPENAME" class="constant">
                 <h3 class="">TYPENAME</h3>
-                <pre class="signature">TYPENAME</pre>
+                <pre class="signature">TYPENAME = &#039;enum&#039;</pre>
                 <p><em></em></p>
                 
             </article>
@@ -434,14 +434,16 @@
 
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                             <span class="label label-info">static</span>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -474,13 +476,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -513,13 +517,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -552,13 +558,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -578,13 +586,15 @@
 
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -612,13 +622,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.EnumType.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\EnumType</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -676,7 +688,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 18th, 2019 at 22:08.
+                    on November 12th, 2020 at 22:42.
                 </section>
             </section>
         </section>

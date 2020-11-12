@@ -1,10 +1,12 @@
 <?php
+/**
+ * Class Generator
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-
-use DB;
-use File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use \DateTime;
 
 /**

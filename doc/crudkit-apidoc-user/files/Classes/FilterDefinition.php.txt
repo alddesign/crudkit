@@ -1,16 +1,24 @@
 <?php
+/**
+ * Class FilterDefinition
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use \Exception;
 
 /** 
  * Represents a filter definition on a record.
  */
 class FilterDefinition
 {
+	/** @var string The field to filter */
 	public $field = '';
+	/** @var string The comparison operator */
 	public $operator = '';
+	/** @var string Type of the filter ('const' or 'field')*/
 	public $type = '';
+	/** @var string The value, or the reference field name */
 	public $fieldnameOrValue = null;
 	
 	const VALID_OPERATORS = ['>','<','>=','<=','=','!=','contains','startswith','endswith'];

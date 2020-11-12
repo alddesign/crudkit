@@ -1,9 +1,11 @@
 <?php
+/**
+ * Class PageStore
+ */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use Exception;
 
 /**
  * Object to store an access all the pages (bundeling)
@@ -44,7 +46,7 @@ class PageStore
     }
     
     /**
-     * Get all pages
+     * Gets all pages
      * @return PageDescriptor[] 
      */
 	public function getPageDescriptors()
@@ -53,16 +55,16 @@ class PageStore
 	}
 
     /**
-     * Get all pages
+     * Gets a page
      * @param string $pageId ID of the Page
      * @param bool $errorIfPageNotFound Throw an Error if the page is not found
-     * @return PageDescriptor[] 
+     * @return PageDescriptor
      */
     public function getPageDescriptor(string $pageId = '', bool $errorIfPageNotFound = false)
     {
         if(empty($this->pageDescriptors))
         {
-            dp::crudkitException('No pages found.'. __CLASS__, __FUNCTION__);
+            dp::crudkitException('No pages found.', __CLASS__, __FUNCTION__);
         }
 
         if(isset($this->pageDescriptors[$pageId]))
@@ -73,7 +75,7 @@ class PageStore
 		{
 			if($errorIfPageNotFound)
 			{
-				dp::crudkitException('Page "%s" not found.'. __CLASS__, __FUNCTION__. $pageId);
+				dp::crudkitException('Page "%s" not found.', __CLASS__, __FUNCTION__. $pageId);
 			}
             return reset($this->pageDescriptors); //Get first pageDescriptor
         }

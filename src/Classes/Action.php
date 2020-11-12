@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class Action
+ */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
@@ -39,10 +42,18 @@ class Action
     /** @var array $data Additional data which can be set when creatig the action. (Can be accessed in the callback function) */
     public $data = [];
 
+
     /**
-     * Constructor.
-     * 
-     * Params basically the properies of this class.
+     * Constructor. Params are basically the properies of this class.
+     * @param string $name
+     * @param string $label
+     * @param string $columnLabel
+     * @param callable $callback
+     * @param bool $onList
+     * @param bool $onCard
+     * @param string $faIcon
+     * @param string $btnClass
+     * @param string $position
      */
     public function __construct(string $name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = 'default', string $position = 'both')
     {	

@@ -1,9 +1,12 @@
 <?php
+/**
+ * Class AuthHelper
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use \Exception;
-use Response;
+use Illuminate\Support\Facades\Response;
+
 
 /** Provides functionality for user/permisson handling. */
 class AuthHelper
@@ -54,6 +57,10 @@ class AuthHelper
 		return $this;
 	}
 
+	/**
+	 * Gets all users
+	 * @return CurdkitUser[]
+	 */
 	public function getUsers()
 	{
 		return $this->users;
@@ -64,8 +71,8 @@ class AuthHelper
 	 * 
 	 * @param string $id The user ID
 	 * @param string $password The password for this user
-	 * @param Startpage $startpage (optional) The startpage for this user
 	 * @param RestrictionSet $restrictionSet (optional) The restriction set (permissions) for this user
+	 * @param Startpage $startpage (optional) The startpage for this user
 	 * @return AuthHelper
 	 * @stackable
 	 */
@@ -193,7 +200,7 @@ class AuthHelper
 	
 	/** @internal */
 	private function loginFailed(string $message = '')
-	{
+	{	
 		Response::redirectToAction('\Alddesign\Crudkit\Controllers\CrudkitController@loginView')
 			->with('crudkit-login-message', $message)
 			->with('crudkit-login-message-type', 'danger')

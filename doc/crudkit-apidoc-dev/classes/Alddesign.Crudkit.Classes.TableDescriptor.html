@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">238</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">206</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1416783145"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1215203847"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1416783145" class="accordion-body collapse in">
+            <div id="namespace-1215203847" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-32067169"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1605769090"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-32067169" class="accordion-body collapse ">
+            <div id="namespace-1605769090" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1048427078"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-296327951"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-1048427078" class="accordion-body collapse ">
+            <div id="namespace-296327951" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1369125058"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-300312405"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-1369125058" class="accordion-body collapse ">
+            <div id="namespace-300312405" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,10 +207,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-674198372"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1554809294"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-674198372" class="accordion-body collapse ">
+            <div id="namespace-1554809294" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -358,7 +358,7 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                         
                                                                             <dt>See also</dt>
                                                                                         <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><span class="namespace-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</span></a></dd>
-                                                    
+                                                                            
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -405,13 +405,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -434,13 +436,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                     <h4>Returns</h4>
                     string
                                             &mdash; <p>Name of the table (as defined in the database)</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -462,13 +466,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                                     <h4>Returns</h4>
                     boolean
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -491,13 +497,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                     <h4>Returns</h4>
                     string
                                             &mdash; <p>Name of the soft delte column (soft delete is a pseudo delete)</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -520,13 +528,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                     <h4>Returns</h4>
                     mixed
                                             &mdash; <p>Value of the soft delete Column that indicates that the record IS deleted</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -549,13 +559,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                     <h4>Returns</h4>
                     mixed
                                             &mdash; <p>Value of the soft delete Column that indicates that the record is NOT deleted.</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -585,13 +597,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                                     <h4>Returns</h4>
                     boolean
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -605,7 +619,7 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
             <article class="method">
                 <h3 class="public ">getAllColumns()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getAllColumns(boolean  <span class="argument">$namesOnly = false</span>) : array&lt;mixed,string&gt;|array&lt;mixed,\Alddesign\Crudkit\Classes\SQLColumn&gt;</pre>
+                <pre class="signature" style="margin-right: 54px;">getAllColumns(boolean  <span class="argument">$namesOnly = false</span>) : array&lt;mixed,string&gt;|array</pre>
                 <p><em>Returns an array of this tables columns, including extended information from Doctrine DBAL.</em></p>
                 <p>Make sure to call fetchAllColumns() at least once before calling this method.</p>
 
@@ -620,14 +634,16 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                 
                                     <h4>Returns</h4>
-                    array&lt;mixed,string&gt;|array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html">\Alddesign\Crudkit\Classes\SQLColumn</a>&gt;
-                                    				
+                    array&lt;mixed,string&gt;|array
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -657,13 +673,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                                     <h4>Returns</h4>
                     array&lt;mixed,string&gt;|array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html">\Alddesign\Crudkit\Classes\SQLColumn</a>&gt;
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -693,13 +711,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                                     <h4>Returns</h4>
                     array&lt;mixed,string&gt;|array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html">\Alddesign\Crudkit\Classes\SQLColumn</a>&gt;
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -721,13 +741,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                 
                                     <h4>Returns</h4>
                     array
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -755,13 +777,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -811,13 +835,15 @@ Important: all methods marked with &quot;@stackable&quot; (like the constructor 
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                                            <dt>See also</dt>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                                            <dt>See also</dt>
                                                                 <dd><a href="../classes/Alddesign.Crudkit.Classes.SQLColumn.html"><span class="namespace-wrapper">\Alddesign\Crudkit\Classes\SQLColumn</span></a></dd>
                                                                 </dl>
             <h2>Tags</h2>
@@ -868,13 +894,15 @@ Example code: see CrudkitServiceProvider doc</p>
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                                            <dt>See also</dt>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                                            <dt>See also</dt>
                                                                 <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><span class="namespace-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</span></a></dd>
                                                                 </dl>
             <h2>Tags</h2>
@@ -914,13 +942,15 @@ Example code: see CrudkitServiceProvider doc</p>
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -967,13 +997,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1011,13 +1043,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1053,13 +1087,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                     <h4>Returns</h4>
                     array
                                             &mdash; <p>Record data as array</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1112,13 +1148,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1149,13 +1187,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                     <h4>Returns</h4>
                     array
                                             &mdash; <p>The primary key values</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -1198,13 +1238,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                     <h4>Returns</h4>
                     array
                                             &mdash; <p>The (maybe) new primary key values</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -1239,13 +1281,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1275,13 +1319,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -1318,13 +1364,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -1366,13 +1414,15 @@ Only thing happen is that the value of the soft delete column will be changed, a
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><div class="path-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr>
@@ -1437,7 +1487,7 @@ Only thing happen is that the value of the soft delete column will be changed, a
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 18th, 2019 at 22:08.
+                    on November 12th, 2020 at 22:42.
                 </section>
             </section>
         </section>

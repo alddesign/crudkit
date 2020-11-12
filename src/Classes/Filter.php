@@ -1,6 +1,7 @@
 <?php
 namespace Alddesign\Crudkit\Classes;
 
+use \Exception;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /** 

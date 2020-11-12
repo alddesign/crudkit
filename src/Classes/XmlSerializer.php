@@ -1,5 +1,9 @@
 <?php
+/**
+ * Class XmlSerializer
+ */
 namespace Alddesign\Crudkit\Classes;
+use \stdClass;
 
 /** @ignore */
 class XmlSerializer 

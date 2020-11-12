@@ -1,4 +1,7 @@
 <?php 
+/**
+ * Class DataProcessor
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use \DateTime;

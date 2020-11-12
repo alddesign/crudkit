@@ -1,9 +1,10 @@
 <?php
-
+/**
+ * Class SQLColumn
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use Exception;
 
 /** 
  * Represents a column in a table.

@@ -1,11 +1,12 @@
 <?php
-
+/**
+ * Class SQLManyToOneColumn
+ */
 namespace Alddesign\Crudkit\Classes;
 
-use \Exception;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use DB;
-use URL;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Allows to define Many to One Columns.

@@ -1,5 +1,7 @@
 <?php
-/** Edit this file to create your application. (Laravel Service Provider) */
+/** 
+ * Edit this file to create your application. (Laravel Service Provider) 
+ */
 
 namespace Alddesign\Crudkit;
 

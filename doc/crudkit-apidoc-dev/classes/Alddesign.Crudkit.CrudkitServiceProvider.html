@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">238</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">206</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-210199010"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1243011295"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-210199010" class="accordion-body collapse in">
+            <div id="namespace-1243011295" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1806333628"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-513778038"></a>
                                 <a href="../namespaces/Alddesign.html" style="margin-left: 30px; padding-left: 0">Alddesign</a>
             </div>
-            <div id="namespace-1806333628" class="accordion-body collapse ">
+            <div id="namespace-513778038" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2076501465"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-151069362"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.html" style="margin-left: 30px; padding-left: 0">Crudkit</a>
             </div>
-            <div id="namespace-2076501465" class="accordion-body collapse ">
+            <div id="namespace-151069362" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1763866627"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1216036102"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Classes.html" style="margin-left: 30px; padding-left: 0">Classes</a>
             </div>
-            <div id="namespace-1763866627" class="accordion-body collapse ">
+            <div id="namespace-1216036102" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,10 +207,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1786251797"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1813363941"></a>
                                 <a href="../namespaces/Alddesign.Crudkit.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-1786251797" class="accordion-body collapse ">
+            <div id="namespace-1813363941" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -336,7 +336,7 @@
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -367,10 +367,12 @@
                 
                                     <h4>Returns</h4>
                     array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html">\Alddesign\Crudkit\Classes\TableDescriptor</a>&gt;
-                                    				
+                                    
                                                             <h4>Examples</h4>
                                                                 <h5>Example</h5>
-                        <pre class="pre-scrollable">	private function defineTables()
+                        <pre class="pre-scrollable">     * @return TableDescriptor[]
+     */
+	private function defineTables()
 	{
 		//### Example code - works with the demo database ###
 		//&lt;CRUDKIT-TABLES-START&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!! 	
@@ -390,15 +392,15 @@
 				-&gt;addColumn(&#039;price&#039;, &#039;Price&#039;, &#039;float&#039;, [])
 				-&gt;addColumn(&#039;cover&#039;, &#039;Cover&#039;, &#039;image&#039;, [])
 				,
-		];
-		//&lt;CRUDKIT-TABLES-END&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 </pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><div class="path-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -418,23 +420,25 @@
 
                 
                 
-                				
+                
                                                             <h4>Examples</h4>
                                                                 <h5>Example</h5>
-                        <pre class="pre-scrollable">	private function defineRelations()
+                        <pre class="pre-scrollable">	 * @see TableDescriptor
+     */
+	private function defineRelations()
 	{
 		//### Example code - works with the demo database ###
 		$this-&gt;tables[&#039;book&#039;]
-		-&gt;defineManyToOneColumn(&#039;author_id&#039;, &#039;author&#039;, &#039;id&#039;); //Column name, reference table name, reference field name
-	}
 </pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                                            <dt>See also</dt>
-                                                                <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\TableDescriptor</span></a></dd>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><div class="path-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Alddesign.Crudkit.Classes.TableDescriptor.html"><span class="namespace-wrapper">\Alddesign\Crudkit\Classes\TableDescriptor</span></a></dd>
                                                                 </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -457,10 +461,12 @@
                 
                                     <h4>Returns</h4>
                     array&lt;mixed,<a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html">\Alddesign\Crudkit\Classes\PageDescriptor</a>&gt;
-                                    				
+                                    
                                                             <h4>Examples</h4>
                                                                 <h5>Example with usage of page events and custom actions:</h5>
-                        <pre class="pre-scrollable">	private function definePages()
+                        <pre class="pre-scrollable">	 * @see PageDescriptor 
+     */
+	private function definePages()
 	{
 		//### Example code - works with the demo database ###
 		//&lt;CRUDKIT-PAGES-START&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
@@ -498,16 +504,16 @@
 				-&gt;onOpenList($onOpenAuthorListCallback)
 				,
 		];
-		//&lt;CRUDKIT-PAGES-END&gt; !!! Do not remove this line. Otherwise /auto-generate wont work !!!
-	}
 </pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                                            <dt>See also</dt>
-                                                                <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\PageDescriptor</span></a></dd>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><div class="path-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Alddesign.Crudkit.Classes.PageDescriptor.html"><span class="namespace-wrapper">\Alddesign\Crudkit\Classes\PageDescriptor</span></a></dd>
                                                                 </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -531,10 +537,12 @@ Default login (administrator) is definded in crudkit config.</p>
                 
                                     <h4>Returns</h4>
                     <a href="../classes/Alddesign.Crudkit.Classes.AuthHelper.html">\Alddesign\Crudkit\Classes\AuthHelper</a>
-                                    				
+                                    
                                                             <h4>Examples</h4>
                                                                 <h5>Example</h5>
-                        <pre class="pre-scrollable">	private function defineUsers()
+                        <pre class="pre-scrollable">	 * @see RestrictionSet
+     */
+	private function defineUsers()
 	{	
 		//### Example code - works with the demo database ###
 
@@ -566,18 +574,18 @@ Default login (administrator) is definded in crudkit config.</p>
 			new User(&#039;johndoe&#039;, &#039;jd123&#039;, $restrictionSet2) //restricted
 		];
 		
-		return new AuthHelper($users);
-	}
 </pre>
                                                 </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                                            <dt>See also</dt>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Alddesign.Crudkit.CrudkitServiceProvider.html"><div class="path-wrapper">\Alddesign\Crudkit\CrudkitServiceProvider</div></a></dd>
+                                                                            <dt>See also</dt>
                                                                 <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\CrudkitUser</span></a></dd>
-                                            <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\Startpage</span></a></dd>
-                                            <dd><a href=""><span class="namespace-wrapper">\Alddesign\Crudkit\RestrictionSet</span></a></dd>
+                                            <dd><a href="../classes/Alddesign.Crudkit.Classes.Startpage.html"><span class="namespace-wrapper">\Alddesign\Crudkit\Classes\Startpage</span></a></dd>
+                                            <dd><a href="../classes/Alddesign.Crudkit.Classes.RestrictionSet.html"><span class="namespace-wrapper">\Alddesign\Crudkit\Classes\RestrictionSet</span></a></dd>
                                                                 </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -636,7 +644,7 @@ Default login (administrator) is definded in crudkit config.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 18th, 2019 at 22:08.
+                    on November 12th, 2020 at 22:42.
                 </section>
             </section>
         </section>

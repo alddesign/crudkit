@@ -1,12 +1,14 @@
 <?php
+/**
+ * Class TableDescriptor
+ */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use DB;
-use Exception;
-use Schema;
-use Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
+use \Exception;
 use \DateTime;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
@@ -66,7 +68,7 @@ class TableDescriptor
 	/** @return bool */
 	public function getHasAutoincrementKey()
 	{
-		return $this->$hasAutoincrementKey;
+		return $this->hasAutoincrementKey;
 	}
 	
 	/** @return string Name of the soft delte column (soft delete is a pseudo delete) */
@@ -104,7 +106,7 @@ class TableDescriptor
 	 * Make sure to call fetchAllColumns() at least once before calling this method.
 	 * 
 	 * @param bool $namesOnly (default = FALSE) TRUE = retruns string[] array with the column names, FALSE = return and array of SQLColumn[] objects
-	 * @return string[]|SQLColumn[]
+	 * @return string[]|array
 	 */
 	public function getAllColumns(bool $namesOnly = false)
 	{
@@ -347,7 +349,7 @@ class TableDescriptor
 		$helper = ($this->columns[$columnName]);
 		unset($this->columns[$columnName]);
 		
-		$this::array_insert($columnName, $helper, $where, $referenceColumnName, $this->columns);
+		$this->array_insert($columnName, $helper, $where, $referenceColumnName, $this->columns);
 		
 		return $this;
 	}

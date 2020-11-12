@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class RestrictionSetEntry
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;

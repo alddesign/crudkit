@@ -1,9 +1,11 @@
 <?php 
+/**
+ * Class Startpage
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use \Exception;
-use Response;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Defines a startpage for users.

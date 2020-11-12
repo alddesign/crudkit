@@ -1,5 +1,7 @@
 <?php 
-/** Controller */
+/**
+ * Class Controller
+ */
 namespace Alddesign\Crudkit\Controllers;
 
 use \Exception;
@@ -13,11 +15,11 @@ use Alddesign\Crudkit\Classes\AuthHelper;
 use Alddesign\Crudkit\Classes\Filter;
 use Alddesign\Crudkit\Classes\FilterDefinition;
 
-use DB;
-use Response;
-use URL;
-use Session;
-use Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Crudkit Controller
@@ -32,7 +34,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	/** @var AuthHelper $authHelper Holding user/permission related data. */ 
 	private $authHelper = null;
 
-    /** Creates a new controller instance */
+    /**
+	 * Creates a new controller instance
+     */
     public function __construct()
     {
     }
@@ -119,7 +123,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'pageTitleText' 		=> $pageDescriptor->getTitleText('list'),
 			'summaryColumns' 		=> $pageDescriptor->getSummaryColumns(false),
             'primaryKeyColumns' 	=> $pageDescriptor->getTable()->getPrimaryKeyColumns(false),
-			'cardPageUrls' 			=> $this::getCardPageUrls($records['records'], $pageDescriptor->getTable()->getPrimaryKeyColumns(true), $pageId),
+			'cardPageUrls' 			=> $this->getCardPageUrls($records['records'], $pageDescriptor->getTable()->getPrimaryKeyColumns(true), $pageId),
 			'cardPageUrlColumns' 	=> $pageDescriptor->getCardLinkColumns(true),
 			'manyToOneUrls' 		=> $this->getRelationUrls($records['records'], $pageDescriptor->getTable()->getColumns(), 'manytoone'),
 			'oneToManyUrls' 		=> $this->getRelationUrls($records['records'], $pageDescriptor->getTable()->getColumns(), 'onetomany'),
@@ -216,7 +220,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		
 		//Load Data from Request
         $pageId 			= request('page-id', '');
-		$primaryKeyValues 	= $this::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues 	= $this->getPrimaryKeyValuesFromRequest($request);
 		
 		//Process Request Data
 		$qrCode 	= $this->getQrCodeTag($request);
@@ -432,7 +436,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$this->authHelper->checkAuth('delete', $pageId); //check-authentication
 
 		//Prepare Reqest Data
-		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = $this->getPrimaryKeyValuesFromRequest($request);
         $pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 
 		//Delete
@@ -467,7 +471,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$pageDescriptor->triggerEvent('onAfterCreate', $primaryKeyValues); //event-trigger
 		
 		//Redirect
-		$url = $this::getCardPageUrl($primaryKeyValues, $pageId);
+		$url = $this->getCardPageUrl($primaryKeyValues, $pageId);
 		return Response::redirectTo($url);
     }
 
@@ -484,7 +488,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
         $pageId = request('page-id', null);
 		$this->authHelper->checkAuth('update', $pageId); //check-authentication
 		$requestData = $request->all();
-		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = $this->getPrimaryKeyValuesFromRequest($request);
 		
 		//Prepare Reqest Data
         $pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
@@ -497,7 +501,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$pageDescriptor->triggerEvent('onAfterUpdate', $primaryKeyValues); //event-trigger
 		
 		//Redirect
-		$url = $this::getCardPageUrl($primaryKeyValues, $pageId);
+		$url = $this->getCardPageUrl($primaryKeyValues, $pageId);
 		return Response::redirectTo($url);
     }
 
@@ -558,7 +562,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Prepare Request Data
         $pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$action = $pageDescriptor->getActions($actionName);
-		$primaryKeyValues = $this::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = $this->getPrimaryKeyValuesFromRequest($request);
 		$record = $pageDescriptor->readRecord($primaryKeyValues);
 
 		$result = call_user_func($action->callback, $record, $pageDescriptor, $action); //event-trigger
@@ -787,10 +791,10 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$avgHelper = [];
 		$minHelper = [];
 		$maxHelper = [];
-		$xAxisValue;
-		$yAxisValue;
-		$yAxisValueIsNumber;
-		$index;
+		$xAxisValue = '';
+		$yAxisValue = '';
+		$yAxisValueIsNumber = false;
+		$index = null;
 		
 		foreach($records as $c1 => $record)
 		{

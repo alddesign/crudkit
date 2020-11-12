@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class Section
+ */
+
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 

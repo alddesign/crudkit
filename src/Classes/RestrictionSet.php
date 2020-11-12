@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class Restriction Set
+ */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
