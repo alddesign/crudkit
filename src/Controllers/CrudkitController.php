@@ -242,7 +242,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'columns' 				=> $columns,
 			'sections' 				=> $pageDescriptor->getSections(),
             'primaryKeyColumns' 	=> $pageDescriptor->getTable()->getPrimaryKeyColumns(true),
-			'manyToOneValues' 		=> $pageDescriptor->getTable()->getManyToOneColumnValues(),
+			'manyToOneValues' 		=> $pageDescriptor->getTable()->getManyToOneColumnValues($record),
 			'htmlInputAttributes' 	=> $this->getHtmlInputAttributes($columns),
             'pageMap' 				=> $this->pageStore->getPageMap(),
 			'record' 				=> $record,
@@ -262,15 +262,19 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
+		$tableDescriptor = $pageDescriptor->getTable();
 		$this->authHelper->checkAuth('create', $pageId); //check-authentication
 		
 		//Load Data from Request
         //*nothing*
         
 		//Process Reqest Data
-		$columns 	= $pageDescriptor->getTable()->getColumns();
+		$columns 	= $tableDescriptor->getColumns();
 		$qrCode 	= $this->getQrCodeTag($request);
 		
+		//Create an empty rec
+		$emptyRecord = $tableDescriptor->getEmptyRecord();
+
 		//Load Data from DB
 		//*nothing*
 		
@@ -286,9 +290,11 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'pageName' 				=> $pageDescriptor->getName(),
 			'columns' 				=> $columns,
 			'sections' 				=> $pageDescriptor->getSections(),
-            'primaryKeyColumns' 	=> $pageDescriptor->getTable()->getPrimaryKeyColumns(true),
+			'primaryKeyColumns' 	=> $tableDescriptor->getPrimaryKeyColumns(true),
+			'manyToOneValues' 		=> $tableDescriptor->getManyToOneColumnValues($emptyRecord),
 			'htmlInputAttributes' 	=> $this->getHtmlInputAttributes($columns),
-            'pageMap' 				=> $this->pageStore->getPageMap(),
+			'pageMap' 				=> $this->pageStore->getPageMap(),
+			'record'				=> $emptyRecord,
 			'qrCode' 				=> $qrCode
         ]);
     }

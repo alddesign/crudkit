@@ -201,10 +201,10 @@
 							@elseif($oneToManyUrl != '')
 								<a href="{!! $oneToManyUrl !!}" class="btn btn-default"> {{$value}} </a>
 							@else
-								@if($value === $texts['yes'])
-									<code class="bg-success text-success">{{$value}}</code>
+								@if($value[0] === true)
+									<code class="bg-success text-success">{{$value[1]}}</code>
 								@else
-									<code class="bg-danger text-danger">{{$value}}</code>
+									<code class="bg-danger text-danger">{{$value[1]}}</code>
 								@endif
 							@endif
 						</div>

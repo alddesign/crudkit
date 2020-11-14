@@ -63,7 +63,12 @@ class FilterDefinition
 		
 		if($this->type === 'field')
 		{
-			if(dp::e($record) || !isset($record[$this->fieldnameOrValue]))
+			if(dp::e($record))
+			{
+				dp::ex('Cannot convert FilterDefinition to Filter. Reference record needed for "field" typ filters.');
+			}
+
+			if(!isset($record[$this->fieldnameOrValue]))
 			{
 				dp::ex('Cannot convert FilterDefinition to Filter. Invalid field name "%s" in FilterDefinition.', $this->fieldnameOrValue);
 			}

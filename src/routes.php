@@ -5,6 +5,8 @@
  * @internal
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => 'web', 'namespace' => 'Alddesign\Crudkit\Controllers'], function () 
 {
 	$appNameUrl = config('crudkit.app_name_url', 'app');

@@ -14,7 +14,7 @@
 	@endif
 	<!-- Create -->
 	@if($createAllowed)
-		<a href="{{ url('admin-panel/create-view?page-id='.$pageId) }}" class="btn btn-primary crudkit-button" id="curdkit-create-button"><i class="fa fa-plus-circle"></i> &nbsp;{{$texts['new']}}</a>
+		<a href="{{ action('\Alddesign\Crudkit\Controllers\CrudkitController@createView', ['page-id' => $pageId]) }}" class="btn btn-primary crudkit-button" id="curdkit-create-button"><i class="fa fa-plus-circle"></i> &nbsp;{{$texts['new']}}</a>
 	@endif
 @endsection
 @section('page-content')
@@ -226,10 +226,10 @@
 								@elseif($oneToManyUrl != '')
 									<a href="{!! $oneToManyUrl !!}" class="btn btn-default"> {{$value}} {{$suffix}} </a>
 								@else
-									@if($value === $texts['yes'])
-										<code class="bg-success text-success">{{$value}}</code>
+									@if($value[0] === true)
+										<code class="bg-success text-success">{{$value[1]}}</code>
 									@else
-										<code class="bg-danger text-danger">{{$value}}</code>
+										<code class="bg-danger text-danger">{{$value[1]}}</code>
 									@endif
 								@endif
 							</div>

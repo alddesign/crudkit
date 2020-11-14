@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Schema;
 use \Exception;
 use \DateTime;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
+use Alddesign\Crudkit\Classes\SQLOneToManyColumn;
 
 /**
  * Definition of a database table.
@@ -31,7 +33,7 @@ class TableDescriptor
     /** @ignore */ private $name = null;
 	/** @ignore */ private $primaryKeyColumns = [];
 	/** @ignore */ private $hasAutoincrementKey = false;
-    /** @ignore */ private $columns = [];
+    /** @var array<SQLColumn> */ private $columns = [];
 	
 	/** @ignore */ private $allColumns = []; //Array of all table columns. Needed for inserts. Fetched by Doctrine DBAL.
 	/** @ignore */ private $allColumnsFetched 	= false;
@@ -172,14 +174,16 @@ class TableDescriptor
 	 * ```
 	 * @return array
 	 */
-	public function getManyToOneColumnValues()
+	public function getManyToOneColumnValues($record = [])
 	{
 		$result = [];
 		foreach($this->columns as $name => $column)
 		{
-			if($column->getRelationType() === 'manytoone')
+			if($column->relationType === 'manytoone')
 			{
-				$result[$name] = $column->getManyToOneValues();
+				/** @var SQLManyToOneColumn */
+				$manyToOneColumn = $column;
+				$result[$name] = $manyToOneColumn->getManyToOneValues($record);
 			}
 		}
 		
@@ -365,20 +369,9 @@ class TableDescriptor
 	public function readRecord(array $primaryKeyValues, array $filters = [])
 	{
 		//Test Parameters
-		if((dp::e($primaryKeyValues) && dp::e($filters)) || (!dp::e($primaryKeyValues) && !dp::e($filters)))
+		if(dp::e($primaryKeyValues) && dp::e($filters))
 		{
-			dp::crudkitException('Please specify either primary key values or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
-		}
-		
-		//Test Primary Keys
-		if(!dp::e($primaryKeyValues))
-		{
-			$c1 = count($this->primaryKeyColumns);
-			$c2 = count($primaryKeyValues); 
-			if($c1 !== $c2)
-			{
-				dp::crudkitException('The table "%s" has "%d" primary key fields. "%d" given.', __CLASS__, __FUNCTION__, $this->name, $c1, $c2);
-			}
+			dp::crudkitException('Please specify primary key values and/or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
 		}
 		
 		$record = [];
@@ -407,7 +400,7 @@ class TableDescriptor
 				$query->where($this->primaryKeyColumns[$index], $value);
 			}
 		}
-		else //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
+		if(!dp::e($filters)) //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
 		{
 			foreach($filters as $filter)
 			{
@@ -548,6 +541,31 @@ class TableDescriptor
         return $records;
 	}
 	
+	/**
+	 * @param bool $setDbDefaultValues Set the default values which are definded in the Database
+	 * @param bool $allColumns Get all columns or just those definded in CRUDKit
+	 * 
+	 * @return array
+	 */
+	public function getEmptyRecord($setDbDefaultValues = true, $allColumns = false)
+	{
+		$record = [];
+		if($allColumns === true || $setDbDefaultValues === true)
+		{	
+			$this->fetchAllColumns();
+		}
+
+		foreach($this->allColumns as $columnName => $options)
+		{
+			if($allColumns === true || $this->hasColumn($columnName))
+			{
+				$record[$columnName] = $setDbDefaultValues === true ? $options['default'] : null;
+			}
+		}
+
+		return $record;
+	}
+
 	/** 
 	 * Creates a record in the DB
 	 * @param array $recordData (preprocessed)

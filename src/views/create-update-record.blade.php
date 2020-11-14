@@ -45,11 +45,12 @@
 							@endif
 							@php
 								$inputAttributes = $htmlInputAttributes[$column->name];
-								$fieldvalue = empty($record[$column->name]) ? '' : $record[$column->name];
+								$fieldvalue = Alddesign\Crudkit\Classes\DataProcessor::e($record[$column->name]) ? '' : $record[$column->name];
 							@endphp
 							<div>
 								@if(isset($manyToOneValues[$column->name]))
 									<select id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control"{!! $inputAttributes !!}>
+										<option value=""></option>
 										@foreach($manyToOneValues[$column->name] as $manyToOneValue)
 											<option value="{{ $manyToOneValue }}" @if($fieldvalue === $manyToOneValue) {{'selected'}} @endif>{{ $manyToOneValue }}</option>
 										@endforeach
@@ -87,8 +88,10 @@
 										<input type="text" value="{{ $fieldvalue }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-time"{!! $inputAttributes !!}/>
 									@endif												
 									@if($column->type === 'boolean')
-										<input type="checkbox" @if($fieldvalue === $texts['yes']) {{ 'checked' }} @endif id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="crudkit-checkbox checkbox validate-boolean"{!! $inputAttributes !!}/>
-										<label for="crudkit-field-{{ $column->name }}" class="crudkit-checkbox-label"></label>
+										<select id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control"{!! $inputAttributes !!}>
+											<option class="bg-danger" value="0" @if($fieldvalue[0] === false) {{'selected'}}@endif>{{ $texts['no'] }}</option>
+											<option class="bg-success" value="1" @if($fieldvalue[0] === true) {{'selected'}}@endif>{{ $texts['yes'] }}</option>
+										</select>
 									@endif
 									@if($column->type === 'image')
 										<p>

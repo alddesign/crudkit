@@ -20,6 +20,7 @@ class DataProcessor
 	/** @ignore */ private $allColumns = null;
 	/** @ignore */ private $primaryKeyColumns = null;
 	/** @ignore */ private $primaryKeyColumnNames = null;
+	/** @ignore */ private $language = '';
 	
 	/** @ignore */ private $dbconf = null; 
 
@@ -56,16 +57,11 @@ class DataProcessor
 	* @return array $recordData
 	* @internal
 	*/
-	public function preProcess($requestData, string $actionType)
+	public function preProcess($requestData, bool $insert)
 	{
 		$this->table->fetchAllColumns(); //intensive workload
 		$this->allColumns = $this->table->getAllColumns();
 
-		if($actionType !== 'update' && $actionType !== 'create')
-		{
-			throw new Exception(sprintf('Pre process: invalid action type "%s".', $actionType));
-		}
-		
 		$recordData = [];
 				
 		$dataExists = false; //[boolean] Per definition --> data exist, if data is in request, even if NULL
@@ -79,27 +75,29 @@ class DataProcessor
 			
 			$dataExists = array_key_exists($columnName, $requestData);
 			$dataIsNull = $data === null;
-			$dbDefault = $options['default'] !== null; //The default value is always provided as string from Doctrine DBAL
+			$dbHasDefault = $options['default'] !== null; //The default value is always provided as string from Doctrine DBAL
 			$dbNotNull = $options['notnull'] === true;
-			$useDbDefault = false; 
-			
+			$deleteBlob = isset($requestData[$columnName.'___DELETEBLOB']) && $requestData[$columnName.'___DELETEBLOB'] === 'on';
+			$i = false; //Include this column in the INSERT statement
+			$u = false; //Include this column in the UPDATE statement
+
 			//$datatype = $options['datatype'];
-			$datatype = $this->columns[$columnName]->type;
+			$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : $options['datatype'];
 			
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& $dbDefault	) { /*Set DEFAULT*/ $this->setDefault($useDbDefault, $data, $options['default'], $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& !$dbDefault	) { /*Set EMPTY*/ 	$this->setEmpty($data, $datatype, $columnName);							}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& $dbDefault	) { /*Set DEFAULT*/ $this->setDefault($useDbDefault, $data, $options['default'], $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& !$dbDefault	) { /*Set NULL*/ 	$this->setNull($data, $datatype, $columnName); 							}
-			if($dataExists 	&& !$dataIsNull && true			&& true			) { /*Set DATA*/ 	$this->setData($data, $datatype, $columnName); 							}
+			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& $dbHasDefault	) {$i=false; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
+			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
+			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& $dbHasDefault	) {$i=false; $u=true; $this->setNull($data, $datatype, $columnName);	}
+			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=true; $this->setNull($data, $datatype, $columnName); 	}
+			if($dataExists 	&& !$dataIsNull && true			&& true				) {$i=true; $u=true; $this->setData($data, $datatype, $columnName); 	}
 			
-			if(!$dataExists && true 		&& $dbNotNull 	&& $dbDefault	) { /*Set DEFAULT*/ $this->setDefault($useDbDefault, $data, $options['default'], $datatype, $columnName);	}
-			if(!$dataExists && true 		&& $dbNotNull 	&& !$dbDefault	) { /*Set EMPTY*/ 	$this->setEmpty($data, $datatype, $columnName);							}
-			if(!$dataExists && true 		&& !$dbNotNull 	&& $dbDefault	) { /*Set DEFAULT*/ $this->setDefault($useDbDefault, $data, $options['default'], $datatype, $columnName);	}
-			if(!$dataExists && true 		&& !$dbNotNull 	&& !$dbDefault	) { /*Set NULL*/ 	$this->setNull($data, $datatype, $columnName);							}			
-							
-			$this->addData($useDbDefault, $recordData, $columnName, $data, $options, $requestData, $actionType, $dataExists);
+			if(!$dataExists && true 		&& $dbNotNull 	&& $dbHasDefault	) {$i=false; $u=false; $this->setNull($data, $datatype, $columnName);	}
+			if(!$dataExists && true 		&& $dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=false; $this->setEmpty($data, $datatype, $columnName);	}
+			if(!$dataExists && true 		&& !$dbNotNull 	&& $dbHasDefault	) {$i=false; $u=false; $this->setNull($data, $datatype, $columnName);	}
+			if(!$dataExists && true 		&& !$dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=false; $this->setNull($data, $datatype, $columnName);	}			
+
+			$this->addData($recordData, $columnName, $data, $deleteBlob, $insert, $i, $u);
 		}
-		
+
 		return($recordData);
 	}
 	
@@ -111,72 +109,26 @@ class DataProcessor
 	 * 
 	 * @internal 
 	 */
-	private function addData(bool $useDbDefault, array &$recordData, $columnName, $data, array $options, array $requestData, string $actionType, bool $dataExists)
+	private function addData(array &$recordData, $columnName, $data, bool $deleteBlob, bool $insert, bool $i, bool $u)
 	{	
-		if($actionType === 'update')
+		if(!$insert)
 		{
 			//Special treatment for blob/binary when updating
-			if($options['datatype'] === 'blob' || $options['datatype'] === 'binary')
+			if($deleteBlob)
 			{
-				if(isset($requestData[$columnName.'___DELETEBLOB']) && $requestData[$columnName.'___DELETEBLOB'] === 'on')
-				{
-					$recordData[$columnName] = $data; //$data should be null or empty here (logic before found this out). Should do the job, except someone checks the "delete" checkbox, and adds a file. --> Then the file will be stored,...
-					return;
-				}
-				if($dataExists)
-				{
-					$recordData[$columnName] = $data; //Just Set the value
-					return;
-				}
-
-				return; //The field will be left out in th UPDATE...
-			}
-			//If it is a update, we dont need to specify unexisting data
-			if(!$dataExists)
-			{
+				$recordData[$columnName] = $data; //$data should be null or empty here (logic before found this out). Should do the job, except someone checks the "delete" checkbox, and adds a file. --> Then the file will be stored,...
 				return;
+			}
+			if($u)
+			{
+				$recordData[$columnName] = $data; //Just Set the value
 			}
 		}	
 		
-		if($actionType === 'insert')
+		if($insert && $i)
 		{
-			//Exclude the field from SQL statement, if there is a DB defualt value and not data:
-			if($useDbDefault && !$dataExists)
-			{
-				return;
-			}
+			$recordData[$columnName] = $data; //Just Set the value
 		}	
-	
-
-		$recordData[$columnName] = $data; //Default
-	}
-	
-	/**
-	 * We can get the default value here, but most important: 
-	 * we set $useDbDefault to TRUE, so we can exclude this field form INSERT, UPDATE statement...
-	 * 
-	 * @internal 
-	 */
-	private function setDefault(bool &$useDbDefault, &$fieldValue, string $defaultValue, string $fieldDatatype, string $columnName = '')
-	{
-		$useDbDefault = true;
-		
-		//The $defaultValue is always provided as string from Doctrine DBAL
-		switch($fieldDatatype)
-		{
-			case 'string' 	: $fieldValue = $defaultValue; break;
-			case 'text' 	: $fieldValue = $defaultValue; break;
-			case 'integer' 	: $fieldValue = intval($defaultValue); break;
-			case 'decimal' 	: $fieldValue = floatval($defaultValue); break;
-			case 'boolean' 	: $fieldValue = ($defaultValue == true); break;
-			case 'datetime' : $fieldValue = $defaultValue; break;
-			case 'date' 	: $fieldValue = $defaultValue; break;
-			case 'time' 	: $fieldValue = $defaultValue; break;
-			case 'blob' 	: $fieldValue = $defaultValue; break; //Cannot have default value in MySQL...
-			case 'binary' 	: $fieldValue = $defaultValue; break; //Cannot have default value in MySQL...
-			case 'enum' 	: $fieldValue = $defaultValue; break;
-			default 		: throw new Exception(sprintf('Unsupported SQL datatype "%s". (column "%s", table "%s")', $fieldDatatype, $columnName, $this->table->getName()));
-		}
 	}
 	
 	/** 
@@ -243,9 +195,8 @@ class DataProcessor
 	*/
 	public function postProcess($records, bool $singleRecord = false, bool $rawData = false)
 	{		
-
 		$records = $singleRecord ? [$records] : $records;//Can now be used in foreach
-		
+
 		foreach($records as &$record)
 		{
 			foreach($record as $columnName => &$columnValue)
@@ -278,16 +229,20 @@ class DataProcessor
 	/** @internal */
 	private function formatBoolean($columnName, &$columnValue)
 	{
-		if($this->columns[$columnName]->type === 'boolean' && !self::e($columnValue))
+		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
+
+		if($datatype === 'boolean')
 		{
-			$columnValue = $columnValue == true ? self::text('yes') : self::text('no');
+			$columnValue = ($columnName === 1 || $columnValue === '1' || $columnValue === true) ? [true, self::text('yes')] : [false, self::text('no')];
 		}
 	}
 
 	/** @internal */
 	private function formatDecimal($columnName, &$columnValue)
 	{
-		if($this->columns[$columnName]->type === 'decimal' && !self::e($columnValue))
+		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
+
+		if($datatype === 'decimal' && !self::e($columnValue))
 		{
 			$columnValue = number_format(floatval($columnValue), 2, ',', '.');
 		}
@@ -296,13 +251,15 @@ class DataProcessor
 	/** @internal */
 	private function processBinaryData($columnName, &$columnValue, $singleRecord, $rawData)
 	{
+		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
+		
 		if($singleRecord)
 		{
-			if($this->columns[$columnName]->type === 'image') //Single record and Image --> we got the blob data from DB, we will show the image.
+			if($datatype === 'image') //Single record and Image --> we got the blob data from DB, we will show the image.
 			{
 				$columnValue = self::e($columnValue) ? $columnValue : base64_encode($columnValue);
 			}
-			if($this->columns[$columnName]->type === 'blob') //here we just got the size in kB from the DB
+			if($datatype === 'blob') //here we just got the size in kB from the DB
 			{
 				$columnValue = $this->formatBytes($columnValue, $rawData);
 			}
@@ -333,22 +290,6 @@ class DataProcessor
 
 		return $rawData ? round($bytes, $precision) : round($bytes, $precision) . ' ' . $units[$pow]; 
 	} 
-
-	/** @internal */
-	private function mapEnum($columnName, &$columnValue)
-	{					
-		if($this->columns[$columnName]->type === 'enum')
-		{
-			if(isset($this->columns[$columnName]->options['enum'][$columnValue]))
-			{				
-				$columnValue = [ 'value' => $columnValue, 'label' => $this->columns[$columnName]->options['enum'][$columnValue]];	
-			}
-			else
-			{
-				$columnValue = ['value' => '', 'label' => ''];
-			}
-		}
-	}
 
 	/** @internal */
 	private function formatDateAndTime($columnName, &$columnValue)
