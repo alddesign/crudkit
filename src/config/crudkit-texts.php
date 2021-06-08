@@ -3,6 +3,11 @@ return
 [
 	'en' =>
 	[
+		'username' => 'Username',
+		'password' => 'Password',
+		'login' => 'Login',
+		'back' => 'Back',
+		'startpage' => 'Start Page',
 		'save' => 'Save',
 		'cancel' => 'Cancel',
 		'new' => 'New',
@@ -10,6 +15,8 @@ return
 		'delete' => 'Delete',
 		'delete_confirmation' => 'Do you really want to delete this record?',
 		'pages' => 'Pages',
+		'skin' => 'Skin',
+		'accent' => 'Accent',
 		'actions' => 'Actions',
 		'version' => 'Version',
 		'search' => 'Search',
@@ -29,8 +36,8 @@ return
 		'not_logged_in' => 'You are not logged in.',
 		'no_permission' => 'You have no permisson to access this page or to perform this action.',
 		//Export:
-		'crudkit_csv_export' => '--- Crudkit CSV Export ---',
-		'crudkit_xml_export' => '--- Crudkit XML Export ---',
+		'crudkit_csv_export' => 'CRUDKit CSV Export',
+		'crudkit_xml_export' => 'CRUDKit XML Export',
 		'page' => 'Page',
 		'page_id' => 'Page ID',
 		'date' => 'Date',
@@ -64,6 +71,11 @@ return
 	],
 	'de' =>
 	[
+		'username' => 'Benutzername',
+		'password' => 'Passwort',
+		'login' => 'Login',
+		'back' => 'Zurück',
+		'startpage' => 'Startseite',
 		'save' => 'Speichern',
 		'cancel' => 'Abbrechen',
 		'new' => 'Neu',
@@ -71,6 +83,8 @@ return
 		'delete' => 'Löschen',
 		'delete_confirmation' => 'Wollen sie diesen Datensatz wirklich löschen?',
 		'pages' => 'Seiten',
+		'skin' => 'Skin',
+		'accent' => 'Akzent',
 		'actions' => 'Funktionen',
 		'version' => 'Version',
 		'search' => 'Suchen',
@@ -90,8 +104,8 @@ return
 		'not_logged_in' => 'Sie sind nicht eingeloggt.',
 		'no_permission' => 'Sie haben keine Berechtigung für den Zugriff auf diese Seite oder zum Durchführen der Aktion.',
 		//CSV Export:
-		'crudkit_csv_export' => '--- CRUDKit CSV Export ---',
-		'crudkit_xml_export' => '--- Crudkit XML Export ---',
+		'crudkit_csv_export' => 'CRUDKit CSV Export',
+		'crudkit_xml_export' => 'CRUDKit XML Export',
 		'page' => 'Seite',
 		'page_id' => 'Page ID',
 		'date' => 'Datum',

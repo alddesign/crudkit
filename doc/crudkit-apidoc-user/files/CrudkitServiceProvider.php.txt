@@ -16,6 +16,7 @@ use Alddesign\Crudkit\Classes\PageStore;
 use Alddesign\Crudkit\Classes\FilterDefinition;
 use Alddesign\Crudkit\Classes\Filter;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use Alddesign\Crudkit\Classes\Lookup;
 
 /**
  * This class is used to create your application.
@@ -150,6 +151,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		};
 
 		//Main code
+		$authorLookup = new Lookup($this->tables['author'], 'name', [new FilterDefinition('id', '=', 'field', 'author_id')], 'lookup', 'Author Name', 'after-field', 'author_id', 'author', true);
 		return 
 		[
 			'author' => (new PageDescriptor('Author', 'author', $this->tables['author']))
@@ -159,7 +161,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
 				->setCardLinkColumns(['id'])
 				->addSection('Additional Data', 'cover', 'price')
-				->addOneToManyLink('author', 'Author', 'Author', 'author', 'author', [(new FilterDefinition('id', '=', 'field', 'author_id'))])
+				->addLookupColumn('author', $authorLookup)
 				->onOpenList($onOpenAuthorListCallback)
 				,
 		];

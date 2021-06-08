@@ -1,9 +1,0 @@
-#ignore vscode folder
-src/.vscode/
-
-#ignore phpdoc "build tools"
-doc/**.txt
-doc/**.cmd
-doc/**.phar
-doc/**.ps1
-doc/**.css

@@ -2,10 +2,10 @@
 
 namespace Alddesign\Crudkit\Classes;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
-use View;
+use Illuminate\Support\Facades\View;
 
 /**
  * Should replace default error handling. 

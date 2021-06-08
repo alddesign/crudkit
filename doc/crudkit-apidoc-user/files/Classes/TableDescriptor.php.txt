@@ -7,10 +7,12 @@ namespace Alddesign\Crudkit\Classes;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Cache;
 
 use \Exception;
 use \DateTime;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
 
 /**
  * Definition of a database table.
@@ -31,7 +33,7 @@ class TableDescriptor
     /** @ignore */ private $name = null;
 	/** @ignore */ private $primaryKeyColumns = [];
 	/** @ignore */ private $hasAutoincrementKey = false;
-    /** @ignore */ private $columns = [];
+    /** @var array<SQLColumn> */ private $columns = [];
 	
 	/** @ignore */ private $allColumns = []; //Array of all table columns. Needed for inserts. Fetched by Doctrine DBAL.
 	/** @ignore */ private $allColumnsFetched 	= false;
@@ -41,6 +43,9 @@ class TableDescriptor
 	/** @ignore */ private $softNotDeletedValue = false;
 	
 	/** @ignore */ private $dbconf = null;
+
+	/** @ignore */ private $orderBy = '';
+	/** @ignore */ private $orderByDirection = 'asc';
 	
 	/**
 	 * Constructor
@@ -172,14 +177,16 @@ class TableDescriptor
 	 * ```
 	 * @return array
 	 */
-	public function getManyToOneColumnValues()
+	public function getManyToOneColumnValues($record = [], bool $onlyCurrentValue = false)
 	{
 		$result = [];
 		foreach($this->columns as $name => $column)
 		{
-			if($column->getRelationType() === 'manytoone')
+			if($column->isManyToOne)
 			{
-				$result[$name] = $column->getManyToOneValues();
+				/** @var SQLManyToOneColumn */
+				$manyToOneColumn = $column;
+				$result[$name] = $manyToOneColumn->getManyToOneValues($record, $onlyCurrentValue);
 			}
 		}
 		
@@ -200,11 +207,17 @@ class TableDescriptor
 		{
 			return;
 		}
+
+		//try reading from cache
+		if($this->allColumnsFromCache())
+		{
+			$this->allColumnsFetched = true;
+			return;
+		}
+
+		EnumType::registerDoctrineEnumMapping();
 		
 		$this->allColumns = [];
-		
-		\Alddesign\Crudkit\Classes\EnumType::registerDoctrineEnumMapping();
-		
 		$columnNames = Schema::getColumnListing($this->name);
 		foreach($columnNames as $key => $name)
 		{
@@ -218,8 +231,29 @@ class TableDescriptor
 				'autoincrement' => $docColumn->getAutoincrement() //autoincrement = boolean
 			];
 		}
+
+		//Write to cache
+		$this->allColumnsToCache();
 		
 		$this->allColumnsFetched = true;
+	}
+
+	/**
+	 * @internal 
+	 * @return bool 
+	 */
+	private function allColumnsFromCache()
+	{
+		$this->allColumns = Cache::get('all-columns-' . $this->name, []);
+	
+		return $this->allColumns === [] ? false : true;
+	}
+
+	/** @internal */
+	private function allColumnsToCache()
+	{
+		$ttlSeconds = 3600 * 24 * 7; //7 days
+		Cache::put('all-columns-' . $this->name, $this->allColumns, $ttlSeconds);
 	}
 	/* #endregion */
 
@@ -246,23 +280,36 @@ class TableDescriptor
         $this->columns[$name] = new SQLColumn($name, $label, $type, $options);
 
         return $this;
-    }
+	}
+	
+	public function setOrderBy(string $columnName, string $direction = 'asc')
+	{
+		if(!isset($this->columns[$columnName]))
+		{
+			dp::crudkitException('Cannot set orderBy. Column "%s" doesnt exist in table "%s".', __CLASS__, __FUNCTION__, $columnName, $this->name);
+		}	
+		
+		$this->orderBy = $columnName;
+		$this->orderByDirection = $direction;
+
+		return $this;
+	}
 	
 	/**
-	 * Defines an existing column as a many-to-on relation to another Table.
-	 * 
 	 * Example: book.author_id is a many to one column. Related table.field is author.id
 	 * Example code: see CrudkitServiceProvider doc
 	 * 
-	 * @param string $name Name of the column
-	 * @param string $relationTableName The name of the related table
-	 * @param string $relationColumnName The name of the column in the related table
-	 * @param FilterDefinition[] $filterDefinitions (optional) Array of FilterDefinitions that is beeing applied to the related table (relation only to a subset of records)
-	 * @param bool $clickable (default = true) Show this column as clickable link (to a card page)
+	 * @param string $name Name of the column to defines as many to one
+	 * @param string $toTableName Related table name
+	 * @param string $columnName A column from the related table
+	 * @param array $secondaryColumnNames Secondary clolumn names from the related table (are shown to the user, more = slower)
+	 * @param string $page A drilldown page if you want to display this relation as a link.
+	 * @param array $filterDefinitions Additional filters to limit the relation
 	 * 
-	 * @see \Alddesign\Crudkit\CrudkitServiceProvider
+	 * @return TableDescriptor
+	 * @stackable
 	 */
-	public function defineManyToOneColumn(string $name, string $relationTableName, string $relationColumnName, array $filterDefinitions = [], bool $clickable = true)
+	public function defineManyToOneColumn(string $name, string $toTableName, string $columnName, array $secondaryColumnNames = [], string $page = '', array $filterDefinitions = [], bool $manualInput = false)
 	{
 		if(!isset($this->columns[$name]))
 		{
@@ -270,29 +317,82 @@ class TableDescriptor
 		}
 		
 		$column = $this->columns[$name];
-		$this->columns[$name] = new SQLManyToOneColumn($column->name, $column->label, $column->type, $relationTableName, $relationColumnName, $filterDefinitions, $column->options, $clickable);
+		$this->columns[$name] = new SQLManyToOneColumn($column->name, $column->label, $column->type, $toTableName, $columnName, $secondaryColumnNames,  $page, $filterDefinitions, $column->options, $manualInput);
 		
 		return $this;
 	}
-	
+
 	/**
-	 * !!! Experimental !!!
+	 * See defineManyToOneColumn(). Same, but rendered as an ajax selectbox (search for values).
 	 * 
-	 * @param string $name Name of the column
-	 * @param string $relationTableName The name of the related table
-	 * @param FilterDefinition[] $filterDefinitions Array of FilterDefinitions that is beeing applied to the related table.
-	 * @internal
+	 * @param string $name
+	 * @param string $toTableName
+	 * @param string $columnName
+	 * @param array $secondaryColumnNames
+	 * @param string $page
+	 * @param array $filterDefinitions
+	 * @param AjaxOptions|null $ajaxOptions additional options to control the ajax behavior
+	 * 
+	 * @return TableDescriptor
+	 * @stackable
 	 */
-	public function defineOneToManyColumn(string $name, string $relationTableName, array $filterDefinitions)
+	public function defineManyToOneColumnAjax(string $name, string $toTableName, string $columnName, array $secondaryColumnNames = [], string $page = '', array $filterDefinitions = [], bool $manualInput = false, AjaxOptions $ajaxOptions = null)
 	{
 		if(!isset($this->columns[$name]))
 		{
-			dp::crudkitException('Cannot define column "%s" as one-to-many column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+			dp::crudkitException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
 		}
-		
 		$column = $this->columns[$name];
-		$this->columns[$name] = new SQLOneToManyColumn($column->name, $column->label, $column->type, $relationTableName, $filterDefinitions, $column->options);
+
+		if(in_array($column->type, ['enum', 'image', 'blob', 'boolean'], true))
+		{
+			dp::crudkitException('Column of type "%s" cannot be defined as Custom Ajax Column.', __CLASS__, __FUNCTION__, $column->type);
+		}
+
 		
+		$this->columns[$name] = new SQLManyToOneColumn($column->name, $column->label, $column->type, $toTableName, $columnName, $secondaryColumnNames, $page, $filterDefinitions, $column->options, $manualInput, true, $ajaxOptions);
+		
+		return $this;
+	}
+
+	/**
+	 * Defines a column where you can handle what is displayed, and what the user can enter via ajax select search. Be carefull - you have to take care of the data!
+	 * 
+	 * ```php
+	 * //Example for $result object if success (Json encoded):
+	 * {type : "result", data : {results : [{'id' : '23', 'text' => 'Joe Smith', 'img' => 'base64imageData'}, {id : '...'}]}}
+	 * //Example for $result object if error (Json encoded):
+	 * {type : "error", message : "404 not found" data : "some error data which will be logged by the Javascript console..."}
+	 * //Helper methods in DataProcessor class:
+	 * DataProcessor::getAjaxErrorResult();
+	 * DataProcessor::getAjaxResult();
+	 * ```
+	 * 
+	 * @param string $name Name of the existing column. Cannot be a many to one column.
+	 * @param callable $onLoadCallback Callback function for preparing the data which is displayed in the field. Params are: &$value, &$text, $record, $table, $page, $column. You can change &$value and &$text as you wish. $value already holds the fields current value (after select). $text is an additionl info text
+	 * @param callable $onSearchCallback Callback function for when the user begins to type for searching data. Params are: &$results, $input, $table, $page, $column. You have to populate $results (see example above);
+	 * @param AjaxOptions $ajaxOptions
+	 * @return TableDescriptor
+	 * @stackable
+	 */
+	public function defineCustomColumnAjax(string $name, callable $onLoadCallback, callable $onSearchCallback, AjaxOptions $ajaxOptions = null)
+	{
+		if(!isset($this->columns[$name]))
+		{
+			dp::crudkitException('Cannot define column "%s" as custom column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+		}
+
+		$column = $this->columns[$name];
+		if($column->isManyToOne)
+		{
+			dp::crudkitException('Cannot define column "%s" as custom column. Column is already a Many To One Column.', __CLASS__, __FUNCTION__, $name);
+		}
+
+		$column->isCustomAjax = true;
+		$column->setAjaxOptions($ajaxOptions);
+		$column->onLoadCallback = $onLoadCallback;
+		$column->onSearchCallback = $onSearchCallback;
+
 		return $this;
 	}
 	
@@ -362,23 +462,12 @@ class TableDescriptor
 	 * @param Filter[] $filters
 	 * @return array Record data as array
 	 */
-	public function readRecord(array $primaryKeyValues, array $filters = [])
+	public function readRecord(array $primaryKeyValues, array $filters = [], bool $formatDateAndTime = true, $formatBool = true, $formatDec = true, $formatBinary = true, $throwErrorIfNotFound = true)
 	{
 		//Test Parameters
-		if((dp::e($primaryKeyValues) && dp::e($filters)) || (!dp::e($primaryKeyValues) && !dp::e($filters)))
+		if(dp::e($primaryKeyValues) && dp::e($filters))
 		{
-			dp::crudkitException('Please specify either primary key values or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
-		}
-		
-		//Test Primary Keys
-		if(!dp::e($primaryKeyValues))
-		{
-			$c1 = count($this->primaryKeyColumns);
-			$c2 = count($primaryKeyValues); 
-			if($c1 !== $c2)
-			{
-				dp::crudkitException('The table "%s" has "%d" primary key fields. "%d" given.', __CLASS__, __FUNCTION__, $this->name, $c1, $c2);
-			}
+			dp::crudkitException('Please specify primary key values and/or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
 		}
 		
 		$record = [];
@@ -407,7 +496,7 @@ class TableDescriptor
 				$query->where($this->primaryKeyColumns[$index], $value);
 			}
 		}
-		else //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
+		if(!dp::e($filters)) //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
 		{
 			foreach($filters as $filter)
 			{
@@ -417,15 +506,37 @@ class TableDescriptor
 		//$query = $query->limit(1);
 		$record = $query->get();
 		
-		if(count($record) !== 1)
+		$recordCount = count($record);
+		if($recordCount > 1 || ($recordCount === 0 && $throwErrorIfNotFound))
 		{
-			dp::crudkitException('Read record query returned %d records (only one expected). Check primary key and filter parameters. Table "%s".', __CLASS__, __FUNCTION__, count($record), $this->name);
+			dp::crudkitException('Read record query returned %d records (only one expected). Check primary key and filter parameters. Table "%s".', __CLASS__, __FUNCTION__, $recordCount, $this->name);
 		}
-		else
+
+		if($recordCount === 0)
 		{
-			$record = (new DataProcessor($this))->postProcess($record[0], true);
-			return $record;
+			return [];
 		}
+
+		$record = (new DataProcessor($this))->postProcess($record[0], true, $formatDateAndTime, $formatBool, $formatDec, $formatBinary);
+
+		return $record;
+	}
+
+	public function getCustomAjaxValues($record, PageDescriptor $page)
+	{
+		//Custom Columns: Trigger Event onLoad
+		$values = [];
+		foreach($this->columns as $column)
+		{
+			if($column->isCustomAjax)
+			{
+				$value = $record[$column->name];
+				$column->triggerOnLoadEvent($value, $record, $this, $page, $column);
+				$values[$column->name] = $value;
+			}
+		}
+
+		return $values;
 	}
 	
 	/**
@@ -435,13 +546,19 @@ class TableDescriptor
 	 * @param string $searchText The search text (if existing)
 	 * @param Filter[] $filters
 	 * @param bool $trimText Trim text >50 chars
-	 * @param bool $rawData Get the data unprocessed from the DB (watch out here!)
+	 * @param bool $formatDateAndTime
+	 * @param bool $formatBool
+	 * @param bool $formatDec
+	 * @param bool $formatBinary
+	 * @param int $itemsPerPage
+	 * 
+	 * @return array
 	 */
-	public function readRecords(int $pageNumber = 1, string $searchColumnName = '', string $searchText = '', array $filters = [], bool $trimText = true, bool $rawData = false)
+	public function readRecords(int $pageNumber = 1, string $searchColumnName = '', string $searchText = '', array $filters = [], bool $trimText = true,  bool $formatDateAndTime = true, $formatBool = true, $formatDec = true, $formatBinary = true, int $itemsPerPage = -1)
 	{
 		//To load all records (within search and filter) set $pageNumber to 0
 		$records = []; //Result
-        $itemsPerPage = config('crudkit.records_per_page', 5);
+        $itemsPerPage = $itemsPerPage >= 0 ? $itemsPerPage : config('crudkit.records_per_page', 5);
         $searchText = mb_strtolower($searchText,'UTF-8');
 		$searchColumn = !dp::e($searchColumnName) && isset($this->columns[$searchColumnName]) ? $this->columns[$searchColumnName] : '';
 
@@ -468,16 +585,16 @@ class TableDescriptor
 					$searchType = 'contains';
 					$searchTerm = $this->getDbSpecificLikeCondition('contains',$searchText); 
 			}
-        }
+		}
 		
-        $query = DB::table( $this->name );		
+		$trimLength = intval(config('crudkit.records_text_trim_length', 50));
+        $query = DB::table($this->name);		
 		foreach($this->columns as $column)
 		{
 			$columnNameWithDelimiter = $this->getDbSpecificColumnNameWithDelimiter($column->name);
 			$lengthFunction = $this->getDbSpecificBlobLengthFunction($columnNameWithDelimiter);
 			
 			//Trim Text
-			$trimLength = 50;
 			$type = ($trimText && ($column->type === 'text' || $column->type === 'textlong')) ? ($column->type . '_trim') : $column->type; 
 
 			switch($type)
@@ -535,19 +652,47 @@ class TableDescriptor
 						return $query;
 					}
 				);
-			
-		$records['total'] = $query->count();
-			
+		if(!dp::e($this->orderBy))
+		{
+			$query->orderBy($this->orderBy, $this->orderByDirection);
+		}
+		$records['total'] = $query->count(); // Get totals record count
 		if($pageNumber > 0)
 		{
 			$query->offset(($pageNumber-1)*$itemsPerPage)
 				  ->limit($itemsPerPage);	
 		}
-		$records['records'] = $query->get();
-		$records['records'] = (new DataProcessor($this))->postProcess($records['records'], false, $rawData);  
+		$records['records'] = $query->get(); // Get records itself
+
+		$records['records'] = (new DataProcessor($this))->postProcess($records['records'], false, $formatDateAndTime, $formatBool, $formatDec, $formatBinary);  
         return $records;
 	}
 	
+	/**
+	 * @param bool $setDbDefaultValues Set the default values which are definded in the Database
+	 * @param bool $allColumns Get all columns or just those definded in CRUDKit
+	 * 
+	 * @return array
+	 */
+	public function getEmptyRecord($setDbDefaultValues = true, $allColumns = false)
+	{
+		$record = [];
+		if($allColumns === true || $setDbDefaultValues === true)
+		{	
+			$this->fetchAllColumns();
+		}
+
+		foreach($this->allColumns as $columnName => $options)
+		{
+			if($allColumns === true || $this->hasColumn($columnName))
+			{
+				$record[$columnName] = $setDbDefaultValues === true ? $options['default'] : null;
+			}
+		}
+
+		return $record;
+	}
+
 	/** 
 	 * Creates a record in the DB
 	 * @param array $recordData (preprocessed)
@@ -592,7 +737,7 @@ class TableDescriptor
 		foreach($this->primaryKeyColumns as $index => $primaryKeyColumnName) //a where for each Primary Key Column
 		{
 			$query->where($primaryKeyColumnName, $primaryKeyValues[$index]);
-			$primaryKeyValues[$index] = $columnValues[$primaryKeyColumnName];
+			$primaryKeyValues[$index] = isset($columnValues[$primaryKeyColumnName]) ? $columnValues[$primaryKeyColumnName] : '';
 		}
 		$query->update($columnValues);
 		
@@ -607,7 +752,7 @@ class TableDescriptor
 			$query->where($primaryKeyColumn, $primaryKeyValues[$index]);
 		}
 		
-        if(dp::e($this->softDeleteColumn))
+        if(!dp::e($this->softDeleteColumn))
         {
 			$query->update([$this->softDeleteColumn => $this->softDeletedValue]);
         }

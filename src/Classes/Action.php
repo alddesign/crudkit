@@ -13,68 +13,141 @@ namespace Alddesign\Crudkit\Classes;
 class Action
 {
     /** @internal */
-    const POSITIONS = ['top','bottom','both'];
+    const POSITIONS = ['top','bottom','both', 'before-field', 'after-field', 'to-field'];
     /** @internal */
-    const BTNCLASSES = ['default','primary','info','success','danger','warning'];
+    const BTNCLASSES = ['default','primary','info','success','danger','warning', 'accent'];
 
-    /** @var string $name Unique name of the action. */
-    public $name = '';
-    /** @var string $label Label of the action button. */
+    public $value = '';
     public $label = '';
-    /** @var string $columnLabel Label of the action column of list pages. */
-    public $columnLabel = '';
-    /** @var callable $callback The callback function. */ 
     public $callback = null;
-    /** @var bool $onList  Show action on list pages.*/
     public $onList = true;
-    /** @var bool $onCard  Show action on card pages.*/
     public $onCard = true;
-    /** @var string $faIcon Font awesome icon name */
+    public $onUpdate = true;
     public $faIcon = '';
-    /** @var string $btnClass Admin LTE button type. ''|'default'|'primary'|'info'|'success'|'danger'|'warning' */
-    public $btnClass = '';
-    /** @var string $position Position on card page: 'top'|'bottom'|'both' */
+    public $btnClass = 'default';
     public $position = '';
-    /** @var bool $enabled Default = true. Disabled actions are gray buttons and cannot be clicked.*/
+    public $fieldname = '';
     public $enabled = true; 
-    /** @var bool $visible Default = true.*/
     public $visible = true;
-    /** @var array $data Additional data which can be set when creatig the action. (Can be accessed in the callback function) */
     public $data = [];
-
 
     /**
      * Constructor. Params are basically the properies of this class.
-     * @param string $name
-     * @param string $label
-     * @param string $columnLabel
-     * @param callable $callback
-     * @param bool $onList
-     * @param bool $onCard
-     * @param string $faIcon
-     * @param string $btnClass
-     * @param string $position
+     * @param string $value The text for the action itselft
+     * @param string $label The text of the label for the action
+     * @param callable $callback The function to execute
+     * @param string $position 'top','bottom','both', 'before-field', 'after-field', 'to-field'
+     * @param string $fieldname reference fieldname for $position
+     * @return Action
      */
-    public function __construct(string $name, string $label, string $columnLabel, callable $callback, bool $onList = true, bool $onCard = true, string $faIcon = '', string $btnClass = 'default', string $position = 'both')
+    public function __construct(string $value, string $label, callable $callback = null, string $position = 'both', string $fieldname = '')
     {	
         if(!in_array($position, self::POSITIONS, true))
 		{
 			$position = 'both';
         }
+        	
+        $this->value = $value;
+        $this->label = $label;
+        $this->callback = $callback;
+        $this->position = $position;
+        $this->fieldname = $fieldname;
 
-        if(!in_array($btnClass, self::BTNCLASSES, true))
+        return $this;
+    }
+
+    #region Set #######################################################################################################################################################
+    /**
+     * The text for the action itselft
+     * @return Action
+     */ 
+    public function setValue(string $value){$this->value = $value; return $this;}
+
+    /**
+     * The text of the label for the action
+     * @return Action
+     */ 
+    public function setLabel(string $label){$this->label = $label; return $this;}
+
+    /**
+     * Show/hide on list pages.
+     * @return Action
+     */
+    public function setOnList(bool $onList = true){$this->onList = $onList; return $this;}
+
+    /**
+     * Show/hide on card pages.
+     * @return Action
+     */
+    public function setOnCard(bool $onCard = true){$this->onCard = $onCard; return $this;}
+
+    /**
+     * Show/hides on update pages.
+     * @return Action
+     */
+    public function setOnUpdate(bool $onUpdate = true){$this->onUpdate = $onUpdate; return $this;}
+
+    /**
+     * Sets the icon for the button (font awesome icon name)
+     * @return Action
+     */
+    public function setFaIcon(string $faIcon){$this->faIcon = $faIcon;return $this;}
+
+    /**
+     * Defines the button appearance. 
+     * 
+     * Admin LTE button type. '','default','primary','info','success','danger','warning','accent'. '' = no button, just a link
+     * @return Action
+     */
+    public function setBtnClass(string $btnClass = 'default')
+    {
+        if(!in_array($btnClass, self::BTNCLASSES, true) && $btnClass !== '')
 		{
 			$btnClass = 'default';
         }
-        	
-        $this->name = $name;
-        $this->label = $label;
-        $this->columnLabel = $columnLabel;
-        $this->callback = $callback;
-        $this->onList = $onList;
-        $this->onCard = $onCard;
-        $this->faIcon = $faIcon;
+        
         $this->btnClass = $btnClass;
-        $this->position = $position;
+        return $this;
     }
+
+    /**
+     * Enableds/disables the action
+     * @return Action
+     */
+    public function setEnabled(bool $enabled = true){$this->enabled = $enabled;return $this;}
+
+    /**
+     * Show/hide on all pages
+     * @return Action
+     */
+    public function setVisible(bool $visible = true){$this->visible = $visible; return $this;}
+
+    /**
+     * The callback function for the action
+     * @return Action
+     */ 
+    public function setCallback(callable $callback){$this->callback = $callback;return $this;}
+
+    /**
+     * 'top','bottom','both', 'before-field', 'after-field', 'to-field'
+     * 
+     * Togehter with $fieldname
+     * @return Action
+     */ 
+    public function setPosition(string $position){$this->position = $position;return $this;}
+
+     /**
+     * The reference fieldname for $position
+     * @return Action
+     */ 
+    public function setFieldname(string $fieldname){$this->fieldname = $fieldname;return $this;}
+
+    /**
+     * Sets additional data. 
+     * Additional data which can be set when creatig the action. (Can be accessed in the callback function)
+     * 
+     * @return Action
+     */
+    public function setData($data){$this->data = $data;return $this;}
+    #endregion
 }

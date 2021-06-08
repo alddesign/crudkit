@@ -1,11 +1,8 @@
-@extends('crudkit::core-admin-panel')
+@extends('crudkit::base.content')
 @section('page-content')
 <div>
-	@if($loginMessage != '')
-		@php 
-			$alertClass = $loginMessageType != '' ? (' alert-'.$loginMessageType) : ''; 
-		@endphp
-		<div class="alert{{ $alertClass }}">
+	@if(!empty($loginMessage))
+		<div class="alert alert-{{ $loginMessageType }}">
 		  {{$loginMessage}}
 		</div>
 	@endif
@@ -15,16 +12,16 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
-					<label for="crudkit-userid">Benutzername: </label>
+					<label for="crudkit-userid">{{$texts['username']}}: </label>
 					<input type="text" id="crudkit-userid" name="crudkit-userid" class="form-control"/>
 				</div>
 				<div class="form-group">
-					<label for="crudkit-password">Passwort: </label>
+					<label for="crudkit-password">{{$texts['password']}}: </label>
 					<input type="password" id="crudkit-password" name="crudkit-password" class="form-control"/>
 				</div>
 			</div>
 		</div>	
-		<button type="submit" form="login-form" class="btn btn-primary btn-lg" style="margin-top:20px"><i class="fa fa-sign-in"></i> &nbsp;Login</button>
+		<button type="submit" form="login-form" class="btn bg-{{config('crudkit.accent', 'blue')}} btn-lg" style="margin-top:20px"><i class="fa fa-sign-in"></i> &nbsp;{{$texts['login']}}</button>
 	</form>
 </div>
 @endsection

@@ -98,7 +98,7 @@ function crudkitDrawChart(data)
 			responsive : true,
 			animation :
 			{
-				duration : 1500,
+				duration : 500,
 				easing : 'linear',
 				onComplete : function()
 				{

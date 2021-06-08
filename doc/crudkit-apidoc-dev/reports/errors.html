@@ -67,12 +67,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">206</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">398</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -97,12 +97,16 @@
 
             <ul class="side-nav nav nav-list">
                 <li class="nav-header">Navigation</li>
-                                                                                                                                    <li><a href="#Classes\AuthHelper.php"><i class="icon-file"></i> Classes\AuthHelper.php</a></li>
+                                                                            <li><a href="#Classes\Action.php"><i class="icon-file"></i> Classes\Action.php</a></li>
+                                                                                                    <li><a href="#Classes\AjaxOptions.php"><i class="icon-file"></i> Classes\AjaxOptions.php</a></li>
+                                                                                                    <li><a href="#Classes\AuthHelper.php"><i class="icon-file"></i> Classes\AuthHelper.php</a></li>
+                                                                                                    <li><a href="#Classes\Backup.php"><i class="icon-file"></i> Classes\Backup.php</a></li>
                                                                                                     <li><a href="#Classes\DataProcessor.php"><i class="icon-file"></i> Classes\DataProcessor.php</a></li>
                                                                                                     <li><a href="#Classes\EnumType.php"><i class="icon-file"></i> Classes\EnumType.php</a></li>
                                                                                                     <li><a href="#Classes\ExceptionHandler.php"><i class="icon-file"></i> Classes\ExceptionHandler.php</a></li>
                                                                                                     <li><a href="#Classes\Filter.php"><i class="icon-file"></i> Classes\Filter.php</a></li>
                                                                                                                                                             <li><a href="#Classes\Generator.php"><i class="icon-file"></i> Classes\Generator.php</a></li>
+                                                                                                    <li><a href="#Classes\Lookup.php"><i class="icon-file"></i> Classes\Lookup.php</a></li>
                                                                                                     <li><a href="#Classes\PageDescriptor.php"><i class="icon-file"></i> Classes\PageDescriptor.php</a></li>
                                                                                                     <li><a href="#Classes\PageStore.php"><i class="icon-file"></i> Classes\PageStore.php</a></li>
                                                                                                     <li><a href="#Classes\RestrictionSet.php"><i class="icon-file"></i> Classes\RestrictionSet.php</a></li>
@@ -110,11 +114,11 @@
                                                                                                     <li><a href="#Classes\Section.php"><i class="icon-file"></i> Classes\Section.php</a></li>
                                                                                                     <li><a href="#Classes\SQLColumn.php"><i class="icon-file"></i> Classes\SQLColumn.php</a></li>
                                                                                                     <li><a href="#Classes\SQLManyToOneColumn.php"><i class="icon-file"></i> Classes\SQLManyToOneColumn.php</a></li>
-                                                                                                    <li><a href="#Classes\SQLOneToManyColumn.php"><i class="icon-file"></i> Classes\SQLOneToManyColumn.php</a></li>
                                                                                                     <li><a href="#Classes\Startpage.php"><i class="icon-file"></i> Classes\Startpage.php</a></li>
                                                                                                     <li><a href="#Classes\TableDescriptor.php"><i class="icon-file"></i> Classes\TableDescriptor.php</a></li>
                                                                                                     <li><a href="#Classes\User.php"><i class="icon-file"></i> Classes\User.php</a></li>
-                                                                                                                                                                                                                                            </ul>
+                                                                                                    <li><a href="#Controllers\CrudkitController.php"><i class="icon-file"></i> Controllers\CrudkitController.php</a></li>
+                                                                                                                                                                                    </ul>
         </div>
 
         <div class="span10 offset2">
@@ -125,13 +129,11 @@
 
             
                             <div class="package-contents">
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="Classes\AuthHelper.php" id="Classes\AuthHelper.php"></a>
+                                            <a name="Classes\Action.php" id="Classes\Action.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            Classes\AuthHelper.php
-                            <small style="float: right;padding-right: 10px;">18</small>
+                            Classes\Action.php
+                            <small style="float: right;padding-right: 10px;">26</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -145,93 +147,411 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
-                                        <td>Name of argument $userId does not match with the DocBlock&#039;s name $action in userHasAccessTo()</td>
+                                        <td>64</td>
+                                        <td>Argument $value is missing from the Docblock of setValue</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $userId in userHasAccessTo()</td>
+                                        <td>70</td>
+                                        <td>Argument $label is missing from the Docblock of setLabel</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
-                                        <td>Argument $action is missing from the Docblock of userHasAccessTo</td>
+                                        <td>76</td>
+                                        <td>Argument $onList is missing from the Docblock of setOnList</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
+                                        <td>82</td>
+                                        <td>Argument $onCard is missing from the Docblock of setOnCard</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>88</td>
+                                        <td>Argument $onUpdate is missing from the Docblock of setOnUpdate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>Argument $faIcon is missing from the Docblock of setFaIcon</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>102</td>
+                                        <td>Argument $btnClass is missing from the Docblock of setBtnClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>117</td>
+                                        <td>Argument $enabled is missing from the Docblock of setEnabled</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>123</td>
+                                        <td>Argument $visible is missing from the Docblock of setVisible</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>129</td>
+                                        <td>Argument $callback is missing from the Docblock of setCallback</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>137</td>
+                                        <td>Argument $position is missing from the Docblock of setPosition</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>143</td>
+                                        <td>Argument $fieldname is missing from the Docblock of setFieldname</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>151</td>
+                                        <td>Argument $data is missing from the Docblock of setData</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $value</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $label</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $callback</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $onList</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $onCard</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for property $onUpdate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $faIcon</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for property $btnClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for property $position</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $fieldname</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>30</td>
+                                        <td>No summary for property $enabled</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $visible</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for property $data</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Classes\AjaxOptions.php" id="Classes\AjaxOptions.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Classes\AjaxOptions.php
+                            <small style="float: right;padding-right: 10px;">16</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for class \Alddesign\Crudkit\Classes\AjaxOptions</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $imageFieldname is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $searchFieldnames is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $minInputLength is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $maxResults is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $fullSearch is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $maxImageWidth is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $inputTimeout is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>No summary for property $minInputLength</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $imageFieldname</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $searchFieldnames</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $maxResults</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for property $fullSearch</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for property $maxImageWidth</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $inputTimeout</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Classes\AuthHelper.php" id="Classes\AuthHelper.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Classes\AuthHelper.php
+                            <small style="float: right;padding-right: 10px;">20</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
                                         <td>Argument $pageId is missing from the Docblock of userHasAccessTo</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
+                                        <td>94</td>
                                         <td>Name of argument $pageId does not match with the DocBlock&#039;s name $action in userHasAccessTo()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>91</td>
+                                        <td>94</td>
                                         <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageId in userHasAccessTo()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>138</td>
+                                        <td>111</td>
+                                        <td>No summary for method isLoggedIn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>117</td>
+                                        <td>No summary for method isAdmin()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>123</td>
+                                        <td>No summary for method getUserId()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
                                         <td>No summary for method checkStartpage()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>166</td>
+                                        <td>191</td>
+                                        <td>No summary for method checkCookies()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>213</td>
                                         <td>Argument $action is missing from the Docblock of checkAuth</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>166</td>
+                                        <td>213</td>
                                         <td>Argument $pageId is missing from the Docblock of checkAuth</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>166</td>
+                                        <td>213</td>
                                         <td>Argument $noPermissionCheck is missing from the Docblock of checkAuth</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>166</td>
+                                        <td>213</td>
                                         <td>Argument $loginAttempt is missing from the Docblock of checkAuth</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>202</td>
+                                        <td>251</td>
                                         <td>Argument $message is missing from the Docblock of loginFailed</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>202</td>
+                                        <td>251</td>
                                         <td>No summary for method loginFailed()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>211</td>
+                                        <td>260</td>
                                         <td>Argument $action is missing from the Docblock of checkPermissions</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>211</td>
+                                        <td>260</td>
                                         <td>Argument $pageId is missing from the Docblock of checkPermissions</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>211</td>
+                                        <td>260</td>
                                         <td>No summary for method checkPermissions()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>228</td>
+                                        <td>277</td>
                                         <td>No summary for method performLogin()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>18</td>
+                                        <td>21</td>
                                         <td>No summary for property $users</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Classes\Backup.php" id="Classes\Backup.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Classes\Backup.php
+                            <small style="float: right;padding-right: 10px;">7</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>Argument $haystack is missing from the Docblock of stringEndsWith</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>Argument $needle is missing from the Docblock of stringEndsWith</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>No summary for method stringEndsWith()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $sourceFolder</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $destinationFolder</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $maxBackupFiles</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $extension</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -242,7 +562,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Classes\DataProcessor.php
-                            <small style="float: right;padding-right: 10px;">57</small>
+                            <small style="float: right;padding-right: 10px;">82</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -256,288 +576,413 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
-                                        <td>Argument $useDbDefault is missing from the Docblock of addData</td>
+                                        <td>63</td>
+                                        <td>Name of argument $insert does not match with the DocBlock&#039;s name $actionType in preProcess()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
+                                        <td>63</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $insert in preProcess()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>63</td>
+                                        <td>Parameter $actionType could not be found in preProcess()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>117</td>
                                         <td>Argument $recordData is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
+                                        <td>117</td>
                                         <td>Argument $columnName is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
+                                        <td>117</td>
                                         <td>Argument $data is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
-                                        <td>Argument $options is missing from the Docblock of addData</td>
+                                        <td>117</td>
+                                        <td>Argument $deleteBlob is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
-                                        <td>Argument $requestData is missing from the Docblock of addData</td>
+                                        <td>117</td>
+                                        <td>Argument $insert is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
-                                        <td>Argument $actionType is missing from the Docblock of addData</td>
+                                        <td>117</td>
+                                        <td>Argument $i is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>114</td>
-                                        <td>Argument $dataExists is missing from the Docblock of addData</td>
+                                        <td>117</td>
+                                        <td>Argument $u is missing from the Docblock of addData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>160</td>
-                                        <td>Argument $useDbDefault is missing from the Docblock of setDefault</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>160</td>
-                                        <td>Argument $fieldValue is missing from the Docblock of setDefault</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>160</td>
-                                        <td>Argument $defaultValue is missing from the Docblock of setDefault</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>160</td>
-                                        <td>Argument $fieldDatatype is missing from the Docblock of setDefault</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>160</td>
-                                        <td>Argument $columnName is missing from the Docblock of setDefault</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>187</td>
+                                        <td>144</td>
                                         <td>Argument $fieldValue is missing from the Docblock of setEmpty</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>187</td>
+                                        <td>144</td>
                                         <td>Argument $fieldDatatype is missing from the Docblock of setEmpty</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>187</td>
+                                        <td>144</td>
                                         <td>Argument $columnName is missing from the Docblock of setEmpty</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>207</td>
+                                        <td>164</td>
                                         <td>Argument $fieldValue is missing from the Docblock of setNull</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>207</td>
+                                        <td>164</td>
                                         <td>Argument $fieldDatatype is missing from the Docblock of setNull</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>207</td>
+                                        <td>164</td>
                                         <td>Argument $columnName is missing from the Docblock of setNull</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>207</td>
+                                        <td>164</td>
                                         <td>No summary for method setNull()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>213</td>
+                                        <td>170</td>
                                         <td>Argument $fieldValue is missing from the Docblock of setData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>213</td>
+                                        <td>170</td>
                                         <td>Argument $fieldDatatype is missing from the Docblock of setData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>213</td>
+                                        <td>170</td>
                                         <td>Argument $columnName is missing from the Docblock of setData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>213</td>
+                                        <td>170</td>
                                         <td>No summary for method setData()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>244</td>
-                                        <td>Argument $rawData is missing from the Docblock of postProcess</td>
+                                        <td>202</td>
+                                        <td>Argument $formatDateAndTime is missing from the Docblock of postProcess</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>244</td>
-                                        <td>Name of argument $rawData does not match with the DocBlock&#039;s name $singleRecord in postProcess()</td>
+                                        <td>202</td>
+                                        <td>Name of argument $formatDateAndTime does not match with the DocBlock&#039;s name $singleRecord in postProcess()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>244</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $rawData in postProcess()</td>
+                                        <td>202</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $formatDateAndTime in postProcess()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>279</td>
+                                        <td>202</td>
+                                        <td>Argument $formatBool is missing from the Docblock of postProcess</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>202</td>
+                                        <td>Name of argument $formatBool does not match with the DocBlock&#039;s name $singleRecord in postProcess()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>202</td>
+                                        <td>Argument $formatDec is missing from the Docblock of postProcess</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>202</td>
+                                        <td>Name of argument $formatDec does not match with the DocBlock&#039;s name $singleRecord in postProcess()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>202</td>
+                                        <td>Argument $formatBinary is missing from the Docblock of postProcess</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>202</td>
+                                        <td>Name of argument $formatBinary does not match with the DocBlock&#039;s name $singleRecord in postProcess()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $records is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $singleRecord is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $formaDateAndTime is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $formatBool is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $formatDec is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>Argument $formatBinary is missing from the Docblock of formatRecords</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>218</td>
+                                        <td>No summary for method formatRecords()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>241</td>
                                         <td>Argument $columnName is missing from the Docblock of formatBoolean</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>279</td>
+                                        <td>241</td>
                                         <td>Argument $columnValue is missing from the Docblock of formatBoolean</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>279</td>
+                                        <td>241</td>
                                         <td>No summary for method formatBoolean()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>288</td>
+                                        <td>252</td>
                                         <td>Argument $columnName is missing from the Docblock of formatDecimal</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>288</td>
+                                        <td>252</td>
                                         <td>Argument $columnValue is missing from the Docblock of formatDecimal</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>288</td>
+                                        <td>252</td>
                                         <td>No summary for method formatDecimal()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>297</td>
+                                        <td>263</td>
                                         <td>Argument $columnName is missing from the Docblock of processBinaryData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>297</td>
+                                        <td>263</td>
                                         <td>Argument $columnValue is missing from the Docblock of processBinaryData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>297</td>
+                                        <td>263</td>
                                         <td>Argument $singleRecord is missing from the Docblock of processBinaryData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>297</td>
-                                        <td>Argument $rawData is missing from the Docblock of processBinaryData</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>297</td>
+                                        <td>263</td>
                                         <td>No summary for method processBinaryData()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>320</td>
+                                        <td>288</td>
                                         <td>Argument $bytes is missing from the Docblock of formatBytes</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>320</td>
-                                        <td>Argument $rawData is missing from the Docblock of formatBytes</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>320</td>
+                                        <td>288</td>
                                         <td>Argument $precision is missing from the Docblock of formatBytes</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>320</td>
+                                        <td>288</td>
                                         <td>No summary for method formatBytes()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>338</td>
-                                        <td>Argument $columnName is missing from the Docblock of mapEnum</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>338</td>
-                                        <td>Argument $columnValue is missing from the Docblock of mapEnum</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>338</td>
-                                        <td>No summary for method mapEnum()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>354</td>
+                                        <td>306</td>
                                         <td>Argument $columnName is missing from the Docblock of formatDateAndTime</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>354</td>
+                                        <td>306</td>
                                         <td>Argument $columnValue is missing from the Docblock of formatDateAndTime</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>354</td>
+                                        <td>306</td>
                                         <td>No summary for method formatDateAndTime()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>374</td>
-                                        <td>Argument $uploadedFile is missing from the Docblock of getUploadFileData</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>374</td>
+                                        <td>331</td>
                                         <td>No summary for method getUploadFileData()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>395</td>
+                                        <td>355</td>
                                         <td>Argument $name is missing from the Docblock of text</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>395</td>
+                                        <td>355</td>
                                         <td>Argument $language is missing from the Docblock of text</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>412</td>
+                                        <td>372</td>
                                         <td>Argument $language is missing from the Docblock of getTexts</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>427</td>
+                                        <td>387</td>
                                         <td>No summary for method noop()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>613</td>
+                                        <td>484</td>
+                                        <td>Name of argument $initCall does not match with the DocBlock&#039;s name $initialCall in xout()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>484</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $initCall in xout()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>484</td>
+                                        <td>Parameter $initialCall could not be found in xout()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>587</td>
                                         <td>No summary for method getCrudkitDbConfig()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>625</td>
+                                        <td>599</td>
                                         <td>Argument $var1 is missing from the Docblock of swap</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>625</td>
+                                        <td>599</td>
                                         <td>Argument $var2 is missing from the Docblock of swap</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>613</td>
+                                        <td>No summary for method appendToArray()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p2 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p2 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p3 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p3 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p4 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p4 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p5 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p5 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p6 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p6 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p7 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p7 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Argument $p8 is missing from the Docblock of getAjaxErrorResult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>Name of argument $p8 does not match with the DocBlock&#039;s name $p1 in getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>727</td>
+                                        <td>No summary for method getAjaxErrorResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>748</td>
+                                        <td>No summary for method getAjaxResult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>759</td>
+                                        <td>No summary for method binaryStringToBase64Png()</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -745,11 +1190,11 @@
                         </div>
                                     </div>
                             <div class="package-contents">
-                                            <a name="Classes\PageDescriptor.php" id="Classes\PageDescriptor.php"></a>
+                                            <a name="Classes\Lookup.php" id="Classes\Lookup.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            Classes\PageDescriptor.php
-                            <small style="float: right;padding-right: 10px;">38</small>
+                            Classes\Lookup.php
+                            <small style="float: right;padding-right: 10px;">44</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -763,193 +1208,564 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>99</td>
-                                        <td>No summary for method getName()</td>
+                                        <td>62</td>
+                                        <td>Name of argument $pageId does not match with the DocBlock&#039;s name $page in __construct()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>100</td>
-                                        <td>No summary for method getId()</td>
+                                        <td>62</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageId in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>62</td>
+                                        <td>Parameter $page could not be found in __construct()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>101</td>
-                                        <td>No summary for method getCreateAllowed()</td>
+                                        <td>95</td>
+                                        <td>Argument $calculateLink is missing from the Docblock of calculateLookup</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>102</td>
-                                        <td>No summary for method getUpdateAllowed()</td>
+                                        <td>95</td>
+                                        <td>Name of argument $calculateLink does not match with the DocBlock&#039;s name $record in calculateLookup()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>103</td>
-                                        <td>No summary for method getDeleteAllowed()</td>
+                                        <td>95</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $calculateLink in calculateLookup()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>104</td>
-                                        <td>No summary for method getExportAllowed()</td>
+                                        <td>207</td>
+                                        <td>Argument $value is missing from the Docblock of setValue</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>105</td>
-                                        <td>No summary for method getChartAllowed()</td>
+                                        <td>213</td>
+                                        <td>Argument $label is missing from the Docblock of setLabel</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>106</td>
-                                        <td>No summary for method getConfirmDelete()</td>
+                                        <td>219</td>
+                                        <td>Argument $onList is missing from the Docblock of setOnList</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>107</td>
-                                        <td>No summary for method getCategory()</td>
+                                        <td>225</td>
+                                        <td>Argument $onCard is missing from the Docblock of setOnCard</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>108</td>
-                                        <td>No summary for method getIcon()</td>
+                                        <td>231</td>
+                                        <td>Argument $onUpdate is missing from the Docblock of setOnUpdate</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>109</td>
-                                        <td>No summary for method getSections()</td>
+                                        <td>237</td>
+                                        <td>Argument $faIcon is missing from the Docblock of setFaIcon</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>116</td>
-                                        <td>Argument $name is missing from the Docblock of getActions</td>
+                                        <td>245</td>
+                                        <td>Argument $btnClass is missing from the Docblock of setBtnClass</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>145</td>
-                                        <td>Argument $namesOnly is missing from the Docblock of getSummaryColumns</td>
+                                        <td>260</td>
+                                        <td>Argument $fieldname is missing from the Docblock of setFieldname</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>167</td>
-                                        <td>Argument $namesOnly is missing from the Docblock of getCardLinkColumns</td>
+                                        <td>268</td>
+                                        <td>Argument $enabled is missing from the Docblock of setEnabled</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>185</td>
-                                        <td>Argument $pageType is missing from the Docblock of getTitleText</td>
+                                        <td>275</td>
+                                        <td>Argument $visible is missing from the Docblock of setVisible</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>185</td>
-                                        <td>No summary for method getTitleText()</td>
+                                        <td>281</td>
+                                        <td>Argument $table is missing from the Docblock of setTable</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>206</td>
-                                        <td>Argument $value is missing from the Docblock of setAllowCreate</td>
+                                        <td>287</td>
+                                        <td>Argument $tableFieldname is missing from the Docblock of setTableFieldname</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>209</td>
-                                        <td>Argument $value is missing from the Docblock of setAllowUpdate</td>
+                                        <td>294</td>
+                                        <td>Argument $position is missing from the Docblock of setPosition</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>212</td>
-                                        <td>Argument $value is missing from the Docblock of setAllowDelete</td>
+                                        <td>300</td>
+                                        <td>Argument $pageId is missing from the Docblock of setPageId</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>215</td>
-                                        <td>Argument $value is missing from the Docblock of setAllowExport</td>
+                                        <td>306</td>
+                                        <td>Argument $cardPage is missing from the Docblock of setCardPage</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>218</td>
-                                        <td>Argument $value is missing from the Docblock of setAllowChart</td>
+                                        <td>312</td>
+                                        <td>Argument $filterDefinition is missing from the Docblock of addFilterDefinitiona</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>221</td>
-                                        <td>Argument $value is missing from the Docblock of setConfirmDelete</td>
+                                        <td>318</td>
+                                        <td>Argument $valueType is missing from the Docblock of setValueType</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>224</td>
-                                        <td>Argument $value is missing from the Docblock of setCategory</td>
+                                        <td>324</td>
+                                        <td>Argument $drillDownTarget is missing from the Docblock of setDrillDownTarget</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>227</td>
-                                        <td>Argument $value is missing from the Docblock of setIcon</td>
+                                        <td>338</td>
+                                        <td>Argument $lookupAllSeparator is missing from the Docblock of setLookupAllSeparator</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $value</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $label</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $onList</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $onCard</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for property $onUpdate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $faIcon</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for property $btnClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for property $position</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>29</td>
-                                        <td>No summary for property $id</td>
+                                        <td>No summary for property $fieldname</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>30</td>
-                                        <td>No summary for property $name</td>
+                                        <td>No summary for property $enabled</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>31</td>
-                                        <td>No summary for property $category</td>
+                                        <td>No summary for property $visible</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>32</td>
-                                        <td>No summary for property $icon</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>33</td>
-                                        <td>No summary for property $titleTexts</td>
+                                        <td>34</td>
+                                        <td>No summary for property $tableFieldname</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>35</td>
-                                        <td>No summary for property $table</td>
+                                        <td>No summary for property $pageId</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>36</td>
-                                        <td>No summary for property $summaryColumns</td>
+                                        <td>No summary for property $cardPage</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>39</td>
+                                        <td>No summary for property $valueType</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>40</td>
+                                        <td>No summary for property $drillDownLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>41</td>
+                                        <td>No summary for property $overrideDrillDownLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>42</td>
+                                        <td>No summary for property $drillDownTarget</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>43</td>
+                                        <td>No summary for property $lookupAllSeparator</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Classes\PageDescriptor.php" id="Classes\PageDescriptor.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Classes\PageDescriptor.php
+                            <small style="float: right;padding-right: 10px;">64</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>No summary for method getName()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>117</td>
+                                        <td>No summary for method getId()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>118</td>
+                                        <td>No summary for method getCreateAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>119</td>
+                                        <td>No summary for method getUpdateAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>120</td>
+                                        <td>No summary for method getDeleteAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>121</td>
+                                        <td>No summary for method getExportAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>122</td>
+                                        <td>No summary for method getChartAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>123</td>
+                                        <td>No summary for method getCardAllowed()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>124</td>
+                                        <td>No summary for method getConfirmDelete()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>125</td>
+                                        <td>No summary for method getCategory()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>126</td>
+                                        <td>No summary for method getIcon()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>127</td>
+                                        <td>No summary for method getSections()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>128</td>
+                                        <td>No summary for method getMenu()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>129</td>
+                                        <td>No summary for method getItemsPerPage()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>136</td>
+                                        <td>Argument $name is missing from the Docblock of getActions</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>165</td>
+                                        <td>Argument $namesOnly is missing from the Docblock of getSummaryColumns</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>187</td>
+                                        <td>Argument $namesOnly is missing from the Docblock of getCardLinkColumns</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>205</td>
+                                        <td>Argument $pageType is missing from the Docblock of getTitleText</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>205</td>
+                                        <td>No summary for method getTitleText()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>228</td>
+                                        <td>Name of argument $record does not match with the DocBlock&#039;s name $recods in getLookupsCalculated()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>228</td>
+                                        <td>Parameter $recods could not be found in getLookupsCalculated()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>327</td>
+                                        <td>No summary for method getJs()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>333</td>
+                                        <td>No summary for method getCss()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>342</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowCreate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>345</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowUpdate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>348</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowDelete</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>351</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowExport</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>354</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowChart</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>357</td>
+                                        <td>Argument $value is missing from the Docblock of setAllowCard</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>360</td>
+                                        <td>Argument $value is missing from the Docblock of setConfirmDelete</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>363</td>
+                                        <td>Argument $value is missing from the Docblock of setCategory</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>366</td>
+                                        <td>Argument $value is missing from the Docblock of setIcon</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>369</td>
+                                        <td>Argument $value is missing from the Docblock of setMenu</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>372</td>
+                                        <td>Argument $value is missing from the Docblock of setItemsPerPage</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>456</td>
+                                        <td>No summary for method addLookupColumn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>502</td>
+                                        <td>Argument $data is missing from the Docblock of addAction</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>502</td>
+                                        <td>Name of argument $data does not match with the DocBlock&#039;s name $visible in addAction()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>605</td>
+                                        <td>Argument $url is missing from the Docblock of addJs</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>605</td>
+                                        <td>Argument $pageTypes is missing from the Docblock of addJs</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>605</td>
+                                        <td>Argument $isAssetPath is missing from the Docblock of addJs</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>605</td>
+                                        <td>No summary for method addJs()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>614</td>
+                                        <td>Argument $url is missing from the Docblock of addCss</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>614</td>
+                                        <td>Argument $pageTypes is missing from the Docblock of addCss</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>614</td>
+                                        <td>Argument $isAssetPath is missing from the Docblock of addCss</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>614</td>
+                                        <td>No summary for method addCss()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>30</td>
+                                        <td>No summary for property $id</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $name</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for property $category</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>33</td>
+                                        <td>No summary for property $icon</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>34</td>
+                                        <td>No summary for property $titleTexts</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>36</td>
+                                        <td>No summary for property $table</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>37</td>
+                                        <td>No summary for property $summaryColumns</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>38</td>
                                         <td>No summary for property $cardLinkColumns</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>51</td>
+                                        <td>39</td>
+                                        <td>No summary for property $menu</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>40</td>
+                                        <td>No summary for property $js</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>41</td>
+                                        <td>No summary for property $css</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>42</td>
+                                        <td>No summary for property $itemsPerPage</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>63</td>
                                         <td>No summary for property $createAllowed</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>52</td>
+                                        <td>64</td>
                                         <td>No summary for property $updateAllowed</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>53</td>
+                                        <td>65</td>
                                         <td>No summary for property $deleteAllowed</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>54</td>
+                                        <td>66</td>
                                         <td>No summary for property $confirmDelete</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>55</td>
+                                        <td>67</td>
                                         <td>No summary for property $exportAllowed</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>56</td>
+                                        <td>68</td>
                                         <td>No summary for property $chartAllowed</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>69</td>
+                                        <td>No summary for property $cardAllowed</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -960,7 +1776,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Classes\PageStore.php
-                            <small style="float: right;padding-right: 10px;">1</small>
+                            <small style="float: right;padding-right: 10px;">11</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -974,8 +1790,58 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>15</td>
+                                        <td>48</td>
+                                        <td>No summary for method addMenuLink()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>61</td>
+                                        <td>No summary for method setCategoryFaIcon()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $pageMap is missing from the Docblock of insertMenuLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $pageId is missing from the Docblock of insertMenuLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $position is missing from the Docblock of insertMenuLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $category is missing from the Docblock of insertMenuLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $direct is missing from the Docblock of insertMenuLink</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>No summary for method insertMenuLink()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
                                         <td>No summary for property $pageDescriptors</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $menuLinks</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $categoryIcons</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -1048,7 +1914,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Classes\Section.php
-                            <small style="float: right;padding-right: 10px;">3</small>
+                            <small style="float: right;padding-right: 10px;">7</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -1060,6 +1926,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $collapsedByDefault is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Name of argument $collapsedByDefault does not match with the DocBlock&#039;s name $to in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $collapsedByDefault in __construct()</td>
+                                    </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>20</td>
@@ -1075,6 +1956,11 @@
                                         <td>22</td>
                                         <td>No summary for property $to</td>
                                     </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $collapsed</td>
+                                    </tr>
                                                             </tbody>
                             </table>
                         </div>
@@ -1084,109 +1970,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Classes\SQLColumn.php
-                            <small style="float: right;padding-right: 10px;">4</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>35</td>
-                                        <td>No summary for property $name</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>36</td>
-                                        <td>No summary for property $label</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>37</td>
-                                        <td>No summary for property $type</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>41</td>
-                                        <td>No summary for property $relationType</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="Classes\SQLManyToOneColumn.php" id="Classes\SQLManyToOneColumn.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Classes\SQLManyToOneColumn.php
-                            <small style="float: right;padding-right: 10px;">8</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>89</td>
-                                        <td>Name of argument $record does not match with the DocBlock&#039;s name $pageStore in getCardUrl()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>89</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $record in getCardUrl()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>89</td>
-                                        <td>Name of argument $pageStore does not match with the DocBlock&#039;s name $record in getCardUrl()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>89</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $pageStore in getCardUrl()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>19</td>
-                                        <td>No summary for property $foreignTableId</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>20</td>
-                                        <td>No summary for property $foreignColumnName</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>21</td>
-                                        <td>No summary for property $filterDefinitions</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>22</td>
-                                        <td>No summary for property $clickable</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="Classes\SQLOneToManyColumn.php" id="Classes\SQLOneToManyColumn.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Classes\SQLOneToManyColumn.php
-                            <small style="float: right;padding-right: 10px;">18</small>
+                            <small style="float: right;padding-right: 10px;">1</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -1203,90 +1987,131 @@
                                         <td>0</td>
                                         <td>No summary was found for this file</td>
                                     </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Classes\SQLManyToOneColumn.php" id="Classes\SQLManyToOneColumn.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Classes\SQLManyToOneColumn.php
+                            <small style="float: right;padding-right: 10px;">21</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>27</td>
-                                        <td>Name of argument $name does not match with the DocBlock&#039;s name $filterDefinitions in __construct()</td>
+                                        <td>52</td>
+                                        <td>Name of argument $options does not match with the DocBlock&#039;s name $manualInput in __construct()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>27</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $name in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Argument $label is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Name of argument $label does not match with the DocBlock&#039;s name $filterDefinitions in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $label in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Argument $type is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Name of argument $type does not match with the DocBlock&#039;s name $filterDefinitions in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $type in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Argument $foreignTableId is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Name of argument $foreignTableId does not match with the DocBlock&#039;s name $filterDefinitions in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $foreignTableId in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Argument $filterDefinitions is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Argument $options is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
-                                        <td>Name of argument $options does not match with the DocBlock&#039;s name $filterDefinitions in __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>27</td>
+                                        <td>52</td>
                                         <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $options in __construct()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>20</td>
-                                        <td>No summary for property $foreignTableId</td>
+                                        <td>52</td>
+                                        <td>Name of argument $manualInput does not match with the DocBlock&#039;s name $options in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>52</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $manualInput in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>84</td>
+                                        <td>Argument $onlyCurrentValue is missing from the Docblock of getManyToOneValues</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>84</td>
+                                        <td>Name of argument $onlyCurrentValue does not match with the DocBlock&#039;s name $record in getManyToOneValues()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>84</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $onlyCurrentValue in getManyToOneValues()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>126</td>
+                                        <td>Name of argument $record does not match with the DocBlock&#039;s name $pageStore in getCardUrl()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>126</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $record in getCardUrl()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>126</td>
+                                        <td>Parameter $pageStore could not be found in getCardUrl()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>147</td>
+                                        <td>Argument $includeAjaxColumns is missing from the Docblock of getColumnsForSelect</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>147</td>
+                                        <td>No summary for method getColumnsForSelect()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>164</td>
+                                        <td>Argument $ajaxOptions is missing from the Docblock of setAjaxOptions</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>164</td>
+                                        <td>No summary for method setAjaxOptions()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>21</td>
+                                        <td>No summary for property $toTableName</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $columnName</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for property $secondaryColumnNames</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
                                         <td>No summary for property $filterDefinitions</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $pageId</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $manualInput</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>33</td>
+                                        <td>No summary for property $ajax</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -1333,7 +2158,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Classes\TableDescriptor.php
-                            <small style="float: right;padding-right: 10px;">13</small>
+                            <small style="float: right;padding-right: 10px;">42</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -1347,68 +2172,213 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>63</td>
+                                        <td>68</td>
                                         <td>No summary for method getName()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>69</td>
+                                        <td>74</td>
                                         <td>No summary for method getHasAutoincrementKey()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>75</td>
+                                        <td>80</td>
                                         <td>No summary for method getSoftDeleteColumn()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>81</td>
+                                        <td>86</td>
                                         <td>No summary for method getSoftDeletedValue()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>87</td>
+                                        <td>92</td>
                                         <td>No summary for method getSoftNotDeletedValue()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>197</td>
+                                        <td>180</td>
+                                        <td>Argument $record is missing from the Docblock of getManyToOneColumnValues</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>Argument $onlyCurrentValue is missing from the Docblock of getManyToOneColumnValues</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
                                         <td>Name of argument $force does not match with the DocBlock&#039;s name $fore in fetchAllColumns()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>197</td>
+                                        <td>204</td>
                                         <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $force in fetchAllColumns()</td>
                                     </tr>
                                                                     <tr>
                                         <td>notice</td>
-                                        <td>197</td>
+                                        <td>204</td>
                                         <td>Parameter $fore could not be found in fetchAllColumns()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>310</td>
+                                        <td>245</td>
+                                        <td>No summary for method allColumnsFromCache()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>253</td>
+                                        <td>No summary for method allColumnsToCache()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>285</td>
+                                        <td>Argument $columnName is missing from the Docblock of setOrderBy</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>285</td>
+                                        <td>Argument $direction is missing from the Docblock of setOrderBy</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>285</td>
+                                        <td>No summary for method setOrderBy()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>312</td>
+                                        <td>Argument $manualInput is missing from the Docblock of defineManyToOneColumn</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>312</td>
+                                        <td>Name of argument $manualInput does not match with the DocBlock&#039;s name $filterDefinitions in defineManyToOneColumn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>312</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $manualInput in defineManyToOneColumn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>339</td>
+                                        <td>Name of argument $manualInput does not match with the DocBlock&#039;s name $ajaxOptions in defineManyToOneColumnAjax()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>339</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $manualInput in defineManyToOneColumnAjax()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>339</td>
+                                        <td>Argument $ajaxOptions is missing from the Docblock of defineManyToOneColumnAjax</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>410</td>
                                         <td>Name of argument $notDeleted does not match with the DocBlock&#039;s name $deleted in setSoftDeleteColumn()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>602</td>
+                                        <td>465</td>
+                                        <td>Argument $formatDateAndTime is missing from the Docblock of readRecord</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Name of argument $formatDateAndTime does not match with the DocBlock&#039;s name $filters in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $formatDateAndTime in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Argument $formatBool is missing from the Docblock of readRecord</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Name of argument $formatBool does not match with the DocBlock&#039;s name $filters in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Argument $formatDec is missing from the Docblock of readRecord</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Name of argument $formatDec does not match with the DocBlock&#039;s name $filters in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Argument $formatBinary is missing from the Docblock of readRecord</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Name of argument $formatBinary does not match with the DocBlock&#039;s name $filters in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Argument $throwErrorIfNotFound is missing from the Docblock of readRecord</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Name of argument $throwErrorIfNotFound does not match with the DocBlock&#039;s name $filters in readRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>525</td>
+                                        <td>Argument $record is missing from the Docblock of getCustomAjaxValues</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>525</td>
+                                        <td>Argument $page is missing from the Docblock of getCustomAjaxValues</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>525</td>
+                                        <td>No summary for method getCustomAjaxValues()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>677</td>
+                                        <td>No summary for method getEmptyRecord()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>747</td>
                                         <td>Argument $primaryKeyValues is missing from the Docblock of deleteRecord</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>602</td>
+                                        <td>747</td>
                                         <td>No summary for method deleteRecord()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>662</td>
+                                        <td>807</td>
                                         <td>Name of argument $type does not match with the DocBlock&#039;s name $expression in getDbSpecificLikeCondition()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>662</td>
+                                        <td>807</td>
                                         <td>Name of argument $expression does not match with the DocBlock&#039;s name $type in getDbSpecificLikeCondition()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>36</td>
+                                        <td>No summary for property $columns</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -1438,77 +2408,77 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>60</td>
+                                        <td>62</td>
                                         <td>Argument $startpage is missing from the Docblock of setStartpage</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>60</td>
+                                        <td>62</td>
                                         <td>No summary for method setStartpage()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>66</td>
+                                        <td>68</td>
                                         <td>No summary for method getStartpage()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>72</td>
+                                        <td>74</td>
                                         <td>Argument $restrictionSet is missing from the Docblock of setRestrictionSet</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>72</td>
+                                        <td>74</td>
                                         <td>No summary for method setRestrictionSet()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>78</td>
+                                        <td>80</td>
                                         <td>No summary for method getRestrictionSet()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>84</td>
+                                        <td>86</td>
                                         <td>No summary for method getId()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>90</td>
+                                        <td>92</td>
                                         <td>No summary for method getPassword()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>96</td>
+                                        <td>98</td>
                                         <td>Argument $action is missing from the Docblock of hasAccessTo</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>96</td>
+                                        <td>98</td>
                                         <td>Argument $pageId is missing from the Docblock of hasAccessTo</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>96</td>
+                                        <td>98</td>
                                         <td>No summary for method hasAccessTo()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>11</td>
+                                        <td>13</td>
                                         <td>No summary for property $id</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>12</td>
+                                        <td>14</td>
                                         <td>No summary for property $password</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>13</td>
+                                        <td>15</td>
                                         <td>No summary for property $fullname</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>19</td>
+                                        <td>21</td>
                                         <td>No summary for property $startpage</td>
                                     </tr>
                                                             </tbody>
@@ -1516,6 +2486,80 @@
                         </div>
                                     </div>
                             <div class="package-contents">
+                                            <a name="Controllers\CrudkitController.php" id="Controllers\CrudkitController.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Controllers\CrudkitController.php
+                            <small style="float: right;padding-right: 10px;">11</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>646</td>
+                                        <td>Argument $request is missing from the Docblock of setTheme</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>646</td>
+                                        <td>No summary for method setTheme()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $header is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $exportLookups is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $lookups is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $position is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $columnName is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>Argument $line is missing from the Docblock of csvLookup</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>818</td>
+                                        <td>No summary for method csvLookup()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1131</td>
+                                        <td>No summary for method ajaxManyToOne()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1209</td>
+                                        <td>No summary for method ajaxCustom()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
                                     </div>
                             <div class="package-contents">
                                     </div>
@@ -1561,7 +2605,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 14th, 2020 at 14:16.
+                    on June 8th, 2021 at 23:24.
                 </section>
             </section>
         </section>

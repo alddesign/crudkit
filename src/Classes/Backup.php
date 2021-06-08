@@ -1,0 +1,177 @@
+<?php 
+/**
+ * Class Backup
+ */
+namespace Alddesign\Crudkit\Classes;
+
+use \DateTime;
+use \DateTimeZone;
+use \RecursiveIteratorIterator;
+use \RecursiveDirectoryIterator;
+use \ZipArchive;
+use Alddesign\Crudkit\Classes\DataProcessor as dp;
+	 
+/**
+ * Methods for automated backup.
+ * @internal
+ */
+class Backup
+{
+	private $sourceFolder = '';
+	private $destinationFolder = '';
+	private $maxBackupFiles = 0;
+	private static $extension = '.crudkit.backup.zip';
+
+	/**
+	 * Constructor. Returns http 500 on failure.
+	 * 
+	 * @param string $sourceFolder The folder to back up
+	 * @param string $destinationFolder The location for the backup .zip file
+	 * @param int $maxBackupFiles Max. amount ouf backup files in the backup folder
+	 */
+	public function __construct(string $sourceFolder, string $destinationFolder, int $maxBackupFiles)
+	{
+		$this->sourceFolder = $sourceFolder;
+		$this->sourceFolder = str_replace('/', DIRECTORY_SEPARATOR, $this->sourceFolder);
+		$this->sourceFolder = realpath($this->sourceFolder);
+
+		$this->destinationFolder = $destinationFolder;
+		$this->destinationFolder = str_replace('/', DIRECTORY_SEPARATOR, $this->destinationFolder);
+		$this->destinationFolder = realpath($this->destinationFolder);
+
+		$this->maxBackupFiles = $maxBackupFiles >= 1 ? $maxBackupFiles : 1;
+
+		if (!extension_loaded('zip')) 
+		{
+			abort(500, 'php extension "zip" not loaded');
+		}
+
+		if(!file_exists($this->sourceFolder) || !is_dir($this->sourceFolder) || dp::e($this->sourceFolder))
+		{
+			abort(500, sprintf('source folder "%s" not found/accessible', $this->sourceFolder));
+		}
+
+		if(!file_exists($this->destinationFolder) || !is_dir($this->destinationFolder) || dp::e($this->destinationFolder))
+		{
+			abort(500, sprintf('destination folder "%s" not found/accessible', $this->destinationFolder));
+		}
+	}
+
+	
+	/**
+	 * Removes the oldest files from the directory. Returns http 500 on failure.
+	 * 
+	 * @return void
+	 */
+	public function cleanupBackupDir()
+	{
+		$files = scandir($this->destinationFolder);
+		$filesPerDate = [];
+		
+		if($files)
+		{
+			foreach($files as $f)
+			{
+				if($f !== '.' && $f !== '..')
+				{
+					$filePath = $this->destinationFolder . DIRECTORY_SEPARATOR . $f;
+					$time = fileatime($filePath);
+					if(!$time)
+					{
+						abort(500, sprintf('could not get filetime from "%s"', $this->destinationFolder . $f));
+					}
+					$filesPerDate[$time] = $filePath;
+				}
+			}
+			
+			//per modification date descending (newest first)
+			krsort($filesPerDate);
+			
+			$c = 0;
+			foreach($filesPerDate as $f)
+			{
+				if(self::stringEndsWith($f, self::$extension))
+				{
+					$c++;
+					if($c > $this->maxBackupFiles)
+					{
+						//deleting file
+						if(!unlink($f))
+						{
+							abort(500, sprintf('could not delete "%s"', $f));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static function stringEndsWith($haystack, $needle) 
+	{
+		$length = strlen($needle);
+		return $length > 0 ? substr($haystack, -$length) === $needle : true;
+	}
+
+	/**
+	 * Creates the .zip Backup file. Returns http 500 on failure.
+	 * 
+	 * @return void
+	 */
+	public function createBackup()
+	{
+		sleep(1);
+
+		$now =  new DateTime('now', new DateTimeZone(config('crudkit.timezone', 'UTC')));
+		$backupFilename = $this->destinationFolder . DIRECTORY_SEPARATOR . $now->format('Y-m-d_H\hi\ss_T') . self::$extension;
+
+		$zip = new ZipArchive();
+		if ($zip->open($backupFilename, ZipArchive::CREATE) !== true) 
+		{
+			abort(500, sprintf('could not create backup file "%s". error: %i', $backupFilename, $zip));
+		}
+
+		if (is_dir($this->sourceFolder) === true)
+		{
+			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->sourceFolder), RecursiveIteratorIterator::SELF_FIRST);
+			//echo $this->sourceFolder;
+			foreach ($files as $file)
+			{
+				$file = str_replace('\\',DIRECTORY_SEPARATOR, $file);
+				// Ignore "." and ".." folders
+				if( in_array(substr($file, strrpos($file, DIRECTORY_SEPARATOR)+1), array('.', '..')) )
+					continue;
+
+				$file = realpath($file);
+
+				if (is_dir($file) === true)
+				{
+					if(!$zip->addEmptyDir(str_replace($this->sourceFolder . DIRECTORY_SEPARATOR, '', $file . DIRECTORY_SEPARATOR)))
+					{
+						abort(500, sprintf('could not add folder "%s" to zip archive', $file));
+					}
+				}
+				else if (is_file($file) === true)
+				{
+					if(!$zip->addFromString(str_replace($this->sourceFolder . DIRECTORY_SEPARATOR, '', $file), file_get_contents($file)))
+					{
+						abort(500, sprintf('could not add file "%s" to zip archive', $file));
+					}
+				}
+				//echo $this->sourceFolder;
+			}
+		}
+		else if (is_file($this->sourceFolder) === true)
+		{
+			if(!$zip->addFromString(basename($this->sourceFolder), file_get_contents($this->sourceFolder)))
+			{
+				abort(500, sprintf('could not add file "%s" to zip archive', $this->sourceFolder));
+			}
+		}
+
+		if(!$zip->close())
+		{
+			abort(500, sprintf('could not close backup file "%s". error: %i', $backupFilename, $zip->status));
+		}
+	}
+}
+

@@ -20,6 +20,7 @@ class Section
     public $title = "";
     public $from = "";
     public $to = "";
+    public $collapsed = true;
 
     /**
      * Constructor
@@ -28,10 +29,11 @@ class Section
      * @param string $from From fieldname
      * @param string $to To fieldname
      */
-    public function __construct(string $title, string $from, string $to)
+    public function __construct(string $title, string $from, string $to, bool $collapsedByDefault = true)
     {		
       $this->title = $title;
       $this->from = $from;
       $this->to = $to;
+      $this->collapsed = $collapsedByDefault;
     }
 }

@@ -1,24 +1,16 @@
-/* --- CRUDKit specific rules --- */
+/*#region Crudkit ----------------------------------------------------------------------------------------------- */
 .crudkit-description
 {
 	white-space: normal;
 	font-weight: normal;
 }
 
-#crudkit-qrcode-tooltip-container .tooltip-inner,
-#crudkit-qrcode-tooltip-container .tooltip-arrow
-{
-	background-color: transparent;
-	border: none;
-	opacity: 1;
-}
-
-#crudkit-qrcode-tooltip-container .tooltip
-{
-	opacity: 1;
-}
-
 #crudkit-page-title
+{
+	margin-top: 0;
+}
+
+#crudkit-page-subtitle
 {
 	margin-top: 0;
 }
@@ -28,47 +20,254 @@
 	margin-bottom: 20px;
 }
 
+body.crudkit-body .panel-heading
+{
+	cursor: pointer;
+}
+
+body.crudkit-body .logo
+{
+	position: fixed;
+}
+
+body.crudkit-body .content-header
+{
+	padding-top: 25px;
+}
+
+body.crudkit-body .form-control
+{
+	font-size: inherit;
+	padding: 0px 12px;
+}
+
+body.crudkit-body select.form-control
+{
+	font-size: inherit;
+	padding: 0px 8px;
+}
+
+body.crudkit-body .crudkit-selected-option
+{
+	font-weight: bold;
+}
+
+body.crudkit-body .modal
+{
+	z-index: 1070;
+}
+
+body.crudkit-body .modal-backdrop
+{
+	z-index: 1060;
+}
+
+.crudkit-record-list table.table .crudkit-cardpage-cell
+{
+	width: 70px;
+}
+
+.crudkit-record-list table th,
+.crudkit-record-list table tr,
+.crudkit-record-list table td
+{
+	vertical-align: middle !important;
+}
+
 .crudkit-action
 {
 	display: inline;
 }
 
+.crudkit-hr
+{
+	border-top: 1px solid #ddd;
+	margin: 0 0 8px 0;
+}
+
+/* #region lookup and action */
+.crudkit-lookup.crudkit-before-after-field div
+{
+	padding: 6px 10px;
+	width: 100%;
+	background-color: #eee;
+}
+
+.crudkit-lookup.crudkit-before-after-field.crudkit-with-btn div
+{
+	padding: 0px;
+	width: 100%;
+	background-color: transparent;
+}
+
+.crudkit-lookup.crudkit-to-field
+{
+	float: right;
+}
+
+/*card*/
+/*all wrapper3 after a to-field*/
+.crudkit-pagetype-card  .crudkit-lookup.crudkit-with-btn + .crudkit-card-field-wrapper3
+{
+	line-height: 190%;
+	vertical-align: bottom;
+}
+
+/*update*/
+.crudkit-pagetype-update .crudkit-lookup.crudkit-to-field + .form-control
+{
+	width: 70%;
+}
+
+.crudkit-pagetype-update .crudkit-lookup.crudkit-to-field
+{
+	padding: 6px 18px;
+	width: 30%;
+}
+
+.crudkit-pagetype-update .crudkit-lookup.crudkit-with-btn
+{
+	margin-top: -4px;
+}
+
+.crudkit-pagetype-list .crudkit-card-field-wrapper3
+{
+	vertical-align: middle;
+}
+
+.crudkit-pagetype-list .crudkit-to-field
+{
+	margin-left: 10px;
+}
+/* #endregion */
+
 .crudkit-action-button, .crudkit-button
 {
-	margin-left: 5px;
+	margin: 0 0 10px 12px;
 }
 
-/* --- AdminLTE / Bootstrap specific rules --- */
-.main-sidebar
+#crudkit-content .table-responsive > .table > tbody > tr > td, 
+#crudkit-content .table-responsive > .table > tbody > tr > th, 
+#crudkit-content .table-responsive > .table > tfoot > tr > td, 
+#crudkit-content .table-responsive > .table > tfoot > tr > th, 
+#crudkit-content .table-responsive > .table > thead > tr > td, 
+#crudkit-content .table-responsive > .table > thead > tr > th
+{
+	white-space: normal;
+}
+
+
+/*#endregion*/
+
+/*#region QR  --------------------------------------------------------------------------------------------------- */
+#crudkit-qrcode-tooltip-container .tooltip-inner,
+#crudkit-qrcode-tooltip-container .tooltip-arrow
+{
+	background-color: transparent;
+	border: none;
+}
+
+#crudkit-qrcode-tooltip-container .tooltip
+{
+	background-color: transparent;
+}
+
+#crudkit-qrcode-tooltip-container
+{
+	font-size: 36px;
+	vertical-align: top;
+}
+
+.crudkit-body .tooltip.in
+{
+	opacity: 1;
+}
+/*#endregion*/
+
+/*#region Menu ---------------------------------------------------------------------------------------------------*/
+#crudkit-menu .sidebar-menu > li.header,
+#crudkit-menu .sidebar-menu > li.treeview > a
+{
+	color: #b8c7ce;
+	background-color: #1a2226;
+	font-size: inherit;
+	padding: 10px 25px 10px 15px;
+}
+
+#crudkit-menu .sidebar-menu li.treeview ul.treeview-menu
+{
+	background: unset;
+}
+
+#crudkit-menu.main-sidebar
 {
 	position: fixed;
 }
 
-.main-header .logo
-{
-	position: fixed;
-}
-
-.content-header
-{
-	padding-top: 25px;
-}
-
-body.sidebar-collapse .main-header .logo
+body.crudkit-body.sidebar-collapse .main-header .logo
 {
 	position: static;
 }
 
-.sidebar-menu .treeview-menu li a
+#crudkit-menu .sidebar-menu li.treeview .treeview-menu li a
 {
 	font-size: inherit;
 	padding: 8px 5px 8px 16px;
 }
 
-.form-control
+#crudkit-menu .select2-selection
 {
-	font-size: inherit;
-	padding: 0px 12px;
+	background-color: transparent;
+	border: none;
+}
+#crudkit-menu .select2-selection__rendered,
+.crudkit-menu-select-dropdown
+{
+	color: inherit !important;
+	border: none !important;
+}
+.crudkit-menu-select-dropdown .select2-results__option[aria-selected="true"],
+.crudkit-menu-select-dropdown .select2-results__option--highlighted[aria-selected],
+.crudkit-menu-select-dropdown .select2-results__option[aria-selected="true"]:hover,
+.crudkit-menu-select-dropdown .select2-results__option,
+.crudkit-menu-select-dropdown .select2-results
+{ 
+	background-color: #1a2226 !important;
+	color: #b8c7ce !important;
+	border: none !important;
+}
+/*#endregion*/
+
+/*#region Select2 and Ajax --------------------------------------------------------------------------------------------------*/
+body.crudkit-body .crudkit-ajax-result img
+{
+	margin-right: 12px;
+	max-width: 100px;
+}
+
+body.crudkit-body .select2-container
+{
+	width: 100% !important;
+}
+
+body.crudkit-body .select2-selection__clear
+{
+	font-size: 48px;
+	color: #d2d6de;
+}
+
+body.crudkit-body .select2-container .select2-selection
+{
+	padding: 4px !important;
+	height: auto !important;
+	border-radius: 0;
+	border-color: #d2d6de;
+}
+
+body.crudkit-body .select2-container .select2-selection__rendered
+{
+	color: #555 !important;
+	margin-top: 0 !important;
 }
 
 /* --- Crudkit Chart and Filter specific rules --- */
@@ -94,33 +293,96 @@ body.sidebar-collapse .main-header .logo
 	margin-left: 50%; 
 	color: #3c8dbc;
 }
+/*#endregion*/
 
-/* --- Custom Checkboxes ---*/
-input.crudkit-checkbox
-{ 
-	display:none; 
-}
+/* #region Skin and Accent --------------------------------------------------------------------------------------------------*/
+.bd-blue	{border-color:#0073b7 !important}
+.bd-yellow	{border-color:#f39c12 !important}
+.bd-green	{border-color:#00a65a !important}
+.bd-purple 	{border-color:#605ca8 !important}
+.bd-red		{border-color:#dd4b39 !important}
+.bd-black 	{border-color:#111111 !important}
+.bd-pink 	{border-color:#e83e8c !important}
 
-input.crudkit-checkbox + label.crudkit-checkbox-label:before 
-{
-  font-family: FontAwesome;
-  display: inline-block;
-  font-size: 2.5em;
-  font-weight: normal;
-  line-height: 1;
-  transition: color 800ms;
-  -webkit-transition: color 800ms;
+.fg-blue	{color:#0073b7 !important}
+.fg-yellow	{color:#f39c12 !important}
+.fg-green	{color:#00a65a !important}
+.fg-purple 	{color:#605ca8 !important}
+.fg-red		{color:#dd4b39 !important}
+.fg-black 	{color:#111111 !important}
+.fg-pink 	{color:#e83e8c !important}
 
-}
+body.accent-blue .fg-accent		{color:#0073b7}
+body.accent-yellow .fg-accent	{color:#f39c12}
+body.accent-green .fg-accent	{color:#00a65a}
+body.accent-purple .fg-accent	{color:#605ca8}
+body.accent-red .fg-accent		{color:#dd4b39}
+body.accent-black .fg-accent	{color:#111111}
+body.accent-pink .fg-accent		{color:#e83e8c}
 
-input.crudkit-checkbox + label.crudkit-checkbox-label:before 
-{
-	content: "\f096"; /* unchecked icon fa-square-o */
-	color: #555;
-} 
+body.accent-blue .bg-accent		{background-color:#0073b7}
+body.accent-yellow .bg-accent	{background-color:#f39c12}
+body.accent-green .bg-accent	{background-color:#00a65a}
+body.accent-purple .bg-accent	{background-color:#605ca8}
+body.accent-red .bg-accent		{background-color:#dd4b39}
+body.accent-black .bg-accent	{background-color:#111111}
+body.accent-pink .bg-accent		{background-color:#e83e8c}
 
-input.crudkit-checkbox:checked + label.crudkit-checkbox-label:before 
-{ 
-	content: "\f046"; /* checked icon "fa-check-square-o" */
-	color: #4a4;
-} 
+.bg-pink 	{background-color:#e83e8c !important; color: #fff !important;}
+
+body.accent-blue .btn-accent	{background-color:#0073b7; color: #fff; }
+body.accent-yellow .btn-accent	{background-color:#f39c12; color: #fff;  }
+body.accent-green .btn-accent	{background-color:#00a65a; color: #fff;  }
+body.accent-purple .btn-accent	{background-color:#605ca8; color: #fff;  } 
+body.accent-red .btn-accent		{background-color:#dd4b39; color: #fff;  }
+body.accent-black .btn-accent 	{background-color:#111111; color: #fff;  }
+body.accent-pink .btn-accent 	{background-color:#e83e8c; color: #fff;  }
+
+body.accent-blue #crudkit-content a:not(.btn)	{color:#0073b7 }
+body.accent-yellow #crudkit-content a:not(.btn)	{color:#f39c12 }
+body.accent-green #crudkit-content a:not(.btn)	{color:#00a65a }
+body.accent-purple #crudkit-content a:not(.btn)	{color:#605ca8 } 
+body.accent-red #crudkit-content a:not(.btn)	{color:#dd4b39 }
+body.accent-black #crudkit-content a:not(.btn)  {color:#048 } /*not #111111*/
+body.accent-pink #crudkit-content a:not(.btn)  {color:#e83e8c }
+
+body.accent-blue .pagination li.active a	{background-color:#0073b7; border-color: rgba(0,0,0,0.15); color: #fff !important;}
+body.accent-yellow .pagination li.active a	{background-color:#f39c12; border-color: rgba(0,0,0,0.15); color: #fff !important;}
+body.accent-green .pagination li.active a	{background-color:#00a65a; border-color: rgba(0,0,0,0.15); color: #fff !important;}
+body.accent-purple .pagination li.active a	{background-color:#605ca8; border-color: rgba(0,0,0,0.15); color: #fff !important;} 
+body.accent-red .pagination li.active a		{background-color:#dd4b39; border-color: rgba(0,0,0,0.15); color: #fff !important;}
+body.accent-black .pagination li.active a  	{background-color:#048; border-color: rgba(0,0,0,0.15); color: #fff !important;} /*not #111111*/
+body.accent-pink .pagination li.active a  	{background-color:#e83e8c; border-color: rgba(0,0,0,0.15); color: #fff !important;} /*not #111111*/
+
+body.accent-blue .pagination a:hover	{color:#666 }
+body.accent-yellow .pagination a:hover	{color:#666 }
+body.accent-green .pagination a:hover	{color:#666 }
+body.accent-purple .pagination a:hover	{color:#666 } 
+body.accent-red .pagination a:hover		{color:#666 }
+body.accent-black .pagination a:hover 	{color:#666 }
+body.accent-pink .pagination a:hover 	{color:#666 }
+
+body.accent-blue #crudkit-footer a		{color:#0073b7}
+body.accent-yellow #crudkit-footer a	{color:#f39c12}
+body.accent-green #crudkit-footer a		{color:#00a65a}
+body.accent-purple #crudkit-footer a	{color:#605ca8}
+body.accent-red #crudkit-footer a		{color:#dd4b39}
+body.accent-black #crudkit-footer a		{color:#048} /*not #111111*/
+body.accent-pink #crudkit-footer a		{color:#e83e8c} /*not #111111*/
+
+body.accent-blue .panel > .panel-heading	{background-color:#0073b7; border-color:#0073b7;}
+body.accent-yellow .panel > .panel-heading	{background-color:#f39c12; border-color:#f39c12;}
+body.accent-green .panel > .panel-heading	{background-color:#00a65a; border-color:#00a65a;}
+body.accent-purple .panel > .panel-heading	{background-color:#605ca8; border-color:#605ca8;}
+body.accent-red .panel > .panel-heading		{background-color:#dd4b39; border-color:#dd4b39;}
+body.accent-black .panel > .panel-heading	{background-color:#111111; border-color:#111111;}
+body.accent-pink .panel > .panel-heading	{background-color:#e83e8c; border-color:#e83e8c;}
+
+body.accent-blue .panel		{border-color:#0073b7;}
+body.accent-yellow .panel	{border-color:#f39c12;}
+body.accent-green .panel	{border-color:#00a65a;}
+body.accent-purple .panel	{border-color:#605ca8;}
+body.accent-red .panel		{border-color:#dd4b39;}
+body.accent-black .panel	{border-color:#111111;}
+body.accent-pink .panel		{border-color:#e83e8c;}
+/*#endregion*/

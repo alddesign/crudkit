@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Class AuthHelper
  */
@@ -6,13 +7,15 @@ namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Cookie;
 
+use function PHPSTORM_META\type;
 
 /** Provides functionality for user/permisson handling. */
 class AuthHelper
 {
 	/** 
-	 * @var CurdkitUser[] $users 
+	 * @var User[] $users 
 	 * @internal 
 	 */
 	private $users = [];
@@ -88,14 +91,39 @@ class AuthHelper
 	 * @return bool
 	 * @internal
 	 */
-	public function userHasAccessTo(string $userId, string $action, string $pageId)
+	public function userHasAccessTo(string $action, string $pageId)
 	{
-		if(isset($this->users[$userId]))
+		if($this->isAdmin())
+		{
+			return true;
+		}
+
+		$userId = $this->getUserId();
+		if($this->isLoggedIn() && isset($this->users[$userId]))
 		{
 			return $this->users[$userId]->hasAccessTo($action, $pageId);
 		}
 		
 		return false;
+	}
+
+	/** @return bool */
+	public function isLoggedIn()
+	{
+		return session('crudkit-logged-in', false) === true;
+	}
+
+	/** @return bool */
+	public function isAdmin()
+	{
+		return session('crudkit-admin-user', false) === true;
+	}
+
+	/** @return string */
+	public function getUserId()
+	{
+		$userId = session('crudkit-userid', '');
+		return gettype($userId) === 'string' ? $userId : '';
 	}
 	
 	/**
@@ -133,7 +161,7 @@ class AuthHelper
 		return call_user_func_array($this->callbacks[$name], [session('crudkit-userid',''), session('crudkit-admin-user',false)]);
 	}
 	
-	// ### STARTPAGE #########################################################################################################################################
+	#region Startpage ----------------------------------------------------------------------------------------------------------
 	/** @internal */
 	public function checkStartpage()
 	{
@@ -157,14 +185,35 @@ class AuthHelper
 		//No Startpage
 		dp::crudkitException('No startpage defined.', __CLASS__, __FUNCTION__);
 	}
-	
-	// ### LOGIN #############################################################################################################################################
+	#endregion
+
+	#region Login --------------------------------------------------------------------------------------------------------------
+	public function checkCookies()
+	{
+		if(config('crudkit.theme_selector', false))
+		{
+			//Skiiiin
+			$skin = request()->cookie('crudkit-skin', '');
+			$accent = request()->cookie('crudkit-accent', '');
+			if(!dp::e($skin))
+			{
+				config(['crudkit.skin' => $skin]);
+			}
+			if(!dp::e($accent))
+			{
+				config(['crudkit.accent' => $accent]);
+			} 
+		}
+	}
+
 	/**
 	 * Checks if user is logged in and his permissions to the current page/action. 
 	 * @internal 
 	 */
 	public function checkAuth(string $action, string $pageId, bool $noPermissionCheck = false, bool $loginAttempt = false)
-	{		
+	{	
+		$this->checkCookies();
+
 		//Login
 		if(session('crudkit-logged-in', false) !== true)           
 		{
@@ -264,4 +313,5 @@ class AuthHelper
 		
 		return false; //Login not ok
 	}
+	#endregion
 }

@@ -6,6 +6,7 @@ namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
+use Helper;
 
 /** 
  * Represents a filter definition on a record.
@@ -68,7 +69,7 @@ class FilterDefinition
 				dp::ex('Cannot convert FilterDefinition to Filter. Reference record needed for "field" typ filters.');
 			}
 
-			if(!isset($record[$this->fieldnameOrValue]))
+			if(!array_key_exists($this->fieldnameOrValue, $record))
 			{
 				dp::ex('Cannot convert FilterDefinition to Filter. Invalid field name "%s" in FilterDefinition.', $this->fieldnameOrValue);
 			}

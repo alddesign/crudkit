@@ -427,3 +427,23 @@ body .modal {
         width: 16.5%;
     }
 }
+
+/* Crudkit custom CSS */
+.navbar-inner /*title bar*/
+{
+	background: #c33;
+}
+
+.navbar .brand, /*title*/
+.navbar li a.dropdown-toggle /*links*/ 
+{
+	color: #eee;
+	text-shadow: none;
+	font-weight: bold;
+}
+
+div.content h1::after {
+    content: " !Developer API Doc!";
+    color: #c33;
+	font-size: 2rem;
+}
