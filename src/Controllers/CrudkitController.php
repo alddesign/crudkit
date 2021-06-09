@@ -35,6 +35,8 @@ use Illuminate\Support\Facades\Redirect;
 class CrudkitController extends \App\Http\Controllers\Controller
 {
 	#region Main Endpoints
+	/** @var string $version The CRUDKit version. */
+	private $version = 'v1.0.0-beta.2';
 	/** @var PageStore $pageStore All the pages. */
 	private $pageStore = null;
 	/** @var AuthHelper $authHelper Holding user/permission related data. */
@@ -45,7 +47,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	 */
 	public function __construct()
 	{
-		View::share('texts', DataProcessor::getTexts()); //share this variable within all views
+		//Make these variables available in all views
+		View::share('texts', DataProcessor::getTexts());
+		View::share('version', $this->version);
 	}
 
 	/** 

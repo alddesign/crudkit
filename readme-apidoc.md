@@ -1,19 +1,25 @@
 # API Documentation (apidoc)
-Curdkit comes with documentation of its API.  
+## First things first
+**Dont read the apidoc before...** you have read [readme-howto](./readme-howto.md) and checked out the sample code in the `CrudkitServiceProvider.php`. You have to know the basics about how to define your tables,pages,relations and users.
+
+The apidoc gives you a deeper insight into that. Its a documentation about the classes and methods used to build your `CrudkitServiceProvider.php`. For example: Lookups, ManyToOnes, custom Actions and Ajax columns may be a bit confusing - here is the place to learn more about them. 
+
 Straigh outta code - generated with [phpDocumentor2](https://phpdoc.org/) - thanks to you guys.
 
-**Crudkit grows, so does the apidoc.**  
-In the first run its my goal to cover the wohle code with the apidoc.  
-With every commit there will be more documentation: more examples, explainations and details.
+**CRUDKit grows, so does the apidoc.**\
+In the first run my goal is to cover the whole project with apidoc. My next step will be to refine that by adding more detail.
+With every commit there will be more documentation, examples, explaination and detail.
 
 ## Where to find
 The apidoc can be found under `<laravel root director>/vendor/alddesign/curdkit/doc`
 There are two versions
-- `doc/crudkit-apidoc-user` contains documentation about all the Classes/methods you need as a "user" to build webpages with crudkit
-- `doc/crudkit-apidoc-dev` contains all the things that are in the user doc + a basic documenatation about the rest of crudkit
+- `doc/crudkit-apidoc-user` contains documentation about all the classes/methods you normally need to build webpages with crudkit
+- `doc/crudkit-apidoc-dev` contains the user-doc, plus a basic documenatation about the rest of crudkit
 
-## Open the apidoc
-Although the apidocs are html/css webpages make sure you access the via a webserver.
-As you need a webserver to run crudkit this is no big deal (already done in crudkit-standalone):
+## Opening the apidoc
+The simple way:
+* Open the `index.html` file
+
+Accessing it via a websever alongside with CRUDKit. As you need a webserver to run CRUDKit this is no big deal (This is already done in crudkit-standalone):
 * Copy the folders `crudkit-apidoc-user` and/or `crudkit-apidoc-user` to `<laravel root director>/public` directory.
 * Now they are accessible by opening `http://<APP_URL>/crudkit-apidoc-user/index.html` or `http://<APP_URL>/crudkit-apidoc-dev/index.html`

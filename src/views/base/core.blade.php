@@ -118,7 +118,7 @@
         @yield('content')
     </div>
     <footer class="main-footer" id="crudkit-footer">
-	  {!! $texts['footer_html'] !!}
+		{!! $texts['footer_html'] !!} | <small>{{$version}}</small>
   	</footer>
 </div>
 

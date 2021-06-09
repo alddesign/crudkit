@@ -24,6 +24,7 @@ just access the application via http://yourhost/laravel-root-directory/public
 * How to setup a virtual host on Apache: [Link](https://www.thegeekstuff.com/2011/07/apache-virtual-host/)
 
 ## CONFIGURATION
+CRUDKit comes with a default configruation that uses its **demo database**. Its highly recommended to start with this configuration as it also contains code examples. **If you use your own database, its not enough just to configure like shown below** - see [readme-howto](./readme-howto.md) afterwards:
 1. Edit "laravel-root-directory/.env" file. Set at least these values:
 * APP_NAME=Laravel
 * APP_DEBUG		true if testing, false in production

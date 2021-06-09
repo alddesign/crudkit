@@ -32,7 +32,7 @@ return
 		'first' => 'First',
 		'last' => 'Last',
 		'footer_html' => 'Powered by <a href="https://laravel.com/" target="_blank">Laravel</a> and <a href="https://adminlte.io/" target="_blank">AdminLTE</a>. Inspired by <a href="https://github.com/markpurser/laravel-crudkit" target="_blank">Laravel CRUDKit</a>.',
-		'wrong_username_password' => 'Wrong username or wrong password.',
+		'wrong_username_password' => 'Wrong username or password.',
 		'not_logged_in' => 'You are not logged in.',
 		'no_permission' => 'You have no permisson to access this page or to perform this action.',
 		//Export:
@@ -100,7 +100,7 @@ return
 		'first' => 'Erste',
 		'last' => 'Letzte',
 		'footer_html' => 'Powered by <a href="https://laravel.com/" target="_blank">Laravel</a> and <a href="https://adminlte.io/" target="_blank">AdminLTE</a>. Inspired by <a href="https://github.com/markpurser/laravel-crudkit" target="_blank">Laravel CRUDKit</a>.',
-		'wrong_username_password' => 'Falscher Benutzername oder falsches Passwort.',
+		'wrong_username_password' => 'Falscher Benutzername oder Passwort.',
 		'not_logged_in' => 'Sie sind nicht eingeloggt.',
 		'no_permission' => 'Sie haben keine Berechtigung für den Zugriff auf diese Seite oder zum Durchführen der Aktion.',
 		//CSV Export:

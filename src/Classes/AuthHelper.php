@@ -1,15 +1,13 @@
 <?php
-declare(strict_types=1);
 /**
  * Class AuthHelper
  */
+
+declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Cookie;
-
-use function PHPSTORM_META\type;
 
 /** Provides functionality for user/permisson handling. */
 class AuthHelper
@@ -188,6 +186,10 @@ class AuthHelper
 	#endregion
 
 	#region Login --------------------------------------------------------------------------------------------------------------
+	/**
+	 * Checks if there is cookie data for skin/accent. If yes, override crudkit config.
+	 * @return void
+	 */
 	public function checkCookies()
 	{
 		if(config('crudkit.theme_selector', false))

@@ -12,8 +12,10 @@ use \ZipArchive;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 	 
 /**
- * Methods for automated backup.
- * @internal
+ * Functionallity for automated folder backups as .zip files.
+ * 
+ * Usage: define backup types and paths in config/crudkit.php. Setup an external cronjob to call the backup url.
+ * All errors make the script abort by sending a HTTP 500 error plus an error message as an result.
  */
 class Backup
 {
@@ -28,6 +30,8 @@ class Backup
 	 * @param string $sourceFolder The folder to back up
 	 * @param string $destinationFolder The location for the backup .zip file
 	 * @param int $maxBackupFiles Max. amount ouf backup files in the backup folder
+	 * 
+	 * @return void
 	 */
 	public function __construct(string $sourceFolder, string $destinationFolder, int $maxBackupFiles)
 	{
@@ -106,6 +110,7 @@ class Backup
 		}
 	}
 
+	/** @ignore */
 	private static function stringEndsWith($haystack, $needle) 
 	{
 		$length = strlen($needle);
