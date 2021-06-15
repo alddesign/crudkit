@@ -1,6 +1,6 @@
 # CONFIG -------------------------------------------------------------------------------------------------------
 cd $PSScriptRoot
-$version = "v1.0.0-beta.1"
+$version = "v1.0.0-beta.2"
 $phpDocumentorVersion = "2.9.1";
 
 $publicDir = "..\..\..\..\public";

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class EnumType
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Doctrine\DBAL\Types\Type;
@@ -7,7 +10,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Creating a custom Enum type for integration with doctrine/dbal
+ * Creating a custom enum type for integration with doctrine/dbal
  * 
  * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/custom-mapping-types.html
  * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/mysql-enums.html
@@ -19,8 +22,9 @@ class EnumType extends Type
     protected $values = array();
 	
 	/**
-	* Creating custom type to deal with ENUM.
-	*/
+     * Creating custom type to deal with ENUM.
+	 * @return void
+	 */
 	public static function registerDoctrineEnumMapping()
 	{
 		if(!Type::hasType('enum'))

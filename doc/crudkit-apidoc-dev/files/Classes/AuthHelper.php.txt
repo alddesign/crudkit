@@ -105,19 +105,32 @@ class AuthHelper
 		return false;
 	}
 
-	/** @return bool */
+	
+	/**
+	 * Checks if the user is logged in.
+	 * 
+	 * @return bool
+	 */
 	public function isLoggedIn()
 	{
 		return session('crudkit-logged-in', false) === true;
 	}
 
-	/** @return bool */
+	
+	/**
+	 * Checks if the user is an admin user (and if the user is logged in)
+	 * @return bool
+	 */
 	public function isAdmin()
 	{
 		return session('crudkit-admin-user', false) === true;
 	}
 
-	/** @return string */
+	
+	/**
+	 * Gets the current user id. Returns '' if not logged in.
+	 * @return string
+	 */
 	public function getUserId()
 	{
 		$userId = session('crudkit-userid', '');
@@ -188,6 +201,7 @@ class AuthHelper
 	#region Login --------------------------------------------------------------------------------------------------------------
 	/**
 	 * Checks if there is cookie data for skin/accent. If yes, override crudkit config.
+	 * 
 	 * @return void
 	 */
 	public function checkCookies()

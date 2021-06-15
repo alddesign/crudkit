@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Redirect;
 /**
  * Crudkit Controller
  * 
- * Main code areas are tagged with "view", "action" and "helper"
+ * Contains code for all the endpoints defined in rountes.php. 
  * @internal
  */
 class CrudkitController extends \App\Http\Controllers\Controller
@@ -53,7 +53,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/** 
-	 * Setting pages and authHelper.
+	 * Set pages and authHelper.
 	 * 
 	 * @param PageStroe $pageStore
 	 * @param AuthHelper $authHelper 
@@ -65,7 +65,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/** 
-	 * Starting generation of CurdkitServiceProvider.php
+	 * Automatic generation of a CurdkitServiceProvider.php
 	 * 
 	 * @param  \Illuminate\Http\Request $request
 	 */
@@ -76,7 +76,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/** 
-	 * Brings up the startpage.
+	 * Brings up the startpage or login view, if not logged in
 	 * 
 	 * @param  \Illuminate\Http\Request $request
 	 * @view
@@ -91,7 +91,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 	#region View Endpoints
 	/**
-	 * Displays records as summary list page
+	 * Displays records as a summary/list page
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
@@ -170,7 +170,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/**
-	 * Displays records as card page
+	 * Displays a singe recorda as a card page
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
@@ -229,7 +229,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/**
-	 * Edit record
+	 * The view for editing an existing record.
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
@@ -281,7 +281,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/**
-	 * Add record
+	 * The view for creating a new record.
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
@@ -481,7 +481,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	#region Api Endpoints
 	
 	/**
-	 * Backup of the CheriCRM project. Should be called via Cronjob - see crudkit config
+	 * Automated backup endpoint. Should be called via Cronjob - see crudkit config for setup.
 	 * @param Request $request
 	 * @return string
 	 */

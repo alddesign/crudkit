@@ -11,7 +11,8 @@ use \Exception;
 /**
  * Holds a set of usefull methods.
  * 
- * In most cases the static methods are all you need. An instance of this Object is only needed by Crudkit itself.
+ * In most cases the static methods are all you need. An instance of this Object is only needed by CRUDKit itself.
+ * Thats a little bit messy but its ok for now.
  */
 class DataProcessor
 {
@@ -324,9 +325,12 @@ class DataProcessor
 	
 	/** @internal */
 	/**
+	 * Gets the binary data from an uploaded file.
+	 * 
 	 * @param \Illuminate\Http\UploadedFile $uploadedFile
 	 * 
 	 * @return mixed
+	 * @internal
 	 */
 	private function getUploadFileData($uploadedFile) // Parameter is \Illuminate\Http\UploadedFile Object or NULL
 	{
@@ -348,9 +352,14 @@ class DataProcessor
 	#endregion
 	
 	#region HELPER FUNCTIONS ##########################################################################################################################################
-	/** 
+	/**
 	 * Gets a single text constant for the specified language form the config (crudkit-texts.php)
-	 * @internal 
+	 * 
+	 * @param string $name The name of the test constant.
+	 * @param string $language The language code. If not set, the default language is used.
+	 * 
+	 * @return string
+	 * @internal
 	 */
 	public static function text(string $name, string $language = '')
 	{
@@ -367,6 +376,10 @@ class DataProcessor
 	
 	/** 
 	 * Gets all text constants for the specified language form the config (crudkit-texts.php)
+	 * 
+	 * @param string $language The language code. If not set, the default language is used.
+	 * 
+	 * @return string
 	 * @internal 
 	 */
 	public static function getTexts(string $language = '')
@@ -388,7 +401,7 @@ class DataProcessor
 	{}
 	
 	/** 
-	 * A better implementation of PHP function empty();
+	 * A better implementation of PHP function empty(); - See code itself for details.
 	 * 
 	 * @param mixed $var The variable to check
 	 * @return boolean
@@ -593,7 +606,7 @@ class DataProcessor
 	}
 
 	/** 
-	 * Swaps the value of two variables 
+	 * Swaps the values of two variables.
 	 * @internal
 	*/
 	public static function swap(&$var1, &$var2) 
@@ -609,6 +622,7 @@ class DataProcessor
 	 * @param bool $appendIfEmpty
 	 * 
 	 * @return void
+	 * @internal
 	 */
 	public static function appendToArray($value, array &$array, bool $appendIfEmpty = true)
 	{
@@ -623,6 +637,7 @@ class DataProcessor
 	 * @param int $seconds
 	 * 
 	 * @return string
+	 * @internal
 	 */
 	public static function formatSeconds(int $seconds)
 	{
@@ -643,6 +658,7 @@ class DataProcessor
 	 * @param array $intoArray the new "result" array (this one will be modified)
 	 * 
 	 * @return void
+	 * @internal
 	 */
 	public static function fastArrayMerge(array &$array, array &$intoArray) 
 	{
@@ -652,7 +668,15 @@ class DataProcessor
 		}
 	}
 
-	/** @ignore */
+	
+	/**
+	 * Handy method for measuring execution time. Use DataProcessor::start() and DataProcessor::end() 
+	 * 
+	 * @param int $index Use different indexes if there are multiple DataProcessor::start() points, befor there is and DataProcessor::end().
+	 * 
+	 * @return void
+	 * @internal
+	 */
 	public static function start(int $index = 0)
 	{
 		self::$startTimes[$index] = microtime(true);
@@ -660,10 +684,12 @@ class DataProcessor
 
 	
 	/**
-	 * Retruns the time in seconds betweetn start() and end()
-	 * @param int $index
+	 * Retruns the time in seconds betweetn DataProcessor::start() and DataProcessor::end()
+	 * 
+	 * @param int $index The index for the corresponding DataProcessor::start()
 	 * 
 	 * @return float
+	 * @internal
 	 */
 	public static function end(int $index = 0)
 	{
@@ -753,8 +779,8 @@ class DataProcessor
 	/**
 	 * @param string $data The binary image data as string (mostly it comes like this from the DB)
 	 * @param int $scaleWidthTo If you want to scale the image width
-	 * 
 	 * @return string The base64 encoded image as a string (PNG format)
+	 * @internal
 	 */
 	public static function binaryStringToBase64Png(string $data, int $scaleWidthTo = -1)
 	{
@@ -774,9 +800,11 @@ class DataProcessor
 	#endregion
 
 	/**
-	 * Gets an array of primary keys from the request
+	 * Gets an array of CRUDKit primary keys from the CRUDKit request
+	 * 
 	 * @param Request $request
 	 * @return array
+	 * @internal
 	 */
 	public static function getPrimaryKeyValuesFromRequest(Request $request)
 	{
@@ -793,9 +821,11 @@ class DataProcessor
 
 	
 	/**
-	 * Gets an array of fitlers from the request
+	 * Gets an array of filters from the CRUDKit request
+	 * 
 	 * @param Request $request
 	 * @return Filter[]
+	 * @internal
 	 */
 	public static function getFiltersFromRequest(Request $request)
 	{
@@ -812,9 +842,11 @@ class DataProcessor
 	}
 
 	/**
-	 * Gets an array of filters from a given crudkit URL
+	 * Gets an array of filters from a given CRUDKit URL
+	 * 
 	 * @param string $url
 	 * @return Filter[]
+	 * @internal
 	 */
 	public static function getFiltersFromUrl(string $url)
 	{
@@ -832,9 +864,10 @@ class DataProcessor
 	}
 
 	/**
-	 * Gets an array with primary key values from a given crudkit URL
+	 * Gets an array with primary key values from a given CRUDKit URL
 	 * @param string $url
 	 * @return array
+	 * @internal
 	 */
 	public static function getPrimaryKeyValuesFromUrl(string $url)
 	{
@@ -853,9 +886,10 @@ class DataProcessor
 
 	/**
 	 * Gets an array of the URL params $key => $value
-	 * @param string $url The url
+	 * @param string $url
 	 * 
 	 * @return array
+	 * @internal
 	 */
 	public static function getParamsFromUrl(string $url)
 	{

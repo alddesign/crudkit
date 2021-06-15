@@ -6,18 +6,24 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /** 
  * Represents an actual filter (with values) on a record.
+ * 
+ * For Example: amount > 21.4
+ * 
  * @internal
  */
 class Filter
 {
+	/** @var string $field The fieldname the filter is applied to */
 	public $field;
+	/** @var string $operator ['>','<','>=','<=','=','!=','contains','startswith','endswith'] */
 	public $operator;
+	/** @var string $value The value */
 	public $value;
 	
 	const VALID_OPERATORS = ['>','<','>=','<=','=','!=','contains','startswith','endswith'];
 	/**
 	 * Constructor.
-	 * @param string $field The field to apply the filter
+	 * @param string $field The fieldname the filter is applied to
 	 * @param string $operator ['>','<','>=','<=','=','!=','contains','startswith','endswith']
 	 * @param string $value The value
 	 */

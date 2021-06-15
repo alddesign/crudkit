@@ -9,7 +9,7 @@ use \Exception;
 use Helper;
 
 /** 
- * Represents a filter definition on a record.
+ * Represents a filter definition on a record (no acutaly filter)
  */
 class FilterDefinition
 {

@@ -1,6 +1,6 @@
 <?php
 /** 
- * Defines the routes (links) 
+ * Defines the routes (links).
  * 
  * @internal
 */

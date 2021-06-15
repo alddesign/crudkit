@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Class ExceptionHandler
+ */
 namespace Alddesign\Crudkit\Classes;
 
 use Illuminate\Support\Facades\Request;
@@ -8,7 +10,7 @@ use \Exception;
 use Illuminate\Support\Facades\View;
 
 /**
- * Should replace default error handling. 
+ * I forgot the purpose of this class... Should replace default error handling or so.
  * Take a look at /app/Exceptions/Handler.php -> render(). Best way is to return a view.
  * 
  * @internal

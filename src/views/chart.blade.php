@@ -42,20 +42,20 @@
 			<select class="crudkit-filter-field form-control">
 				<option class="list-group-item" value=""></option>
 				@foreach ($columns as $column)
-					<option class="list-group-item" value="{{$column->name}}" @if($filter['field'] === $column->name){{'selected'}}@endif>{{$column->label}}</option>
+					<option class="list-group-item" value="{{$column->name}}" @if($filter->field=== $column->name){{'selected'}}@endif>{{$column->label}}</option>
 				@endforeach
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select class="crudkit-filter-operator form-control">
 				@foreach($filterOperators as $key => $value)
-					<option class="list-group-item" value="{{$key}}" @if($filter['operator'] === $key){{'selected'}}@endif>{{$value}}</option>
+					<option class="list-group-item" value="{{$key}}" @if($filter->operator === $key){{'selected'}}@endif>{{$value}}</option>
 				@endforeach
 			</select>
 		</div>
 		<div class="col-md-2">
 			<div class="input-group">
-				<input class="crudkit-filter-value form-control" type="text" value="{{$filter['value']}}" placeholder="{{$texts['filter_value']}}"/>
+				<input class="crudkit-filter-value form-control" type="text" value="{{$filter->value}}" placeholder="{{$texts['filter_value']}}"/>
 				<span class="input-group-btn">
 					<button class="btn btn-danger crudkit-filter-remove-button" type="button"><i class="fa fa-minus"></i> &nbsp;Entfernen</button>
 				</span>

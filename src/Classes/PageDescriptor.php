@@ -601,19 +601,37 @@ class PageDescriptor
 		return $this;
 	}
 
-	/** @return PageDescriptor */
-	public function addJs(string $url, array $pageTypes = [], bool $isAssetPath = true)
+	/**
+	 * Adds a custom JS file to pages.
+	 * 
+	 * Hint: when programming in JS you can get data from the global var "curdkit"
+	 * 
+	 * @param string $url Absolute or relative URL to the JS file
+	 * @param array $pageTypes Array of page type names fore the JS file to add
+	 * @param bool $isAssetUrl Indicates if its a URL to the Laravel asset directory (/public)
+	 * 
+	 * @return PageDescriptor
+	 */
+	public function addJs(string $url, array $pageTypes = [], bool $isAssetUrl = true)
 	{
-		$url = $isAssetPath ? asset($url) : $url;
+		$url = $isAssetUrl ? asset($url) : $url;
 
 		$this->js[] = ['url' => $url, 'pageTypes' => $pageTypes]; 
 		return $this;
 	}
 
-	/** @return PageDescriptor */
-	public function addCss(string $url, array $pageTypes = [], bool $isAssetPath = true)
+	/**
+	 * Adds a custom CSS file to pages.
+	 * 
+	 * @param string $url Absolute or relative URL to the CSS file
+	 * @param array $pageTypes Array of page type names fore the CSS file to add
+	 * @param bool $isAssetUrl Indicates if its a URL to the Laravel asset directory (/public)
+	 * 
+	 * @return PageDescriptor
+	 */
+	public function addCss(string $url, array $pageTypes = [], bool $isAssetUrl = true)
 	{
-		$url = $isAssetPath ? asset($url) : $url;
+		$url = $isAssetUrl ? asset($url) : $url;
 
 		$this->css[] = ['url' => $url, 'pageTypes' => $pageTypes]; 
 		return $this;

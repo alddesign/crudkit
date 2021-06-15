@@ -2,6 +2,7 @@
 /** 
  * Edit this file to create your application. (Laravel Service Provider) 
  */
+declare(strict_types=1);
 
 namespace Alddesign\Crudkit;
 
@@ -38,6 +39,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/** @ignore */private $users		= [];
 	/** @ignore */private $authHelper	= null;
 
+	#region CRUDKit internal
 	/** @ignore */
     public function boot()
     {
@@ -54,30 +56,35 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/** @ignore */
     public function register()
     {
-		
-        $this->app->resolving(\Alddesign\Crudkit\Controllers\CrudkitController::class, function ($adminPanel, $app) 
+        $this->app->resolving(\Alddesign\Crudkit\Controllers\CrudkitController::class, function ($controller, $app) 
 		{
-			// Table schema
-			$this->tables = $this->defineTables();
-			
-			// Relations
-			$this->defineRelations();
+			$this->defineCrudKit();
+			$controller->init($this->pageStore, $this->authHelper);
+		});		
+	}
+	
+	/** @ignore */
+	private function defineCrudKit()
+	{
+		// Table schema
+		$this->tables = $this->defineTables();
 
-            // Pages
-            $this->pages = $this->definePages();
-			
-			// Users
-			$this->authHelper = $this->defineUsers();
-			$this->users = $this->authHelper->getUsers();
+		// Relations
+		$this->defineRelations();
 
-			//Go!
-            $this->start($adminPanel);
-        });		
-    }
+		// Pages
+		$this->pages = $this->definePages();
+		$this->pageStore = new PageStore($this->pages);
+		$this->defineMenuLinks();
+		
+		// Users
+		$this->authHelper = $this->defineUsers();
+		$this->users = $this->authHelper->getUsers();
+	}
+	#endregion
 	
     /**
      * Populate this methods to define the tables plus columns used by your application.
-	 * @example ".\CrudkitServiceProvider.php" 80 22 Example
      * @return TableDescriptor[]
      */
 	private function defineTables()
@@ -109,7 +116,6 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	 * 
      * Use "$this->tables" which you have defined in method defineTables().
 	 * 
-	 * @example ".\CrudkitServiceProvider.php" 112 6 Example
 	 * @see TableDescriptor
      */
 	private function defineRelations()
@@ -122,7 +128,6 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	/**
      * Populate this methods to define the pages (views) according to the already definded tables.
 	 * 
-	 * @example ".\CrudkitServiceProvider.php" 126 40 Example with usage of page events and custom actions:
 	 * @return PageDescriptor[]
 	 * @see PageDescriptor 
      */
@@ -168,13 +173,26 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		//<CRUDKIT-PAGES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
 	
+	#region Menu links
+	/**
+	 * Add additional items to the menu and set icons for categories
+	 * 
+	 * Use $this->pageStore->addMenuLink(...);
+	 * 
+	 * @see PageStore
+	 */
+	private function defineMenuLinks()
+	{
+
+	}
+	#endregion
+	
 	/**
      * Populate this methods to define the Logins for this application.
 	 * 
 	 * Optional: define RestrictionSet and/or Startpage for each User.
 	 * Default login (administrator) is definded in crudkit config.
 	 * 
-	 * @example ".\CrudkitServiceProvider.php" 179 34 Example
 	 * @return AuthHelper
 	 * @see CrudkitUser
 	 * @see Startpage
@@ -213,14 +231,6 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		];
 		
 		return new AuthHelper($users);
-	}
-	
-	/** @ignore */
-	private function start($adminPanel)
-	{
-		$pageStore 	= new PageStore($this->pages);
-
-		$adminPanel->init($pageStore, $this->authHelper);
 	}
 }
 

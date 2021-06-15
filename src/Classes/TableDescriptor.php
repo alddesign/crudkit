@@ -46,6 +46,9 @@ class TableDescriptor
 
 	/** @ignore */ private $orderBy = '';
 	/** @ignore */ private $orderByDirection = 'asc';
+
+	/** @var int The lifetime of the cache. The cache is usede to store the Doctrine\DBAL results of all DB columns */
+	private $cacheTTLSeconds = 3600 * 24 * 7; //7 days
 	
 	/**
 	 * Constructor
@@ -197,6 +200,7 @@ class TableDescriptor
 	 * This method fetches $allColumns via Doctrine\DBAL (get extended information about columns)
 	 * 
 	 * This is a compute intensive workload - so it should only be used by CRUDKit internally, and only when needed.
+	 * The result from Doctrine\DBAL is also stored in the cache to increase performance.
 	 * 
 	 * @param bool $fore Force a re-fetch.
 	 * @internal
@@ -252,8 +256,7 @@ class TableDescriptor
 	/** @internal */
 	private function allColumnsToCache()
 	{
-		$ttlSeconds = 3600 * 24 * 7; //7 days
-		Cache::put('all-columns-' . $this->name, $this->allColumns, $ttlSeconds);
+		Cache::put('all-columns-' . $this->name, $this->allColumns, $this->cacheTTLSeconds);
 	}
 	/* #endregion */
 
@@ -559,7 +562,7 @@ class TableDescriptor
 		//To load all records (within search and filter) set $pageNumber to 0
 		$records = []; //Result
         $itemsPerPage = $itemsPerPage >= 0 ? $itemsPerPage : config('crudkit.records_per_page', 5);
-        $searchText = mb_strtolower($searchText,'UTF-8');
+		$searchText = mb_strtolower($searchText,'UTF-8');
 		$searchColumn = !dp::e($searchColumnName) && isset($this->columns[$searchColumnName]) ? $this->columns[$searchColumnName] : '';
 
         //Build search term
@@ -581,6 +584,12 @@ class TableDescriptor
 				case 'enum' :
 					$searchType = 'exact';
 					$searchTerm = $searchText;
+					if(!is_numeric($searchText)) //Try to find the value because the search term might be a text
+					{
+						$searchTerm = array_search($searchText, array_map(function($e){return mb_strtolower($e,'UTF-8');}, $searchColumn->options['enum']) , true);
+						$searchTerm = $searchTerm !== false ? (string)$searchTerm : $searchText;
+					}
+					break;
 				default :
 					$searchType = 'contains';
 					$searchTerm = $this->getDbSpecificLikeCondition('contains',$searchText); 
