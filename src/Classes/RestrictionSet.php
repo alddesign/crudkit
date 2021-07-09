@@ -9,9 +9,7 @@ use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use \Exception;
 
 /**
- * Defines a set of restrictions or rights to access pages and specific actions on pages.
- * 
- * The $type defines the behavior. A RestrictionSet belongs to a User.
+ * Defines a set of restrictions or rights to access pages and specific actions on pages. The $type 'allow-all' or 'deny-all' defines its behavior. A RestrictionSet belongs to a User.
  */
 class RestrictionSet
 {	

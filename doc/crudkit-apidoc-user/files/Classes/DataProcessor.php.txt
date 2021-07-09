@@ -744,6 +744,8 @@ class DataProcessor
 	}
 
 	/**
+	 * Gets a JSON string which can be used for CRUDKit custom ajax error results.
+	 * 
 	 * @param mixed $data which will be logged by the JS console on the client: console.log(data);
 	 * @param string $message A simple message for the user
 	 * @param string $p1 p1 to p8 are placeholders for the message
@@ -758,6 +760,8 @@ class DataProcessor
 	}
 
 	/**
+	 * Gets a JSON string which can be used for CRUDKit custom ajax results.
+	 * 
 	 * @param array $data is an array of objects:
 	 * 
 	 * ```php
@@ -769,7 +773,7 @@ class DataProcessor
 	 * ];
 	 * ```
 	 * 
-	 * @return string JSON string you can return to the client
+	 * @return string JSON string
 	 */
 	public static function getAjaxResult(array $data)
 	{

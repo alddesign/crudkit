@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Controller
  */
@@ -19,7 +18,6 @@ use Alddesign\Crudkit\Classes\Backup;
 use Alddesign\Crudkit\Classes\Lookup;
 use Alddesign\Crudkit\Classes\SQLColumn;
 use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
-use Alddesign\Crudkit\MediaDbLoader;
 use DateTimeZone;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;

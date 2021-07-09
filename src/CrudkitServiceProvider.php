@@ -205,8 +205,13 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	private function defineMenuLinks()
 	{
 		//<CRUDKIT-MENU-LINKS-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+		
+
 		$jkRowlingBooksFilter = new Filter('author_id', '=', '1');
-		$jkRowlingBooksUrl = action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', DataProcessor::getUrlParameters('book', null, '', '', [$jkRowlingBooksFilter], []));
+		//DataProcessor contains useful methods. For example creating url params for a crudkit page
+		$urlParams = DataProcessor::getUrlParameters('book', null, '', '', [$jkRowlingBooksFilter], []);
+		//action() is a Laravel helper function to create a link to a controller action
+		$jkRowlingBooksUrl = action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', $urlParams);
 
 		$this->pageStore->addMenuLink('GitHub', 'https://github.com/alddesign/crudkit', '', '', 'Misc', '');
 		$this->pageStore->addMenuLink('JKR Books', $jkRowlingBooksUrl, '', '', 'Misc', '');
@@ -254,9 +259,9 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 
 		$this->users = 
 		[
-			new User('admin2', 'pwd'), //has all rights
-			new User('jane', 'pwd', $restrictionSet1), //restricted
-			new User('john', 'pwd', $restrictionSet2) //restricted
+			new User('admin2', 'pwd'), 					//has all rights
+			new User('jane', 'pwd', $restrictionSet1), 	//restricted
+			new User('john', 'pwd', $restrictionSet2) 	//restricted
 		];
 		
 		return new AuthHelper($this->users);
