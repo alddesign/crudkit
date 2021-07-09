@@ -44,7 +44,7 @@ $(document).ready(function()
 				},
 				cache: true
 			},
-			placeholder: 'Tippen zum suchen...',
+			placeholder: '...',
 			minimumInputLength: minInputLength,
 			templateResult: crudkitFormatAjaxResult,
 			templateSelection: crudkitFormatAjaxSelectionWrapper,

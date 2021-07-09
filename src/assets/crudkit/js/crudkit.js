@@ -28,8 +28,8 @@ $(document).ready(function()
 
 			select.select2(
 			{
-				placeholder: 'Tippen zum suchen...',
-				minimumInputLength: 1,
+				placeholder: '...',
+				minimumInputLength: 0,
 				allowClear : true,
 				templateResult: crudkitFormatResult,
 				templateSelection: crudkitFormatSelection,

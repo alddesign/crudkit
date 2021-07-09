@@ -104,7 +104,7 @@
 											</p>
 										@endif
 										@if(!empty($fieldvalue))
-											<img src="data:image;base64,{{$fieldvalue}}" />
+											<img src="{!! $fieldvalue !!}" />
 										@else
 											<span><code class="bg-warning text-primary">0 KB</code></span>
 										@endif

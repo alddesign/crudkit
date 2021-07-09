@@ -43,7 +43,7 @@ class SQLManyToOneColumn extends SQLColumn
 	 * @param string[] $secondaryColumnNames Secondary columns which will be shown to the user (more = slower)
 	 * @param string $pageId The drilldown page id
 	 * @param FilterDefinition[] $filterDefinitions (optional) Array of filter definitions to describe the relation.
-	 * @param bool $manualInput Allow the user to manually input data
+	 * @param bool $manualInput Allows the user to input custom data manually (without checking)
 	 * @param array $options (optional) See Class SQLColumn for options
 	 * @param bool $ajax Ajax powered value selection
 	 * @param array $ajaxOptions Options for the ajax

@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Alddesign\Crudkit;
 
+use Alddesign\Crudkit\Classes\AjaxOptions;
 use Alddesign\Crudkit\Classes\AuthHelper;
 use Alddesign\Crudkit\Classes\User;
 use Alddesign\Crudkit\Classes\RestrictionSet;
@@ -17,6 +18,7 @@ use Alddesign\Crudkit\Classes\PageStore;
 use Alddesign\Crudkit\Classes\FilterDefinition;
 use Alddesign\Crudkit\Classes\Filter;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use Alddesign\Crudkit\Classes\DataProcessor;
 use Alddesign\Crudkit\Classes\Lookup;
 
 /**
@@ -34,10 +36,16 @@ use Alddesign\Crudkit\Classes\Lookup;
 */
 class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-	/** @ignore */private $tables		= [];
-	/** @ignore */private $pages		= [];
-	/** @ignore */private $users		= [];
-	/** @ignore */private $authHelper	= null;
+	/** @var TableDescriptor[] $tables */
+	private $tables		= [];
+	/** @var PageDescriptor[] $pages */
+	private $pages		= [];
+	/** @var User[] $users */
+	private $users		= [];
+	/** @var AuthHelper $authHelper */
+	private $authHelper	= null;
+	/** @var PageStore $pageStore */
+	private $pageStore	= null;
 
 	#region CRUDKit internal
 	/** @ignore */
@@ -89,8 +97,8 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
      */
 	private function defineTables()
 	{
+		//<CRUDKIT-TABLES-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 		//### Example code - works with the demo database ###
-		//<CRUDKIT-TABLES-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!! 	
 		return 
 		[
 			'author' => (new TableDescriptor('author', ['id'], true))
@@ -100,13 +108,16 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 				->addColumn('active', 'Active', 'bool', [])
 				,
 			'book' => (new TableDescriptor('book', ['id'], true))
-				->addColumn('id', 'Id', 'integer', [])
+				->addColumn('id', 'Id', 'integer', ['readonly' => true])
 				->addColumn('name', 'Name', 'text', [])
 				->addColumn('description', 'Description', 'text', [])
 				->addColumn('author_id', 'Author id', 'integer', [])
 				->addColumn('price', 'Price', 'float', [])
-				->addColumn('cover', 'Cover', 'image', [])
-				,
+				->addColumn('cover', 'Cover', 'image', []),
+			'sale' => ((new TableDescriptor('sale', ['id'], true))
+				->addColumn('id', 'Id', 'integer', ['readonly' => true, 'create' => false])
+				->addColumn('book_id', 'Book Id', 'integer', [])
+				->addColumn('date', 'Date', 'date', []))
 		];
 		//<CRUDKIT-TABLES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
@@ -119,10 +130,18 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	 * @see TableDescriptor
      */
 	private function defineRelations()
-	{
+	{	
+		//<CRUDKIT-RELATIONS-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 		//### Example code - works with the demo database ###
-		$this->tables['book']
-		->defineManyToOneColumn('author_id', 'author', 'id'); //Column name, reference table name, reference field name
+		
+		//Column name, reference table name, reference field name
+		$this->tables['book']->defineManyToOneColumn('author_id', 'author', 'id', ['name'], 'author'); 
+
+		//Many to one column, but with ajax search for a better user experience
+		$saleBookIdAjaxOptions = new AjaxOptions('cover', ['id', 'name'], 3, 5, true);
+		$this->tables['sale']->defineManyToOneColumnAjax('book_id', 'book', 'id', ['name'], '', [], false, $saleBookIdAjaxOptions);
+
+		//<CRUDKIT-RELATIONS-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
 
 	/**
@@ -133,9 +152,9 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
      */
 	private function definePages()
 	{
-		//### Example code - works with the demo database ###
 		//<CRUDKIT-PAGES-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
-		
+		//### Example code - works with the demo database ###
+
 		//Custom action
 		$seachCallback = function($record, $pageDescriptor, $action)
 		{
@@ -144,10 +163,10 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 			die();
 		};
 
-		//Show prices only to the CEO
+		//Show prices only to the admin
 		$onOpenAuthorListCallback = function(&$pageDescriptor, &$tableDescriptor, &$records)
 		{
-			if(session('crudkit-userid') !== 'CEO')
+			if(session('crudkit-userid') !== 'admin')
 			{
 				$cols = $pageDescriptor->getSummaryColumns(true); //get columns
 				unset($cols['price']); //remove price column
@@ -160,15 +179,17 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		return 
 		[
 			'author' => (new PageDescriptor('Author', 'author', $this->tables['author']))
-				->setCardLinkColumns(['id'])
+				->setCardLinkColumns(['name'])
 				->addAction('search-on-wikipedia', 'Search on Wikipedia', 'Search', $seachCallback)
 				,
 			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
-				->setCardLinkColumns(['id'])
+				->setCardLinkColumns(['name'])
 				->addSection('Additional Data', 'cover', 'price')
 				->addLookupColumn('author', $authorLookup)
 				->onOpenList($onOpenAuthorListCallback)
 				,
+			'sale' => (new PageDescriptor('Sale', 'sale', $this->tables['sale']))
+				->setCardLinkColumns([])
 		];
 		//<CRUDKIT-PAGES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
@@ -183,7 +204,14 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	 */
 	private function defineMenuLinks()
 	{
+		//<CRUDKIT-MENU-LINKS-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
+		$jkRowlingBooksFilter = new Filter('author_id', '=', '1');
+		$jkRowlingBooksUrl = action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', DataProcessor::getUrlParameters('book', null, '', '', [$jkRowlingBooksFilter], []));
 
+		$this->pageStore->addMenuLink('GitHub', 'https://github.com/alddesign/crudkit', '', '', 'Misc', '');
+		$this->pageStore->addMenuLink('JKR Books', $jkRowlingBooksUrl, '', '', 'Misc', '');
+		$this->pageStore->setCategoryFaIcon('Misc', 'cogs');
+		//<CRUDKIT-MENU-LINKS-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
 	#endregion
 	
@@ -202,6 +230,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 	{	
 		//### Example code - works with the demo database ###
 
+		//<CRUDKIT-USERS-START> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 		//allow everything except: -updating/delete books, -access to authors in general
 		$restrictionSet1 = 
 		new RestrictionSet
@@ -223,14 +252,15 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 			]
 		);
 
-		$users = 
+		$this->users = 
 		[
-			new User('admin2', 'M0stS@ecurPwd4This1'), //has all rights
-			new User('janedoe', 'P@ssw0rd', $restrictionSet1), //restricted
-			new User('johndoe', 'jd123', $restrictionSet2) //restricted
+			new User('admin2', 'pwd'), //has all rights
+			new User('jane', 'pwd', $restrictionSet1), //restricted
+			new User('john', 'pwd', $restrictionSet2) //restricted
 		];
 		
-		return new AuthHelper($users);
+		return new AuthHelper($this->users);
+		//<CRUDKIT-USERS-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
 	}
 }
 

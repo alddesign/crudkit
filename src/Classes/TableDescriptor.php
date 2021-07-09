@@ -305,9 +305,10 @@ class TableDescriptor
 	 * @param string $name Name of the column to defines as many to one
 	 * @param string $toTableName Related table name
 	 * @param string $columnName A column from the related table
-	 * @param array $secondaryColumnNames Secondary clolumn names from the related table (are shown to the user, more = slower)
-	 * @param string $page A drilldown page if you want to display this relation as a link.
+	 * @param array $secondaryColumnNames Secondary clolumn names from the related table. These are shown to the user when selecting the value (more = slower)
+	 * @param string $page A drilldown page if you want to display this relation as a link
 	 * @param array $filterDefinitions Additional filters to limit the relation
+	 * @param bool $manualInput Allows the user to input custom data manually (without checking)
 	 * 
 	 * @return TableDescriptor
 	 * @stackable
@@ -326,14 +327,15 @@ class TableDescriptor
 	}
 
 	/**
-	 * See defineManyToOneColumn(). Same, but rendered as an ajax selectbox (search for values).
+	 * See defineManyToOneColumn() - same, but rendered as an ajax selectbox (search for values).
 	 * 
-	 * @param string $name
-	 * @param string $toTableName
-	 * @param string $columnName
-	 * @param array $secondaryColumnNames
-	 * @param string $page
-	 * @param array $filterDefinitions
+	 * @param string $name Name of the column to defines as many to one
+	 * @param string $toTableName Related table name
+	 * @param string $columnName A column from the related table
+	 * @param array $secondaryColumnNames Secondary clolumn names from the related table. These are shown to the user when selecting the value (more = slower)
+	 * @param string $page A drilldown page if you want to display this relation as a link
+	 * @param array $filterDefinitions Additional filters to limit the relation
+	 * @param bool $manualInput Allows the user to input custom data manually (without checking)
 	 * @param AjaxOptions|null $ajaxOptions additional options to control the ajax behavior
 	 * 
 	 * @return TableDescriptor
