@@ -13,7 +13,7 @@ use \DateTime;
 /**
  * Automatically generates a "CrudkitServiceProvider.php" file based on the configured database in .env
  * 
- * To use this functionality setup and configur Laravel and Crudkit and open http://<UrlToCrudKit>/auto-gererate
+ * To use this functionality setup and configure Laravel and Crudkit and open http://crudkit-base-url/auto-gererate
  * @internal
  */
 class Generator
