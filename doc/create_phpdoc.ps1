@@ -1,6 +1,6 @@
 # CONFIG -------------------------------------------------------------------------------------------------------
 cd $PSScriptRoot
-$version = "v1.0.0-beta.3"
+$version = "v1.0.0"
 $phpDocumentorVersion = "2.9.1";
 
 $publicDir = "..\..\..\..\public";
@@ -15,17 +15,24 @@ $userCssTpl = ".\crudkit-apidoc-user\css\template.css";
 $userDir = ".\crudkit-apidoc-user";
 $devDir = ".\crudkit-apidoc-dev";
 
-Write-Host "Using version $version"
+Write-Host "Building documentation for CRUDKit $version"
+
+$ErrorActionPreference = Continue;
 
 #User Doc -------------------------------------------------------------------------------------------------------
 $ignoreuser = "examples/,views/,config/,SQLColumn.php,SQLManyToOneColumn.php,SQLOneToManyColumn.php,EnumType.php,ExceptionHandler.php,Filter.php,XmlSerializer.php,CrudkitController.php,Section.php" 
-Remove-Item -Path $userDir -Recurse -Force
-php -d error_reporting=1 phpDocumentor.phar -d $srcDir -t $userDir --ignore $ignoreuser --title "CRUDKit User API Doc $version" --sourcecode  > .\phpdoc-log-user.txt
+Remove-Item -Path $userDir -Recurse -Force -ErrorAction SilentlyContinue;
+Remove-Item -Path phpdoc-log-user.txt -ErrorAction SilentlyContinue
+Remove-Item -Path phpdoc-err-user.txt -ErrorAction SilentlyContinue;
+Remove-Item -Path created_with_phpDocumentor_v2.9.1.txt -ErrorAction SilentlyContinue;
 
+php phpDocumentor.phar -d "D:\need absolute shite path here!" -t "./usr" --title "CRUDKit"
+
+exit;
 #Developer Doc -------------------------------------------------------------------------------------------------------
 $ignoredev="examples/,views/,config/,XmlSerializer.php" 
-Remove-Item -Path $devDir -Recurse -Force
-php -d error_reporting=1 phpDocumentor.phar -d $srcDir -t $devDir --parseprivate --ignore $ignoredev --title "CRUDKit Developer API Doc $version" --sourcecode > .\phpdoc-log-dev.txt
+Remove-Item -Path $devDir -Recurse -Force -ErrorAction SilentlyContinue;
+php -d error_reporting=-1 phpDocumentor.phar -d $srcDir -t $devDir --parseprivate --ignore $ignoredev --title "CRUDKit Developer API Doc $version" --sourcecode > .\phpdoc-log-dev.txt 2> .\phpdoc-err-dev.txt
 
 #Change css -------------------------------------------------------------------------------------------------------
 if(Test-Path -Path $devCss)
