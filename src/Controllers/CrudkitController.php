@@ -35,7 +35,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 {
 	#region Main Endpoints
 	/** @var string $version The CRUDKit version. */
-	private $version = 'v1.0.0-beta.2';
+	private $version = 'v1.0.0';
 	/** @var PageStore $pageStore All the pages. */
 	private $pageStore = null;
 	/** @var AuthHelper $authHelper Holding user/permission related data. */

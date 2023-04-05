@@ -89,8 +89,8 @@
 									@endif												
 									@if($column->type === 'boolean')
 										<select id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control"{!! $inputAttributes !!}>
-											<option class="bg-danger" value="0" @if($fieldvalue[0] === false) {{'selected'}}@endif>{{ $texts['no'] }}</option>
-											<option class="bg-success" value="1" @if($fieldvalue[0] === true) {{'selected'}}@endif>{{ $texts['yes'] }}</option>
+											<option value="0" @if($fieldvalue[0] === false) {{'selected'}}@endif>{{ $texts['no'] }}</option>
+											<option value="1" @if($fieldvalue[0] === true) {{'selected'}}@endif>{{ $texts['yes'] }}</option>
 										</select>
 									@endif
 									@if($column->type === 'image')

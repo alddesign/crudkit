@@ -33,12 +33,17 @@ return [
 		'type' => 'list',
 		'parameters' => []
 	],
-	'formats_ui' =>
+	'formats_ui' => //Defines how certain datatypes should be displayed
 	[
 		'datetime' => 'd.m.Y H:i:s',
 		'date' => 'd.m.Y',
-		'time' => 'H:i:s'
+		'time' => 'H:i:s',
+		'decimal_places' => 2,
+		'thousands_separator' => '.',
+		'decimal_separator' => ','
 	],
+	'doctrine_dbal_cache' => true, //Enable or disable caching for DB::getDoctrineColumn(); (very time consuming operation). For certain operations Doctrine\DBAL fetches all columns of a DB table, to get extended informations like default-value, not-null...
+	'doctrine_dbal_cache_ttl' => 3600 * 24, //Time before the cache has to be refreshed (in seconds),
 
 	//### Backup ###
 	'daily_backup' => true,

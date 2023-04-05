@@ -25,7 +25,9 @@ class DataProcessor
 	/** @ignore */ private $language = '';
 	/** @ignore @var array<float>  */ private static $startTimes = [];
 	
-	/** @ignore*/ private $dbconf = null; 
+	/** @ignore*/ private array $dbconf = [];
+	/** @ignore*/ private array $formatsUi = []; 
+
 
 	/**
 	 * An instance is needed when dealing with data (pre/postprocessing).
@@ -44,6 +46,7 @@ class DataProcessor
 		$this->primaryKeyColumnNames = $table->getPrimaryKeyColumns(true); 
 		
 		$this->dbconf = self::getCrudkitDbConfig();
+		$this->formatsUi = config('crudkit.formats_ui');
 	}
 
 	#region PRE PROCESSING ##############################################################################################################################################
@@ -170,7 +173,7 @@ class DataProcessor
 	/** @internal */
 	private function setData(&$fieldValue, string $fieldDatatype, string $columnName = '')
 	{
-		$formatsUi = config('crudkit.formats_ui');
+		
 		
 		switch($fieldDatatype)
 		{
@@ -179,9 +182,9 @@ class DataProcessor
 			case 'integer' 	: $fieldValue = intval($fieldValue); break;
 			case 'decimal' 	: $fieldValue = floatval($fieldValue); break;
 			case 'boolean' 	: $fieldValue = ($fieldValue == true); break;
-			case 'datetime' : $fieldValue = DateTime::createFromFormat($formatsUi['datetime'], $fieldValue)->format('Y-m-d H:i:s'); break;
-			case 'date' 	: $fieldValue = DateTime::createFromFormat($formatsUi['date'], $fieldValue)->format('Y-m-d'); break;
-			case 'time' 	: $fieldValue = DateTime::createFromFormat($formatsUi['time'], $fieldValue)->format('H:i:s'); break;
+			case 'datetime' : $fieldValue = DateTime::createFromFormat($this->formatsUi['datetime'], $fieldValue)->format('Y-m-d H:i:s'); break;
+			case 'date' 	: $fieldValue = DateTime::createFromFormat($this->formatsUi['date'], $fieldValue)->format('Y-m-d'); break;
+			case 'time' 	: $fieldValue = DateTime::createFromFormat($this->formatsUi['time'], $fieldValue)->format('H:i:s'); break;
 			case 'blob' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
 			case 'binary' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
 			case 'image' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
@@ -224,12 +227,26 @@ class DataProcessor
 		{
 			foreach($record as $columnName => &$columnValue)
 			{
+				$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
+
 				//Processing
-				if($formatBinary){ $this->processBinaryData($columnName, $columnValue, $singleRecord); }
-				//$this->mapEnum($columnName, $columnValue);
-				if($formaDateAndTime){ $this->formatDateAndTime($columnName, $columnValue); }
-				if($formatDec){ $this->formatDecimal($columnName, $columnValue); }
-				if($formatBool){ $this->formatBoolean($columnName, $columnValue); }
+				if($formatBinary && ($datatype === 'blob' || $datatype === 'image'))		
+				{ 
+					$this->processBinaryData($columnName, $columnValue, $singleRecord, $datatype); 
+				}
+				//$this->mapEnum($columnName, $columnValue); ???
+				if($formaDateAndTime && in_array($datatype, ['datetime', 'date', 'time'], true))	
+				{ 
+					$this->formatDateAndTime($columnName, $columnValue, $datatype); 
+				}
+				if($formatDec && $datatype === 'decimal' && !self::e($columnValue))			
+				{ 
+					$columnValue = number_format(floatval($columnValue), $this->formatsUi['decimal_places'], $this->formatsUi['decimal_separator'], $this->formatsUi['thousands_separator']); 
+				}
+				if($formatBool && $datatype === 'boolean')			
+				{ 
+					$columnValue = in_array($columnValue, [1, '1', true], true) ? [true, self::text('yes')] : [false, self::text('no')]; 
+				}
 			}
 			unset($columnValue);	
 		}
@@ -237,34 +254,10 @@ class DataProcessor
 
 		return $singleRecord ? $records[0] : $records;
 	}
-
-	/** @internal */
-	private function formatBoolean($columnName, &$columnValue)
-	{
-		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
-
-		if($datatype === 'boolean')
-		{
-			$columnValue = ($columnName === 1 || $columnValue === '1' || $columnValue === true) ? [true, self::text('yes')] : [false, self::text('no')];
-		}
-	}
-
-	/** @internal */
-	private function formatDecimal($columnName, &$columnValue)
-	{
-		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
-
-		if($datatype === 'decimal' && !self::e($columnValue))
-		{
-			$columnValue = number_format(floatval($columnValue), 2, ',', '.');
-		}
-	}
 	
 	/** @internal */
-	private function processBinaryData($columnName, &$columnValue, $singleRecord)
+	private function processBinaryData($columnName, &$columnValue, $singleRecord, string $datatype)
 	{
-		$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
-		
 		if($singleRecord)
 		{
 			if($datatype === 'image') //Single record and Image --> we got the blob data from DB, we will show the image.
@@ -278,10 +271,7 @@ class DataProcessor
 		}
 		else
 		{
-			if($this->columns[$columnName]->type === 'blob' || $this->columns[$columnName]->type === 'image') //here we just got the size in kB from the DB
-			{
-				$columnValue = $this->formatBytes($columnValue);
-			}
+			$columnValue = $this->formatBytes($columnValue);
 		}
 	}
 
@@ -304,20 +294,19 @@ class DataProcessor
 	} 
 
 	/** @internal */
-	private function formatDateAndTime($columnName, &$columnValue)
+	private function formatDateAndTime($columnName, &$columnValue, string $datatype)
 	{		
-		$formatsUi = config('crudkit.formats_ui');
 		$formatsDb = $this->dbconf['formats'];
 		$empty = $this->dbconf['empty_values'];
 		
 		if(!self::e($columnValue))
 		{		
 			//PHP SQL Zero Date Problem (0000-00-00...): 
-			switch($this->columns[$columnName]->type)
+			switch($datatype)
 			{
-				case 'datetime' : $columnValue = ($columnValue === $empty['datetime'])	? '' : DateTime::createFromFormat($formatsDb['datetime'], $columnValue)->format($formatsUi['datetime']); break;
-				case 'date' 	: $columnValue = ($columnValue === $empty['date']) 		? '' : DateTime::createFromFormat($formatsDb['date'], $columnValue)->format($formatsUi['date']); break;
-				case 'time' 	: $columnValue = ($columnValue === $empty['time'])		? '' : DateTime::createFromFormat($formatsDb['time'], $columnValue)->format($formatsUi['time']); break;
+				case 'datetime' : $columnValue = ($columnValue === $empty['datetime'])	? '' : DateTime::createFromFormat($formatsDb['datetime'], $columnValue)->format($this->formatsUi['datetime']); break;
+				case 'date' 	: $columnValue = ($columnValue === $empty['date']) 		? '' : DateTime::createFromFormat($formatsDb['date'], $columnValue)->format($this->formatsUi['date']); break;
+				case 'time' 	: $columnValue = ($columnValue === $empty['time'])		? '' : DateTime::createFromFormat($formatsDb['time'], $columnValue)->format($this->formatsUi['time']); break;
 				default			: return;
 			}
 		}
@@ -401,26 +390,23 @@ class DataProcessor
 	{}
 	
 	/** 
-	 * A better implementation of PHP function empty(); - See code itself for details.
+	 * A better implementation of PHP function empty();
 	 * 
 	 * @param mixed $var The variable to check
+	 * @param bool $zeroIsEmpty Indicates whether a int/doube zero is considered empty
 	 * @return boolean
 	 */
-	public static function e($var)
+	public static function e($var, bool $zeroIsEmpty = false)
 	{
-		$type = gettype($var);
-		switch($type)
-		{
-			case 'boolean'	: return false;
-			case 'integer'	: return false;
-			case 'double'	: return false;
-			case 'string'	: return $var === '' ? true : false;
-			case 'array'	: return $var === [] ? true : false;
- 			case 'object'	: return false;
-			case 'resource'	: return false;
-			case 'NULL'		: return true;
-			default			: return false;
-		}
+		return
+		(
+			($zeroIsEmpty && $var === 0) ||
+			($zeroIsEmpty && $var === 0.0) ||
+			$var === '' ||
+			$var === [] ||
+			$var === (object)[] ||
+			$var === null
+		);
 	}
 	
 	/** 
@@ -600,9 +586,9 @@ class DataProcessor
 	public static function getCrudkitDbConfig()
 	{
 		$dbtype = config('database.default','__default__');
-		$dbconfig = config('crudkit-db');
+		$crudkitDbConfig = config('crudkit-db');
 		
-		return isset($dbconfig[$dbtype]) ? $dbconfig[$dbtype] : $dbconfig['__default__'];
+		return isset($crudkitDbConfig[$dbtype]) ? $crudkitDbConfig[$dbtype] : $crudkitDbConfig['__default__'];
 	}
 
 	/** 

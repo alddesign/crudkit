@@ -92,9 +92,9 @@
 								<a href="{!! $manyToOneUrl !!}">{{$value[1]}}</a> 
 							@else
 								@if($value[0] === true)
-									<kbd style="background-color: #333; color: #eee; font-size: 1.7rem;">{{$value[1]}}</kbd>
+									<kbd class="bg-success fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
 								@else
-									<kbd style="background-color: #eee; color: #111; font-size: 1.7rem;">{{$value[1]}}</kbd>
+									<kbd class="bg-danger fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
 								@endif
 							@endif
 						@endif				

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Cache;
 
 use \Exception;
-use \DateTime;
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
 
@@ -47,8 +46,8 @@ class TableDescriptor
 	/** @ignore */ private $orderBy = '';
 	/** @ignore */ private $orderByDirection = 'asc';
 
-	/** @var int The lifetime of the cache. The cache is usede to store the Doctrine\DBAL results of all DB columns */
-	private $cacheTTLSeconds = 3600 * 24 * 7; //7 days
+	/** @ignore */ private bool $doctrineDbalCache = true;
+	/** @ignore */ private int $doctrineDbalCacheTtl = 3600 * 24;
 	
 	/**
 	 * Constructor
@@ -64,6 +63,9 @@ class TableDescriptor
 		
 		$this->primaryKeyColumns = $primaryKeyColumns;
 		$this->dbconf = dp::getCrudkitDbConfig();
+
+		$this->doctrineDbalCache = boolval(config('crudkit.doctrine_dbal_cache', true));
+		$this->doctrineDbalCacheTtl = intval(config('crudkit.doctrine_dbal_cache_ttl', 3600 * 24));
     }
 
 	/* #region GET */
@@ -243,11 +245,18 @@ class TableDescriptor
 	}
 
 	/**
+	 * Tries fetch all columns from cache. Returns TRUE, if they were cached, FALSE if not.
+	 * 
 	 * @internal 
 	 * @return bool 
 	 */
 	private function allColumnsFromCache()
 	{
+		if(!$this->doctrineDbalCache)
+		{
+			return false;
+		}
+
 		$this->allColumns = Cache::get('all-columns-' . $this->name, []);
 	
 		return $this->allColumns === [] ? false : true;
@@ -256,7 +265,12 @@ class TableDescriptor
 	/** @internal */
 	private function allColumnsToCache()
 	{
-		Cache::put('all-columns-' . $this->name, $this->allColumns, $this->cacheTTLSeconds);
+		if(!$this->doctrineDbalCache)
+		{
+			return;
+		}
+
+		Cache::put('all-columns-' . $this->name, $this->allColumns, $this->doctrineDbalCacheTtl);
 	}
 	/* #endregion */
 
