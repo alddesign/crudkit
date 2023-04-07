@@ -51,93 +51,81 @@ class DataProcessor
 
 	#region PRE PROCESSING ##############################################################################################################################################
 	/**
-	* Processing data from request before INSERT, UPDATE it to the database
-	* 
-	* Considering the four important things:
-	* 	-Request data for field exists
-	*	-Request data for field has value or is NULL
-	*	-Field has SQL default value in Databse
-	*	-Field is set as NOT NULL in Database
-	*
-	* @param array $requestData
-	* @param string $actionType 'update'|'create'  
-	* @return array $recordData
-	* @internal
-	*/
-	public function preProcess($requestData, bool $insert)
+	 * Processing data from request before INSERT, UPDATE it to the database.
+	 * 
+	 * Considering the 5 important things:  
+	 * * Request data for the field exists
+	 * * Request data for the field has value or is NULL
+	 * * Field has a DEFAULT value in the DB
+	 * * Field is set to NOT NULL in the DB
+	 * * Field is set to AUTOINCREMENT in the DB
+	 *
+	 * @param array $requestData
+	 * @param string $isInsert TRUE for insert, FALSE for update
+	 * @return array $recordData
+	 * @internal
+	 */
+	public function preProcess($requestData, bool $isInsert)
 	{
+		$isUpdate = !$isInsert;
 		$this->table->fetchAllColumns(); //intensive workload
 		$this->allColumns = $this->table->getAllColumns();
 
+		//The resulting record
 		$recordData = [];
 				
 		$dataExists = false; //[boolean] Per definition --> data exist, if data is in request, even if NULL
 		$dataIsNull = false; //[boolean] Per definition --> data === null, no information about if it exists in request
-		$dbDefault = false; //[boolean] Field has a default value in database
+		$dbHasDefault = false; //[boolean] Field has a default value in database
 		$dbNotNull = false; //[boolean] Field has NOT NUL set in database 
 
-		foreach($this->allColumns as $columnName => $options)
+		foreach($this->allColumns as $columnName => $column)
 		{	
 			$data = array_key_exists($columnName, $requestData) ? $requestData[$columnName] : null;
-			
-			$isPrimaryKey = in_array($columnName, $this->table->getPrimaryKeyColumns(true), true);
 
+			//Prepare some infos:
+			$isPk = in_array($columnName, $this->table->getPrimaryKeyColumns(true), true);
 			$dataExists = array_key_exists($columnName, $requestData);
 			$dataIsNull = $data === null;
-			$dbHasDefault = $options['default'] !== null; //The default value is always provided as string from Doctrine DBAL
-			$dbNotNull = $options['notnull'] === true;
-			$deleteBlob = isset($requestData[$columnName.'___DELETEBLOB']) && $requestData[$columnName.'___DELETEBLOB'] === 'on';
+			$dbHasDefault = $column['default'] !== null; //The default value is always provided as string from Doctrine DBAL
+			$dbNotNull = $column['notnull'] == true;
+			$isAi = $column['autoincrement'] == true; //auto increment
+			$deleteBlobIsSet = isset($requestData[$columnName.'___DELETEBLOB']) && $requestData[$columnName.'___DELETEBLOB'] === 'on';
+			$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : $column['datatype'];
+			
+			//If the ___DELETEBLOB field is set, we preted there is no request data. It might happen, that someone clicks delete, and selects a file to upload(!)
+			if($deleteBlobIsSet)
+			{
+				$dataExists = false;
+				$data = null;
+			}
+
 			$i = false; //Include this column in the INSERT statement
 			$u = false; //Include this column in the UPDATE statement
-
-			//$datatype = $options['datatype'];
-			$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : $options['datatype'];
 			
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& $dbHasDefault	) {$i=false; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& $dbHasDefault	) {$i=false; $u=true; $this->setNull($data, $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=true; $this->setNull($data, $datatype, $columnName); 	}
-			if($dataExists 	&& !$dataIsNull && true			&& true				) {$i=true; $u=true; $this->setData($data, $datatype, $columnName); 	}
-			
-			if(!$dataExists && true 		&& $dbNotNull 	&& $dbHasDefault	) {$i=false; $u=false; $this->setNull($data, $datatype, $columnName);	}
-			if(!$dataExists && true 		&& $dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=false; $this->setEmpty($data, $datatype, $columnName);	}
-			if(!$dataExists && true 		&& !$dbNotNull 	&& $dbHasDefault	) {$i=false; $u=false; $this->setNull($data, $datatype, $columnName);	}
-			if(!$dataExists && true 		&& !$dbNotNull 	&& !$dbHasDefault	) {$i=true; $u=false; $this->setNull($data, $datatype, $columnName);	}			
+			//Ah yes, the "Matrix". The core logic of preprocessing data:
+			//When data exists in request. (We do not care about Ai, when data exists)
+			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& $dbHasDefault	&& true) {$i=false; $u=true; $this->setEmpty($data, $datatype, $columnName); }
+			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& !$dbHasDefault	&& true) {$i=true; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
+			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& $dbHasDefault	&& true) {$i=false; $u=true; $this->setNull($data, $datatype, $columnName);	}
+			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& !$dbHasDefault	&& true) {$i=true; $u=true; $this->setNull($data, $datatype, $columnName); 	}
+			if($dataExists 	&& !$dataIsNull && true			&& true				&& true) {$i=true; $u=true; $this->setData($data, $datatype, $columnName); 	}
+			//When NO data exists in request, and columun is not Ai
+			if(!$dataExists && true 		&& $dbNotNull 	&& $dbHasDefault	&& !$isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
+			if(!$dataExists && true 		&& $dbNotNull 	&& !$dbHasDefault	&& !$isAi) {$i=true; $u=false; $this->setEmpty($data, $datatype, $columnName); }
+			if(!$dataExists && true 		&& !$dbNotNull 	&& $dbHasDefault	&& !$isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
+			if(!$dataExists && true 		&& !$dbNotNull 	&& !$dbHasDefault	&& !$isAi) {$i=true; $u=false; $this->setNull($data, $datatype, $columnName); }
+			//When NO data exists in request. When column is Ai, we definitly dont want it in insert or update
+			if(!$dataExists && true 		&& true			&& true				&& $isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
 
-			$this->addData($recordData, $columnName, $data, $deleteBlob, $insert, $i, $u);
+			//Finally add the data to the final record:
+			if(($isInsert && $i) || ($isUpdate && $u))
+			{
+				$recordData[$columnName] = $data;
+			}
 		}
 
 		return($recordData);
-	}
-	
-	/**
-	 * In the Update From there is the special "delete" checkbox for blob/image fields.
-	 *
-	 * If the user doesnt check this checkbox, doesnt provide a file, and there is already data in the DB, we have to ensure not to delete the existing data.
-	 * This will bypass the above maxtrix with all the logic of null,empty,value... 
-	 * 
-	 * @internal 
-	 */
-	private function addData(array &$recordData, $columnName, $data, bool $deleteBlob, bool $insert, bool $i, bool $u)
-	{	
-		if(!$insert)
-		{
-			//Special treatment for blob/binary when updating
-			if($deleteBlob)
-			{
-				$recordData[$columnName] = $data; //$data should be null or empty here (logic before found this out). Should do the job, except someone checks the "delete" checkbox, and adds a file. --> Then the file will be stored,...
-				return;
-			}
-			if($u)
-			{
-				$recordData[$columnName] = $data; //Just Set the value
-			}
-		}	
-		
-		if($insert && $i)
-		{
-			$recordData[$columnName] = $data; //Just Set the value
-		}	
 	}
 	
 	/** 
@@ -159,7 +147,7 @@ class DataProcessor
 			case 'time' 	: $fieldValue = $this->dbconf['empty_values']['time']; break;
 			case 'blob' 	: $fieldValue = ''; break;
 			case 'binary' 	: $fieldValue = ''; break;
-			case 'enum' 	: $fieldValue = ''; break;
+			case 'enum' 	: $fieldValue = ''; break; //hmmm...
 			default 		: throw new Exception(sprintf('Unsupported SQL datatype "%s". (column "%s", table "%s")', $fieldDatatype, $columnName, $this->table->getName()));
 		}
 	}
@@ -196,30 +184,18 @@ class DataProcessor
 
 	#region POST PROCESSING #############################################################################################################################################
 	/**
-	* Processing data after SELECTing it from the database, before sending it to the view.
-	* 
-	* @param $records
-	* @param bool $singleRecord
-	* @return array $records
-	* @internal
-	*/
-	public function postProcess($records, bool $singleRecord = false, bool $formatDateAndTime = true, $formatBool = true, $formatDec = true, $formatBinary = true)
-	{		
-		$records = $this->formatRecords($records, $singleRecord, $formatDateAndTime, $formatBool, $formatDec, $formatBinary);
-		
-		//Converting Object to Array,... dont ask me about this...
-		$helper = [];
-		$records = $singleRecord ? [$records] : $records;//Can now be used in foreach
-		foreach($records as $record)
-		{
-			$helper[] = ((array) $record);
-		}
-		$records = $helper;
-
-		return $singleRecord ? $records[0] : $records;
-	}
-
-	public function formatRecords($records, bool $singleRecord = false, bool $formaDateAndTime = true, $formatBool = true, $formatDec = true, $formatBinary = true)
+	 * Formats the data in record(s) so that they can be displayed to the user or consumed by views.
+	 * 
+	 * @param mixed $records Raw data from the DB. Obtained by readRecordsRaw() or readRecordRaw() 
+	 * @param bool $singleRecord TRUE if the records is a single record, FALSE if its an array of multiple records.
+	 * @param bool $formaDateAndTime
+	 * @param bool $formatBool
+	 * @param bool $formatDec
+	 * @param bool $formatBinary
+	 * 
+	 * @return array $records
+	 */
+	public function postProcess($records, bool $singleRecord = false, bool $formaDateAndTime = true, $formatBool = true, $formatDec = true, $formatBinary = true)
 	{
 		$records = $singleRecord ? [$records] : $records;//Can now be used in foreach
 

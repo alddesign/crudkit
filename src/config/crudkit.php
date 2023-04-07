@@ -17,7 +17,7 @@ return [
 	'pagination_limit' => 2, //How many page does the pagination show (in each direction)
 	'fontsize' => '16px', //Overall font size. Provide a CSS compatible value (Example: 14px, 2em, 80%,...).
 	'show_qrcode' => true,
-	'timezone' => 'Europe/Vienna', //Attention: this is only for certain outputs like export files. All Datetime/Time values will be stored "as is" in the DB. See https://www.php.net/manual/en/timezones.php
+	'local_timezone' => 'Europe/Vienna', //Used mainly for dates/times in output filenames (xml, csv). This does not change the PHP default timezone - that should be done in laravel (config/app.php)
 	
 	//### Technical ###
 	'records_text_trim_length' => 50,
@@ -44,15 +44,4 @@ return [
 	],
 	'doctrine_dbal_cache' => true, //Enable or disable caching for DB::getDoctrineColumn(); (very time consuming operation). For certain operations Doctrine\DBAL fetches all columns of a DB table, to get extended informations like default-value, not-null...
 	'doctrine_dbal_cache_ttl' => 3600 * 24, //Time before the cache has to be refreshed (in seconds),
-
-	//### Backup ###
-	'daily_backup' => true,
-	'daily_backup_src_folder' => base_path('/vendor/alddesign/'), //use absolute filesystem paths
-	'daily_backup_dest_folder' => base_path('../cheri-crm-backup/daily/'), //use absolute filesystem paths
-	'daily_backup_max_backups' => 90,
-	'monthly_backup' => true,
-	'monthly_backup_src_folder' => base_path('/vendor/alddesign/'), //use absolute filesystem paths
-	'monthly_backup_dest_folder' => base_path('../cheri-crm-backup/monthly/'), //use absolute filesystem paths
-	'monthly_backup_max_backups' => 12,
-	'backup_key' => 'r9snq5Az7gQwS0hOgMot' //Change this vaule! Backup is started via Cronjob http://yourhost.com/<app_name_url>/api/backup?key=<backup_key>
 ];

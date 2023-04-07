@@ -18,12 +18,13 @@ use Alddesign\Crudkit\Classes\Backup;
 use Alddesign\Crudkit\Classes\Lookup;
 use Alddesign\Crudkit\Classes\SQLColumn;
 use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
-use DateTimeZone;
+use \DateTimeZone;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
 /**
  * Crudkit Controller
@@ -40,6 +41,13 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	private $pageStore = null;
 	/** @var AuthHelper $authHelper Holding user/permission related data. */
 	private $authHelper = null;
+	
+	/**
+	 * Holds the datetimezone object that matches the value in the config "crudkit.local_timezone"
+	 * @var \DateTimeZone
+	 * @ignore
+	 */
+	private $localTimeZone = null;
 
 	/**
 	 * Creates a new controller instance
@@ -49,6 +57,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Make these variables available in all views
 		View::share('texts', DataProcessor::getTexts());
 		View::share('version', $this->version);
+
+		$this->localTimeZone = new DateTimeZone(config('crudkit.local_timezone', 'UTC'));
 	}
 
 	/** 
@@ -122,9 +132,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		}
 
 		//Load record with raw data from DB, load Lookups, format record data
-		$records = $table->readRecords($pageNumber, $searchColumnName, $searchText, $filters, true, false, false, false, false, $itemsPerPage);
+		$records = $table->readRecordsRaw($pageNumber, $searchColumnName, $searchText, $filters, true, $itemsPerPage); //ok
 		$lookups = $pageDescriptor->getMultipleLookupsCalculated($records['records']);
-		$records['records'] = (new DataProcessor($table))->formatRecords($records['records'], false, true, true, true, true);
+		$records['records'] = $table->postProcess($records['records'], false, true, true, true, true);
 
 		//Process DB Data
 		$paginationUrls = $this->getPaginationUrls($pageNumber, $pageId, $records['total'], $searchText, $searchColumnName, $filters);
@@ -192,9 +202,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$updateUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@updateView', dp::getUrlParameters($pageId, null, '', '', $filters, $primaryKeyValues));
 
 		//Load record with raw data from DB, load Lookups, format record data
-		$record = $table->readRecord($primaryKeyValues, $filters, false, false, false, false, true);
+		$record = $table->readRecordRaw($primaryKeyValues, $filters, true); //ok
 		$lookups = $pageDescriptor->getLookupsCalculated($record);
-		$record = (new DataProcessor($table))->formatRecords($record, true, true, true, true, true);
+		$record = $table->postProcess($record, true);
 
 		$viewData = 
 		[
@@ -251,9 +261,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$columns 	= $table->getColumns();
 
 		//Load Data from DB
-		$record = $table->readRecord($primaryKeyValues, $filters, false, false, false, false, true);
+		$record = $table->readRecordRaw($primaryKeyValues, $filters, true); //ok
 		$lookups = $pageDescriptor->getLookupsCalculated($record);
-		$record = (new DataProcessor($table))->formatRecords($record, true, true, true, true, true);
+		$record = $table->postProcess($record, true);
 
 		$viewData =
 		[
@@ -478,54 +488,6 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	#endregion
 
 	#region Api Endpoints
-	
-	/**
-	 * Automated backup endpoint. Should be called via Cronjob - see crudkit config for setup.
-	 * @param Request $request
-	 * @return string
-	 */
-	public function backup(Request $request)
-	{
-		//Check auth via key
-		if(request('key', '') !== config('crudkit.backup_key', ''))
-		{
-			abort(400, 'invalid backup key');
-		}
-
-		// Make sure the script can handle large folders/files
-		ini_set('max_execution_time', '60');
-		ini_set('memory_limit','256M');	
-
-		//Load config
-		$dailyBackup = config('crudkit.daily_backup', false);
-		$dailyBackupSrcFolder = config('crudkit.daily_backup_src_folder', '');
-		$dailyBackupDestFolder = config('crudkit.daily_backup_dest_folder', '');
-		$dailyBackupMaxBackups = config('crudkit.daily_backup_max_backups', 1);
-		$monthlyBackup = config('crudkit.monthly_backup', false);
-		$monthlyBackupSrcFolder = config('crudkit.monthly_backup_src_folder', '');
-		$monthlyBackupDestFolder = config('crudkit.monthly_backup_dest_folder', '');
-		$monthlyBackupMaxBackups = config('crudkit.monthly_backup_max_backups', 1);	
-
-		// Start the backup!
-		if($dailyBackup === true)
-		{
-			$backup = new Backup($dailyBackupSrcFolder, $dailyBackupDestFolder, $dailyBackupMaxBackups);
-			$backup->createBackup();
-			$backup->cleanupBackupDir();
-		}
-
-		$now = new DateTime('now', new DateTimeZone(config('crudkit.timezone', 'UTC')));
-		$isFirstDayOfMonth = $now->format('j') === '7';
-		if($monthlyBackup === true && $isFirstDayOfMonth)
-		{
-			$backup = new Backup($monthlyBackupSrcFolder, $monthlyBackupDestFolder, $monthlyBackupMaxBackups);
-			$backup->createBackup();
-			$backup->cleanupBackupDir();
-		}
-
-		echo 'backup-ok';
-	}
-
 	/**
 	 * Deletes a record from the database
 	 *
@@ -687,7 +649,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$primaryKeyValues = dp::getPrimaryKeyValuesFromRequest($request);
 
 		//Read Data
-		$record = $table->readRecord($primaryKeyValues);
+		$record = $table->readRecordRaw($primaryKeyValues); //ok
+		$record = $table->postProcess($record, true);
 
 		$result = call_user_func($action->callback, $record, $pageDescriptor, $action); //event-trigger
 		if ($result instanceof \Illuminate\Http\RedirectResponse) {
@@ -723,13 +686,13 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Load record with raw data from DB, load Lookups, format record data
 		//!! Data is not trimmed
 		//!! Blob fields and images will show only the size in KB
-		$records = $table->readRecords(0, $searchColumnName, $searchText, $filters, false, false, false, false, false)['records'];
+		$records = $table->readRecordsRaw(0, $searchColumnName, $searchText, $filters, false); //ok
 		$lookups = [];
 		foreach ($records as $id => $record) 
 		{
 			$lookups[$id] = $pageDescriptor->getLookupsCalculated($record);
 		}
-		$records = (new DataProcessor($table))->formatRecords($records, false, true, true, true, true);
+		$records = $table->postProcess($records, false, true, true, true, true);
 
 		//Config values
 		$exportAll = config('crudkit.export_all_columns', false);
@@ -738,37 +701,41 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$exportBooleanLabel = config('crudkit.export_boolean_label', false);
 
 		//Create File
-		$dateTime = new DateTime('now', new DateTimeZone(config('crudkit.timezone', 'UTC')));
-		$filenameReal = $pageId . '_' . $dateTime->format('Y-m-d') . '_' . $dateTime->getTimestamp() . '.csv';
+		$dateTimeUtc = new DateTime('now', new DateTimeZone('UTC'));
+		$dateTimeLocal = new DateTime('now', $this->localTimeZone);
+		$filenameReal = $pageId . '_' . $dateTimeLocal->format('Y-m-d_H-i-s') . '_' . $dateTimeLocal->getTimestamp() . '.csv';
 		$filenameTemp = uniqid() . '.csv';
 		$filepath = storage_path('app' . DIRECTORY_SEPARATOR . $filenameTemp);
 		$fileHandle = fopen($filepath, 'w');
 
 		#region Write File info
-		
-		if (config('crudkit.csv_export_with_bom', false)) {
+		if (config('crudkit.csv_export_with_bom', false)) 
+		{
 			fwrite($fileHandle, chr(239) . chr(187) . chr(191)); //Add BOM for Windows... https://stackoverflow.com/questions/5601904/encoding-a-string-as-utf-8-with-bom-in-php
 		}
-		fputcsv($fileHandle, [dp::text('crudkit_csv_export')], ';');
-		fputcsv($fileHandle, [dp::text('page'), $pageDescriptor->getName()], ';');
-		fputcsv($fileHandle, [dp::text('page_id'), $pageDescriptor->getId()], ';');
-		fputcsv($fileHandle, [dp::text('date'), $dateTime->format('d.m.Y')], ';');
-		fputcsv($fileHandle, [dp::text('time'), $dateTime->format('H:i:s')], ';');
+		fputcsv($fileHandle, ['src', 'crudkit_csv_export'], ';');
+		fputcsv($fileHandle, ['src_description', 'This XML file was exported from CRUDKit. Join us as Github: alddesign/crudkit'], ';');
+		fputcsv($fileHandle, ['exported_page', $pageDescriptor->getName()], ';');
+		fputcsv($fileHandle, ['exported_page_id', $pageDescriptor->getId()], ';');
+		fputcsv($fileHandle, ['export_datetime_utc', $dateTimeUtc->format('Y-m-d\TH:i:s')], ';');
+		fputcsv($fileHandle, ['export_datetime_local', $dateTimeLocal->format('Y-m-d\TH:i:s')], ';');
+		fputcsv($fileHandle, ['local_datetime', $this->localTimeZone->getName()], ';');
 		if ($searchText !== '') {
 			fputcsv($fileHandle, [''], ';');
-			fputcsv($fileHandle, [dp::text('restricted_by_search')], ';');
-			fputcsv($fileHandle, [dp::text('column'), $searchColumnName], ';');
-			fputcsv($fileHandle, [dp::text('search_term'), $searchText], ';');
+			fputcsv($fileHandle, ['restricted_by_search'], ';');
+			fputcsv($fileHandle, ['column', $searchColumnName], ';');
+			fputcsv($fileHandle, ['search_term', $searchText], ';');
 		}
 		if (!dp::e($filters)) {
 			fputcsv($fileHandle, [''], ';');
-			fputcsv($fileHandle, [dp::text('restricted_by_filter'), dp::text('column'), dp::text('operator'), dp::text('value')], ';');
-			foreach ($filters as $index => $filter) {
-				fputcsv($fileHandle, [dp::text('filter') . ' ' . ($index + 1), sprintf('%s (%s)', $columns[$filter->field]->label, $filter->field), $filter->operator, $filter->value], ';');
+			fputcsv($fileHandle, ['restricted_by_filter', 'column', 'operator', 'value'], ';');
+			foreach ($filters as $index => $filter) 
+			{
+				fputcsv($fileHandle, ['filter' . '_' . $index, sprintf('%s (%s)', $columns[$filter->field]->label, $filter->field), $filter->operator, $filter->value], ';');
 			}
 		}
 
-		fputcsv($fileHandle, [''], ';');
+		fputcsv($fileHandle, ['{{{data-start}}}'], ';');
 		#endregion
 
 		#region Write header row
@@ -854,27 +821,33 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$searchColumnName = request('sc', '');
 
 		//Prepare Request Data
-		$dateTime = new DateTime();
+		$dateTimeUtc = new DateTime('now', new DateTimeZone('UTC'));
+		$dateTimeLocal = new DateTime('now', $this->localTimeZone);
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$table = $pageDescriptor->getTable();
 		$filters = dp::getFiltersFromRequest($request);
 		$columns = [];
-		if (config('crudkit.export_all_columns', false)) {
+		if (config('crudkit.export_all_columns', false)) 
+		{
 			$columns = $table->getColumns();
-		} else {
+		} else 
+		{
 			$columns = $pageDescriptor->getSummaryColumns();
 		}
 
 		//Load Data from DB
-		$records = $table->readRecords(0, $searchColumnName, $searchText, $filters, false)['records'];
+		$records = $table->readRecordsRaw(0, $searchColumnName, $searchText, $filters, false); //ok
+		$records = $table->postProcess($records);
 
 		//Header data
 		$data = [];
-		$data['title'] = dp::text('crudkit_xml_export');
-		$data['page'] = $pageDescriptor->getName();
-		$data['page_id'] = $pageDescriptor->getId();
-		$data['date'] = $dateTime->format('d.m.Y');
-		$data['time'] = $dateTime->format('H:i:s');
+		$data['src'] = 'crudkit_xml_export';
+		$data['src_description'] = 'This XML file was exported from CRUDKit. Join us as Github: alddesign/crudkit';
+		$data['exported_page'] = $pageDescriptor->getName();
+		$data['exported_page_id'] = $pageDescriptor->getId();
+		$data['export_datetime_utc'] = $dateTimeUtc->format('Y-m-d\TH:i:s');
+		$data['export_datetime_local'] = $dateTimeLocal->format('Y-m-d\TH:i:s');
+		$data['local_timezone'] = $this->localTimeZone->getName();
 		$data['record_count'] = count($records);
 		if ($searchText !== '') {
 			$data['search'] = ['column' => $searchColumnName, 'search_term' => $searchText];
@@ -887,22 +860,39 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		}
 
 		//Record data
-		$recordData = [];
 		$exportEnumLabels = config('crudkit.export_enum_label', false);
-		foreach ($records as $index => $record) {
-			$recordData[$index] = [];
-			foreach ($columns as $column) {
-				$recordData[$index][$column->name] = ($column->type === 'enum' && $exportEnumLabels) ? $column->options['enum'][$record[$column->name]] : $record[$column->name];
+		$exportBoolLabels = config('crudkit.export_boolean_label', false);
+		$exportBoolLabels = false;
+		foreach ($records as $index => $record) 
+		{
+			foreach ($columns as $column) 
+			{
+				switch($column->type)
+				{
+					case 'enum' : $records[$index][$column->name] =  $exportEnumLabels ?  $column->options['enum'][$record[$column->name]] : $record[$column->name]; break;
+					case 'boolean' : $records[$index][$column->name] = $exportBoolLabels ?  $record[$column->name][1] : (string)(int)$record[$column->name][0]; break;
+					default : $records[$index][$column->name] = $record[$column->name];
+				}
 			}
 		}
-		$data['records'] = $recordData;
 
-		//Create XML
-		$XmlSerializer = new \Alddesign\Crudkit\Classes\XmlSerializer();
-		$xml = $XmlSerializer->generateXmlFromArray($data);
+		//Prepare data structure so it looks nice in xml:
+		$data['records'] = ['record' => $records];
+		unset($records); //free memory
+
+		//Make xml
+		$context = 
+		[
+			XmlEncoder::FORMAT_OUTPUT => true, //nice output with newlines and indention
+			XmlEncoder::ENCODING => 'utf-8', 
+			XmlEncoder::ROOT_NODE_NAME => 'data'
+		];
+		$xmlEncoder = new XmlEncoder($context);
+		$xml = $xmlEncoder->encode($data, 'xml');
+		unset($data); //free momory
 
 		//Write to file
-		$filename = $pageId . '_' . $dateTime->format('Ymd') . '_' . $dateTime->getTimestamp() . '.xml';
+		$filename = $pageId . '_' . $dateTimeLocal->format('Y-m-d_H-i-s') . '_' . $dateTimeLocal->getTimestamp() . '.xml';
 		$outputFilename = storage_path('app' . DIRECTORY_SEPARATOR . $filename);
 		file_put_contents($outputFilename, $xml);
 
@@ -943,8 +933,9 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		) {
 			throw new Exception('Get Chart Data: invalid request.');
 		}
-		$records = $table->readRecords(0, $searchColumnName, $searchText, $filters)['records'];
-
+		$records = $table->readRecordsRaw(0, $searchColumnName, $searchText, $filters); //ok
+		$records = $table->postProcess($records);
+		
 		//Prepare chart data
 		$labels = []; //Grouping on xAxis
 		$values = []; //Values with aggreation on yAxis
@@ -1182,11 +1173,11 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		foreach($records as $record)
 		{
 			$record = (array)$record;
-			$id = isset($record[$manyToOneColumn->columnName]) ? $record[$manyToOneColumn->columnName] : '';
+			$id = isset($record[$manyToOneColumn->columnName]) ? strval($record[$manyToOneColumn->columnName]) : '';
 			$textparts = [];
 			foreach($manyToOneColumn->secondaryColumnNames as $index => $name)
 			{
-				$textparts[$name] = isset($record[$name]) ? $record[$name] : '';
+				$textparts[$name] = isset($record[$name]) ? strval($record[$name]) : '';
 			}
 			$text = implode(' ', $textparts);
 			$img = '';
@@ -1203,6 +1194,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			}
 			$img = $img !== '' ? 'data:image;base64,' . $img : '';
 
+			//Make sure to return only strings
 			$data[] = (object)['id' => $id, 'text' => $text, 'textparts' => $textparts, 'img' => $img];
 		}
 

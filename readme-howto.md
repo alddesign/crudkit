@@ -52,7 +52,7 @@ Once you configured crudkit and wrote some code for your own database, the GUI s
     * Show as diagram
     * XML/CSV export
 * Card Page - shows the data of a single record. Card pages normally provide more information. 
-    * Create, Read, Update, Delete records (CRUD is the name of the game)
+    * Create, Read, Update, Delete records
     * Arrange fields into groups
     * Display images
 

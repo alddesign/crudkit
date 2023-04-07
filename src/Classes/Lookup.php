@@ -113,8 +113,8 @@ class Lookup
             }
         }
 
-        $records = $this->table->readRecords(0, '', '', $filters,true, true, true, true, true)['records'];
-        
+        $records = $this->table->readRecordsRaw(0, '', '', $filters, true); //ok
+        $records = $this->table->postProcess($records);
 
         if($this->valueType === 'count')
         {

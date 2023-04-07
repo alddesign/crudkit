@@ -33,7 +33,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Alddesign\Crudkit\Controlle
 	Route::post('/'.$appNameUrl.'api/action', 'CrudkitController@action');
 	Route::post('/'.$appNameUrl.'api/get-chart-data', 'CrudkitController@getChartData');
 	Route::post('/'.$appNameUrl.'api/set-theme', 'CrudkitController@setTheme');
-	Route::get('/'.$appNameUrl.'api/backup', 'CrudkitController@backup');
+	//Route::get('/'.$appNameUrl.'api/backup', 'CrudkitController@backup'); #Functionallity removed
 
 	Route::post('/'.$appNameUrl.'api/ajax-many-to-one', 'CrudkitController@ajaxManyToOne');
 	Route::post('/'.$appNameUrl.'api/ajax-custom', 'CrudkitController@ajaxCustom');
