@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- USER -->
+<phpdocumentor configVersion="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpdoc.org" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd">
+	<title>CRUDKit api-doc [User]</title>
+	<paths>
+		<output>../api-doc/user</output>
+		<cache>./cache/user</cache>
+	</paths>
+	<version number="1.0.0">
+		<api format="php">
+			<default-package-name>CRUDKit</default-package-name>
+			<source dsn="../src">
+				<path>./</path>
+			</source>
+			<ignore>
+				<path>examples/</path>
+				<path>views/</path>
+				<path>config/</path>
+				<path>Classes/SQLColumn.php</path>
+				<path>Classes/SQLManyToOneColumn.php</path>
+				<path>Classes/SQLOneToManyColumn.php</path>
+				<path>Classes/EnumType.php</path>
+				<path>Classes/ExceptionHandler.php</path>
+				<path>Classes/Filter.php</path>
+				<path>Classes/XmlSerializer.php</path>
+				<path>Classes/Section.php</path>
+				<path>Controllers/CrudkitController.php</path>
+			</ignore>
+		</api>
+	</version>
+	<!-- Following shit doesnt work, might do in the future: -->
+	<setting name="template.color" value="red"/>
+	<template name="default">
+		<parameter name="color" value="red"/>
+	</template>
+</phpdocumentor>
+<!-- USER -->

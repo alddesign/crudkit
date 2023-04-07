@@ -1,0 +1,4 @@
+make-api-doc/cache
+make-api-doc/*out.txt
+make-api-doc/*.dump
+

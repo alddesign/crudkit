@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- DEV -->
+<phpdocumentor configVersion="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpdoc.org" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd">
+	<title>CRUDKit api-doc [Developer]</title>
+	<paths>
+		<output>../api-doc/dev</output>
+		<cache>./cache/dev</cache>
+	</paths>
+	<version number="1.0.0">
+		<api format="php">
+			<default-package-name>CRUDKit</default-package-name>
+			<visibility>internal</visibility> <!-- also includes Classes and Methods marked with @internal -->
+			<include-source>true</include-source>
+			<source dsn="../src">
+				<path>./</path>
+			</source>
+			<ignore>
+				<path>examples/</path>
+				<path>views/</path>
+				<path>config/</path>
+				<path>Classes/XmlSerializer.php</path>
+			</ignore>
+		</api>
+	</version>
+	<!-- Following shit doesnt work, might do in the future: -->
+	<setting name="template.color" value="red"/>
+	<template name="default">
+		<parameter name="color" value="red"/>
+	</template>
+</phpdocumentor>
+<!-- DEV -->
