@@ -367,8 +367,11 @@ class PageDescriptor
 	public function setItemsPerPage(int $value = -1)	{ $this->itemsPerPage = $value;		return $this; }
 
 	/** 
-	 * Defines which columns are shown in which order on list pages (defaul = all, order = as defined in tables). 
-	 * @param string[] $summaryColumnNames
+	 * Defines which columns are shown in which order on list pages.
+	 * 
+	 * By default all columns are shown in the order they are defined in the table.
+	 *  
+	 * @param string[] $summaryColumnNames Array of column names.
 	 * @stackable
 	 * 
 	 * @return PageDescriptor
@@ -389,12 +392,10 @@ class PageDescriptor
 	}
 
 	/** 
-	 * Defines which columns are shown as link form list to card page (defaul = first column of Tables PK)
+	 * Defines which columns are shown as link form the list page to the card page.
+	 * By the default its the first column of the table´s primary key.
 	 * 
-	 * ```php
-	 * $pageDescriptor->setCardLinkColumns(["id", "name"]);
-	 * ```
-	 * @param string[] $cardLinkColumnNames
+	 * @param string[] $cardLinkColumnNames Array of column names
 	 * @return PageDescriptor
 	 * @stackable
 	 */

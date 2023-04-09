@@ -6,7 +6,7 @@ return [
 	'password' => 'admin',
 	
 	//### General ###
-	'language' => 'de',
+	'language' => 'en', //'en' and 'de' are implemented by default. To add your own laguage, take a look at crudkit-texts.php
 	'app_name' => 'CRUDKit',
 	'app_name_url'=> 'app', //Your Laravel APP_URL plus this name is the URL to your crudkit. Do not use 'crudkit' or the name of another laravel app.
 	'icons' => //Favicon icon paths. Relative to the laravel public folder. Its recommended to provide 32,64,128 and 192px (multidevice support)
@@ -32,16 +32,16 @@ return [
 	'export_all_columns' => true, //true = Exports all columns defined for the table, false = exports only summary columns (list)
 	'export_enum_label' => true, //true = Exports the Enum label, false = Exports the actual value
 	'export_lookups' => true,
-	'startpage' =>
+	'startpage' => //The page (view) which is loaded when you open http://example.com/app_name_url/
 	[
-		'page-id' => 'contact', 
+		'page-id' => 'book', 
 		'type' => 'list',
 		'parameters' => []
 	],
-	'formats_ui' => //Defines how certain datatypes should be displayed
+	'formats_ui' => //Defines how certain datatypes should be displayed. PHP format: https://www.php.net/manual/en/datetime.format.php
 	[
-		'datetime' => 'd.m.Y H:i:s',
-		'date' => 'd.m.Y',
+		'datetime' => 'm/d/Y H:i:s', //de: d.m.Y H:i:s
+		'date' => 'm/d/Y',
 		'time' => 'H:i:s',
 		'decimal_places' => 2,
 		'thousands_separator' => '.',

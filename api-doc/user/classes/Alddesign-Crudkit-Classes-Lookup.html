@@ -1264,7 +1264,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -1309,7 +1309,14 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Defindes whats the value of the label (that is displayed)'lookup', 'lookup-all', 'const', 'count', 'sum'</p>
+                    <section class="phpdocumentor-description"><p>Defines which value(s) the lookup should fetch from the related table´s column:</p>
+<ul>
+<li>'lookup': fetches the value of $tableFieldname from a single record: typically used when the filters result in a single record</li>
+<li>'lookup-all': fetches the values of $tableFieldname from multiple records and glues them together with $lookupAllSeparator: typically used when the filters result in multiple records</li>
+<li>'const': fetches a constant value defined by $value: makes sense if you dont want to show data from another table, but to crate some sort of link to it</li>
+<li>'count': fetches records from the other table and counts them</li>
+<li>'sum': fetches the values of $tableFieldname from multiple records sums them up: typically used when creating totals. Requires $tableFieldname to be a numeric field.</li>
+</ul>
 </section>
 
             </dd>
@@ -1318,7 +1325,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The text of the label for the action</p>
+                    <section class="phpdocumentor-description"><p>The text of the label for this Lookup</p>
 </section>
 
             </dd>
@@ -1402,7 +1409,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">317</span>
 
     </aside>
 
@@ -1446,7 +1453,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -1499,7 +1506,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
@@ -1544,7 +1551,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">245</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -1603,7 +1610,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">306</span>
+    <span class="phpdocumentor-element-found-in__line">311</span>
 
     </aside>
 
@@ -1647,7 +1654,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">337</span>
 
     </aside>
 
@@ -1699,7 +1706,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">324</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 
     </aside>
 
@@ -1743,7 +1750,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">268</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -1800,7 +1807,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">242</span>
 
     </aside>
 
@@ -1844,7 +1851,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">265</span>
 
     </aside>
 
@@ -1888,7 +1895,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">213</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -1932,7 +1939,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">343</span>
 
     </aside>
 
@@ -1976,7 +1983,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -2020,7 +2027,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -2064,7 +2071,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">231</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -2108,7 +2115,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -2152,7 +2159,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">299</span>
 
     </aside>
 
@@ -2196,7 +2203,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">286</span>
 
     </aside>
 
@@ -2240,7 +2247,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
@@ -2284,7 +2291,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
@@ -2328,7 +2335,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">323</span>
 
     </aside>
 
@@ -2372,7 +2379,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/Lookup.php"><a href="files/classes-lookup.html"><abbr title="Classes/Lookup.php">Lookup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">275</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 

@@ -5,7 +5,7 @@
 	@endif
 	{{-- Delete --}}
 	@if ($deleteAllowed)
-		@if($confirmDelete)
+		@if(!$confirmDelete)
 			<a id="crudkit-delete-button" class="btn btn-danger pull-right crudkit-button" href="{{$deleteUrl}}"><i class="fa fa-trash"></i> &nbsp;{{$texts['delete']}}</a>		
 		@else
 			{{-- Modal?! --}}
@@ -13,14 +13,14 @@
 			<div id="crudkit-confirm-delete-modal" class="modal fade"  role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<div class="modal-header">
+						<div class="modal-header bg-red">
 							<h4 class="modal-title">{{$texts['delete']}}</h4>
 						</div>
 						<div class="modal-body">
 							{{$texts['delete_confirmation']}}
 						</div>
 						<div class="modal-footer">
-							<a href="{{$deleteUrl}}" class="btn btn-primary">{{$texts['yes']}}</a>
+							<a href="{{$deleteUrl}}" class="btn btn-danger">{{$texts['yes']}}</a>
 							<button type="button" class="btn btn-default" data-dismiss="modal">{{$texts['no']}}</button>
 						</div>
 					</div>

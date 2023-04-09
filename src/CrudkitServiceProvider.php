@@ -10,6 +10,7 @@ use Alddesign\Crudkit\Classes\User;
 use Alddesign\Crudkit\Classes\RestrictionSet;
 use Alddesign\Crudkit\Classes\RestrictionSetEntry;
 use Alddesign\Crudkit\Classes\Startpage;
+use Alddesign\Crudkit\Classes\Action;
 use Alddesign\Crudkit\Classes\TableDescriptor;
 use Alddesign\Crudkit\Classes\PageDescriptor;
 use Alddesign\Crudkit\Classes\PageStore;
@@ -99,20 +100,20 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		[
 			'author' => (new TableDescriptor('author', ['id'], true))
 				->addColumn('id', 'Id', 'integer', ['readonly' => true])
-				->addColumn('name', 'Name', 'text', [])
+				->addColumn('name', 'Name', 'text', ['required' => true])
 				->addColumn('birthday', 'Birthday', 'date', [])
 				->addColumn('active', 'Active', 'bool', [])
 				,
 			'book' => (new TableDescriptor('book', ['id'], true))
 				->addColumn('id', 'Id', 'integer', ['readonly' => true])
-				->addColumn('name', 'Name', 'text', [])
+				->addColumn('name', 'Name', 'text', ['required' => true])
 				->addColumn('description', 'Description', 'text', [])
 				->addColumn('author_id', 'Author id', 'integer', [])
 				->addColumn('price', 'Price', 'float', [])
 				->addColumn('cover', 'Cover', 'image', []),
 			'sale' => ((new TableDescriptor('sale', ['id'], true))
 				->addColumn('id', 'Id', 'integer', ['readonly' => true, 'create' => false])
-				->addColumn('book_id', 'Book Id', 'integer', [])
+				->addColumn('book_id', 'Book Id', 'integer', ['required' => true])
 				->addColumn('date', 'Date', 'date', []))
 		];
 		//<CRUDKIT-TABLES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!
@@ -152,7 +153,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		//### Example code - works with the demo database ###
 
 		//Custom action
-		$seachCallback = function($record, $pageDescriptor, $action)
+		$seachCallback = function($record, PageDescriptor $pageDescriptor, Action $action)
 		{
 			$authorName = urlencode($record['name']);
 			header('Location: ' . 'https://wikipedia.org/wiki/Special:Search?search=' . $authorName);
@@ -160,7 +161,7 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		};
 
 		//Show prices only to the admin
-		$onOpenAuthorListCallback = function(&$pageDescriptor, &$tableDescriptor, &$records)
+		$onOpenAuthorListCallback = function(PageDescriptor &$pageDescriptor, TableDescriptor &$tableDescriptor, &$records)
 		{
 			if(session('crudkit-userid') !== 'admin')
 			{
@@ -170,21 +171,23 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 			}
 		};
 
-		//Main code
+		//Defining a Lookup column: As the name suggests it looks someting up: in this case the name of the author. It uses relation from book.author_id to author.id
 		$authorLookup = new Lookup($this->tables['author'], 'name', [new FilterDefinition('id', '=', 'field', 'author_id')], 'lookup', 'Author Name', 'after-field', 'author_id', 'author', true);
+		//Main code
 		return 
 		[
-			'author' => (new PageDescriptor('Author', 'author', $this->tables['author']))
+			'author' => (new PageDescriptor('Authors', 'author', $this->tables['author']))
 				->setCardLinkColumns(['name'])
 				->addAction('search-on-wikipedia', 'Search on Wikipedia', 'Search', $seachCallback)
 				,
-			'book' => (new PageDescriptor('Book', 'book', $this->tables['book']))
+			'book' => (new PageDescriptor('Books', 'book', $this->tables['book']))
 				->setCardLinkColumns(['name'])
 				->addSection('Additional Data', 'cover', 'price')
-				->addLookupColumn('author', $authorLookup)
+				->addLookupColumn('author_name', $authorLookup)
+				->setTitleText('(New Book)', ['create'])
 				->onOpenList($onOpenAuthorListCallback)
 				,
-			'sale' => (new PageDescriptor('Sale', 'sale', $this->tables['sale']))
+			'sale' => (new PageDescriptor('Sales', 'sale', $this->tables['sale']))
 				->setCardLinkColumns([])
 		];
 		//<CRUDKIT-PAGES-END> !!! Do not remove this line. Otherwise /auto-generate wont work !!!

@@ -613,12 +613,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\PageDescriptor\u003A\u003AsetSummaryColumns\u0028\u0029",
             "name": "setSummaryColumns",
-            "summary": "Defines\u0020which\u0020columns\u0020are\u0020shown\u0020in\u0020which\u0020order\u0020on\u0020list\u0020pages\u0020\u0028defaul\u0020\u003D\u0020all,\u0020order\u0020\u003D\u0020as\u0020defined\u0020in\u0020tables\u0029.",
+            "summary": "Defines\u0020which\u0020columns\u0020are\u0020shown\u0020in\u0020which\u0020order\u0020on\u0020list\u0020pages.",
             "url": "classes/Alddesign-Crudkit-Classes-PageDescriptor.html#method_setSummaryColumns"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\PageDescriptor\u003A\u003AsetCardLinkColumns\u0028\u0029",
             "name": "setCardLinkColumns",
-            "summary": "Defines\u0020which\u0020columns\u0020are\u0020shown\u0020as\u0020link\u0020form\u0020list\u0020to\u0020card\u0020page\u0020\u0028defaul\u0020\u003D\u0020first\u0020column\u0020of\u0020Tables\u0020PK\u0029",
+            "summary": "Defines\u0020which\u0020columns\u0020are\u0020shown\u0020as\u0020link\u0020form\u0020the\u0020list\u0020page\u0020to\u0020the\u0020card\u0020page.",
             "url": "classes/Alddesign-Crudkit-Classes-PageDescriptor.html#method_setCardLinkColumns"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\PageDescriptor\u003A\u003AsetTitleText\u0028\u0029",

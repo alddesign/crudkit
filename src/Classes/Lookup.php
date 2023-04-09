@@ -48,11 +48,16 @@ class Lookup
      * @param TableDescriptor $table the reference table for the lookup
      * @param string $tableFieldname the fieldname in the recerence table
      * @param array $filterDefinitions fitlers for the reference talbe
-     * @param string $valueType Defindes whats the value of the label (that is displayed)'lookup', 'lookup-all', 'const', 'count', 'sum'
-     * @param string $label The text of the label for the action
+     * @param string $valueType Defines which value(s) the lookup should fetch from the related table´s column: 
+     * * 'lookup': fetches the value of $tableFieldname from a single record: typically used when the filters result in a single record
+     * * 'lookup-all': fetches the values of $tableFieldname from multiple records and glues them together with $lookupAllSeparator: typically used when the filters result in multiple records
+     * * 'const': fetches a constant value defined by $value: makes sense if you dont want to show data from another table, but to crate some sort of link to it
+     * * 'count': fetches records from the other table and counts them
+     * * 'sum': fetches the values of $tableFieldname from multiple records sums them up: typically used when creating totals. Requires $tableFieldname to be a numeric field.
+     * @param string $label The text of the label for this Lookup
      * @param string $position Position on card page. 'before-field', 'after-field', 'to-field'
      * @param string $fieldname The reference field for $position
-     * @param string $page Specifiy a page for drillDown 
+     * @param string $page Specifiy a page for drillDown (klick)
      * @param bool $cardPage Shows the related record in a card page (fitlers have to return exactly one record!)
      * @param string $value The value for $valueType 'const'
      * 

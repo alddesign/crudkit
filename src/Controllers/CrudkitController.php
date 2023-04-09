@@ -30,11 +30,11 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 class CrudkitController extends \App\Http\Controllers\Controller
 {
 	#region Main Endpoints
-	/** @var string $version The CRUDKit version. */
-	private $version = 'v1.0.0';
-	/** @var PageStore $pageStore All the pages. */
+	/** @var string The CRUDKit version */
+	private const CRUDKIT_VERSION = 'v1.0.0-rc.1';
+	/** @var PageStore All the pages. */
 	private $pageStore = null;
-	/** @var AuthHelper $authHelper Holding user/permission related data. */
+	/** @var AuthHelper Holding user/permission related data. */
 	private $authHelper = null;
 	
 	/**
@@ -51,7 +51,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{
 		//Make these variables available in all views
 		View::share('texts', CHelper::getTexts());
-		View::share('version', $this->version);
+		View::share('version', self::CRUDKIT_VERSION);
 
 		$this->localTimeZone = new DateTimeZone(config('crudkit.local_timezone', 'UTC'));
 	}
