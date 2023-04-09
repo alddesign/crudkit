@@ -5,9 +5,8 @@
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use Helper;
 use Illuminate\Support\Facades\URL;
+use Psy\VersionUpdater\Checker;
 
 /**
  * Object to store an access all the pages (bundeling)
@@ -25,7 +24,7 @@ class PageStore
      */
     public function __construct(array $pageDescriptors = [])
     {
-        if(!dp::e($pageDescriptors))
+        if(!CHelper::e($pageDescriptors))
 		{
 			foreach($pageDescriptors as $pageDescriptor)
 			{
@@ -66,13 +65,13 @@ class PageStore
 
     /**
      * Adds a single page.
-     * @param PageDescriptor[] $pageDescriptor
+     * @param PageDescriptor $pageDescriptor
      */
     public function addPageDescriptor(PageDescriptor $pageDescriptor)
     {
 		if(isset($this->pageDescriptors[$pageDescriptor->getId()]))
 		{
-			dp::crudkitException('Page store - add: page ID "%s" already exists in page store.', __CLASS__, __FUNCTION__, $pageDescriptor->getId());
+			throw new CException('Page store - add: page ID "%s" already exists in page store.', $pageDescriptor->getId());
 		}
 	
         $this->pageDescriptors[$pageDescriptor->getId()] = $pageDescriptor;
@@ -99,7 +98,7 @@ class PageStore
     {
         if(empty($this->pageDescriptors))
         {
-            dp::crudkitException('No pages found.', __CLASS__, __FUNCTION__);
+            throw new CException('No pages found.');
         }
 
         if(isset($this->pageDescriptors[$pageId]))
@@ -110,7 +109,7 @@ class PageStore
 		{
 			if($errorIfPageNotFound)
 			{
-				dp::crudkitException('Page "%s" not found.', __CLASS__, __FUNCTION__. $pageId);
+				throw new CException('Page "%s" not found.', $pageId);
 			}
             return reset($this->pageDescriptors); //Get first pageDescriptor
         }
@@ -137,7 +136,7 @@ class PageStore
                     'url' => URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', ['page-id' => $page->getId()])
                 ];
 
-                if(!dp::e($category))
+                if(!CHelper::e($category))
                 {
                     $this->insertMenuLink($pageMap, $pageId, 'before', $category);
                     $pageMap['category-pages'][$page->getCategory()][] = $entry;
@@ -170,7 +169,7 @@ class PageStore
             $category = $direct ? $menuLink['category'] : $category;
             if($menuLink['pageId'] === $pageId && $menuLink['position'] === $position && $menuLink['category'] === $category)
             {
-                if(!dp::e($category))
+                if(!CHelper::e($category))
                 {
                     $pageMap['category-pages'][$category][] = $menuLink;
                 }

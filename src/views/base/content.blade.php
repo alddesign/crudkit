@@ -8,6 +8,7 @@
 				<a href="{{ url()->previous() }}" class="btn btn-accent btn-sm" style="margin-top: -5px;"><i class="fa fa-chevron-left"></i></a>
 				@endif
 				<span id="crudkit-page-title-text">{{$pageName}}</span>
+				<!-- QR Code -->
 				@if(config('crudkit.show_qrcode', false))
 				<span id="crudkit-qrcode-tooltip-container">
 					<a id="crudkit-qrcode-tooltip" class="fg-accent" href="#" title="">
@@ -15,7 +16,6 @@
 					</a>
 				</span>
 				@endif
-				<!-- QR Code -->
 			</h2>
 		</div>
 		<div class="col-md-8">

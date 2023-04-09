@@ -1,13 +1,11 @@
 <?php
-/** 
- * Edit this file to create your application. (Laravel Service Provider) 
- */
 declare(strict_types=1);
 
 namespace Alddesign\Crudkit;
 
 use Alddesign\Crudkit\Classes\AjaxOptions;
 use Alddesign\Crudkit\Classes\AuthHelper;
+use Alddesign\Crudkit\Classes\CHelper;
 use Alddesign\Crudkit\Classes\User;
 use Alddesign\Crudkit\Classes\RestrictionSet;
 use Alddesign\Crudkit\Classes\RestrictionSetEntry;
@@ -17,8 +15,6 @@ use Alddesign\Crudkit\Classes\PageDescriptor;
 use Alddesign\Crudkit\Classes\PageStore;
 use Alddesign\Crudkit\Classes\FilterDefinition;
 use Alddesign\Crudkit\Classes\Filter;
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use Alddesign\Crudkit\Classes\DataProcessor;
 use Alddesign\Crudkit\Classes\Lookup;
 
 /**
@@ -209,8 +205,8 @@ class CrudkitServiceProvider extends \Illuminate\Support\ServiceProvider
 		//Create a filter
 		$jkRowlingBooksFilter = new Filter('author_id', '=', '1');
 		
-		//DataProcessor contains useful methods. For example creating url params for a crudkit page
-		$urlParams = DataProcessor::getUrlParameters('book', null, '', '', [$jkRowlingBooksFilter], []);
+		//CHelper contains useful methods. For example creating url params for a crudkit page
+		$urlParams = CHelper::getUrlParameters('book', null, '', '', [$jkRowlingBooksFilter], []);
 		
 		//action() is a Laravel helper function to create a link to a controller action
 		$jkRowlingBooksUrl = action('\Alddesign\Crudkit\Controllers\CrudkitController@listView', $urlParams);

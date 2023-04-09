@@ -32,7 +32,7 @@ class RestrictionSetEntry
     {
 		if(!in_array($action, self::ALLOWED_ACTIONS ,true))
 		{
-			dp::crudkitException('Invalid action: "%s".', __CLASS__, __FUNCTION__, $action);
+			throw new CException('Invalid action: "%s".', $action);
 		}
 
 		$this->action = $action;

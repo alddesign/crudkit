@@ -1,13 +1,8 @@
 <?php
-/**
- * Class PageDescriptor
- */
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
 
 /**
  * Definition of a webpage (UI).
@@ -93,19 +88,19 @@ class PageDescriptor
 		$this->category = $category;
 		$this->menu = $menu;
 
-		if(dp::e($id) || !preg_match('/^[a-zA-Z0-9_-]*$/', $id))
+		if(CHelper::e($id) || !preg_match('/^[a-zA-Z0-9_-]*$/', $id))
 		{
-			dp::crudkitException('Please provide a valid id for this page. Allowed characters: a-z, A-Z, 0-9, "_", "-"', __CLASS__, __FUNCTION__);
+			throw new CException('Please provide a valid id for this page. Allowed characters: a-z, A-Z, 0-9, "_", "-"');
 		}
 		
-		if(dp::e($name))
+		if(CHelper::e($name))
 		{
-			dp::crudkitException('Please provide an id for this page.', __CLASS__, __FUNCTION__);
+			throw new CException('Please provide an id for this page.');
 		}
 		
-		if(dp::e($table))
+		if(CHelper::e($table))
 		{
-			dp::crudkitException('Please provide a table for this page.', __CLASS__, __FUNCTION__);
+			throw new CException('Please provide a table for this page.');
 		}
 
 		$this->summaryColumns = $this->table->getColumns(true);
@@ -135,13 +130,13 @@ class PageDescriptor
 	 */ 
 	public function getActions(string $name = '')
 	{
-		if(!dp::e($name))
+		if(!CHelper::e($name))
 		{
 			if(isset($this->actions[$name])) 
 			{
 				return $this->actions[$name]; 
 			}
-			dp::crudkitException('Action "%s" cannot be found on page "%s".', __CLASS__, __FUNCTION__, $name, $this->id);
+			throw new CException('Action "%s" cannot be found on page "%s".', $name, $this->id);
 		}
 		return $this->actions;
 	}
@@ -259,7 +254,7 @@ class PageDescriptor
 	/** @ignore */
 	public function getCardPageUrl(array $primaryKeyValues)
 	{
-		$urlParameters = dp::getUrlParameters($this->id, null, '', '', [], $primaryKeyValues);
+		$urlParameters = CHelper::getUrlParameters($this->id, null, '', '', [], $primaryKeyValues);
 		return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@cardView', $urlParameters));
 	}
 	
@@ -272,7 +267,7 @@ class PageDescriptor
 		
 		foreach($records as $index => $record)
 		{
-			$urlParameters = dp::getUrlParameters($this->id, null, '', '', [], [], $primaryKeyColumns, $record);
+			$urlParameters = CHelper::getUrlParameters($this->id, null, '', '', [], [], $primaryKeyColumns, $record);
 			$result[$index] = URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@cardView', $urlParameters);
 		}
 		
@@ -282,21 +277,21 @@ class PageDescriptor
 	/** @ignore */
 	public function getExportCsvUrl(string $searchText = '', string $searchColumnName = '', array $filters = [])
 	{
-		$urlParameters = dp::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
+		$urlParameters = CHelper::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
 		return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@exportRecordsCsv', $urlParameters));
 	}
 
 	/** @ignore */
 	public function getExportXmlUrl(string $searchText = '', string $searchColumnName = '', array $filters = [])
 	{
-		$urlParameters = dp::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
+		$urlParameters = CHelper::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
 		return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@exportRecordsXml', $urlParameters));
 	}
 
 	/** @ignore */
 	public function getChartPageUrl(string $searchText = '', string $searchColumnName = '', array $filters = [])
 	{
-		$urlParameters = dp::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
+		$urlParameters = CHelper::getUrlParameters($this->id, null,$searchText,$searchColumnName,$filters);
 		return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@chartView', $urlParameters));
 	}
 
@@ -382,9 +377,9 @@ class PageDescriptor
     {
 		$columnsNotFound = array_diff($summaryColumnNames, $this->table->getColumns(true));
 		
-		if(!dp::e($columnsNotFound))
+		if(!CHelper::e($columnsNotFound))
         {
-            dp::crudkitException('Following summary columns were not found on page "%s" (table "%s"): "%s"', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
+            throw new CException('Following summary columns were not found on page "%s" (table "%s"): "%s"', $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
         }
 
 		//$this->summaryColumns = ['id' => 'id', 'description' => 'description'];
@@ -407,9 +402,9 @@ class PageDescriptor
     {
 		$columnsNotFound = array_diff($cardLinkColumnNames, array_keys($this->table->getColumns()));
 		
-		if(!dp::e($columnsNotFound))
+		if(!CHelper::e($columnsNotFound))
         {
-            dp::crudkitException('Page - set card link columns: following card link columns were not found on page "%s" (table "%s"): "%s": ', __CLASS__, __FUNCTION__, $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
+            throw new CException('Page - set card link columns: following card link columns were not found on page "%s" (table "%s"): "%s": ', $this->id, $this->table->getName(), implode(', ',$columnsNotFound));
         }
 		
 		$this->cardLinkColumns = $cardLinkColumnNames;
@@ -437,7 +432,7 @@ class PageDescriptor
 			$pageTypesNotFound = array_diff($pageTypes, self::PAGE_TYPES);
 			if($pageTypesNotFound !== [])
 			{
-				dp::crudkitException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', __CLASS__, __FUNCTION__, implode(', ', $pageTypesNotFound), $this->id);
+				throw new CException('Page - add title text: invalid page type(s) "%s" provided. Page "%s"', implode(', ', $pageTypesNotFound), $this->id);
 			}
 		}
 		
@@ -455,19 +450,19 @@ class PageDescriptor
 	 */
 	public function addLookupColumn(string $id, Lookup $lookup)
 	{
-		if(dp::e($id))
+		if(CHelper::e($id))
 		{
-			dp::crudkitException('Please provide a id form the lookup.', __CLASS__, __FUNCTION__);
+			throw new CException('Please provide a id form the lookup.');
 		}
 		
 		if(isset($this->lookups[$id]))
 		{
-			dp::crudkitException('Lookup id "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $id, $this->id);
+			throw new CException('Lookup id "%s" already exists on page "%s"!', $id, $this->id);
 		}
 
 		if(!$this->table->hasColumn($lookup->fieldname))
 		{
-			dp::crudkitException('Cannot add lookup field. Column "%s" doesnt exist in primary table "%s".', __CLASS__, __FUNCTION__, $lookup->fieldname, $this->table->getName());
+			throw new CException('Cannot add lookup field. Column "%s" doesnt exist in primary table "%s".', $lookup->fieldname, $this->table->getName());
 		}
 
 		$this->lookups[$id] = $lookup;		
@@ -526,14 +521,14 @@ class PageDescriptor
 	public function addActionObject(string $id, Action $action)
 	{
 		//Callback functions parameters: $record, $pageDescriptor, $action
-		if(dp::e($id))
+		if(CHelper::e($id))
 		{
-			dp::crudkitException('Please provide a id for the action.', __CLASS__, __FUNCTION__);
+			throw new CException('Please provide a id for the action.');
 		}
 		
 		if(isset($this->actions[$id]))
 		{
-			dp::crudkitException('Action id "%s" already exists on page "%s"!', __CLASS__, __FUNCTION__, $id, $this->id);
+			throw new CException('Action id "%s" already exists on page "%s"!', $id, $this->id);
 		}
 		
 		$this->actions[$id] = $action;
@@ -555,31 +550,31 @@ class PageDescriptor
 	{
 		//Test if columns exists
 		$columns = $this->table->getColumns(true);
-		if(dp::e($columns))
+		if(CHelper::e($columns))
 		{
-			dp::crudkitException('No columns found in table "%s".', __CLASS__, __FUNCTION__, $this->table->getName());
+			throw new CException('No columns found in table "%s".', $this->table->getName());
 		}
 		
 		//Test if Columns exist
 		if(!in_array($fromColumnName, $columns, true))
 		{
-			dp::crudkitException('From-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $fromColumnName, $this->table->getName());
+			throw new CException('From-column "%s" was not found in table "%s".', $fromColumnName, $this->table->getName());
 		}
-		if(!dp::e($toColumnName) && !in_array($toColumnName, $columns, true))
+		if(!CHelper::e($toColumnName) && !in_array($toColumnName, $columns, true))
 		{
-			dp::crudkitException('To-column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $toColumnName, $this->table->getName());
+			throw new CException('To-column "%s" was not found in table "%s".', $toColumnName, $this->table->getName());
 		}
 		
 		//Get Last Column, if not specified
-		$toColumnName = dp::e($toColumnName) ? end($columns) : $toColumnName;
+		$toColumnName = CHelper::e($toColumnName) ? end($columns) : $toColumnName;
 		
 		//Swap if order is wrong
 		$fromIndex = array_search($fromColumnName, array_keys($columns));
 		$toIndex = array_search($toColumnName, array_keys($columns));
 		if($fromIndex > $toIndex)
 		{
-			dp::swap($fromIndex, $toIndex);
-			dp::swap($fromColumnName, $toColumnName);
+			CHelper::swap($fromIndex, $toIndex);
+			CHelper::swap($fromColumnName, $toColumnName);
 		}
 		
 		//Test crossings of sections
@@ -591,7 +586,7 @@ class PageDescriptor
 			   ($toIndex >= $fromIndex2 && $toIndex <= $fromIndex2) ||
 			   ($fromIndex <= $fromIndex2 && $toIndex >= $toIndex2))
 			{
-				dp::crudkitException('Sections "%s" and "%s" overlap each other.', __CLASS__, __FUNCTION__, $section['title'], $title);
+				throw new CException('Sections "%s" and "%s" overlap each other.', $section['title'], $title);
 			}
 		}
 		

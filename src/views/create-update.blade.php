@@ -1,8 +1,5 @@
 @extends('crudkit::base.content')
 @section('page-content')
-	@php
-		$texts = Alddesign\Crudkit\Classes\DataProcessor::getTexts();
-	@endphp
 	@if($pageType === 'create')                                                                                
 		<form id="create-form" class="create-update-form" name="create-form" method="post" action="{{action('\Alddesign\Crudkit\Controllers\CrudkitController@createRecord')}}" enctype="multipart/form-data" novalidate="novalidate">
 	@endif
@@ -18,10 +15,10 @@
 				@foreach ($columns as $column)
 					@php
 						$inputAttributes = $htmlInputAttributes[$column->name];
-						$fieldvalue = isset($record[$column->name]) ? $record[$column->name] : '';
+						$value = isset($record[$column->name]) ? $record[$column->name] : '';
 						$options = $column->options;
 						$validateEmail = isset($options['email']) && $options['email'] ? ' validate-email' : '';
-						$customAjaxValue = ($column->isCustomAjax && isset($customAjaxValues[$column->name])) ? $customAjaxValues[$column->name] : [$fieldvalue,''];
+						$customAjaxValue = ($column->isCustomAjax && isset($customAjaxValues[$column->name])) ? $customAjaxValues[$column->name] : [$value,''];
 					@endphp
 					@foreach($sections as $section)
 						@if($section->from === $column->name)
@@ -60,37 +57,37 @@
 								@else
 									@if($column->type === 'text')
 										@if(isset($options['textarea']) && $options['textarea'])
-											<textarea id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-textarea{{$validateEmail}}" rows="5"{!! $inputAttributes !!}>{{ $fieldvalue }}</textarea>
+											<textarea id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-textarea{{$validateEmail}}" rows="5"{!! $inputAttributes !!}>{{ $value }}</textarea>
 										@else
-											<input type="text" value="{{ $fieldvalue }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-text{{$validateEmail}}"{!! $inputAttributes !!}/>
+											<input type="text" value="{{ $value }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-text{{$validateEmail}}"{!! $inputAttributes !!}/>
 										@endif
 									@endif												
 									@if($column->type === 'integer')
-										<input type="number" value="{{ str_replace(',','.',$fieldvalue) }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-integer"{!! $inputAttributes !!}/>
+										<input type="number" value="{{ str_replace(',','.',$value) }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-integer"{!! $inputAttributes !!}/>
 									@endif	
 									@if($column->type === 'decimal')
-										<input type="number" value="{{ str_replace(',','.',$fieldvalue) }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-decimal"{!! $inputAttributes !!}/>
+										<input type="number" value="{{ str_replace(',','.',$value) }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-decimal"{!! $inputAttributes !!}/>
 									@endif									
 									@if($column->type === 'enum')
 										<select id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control"{!! $inputAttributes !!}>
-											@foreach($options['enum'] as $key => $value)
-												<option value="{{$key}}" @if(strval($key) == strval($fieldvalue)){{'selected'}}@endif>{{ $value }}</option>
+											@foreach($options['enum'] as $key => $val)
+												<option value="{{$key}}" @if(strval($key) == strval($value)){{'selected'}}@endif>{{ $val }}</option>
 											@endforeach
 										</select>
 									@endif						
 									@if($column->type === 'datetime')
-										<input type="text" value="{{ $fieldvalue }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-datetime"{!! $inputAttributes !!}/>
+										<input type="text" value="{{ $value }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-datetime"{!! $inputAttributes !!}/>
 									@endif					
 									@if($column->type === 'date')
-										<input type="text" value="{{ $fieldvalue }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-date"{!! $inputAttributes !!}/>
+										<input type="text" value="{{ $value }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-date"{!! $inputAttributes !!}/>
 									@endif					
 									@if($column->type === 'time')
-										<input type="text" value="{{ $fieldvalue }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-time"{!! $inputAttributes !!}/>
+										<input type="text" value="{{ $value }}" id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control validate-time"{!! $inputAttributes !!}/>
 									@endif												
 									@if($column->type === 'boolean')
 										<select id="crudkit-field-{{ $column->name }}" name="{{ $column->name }}" class="form-control"{!! $inputAttributes !!}>
-											<option value="0" @if($fieldvalue[0] === false) {{'selected'}}@endif>{{ $texts['no'] }}</option>
-											<option value="1" @if($fieldvalue[0] === true) {{'selected'}}@endif>{{ $texts['yes'] }}</option>
+											<option value="0" @if($value == false) {{'selected'}}@endif>{{ $texts['no'] }}</option>
+											<option value="1" @if($value == true) {{'selected'}}@endif>{{ $texts['yes'] }}</option>
 										</select>
 									@endif
 									@if($column->type === 'image')
@@ -103,8 +100,8 @@
 												<span for="crudkit-field-{{ $column->name }}___DELETEBLOB">Daten löschen</span>
 											</p>
 										@endif
-										@if(!empty($fieldvalue))
-											<img src="{!! $fieldvalue !!}" />
+										@if(!empty($value))
+											<img src="{!! $value !!}" />
 										@else
 											<span><code class="bg-warning text-primary">0 KB</code></span>
 										@endif
@@ -119,7 +116,7 @@
 												<span for="crudkit-field-{{ $column->name }}___DELETEBLOB">Daten löschen</span>
 											</p>
 										@endif
-										@if(!empty($fieldvalue))<span><i>Aktuelle Daten:</i> <code class="bg-warning text-primary">{{$fieldvalue}}</code></span>@endif
+										@if(!empty($value))<span><i>Aktuelle Daten:</i> <code class="bg-warning text-primary">{{$value}}</code></span>@endif
 									@endif
 								@endif
 							</div>
@@ -137,13 +134,13 @@
 			</dl>
 			{{-- Save/Cancel Button --}}
 			<div class="form-group pull-right">
+			<a href="{{ url()->previous() }}" class="btn btn-danger btn-lg crudkit-button"><i class="fa fa-times"></i> &nbsp;{{$texts['cancel']}}</a>
 			@if($pageType === 'create')
 				<button type="submit" form="create-form" class="btn btn-primary btn-lg crudkit-button"><i class="fa fa-save"></i> &nbsp;{{$texts['save']}}</button>
 			@endif
 			@if($pageType === 'update')
 				<button type="submit" form="update-form" class="btn btn-primary btn-lg crudkit-button"><i class="fa fa-save"></i> &nbsp;{{$texts['save']}}</button>
 			@endif
-			<a href="{{ url()->previous() }}" class="btn btn-danger btn-lg crudkit-button"><i class="fa fa-times"></i> &nbsp;{{$texts['cancel']}}</a>
 			</div>
 		</form>
 @endsection

@@ -291,9 +291,119 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Alddesign-Crudkit-Classes-AuthHelper.html#property_callbacks"
         },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CException",
+            "name": "CException",
+            "summary": "Custom\u0020Exception\u0020which\u0020indicates\u0020its\u0020from\u0020CRUDKit\u0020itself.\u0020.",
+            "url": "classes/Alddesign-Crudkit-Classes-CException.html"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CException\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Creates\u0020new\u0020CrudkitException.\u0020Can\u0020be\u0020usesd\u0020like\u0020\u0060sprintf\u0028\u0029\u0060\u003B",
+            "url": "classes/Alddesign-Crudkit-Classes-CException.html#method___construct"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper",
+            "name": "CHelper",
+            "summary": "Helper\u0020Class\u0020for\u0020Crudkit.\u0020Yes,\u0020i\u0020know,\u0020classes\u0020like\u0020\u0022Helper\u0022\u0020are\u0020bad\u0020design.",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method___construct"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003Atext\u0028\u0029",
+            "name": "text",
+            "summary": "Gets\u0020a\u0020single\u0020text\u0020constant\u0020for\u0020the\u0020specified\u0020language\u0020form\u0020the\u0020config\u0020\u0028crudkit\u002Dtexts.php\u0029",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_text"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetTexts\u0028\u0029",
+            "name": "getTexts",
+            "summary": "Gets\u0020all\u0020text\u0020constants\u0020for\u0020the\u0020specified\u0020language\u0020form\u0020the\u0020config\u0020\u0028crudkit\u002Dtexts.php\u0029",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getTexts"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003Anoop\u0028\u0029",
+            "name": "noop",
+            "summary": "",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_noop"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003Ae\u0028\u0029",
+            "name": "e",
+            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020empty\u0028\u0029\u003B",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_e"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003Axout\u0028\u0029",
+            "name": "xout",
+            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020var_dump\u0028\u0029\u003B",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_xout"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetCrudkitDbConfig\u0028\u0029",
+            "name": "getCrudkitDbConfig",
+            "summary": "",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getCrudkitDbConfig"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003Aswap\u0028\u0029",
+            "name": "swap",
+            "summary": "Swaps\u0020the\u0020values\u0020of\u0020two\u0020variables.",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_swap"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AappendToArray\u0028\u0029",
+            "name": "appendToArray",
+            "summary": "",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_appendToArray"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AformatSeconds\u0028\u0029",
+            "name": "formatSeconds",
+            "summary": "Formats\u00203620\u0020seconds\u0020into\u00201h\u00200m\u002020s",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_formatSeconds"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AfastArrayMerge\u0028\u0029",
+            "name": "fastArrayMerge",
+            "summary": "This\u0020is\u0020upt\u0020to\u00202000\u0020times\u0020faster\u0020than\u0020array_merge\u0028\u0029.",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_fastArrayMerge"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetAjaxErrorResult\u0028\u0029",
+            "name": "getAjaxErrorResult",
+            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020error\u0020results.",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getAjaxErrorResult"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetAjaxResult\u0028\u0029",
+            "name": "getAjaxResult",
+            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020results.",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getAjaxResult"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AbinaryStringToBase64Png\u0028\u0029",
+            "name": "binaryStringToBase64Png",
+            "summary": "",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_binaryStringToBase64Png"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetPrimaryKeyValuesFromRequest\u0028\u0029",
+            "name": "getPrimaryKeyValuesFromRequest",
+            "summary": "Gets\u0020an\u0020array\u0020of\u0020CRUDKit\u0020primary\u0020keys\u0020from\u0020the\u0020CRUDKit\u0020request",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getPrimaryKeyValuesFromRequest"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetFiltersFromRequest\u0028\u0029",
+            "name": "getFiltersFromRequest",
+            "summary": "Gets\u0020an\u0020array\u0020of\u0020filters\u0020from\u0020the\u0020CRUDKit\u0020request",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getFiltersFromRequest"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetFiltersFromUrl\u0028\u0029",
+            "name": "getFiltersFromUrl",
+            "summary": "Gets\u0020an\u0020array\u0020of\u0020filters\u0020from\u0020a\u0020given\u0020CRUDKit\u0020URL",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getFiltersFromUrl"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetPrimaryKeyValuesFromUrl\u0028\u0029",
+            "name": "getPrimaryKeyValuesFromUrl",
+            "summary": "Gets\u0020an\u0020array\u0020with\u0020primary\u0020key\u0020values\u0020from\u0020a\u0020given\u0020CRUDKit\u0020URL",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getPrimaryKeyValuesFromUrl"
+        },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\CHelper\u003A\u003AgetParamsFromUrl\u0028\u0029",
+            "name": "getParamsFromUrl",
+            "summary": "Gets\u0020an\u0020array\u0020of\u0020the\u0020URL\u0020params\u0020\u0024key\u0020\u003D\u003E\u0020\u0024value",
+            "url": "classes/Alddesign-Crudkit-Classes-CHelper.html#method_getParamsFromUrl"
+        },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor",
             "name": "DataProcessor",
-            "summary": "Holds\u0020a\u0020set\u0020of\u0020usefull\u0020methods.",
+            "summary": "Entity\u0020for\u0020formatting\u0020and\u0020processing\u0020data\u0020coming\u0020eiter\u0020from,\u0020or\u0020going\u0020into\u0020the\u0020Database.",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003A__construct\u0028\u0029",
@@ -306,9 +416,14 @@ Search.appendIndex(
             "summary": "Processing\u0020data\u0020from\u0020request\u0020before\u0020INSERT,\u0020UPDATE\u0020it\u0020to\u0020the\u0020database.",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_preProcess"
         },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Amatrix\u0028\u0029",
+            "name": "matrix",
+            "summary": "Ah\u0020yes,\u0020the\u0020\u0022Matrix\u0022.\u0020The\u0020core\u0020logic\u0020of\u0020preprocessing\u0020data,\u0020based\u0020on\u0020the\u0020paramters.",
+            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_matrix"
+        },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AsetEmpty\u0028\u0029",
             "name": "setEmpty",
-            "summary": "Setting\u0020the\u0020empty\u0020or\u0020lets\u0020say\u0020database\u0020specific\u0020value\u0020for\u0020each\u0020datatype",
+            "summary": "Setting\u0020the\u0020empty\u0020or\u0020the\u0020DB\u0020specific\u0020value\u0020empty\u0020for\u0020some\u0020datatypes",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_setEmpty"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AsetNull\u0028\u0029",
@@ -345,116 +460,6 @@ Search.appendIndex(
             "name": "getUploadFileData",
             "summary": "Gets\u0020the\u0020binary\u0020data\u0020from\u0020an\u0020uploaded\u0020file.",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getUploadFileData"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Atext\u0028\u0029",
-            "name": "text",
-            "summary": "Gets\u0020a\u0020single\u0020text\u0020constant\u0020for\u0020the\u0020specified\u0020language\u0020form\u0020the\u0020config\u0020\u0028crudkit\u002Dtexts.php\u0029",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_text"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetTexts\u0028\u0029",
-            "name": "getTexts",
-            "summary": "Gets\u0020all\u0020text\u0020constants\u0020for\u0020the\u0020specified\u0020language\u0020form\u0020the\u0020config\u0020\u0028crudkit\u002Dtexts.php\u0029",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getTexts"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Anoop\u0028\u0029",
-            "name": "noop",
-            "summary": "",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_noop"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Ae\u0028\u0029",
-            "name": "e",
-            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020empty\u0028\u0029\u003B",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_e"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Aex\u0028\u0029",
-            "name": "ex",
-            "summary": "Shorthand\u0020call\u0020of\u0020throw\u0020new\u0020Exception\u0028\u0029\u003B\u0020with\u0020up\u0020to\u00208\u0020placeholders",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_ex"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AcrudkitException\u0028\u0029",
-            "name": "crudkitException",
-            "summary": "Shorthand\u0020call\u0020of\u0020throw\u0020new\u0020Exception\u0028\u0029\u003B\u0020with\u0020up\u0020to\u00208\u0020placeholders,\u0020plus\u0020classname\u0020and\u0020method.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_crudkitException"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Axout\u0028\u0029",
-            "name": "xout",
-            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020var_dump\u0028\u0029\u003B",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_xout"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetCrudkitDbConfig\u0028\u0029",
-            "name": "getCrudkitDbConfig",
-            "summary": "",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getCrudkitDbConfig"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Aswap\u0028\u0029",
-            "name": "swap",
-            "summary": "Swaps\u0020the\u0020values\u0020of\u0020two\u0020variables.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_swap"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AappendToArray\u0028\u0029",
-            "name": "appendToArray",
-            "summary": "",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_appendToArray"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AformatSeconds\u0028\u0029",
-            "name": "formatSeconds",
-            "summary": "Formats\u00203620\u0020seconds\u0020into\u00201h\u00200m\u002020s",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_formatSeconds"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AfastArrayMerge\u0028\u0029",
-            "name": "fastArrayMerge",
-            "summary": "This\u0020is\u0020upt\u0020to\u00202000\u0020times\u0020faster\u0020than\u0020array_merge\u0028\u0029.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_fastArrayMerge"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Astart\u0028\u0029",
-            "name": "start",
-            "summary": "Handy\u0020method\u0020for\u0020measuring\u0020execution\u0020time.\u0020Use\u0020DataProcessor\u003A\u003Astart\u0028\u0029\u0020and\u0020DataProcessor\u003A\u003Aend\u0028\u0029",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_start"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Aend\u0028\u0029",
-            "name": "end",
-            "summary": "Retruns\u0020the\u0020time\u0020in\u0020seconds\u0020betweetn\u0020DataProcessor\u003A\u003Astart\u0028\u0029\u0020and\u0020DataProcessor\u003A\u003Aend\u0028\u0029",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_end"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetAjaxErrorResult\u0028\u0029",
-            "name": "getAjaxErrorResult",
-            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020error\u0020results.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getAjaxErrorResult"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetAjaxResult\u0028\u0029",
-            "name": "getAjaxResult",
-            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020results.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getAjaxResult"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AbinaryStringToBase64Png\u0028\u0029",
-            "name": "binaryStringToBase64Png",
-            "summary": "",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_binaryStringToBase64Png"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetPrimaryKeyValuesFromRequest\u0028\u0029",
-            "name": "getPrimaryKeyValuesFromRequest",
-            "summary": "Gets\u0020an\u0020array\u0020of\u0020CRUDKit\u0020primary\u0020keys\u0020from\u0020the\u0020CRUDKit\u0020request",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getPrimaryKeyValuesFromRequest"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetFiltersFromRequest\u0028\u0029",
-            "name": "getFiltersFromRequest",
-            "summary": "Gets\u0020an\u0020array\u0020of\u0020filters\u0020from\u0020the\u0020CRUDKit\u0020request",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getFiltersFromRequest"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetFiltersFromUrl\u0028\u0029",
-            "name": "getFiltersFromUrl",
-            "summary": "Gets\u0020an\u0020array\u0020of\u0020filters\u0020from\u0020a\u0020given\u0020CRUDKit\u0020URL",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getFiltersFromUrl"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetPrimaryKeyValuesFromUrl\u0028\u0029",
-            "name": "getPrimaryKeyValuesFromUrl",
-            "summary": "Gets\u0020an\u0020array\u0020with\u0020primary\u0020key\u0020values\u0020from\u0020a\u0020given\u0020CRUDKit\u0020URL",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getPrimaryKeyValuesFromUrl"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetParamsFromUrl\u0028\u0029",
-            "name": "getParamsFromUrl",
-            "summary": "Gets\u0020an\u0020array\u0020of\u0020the\u0020URL\u0020params\u0020\u0024key\u0020\u003D\u003E\u0020\u0024value",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getParamsFromUrl"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\EnumType",
             "name": "EnumType",
@@ -500,16 +505,6 @@ Search.appendIndex(
             "name": "values",
             "summary": "",
             "url": "classes/Alddesign-Crudkit-Classes-EnumType.html#property_values"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\ExceptionHandler",
-            "name": "ExceptionHandler",
-            "summary": "I\u0020forgot\u0020the\u0020purpose\u0020of\u0020this\u0020class...\u0020Should\u0020replace\u0020default\u0020error\u0020handling\u0020or\u0020so.",
-            "url": "classes/Alddesign-Crudkit-Classes-ExceptionHandler.html"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\ExceptionHandler\u003A\u003Arender\u0028\u0029",
-            "name": "render",
-            "summary": "Replaces\u0020Handler.php\u0020\u002D\u003E\u0020render\u0028\u0029",
-            "url": "classes/Alddesign-Crudkit-Classes-ExceptionHandler.html#method_render"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\Filter",
             "name": "Filter",
@@ -1426,6 +1421,11 @@ Search.appendIndex(
             "summary": "Constructor",
             "url": "classes/Alddesign-Crudkit-Classes-SQLColumn.html#method___construct"
         },                {
+            "fqsen": "\\Alddesign\\Crudkit\\Classes\\SQLColumn\u003A\u003AmapDatatype\u0028\u0029",
+            "name": "mapDatatype",
+            "summary": "Maps\u0020various\u0020names\u0020for\u0020datatypes\u0020to\u0020a\u0020uniform\u0020name.",
+            "url": "classes/Alddesign-Crudkit-Classes-SQLColumn.html#method_mapDatatype"
+        },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\SQLColumn\u003A\u003AcheckOptions\u0028\u0029",
             "name": "checkOptions",
             "summary": "",
@@ -1738,7 +1738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\TableDescriptor\u003A\u003AgetEmptyRecord\u0028\u0029",
             "name": "getEmptyRecord",
-            "summary": "",
+            "summary": "Creates\u0020an\u0020empty\u0020records\u0020from\u0020this\u0020table\u0020for\u0020the\u0020create\u002Dupdate\u0020View.",
             "url": "classes/Alddesign-Crudkit-Classes-TableDescriptor.html#method_getEmptyRecord"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\TableDescriptor\u003A\u003AcreateRecord\u0028\u0029",
@@ -1903,7 +1903,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Controllers\\CrudkitController\u003A\u003AmessageView\u0028\u0029",
             "name": "messageView",
-            "summary": "Message\u0020page",
+            "summary": "View\u0020for\u0020displaying\u0020a\u0020message.",
             "url": "classes/Alddesign-Crudkit-Controllers-CrudkitController.html#method_messageView"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Controllers\\CrudkitController\u003A\u003AloginView\u0028\u0029",

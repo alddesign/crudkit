@@ -1,10 +1,9 @@
 <?php
-/**
- * Class SQLColumn
- */
+declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
 use Alddesign\Crudkit\Classes\DataProcessor as dp;
+use Exception;
 
 /** 
  * Represents a column in a table.
@@ -60,6 +59,7 @@ class SQLColumn
 		'string' 	=> 'text',
 		'integer' 	=> 'integer',
 		'bigint' 	=> 'integer',
+		'biginteger'=> 'integer',
 		'smallint'	=> 'integer',
 		'int' 		=> 'integer',
 		'decimal' 	=> 'decimal',
@@ -72,7 +72,7 @@ class SQLColumn
 		'time' 		=> 'time',
 		'boolean' 	=> 'boolean',
 		'bool' 		=> 'boolean',
-		'tinying'	=> 'boolean',
+		'tinyint'	=> 'boolean',
 		'blob' 		=> 'blob',
 		'binary' 	=> 'blob',
 		'bin' 		=> 'blob',
@@ -112,17 +112,10 @@ class SQLColumn
 	 */
     public function __construct(string $name, string $label, string $type, array $options = [])
     {
-		//Checking type
-		$type = mb_strtolower($type, 'UTF-8');
-		
-		if(!isset(self::VALID_TYPES[$type]))
-		{
-			dp::ex('Invalid datatype "%s".', $type);
-		}
-		
+		//Checking type	
         $this->name = $name;
         $this->label = $label;
-        $this->type = self::VALID_TYPES[$type];
+		$this->type = self::mapDatatype($type, $name);
 		$this->options = $options;
 		
 		if($type === 'decimal' && empty($this->options['step']))
@@ -132,6 +125,35 @@ class SQLColumn
 
 		$this->checkOptions();
     }
+
+	/**
+	 * Maps various names for datatypes to a uniform name.
+	 * `Example: string, text = text`  
+	 * `Example: int, integer, bigint = integer`  
+	 * 
+	 * @param string $datatype The name of the datatype
+	 * @param string $columnName The name of the column for a more precise exception message, if needed.
+	 * @throws \Exception if $datatype is not recognized as a valid datatype
+	 * @return string the uniform datatype name
+	 * @internal
+	 */
+	public static function mapDatatype(string $datatype, string $columnName = '')
+	{
+		$datatype = mb_strtolower($datatype, 'UTF-8');
+		if(!isset(self::VALID_TYPES[$datatype]))
+		{
+			if(CHelper::e($columnName))
+			{
+				throw new CException('Invalid datatype "%s".', $datatype);
+			}
+			else
+			{
+				throw new CException('Column "%s": invalid datatype "%s".', $columnName, $datatype);
+			}
+		}
+
+		return self::VALID_TYPES[$datatype];
+	}
 	
 	private function checkOptions()
 	{
@@ -139,7 +161,7 @@ class SQLColumn
 		{
 			if(!in_array($name, self::VALID_OPTIONS, true))
 			{
-				dp::crudkitException('Invalid SQLColumn option "%s".', __CLASS__, __FUNCTION__, $name);
+				throw new CException('Invalid SQLColumn option "%s".', __CLASS__, __FUNCTION__, $name);
 			}
 		}
 	}

@@ -42,14 +42,14 @@ class User
 	 */
     public function __construct(string $id, string $password, RestrictionSet $restrictionSet = null, Startpage $startpage = null)
     {
-		if(dp::e($id))
+		if(CHelper::e($id))
 		{
-			dp::crudkitException('User ID must be provided.', __CLASS__, __FUNCTION__);
+			throw new CException('User ID must be provided.');
 		}
 		
-		if(dp::e($password))
+		if(CHelper::e($password))
 		{
-			dp::crudkitException('Password must be provided for user "%s".', __CLASS__, __FUNCTION__, $id);
+			throw new CException('Password must be provided for user "%s".', $id);
 		}
 		
 		$this->id = $id;

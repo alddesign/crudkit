@@ -34,7 +34,7 @@ class Filter
 			throw new Exception(sprintf('Filter Definition: invalid operator "%s".', $operator));
 		}
 		
-		if(dp::e($field))
+		if(CHelper::e($field))
 		{
 			throw new Exception('Filter Definition: Field needed.');
 		}

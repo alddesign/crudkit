@@ -49,6 +49,7 @@
 						$cardPageUrl = (in_array($column->name, $cardPageUrlColumns, true)) &&  (!empty($cardPageUrls[$index])) ? $cardPageUrls[$index] : '';
 						$manyToOneUrl = !empty($manyToOneUrls[$index][$column->name]) ? $manyToOneUrls[$index][$column->name] : '';
 						$value = $record[$column->name];
+						$valueBoolText = $value == true ? $texts['yes'] : $texts['no'];
 						$valueEnum = isset($options['enum'][$value]) ? $options['enum'][$value] : $value;
 					@endphp
 					{{-- LOOKUPS BEFORE FIELD --}}
@@ -85,16 +86,16 @@
 						@endif							
 						@if($column->type === 'boolean')
 							@if($cardPageUrl != '')
-								<a href="{!! $cardPageUrl !!}" class="btn btn-accent"> {{$value[1]}}</a>
+								<a href="{!! $cardPageUrl !!}" class="btn btn-accent"> {{$valueBoolText}}</a>
 							@elseif(!empty($column->link))
-								<a href="{!! $column->link !!}"> {{$value}} {{$suffix}} </a>
+								<a href="{!! $column->link !!}"> {{$valueBoolText}} {{$suffix}} </a>
 							@elseif($manyToOneUrl != '')
-								<a href="{!! $manyToOneUrl !!}">{{$value[1]}}</a> 
+								<a href="{!! $manyToOneUrl !!}">{{$valueBoolText}}</a> 
 							@else
-								@if($value[0] === true)
-									<kbd class="bg-success fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
+								@if($value == true)
+									<kbd class="bg-success fg-black" style="font-size: 1.6rem;">{{$valueBoolText}}</kbd>
 								@else
-									<kbd class="bg-danger fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
+									<kbd class="bg-danger fg-black" style="font-size: 1.6rem;">{{$valueBoolText}}</kbd>
 								@endif
 							@endif
 						@endif				

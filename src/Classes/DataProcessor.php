@@ -1,28 +1,19 @@
 <?php 
-/**
- * Class DataProcessor
- */
+declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use \Illuminate\Http\Request;
+use Alddesign\Crudkit\Classes\CHelper;
 use \DateTime;
 use \Exception;
 	 
 /**
- * Holds a set of usefull methods.
+ * Entity for formatting and processing data coming eiter from, or going into the Database.
  * 
- * In most cases the static methods are all you need. An instance of this Object is only needed by CRUDKit itself.
- * Thats a little bit messy but its ok for now.
+ * Mostly needed by CRUDKit internally.
  */
 class DataProcessor
 {
 	/** @ignore */ private $table = null;
-	/** @ignore */ private $columns = null;
-	/** @ignore */ private $columnNames = null;
-	/** @ignore */ private $allColumns = null;
-	/** @ignore */ private $primaryKeyColumns = null;
-	/** @ignore */ private $primaryKeyColumnNames = null;
-	/** @ignore */ private $language = '';
 	/** @ignore @var array<float>  */ private static $startTimes = [];
 	
 	/** @ignore*/ private array $dbconf = [];
@@ -39,13 +30,7 @@ class DataProcessor
 	{
 		$this->table = $table;
 		
-		//We need these table properties very often, so we preload them...
-		$this->columns = $table->getColumns();
-		$this->columnNames = $table->getColumns(true);
-		$this->primaryKeyColumns = $table->getPrimaryKeyColumns();
-		$this->primaryKeyColumnNames = $table->getPrimaryKeyColumns(true); 
-		
-		$this->dbconf = self::getCrudkitDbConfig();
+		$this->dbconf = CHelper::getCrudkitDbConfig();
 		$this->formatsUi = config('crudkit.formats_ui');
 	}
 
@@ -68,58 +53,64 @@ class DataProcessor
 	public function preProcess($requestData, bool $isInsert)
 	{
 		$isUpdate = !$isInsert;
-		$this->table->fetchAllColumns(); //intensive workload
-		$this->allColumns = $this->table->getAllColumns();
 
 		//The resulting record
 		$recordData = [];
 				
-		$dataExists = false; //[boolean] Per definition --> data exist, if data is in request, even if NULL
-		$dataIsNull = false; //[boolean] Per definition --> data === null, no information about if it exists in request
-		$dbHasDefault = false; //[boolean] Field has a default value in database
-		$dbNotNull = false; //[boolean] Field has NOT NUL set in database 
+		/** @var mixed The field data */
+		$data = null;
+		/** @var string The datatype of the field based on crudkit, or doctrine/dbal (there might be fields which are not defined in crudkit, but are still in the DB)  */
+		$datatype = '';
+		/** @var bool Per definition: data exist, if the field is present in request, even if NULL */
+		$dataExists = false;
+		/** @var bool Per definition: data === null. This doesnt indicate if its NULL in the request or set to NULL here, because is doesnt exist in the request. */
+		$dataIsNull = false;
+		/** @var bool Field is defined as NOT NULL in the database */
+		$dbNotNull = false;
+		/** @var bool Field has a DEFAULT value in database */
+		$dbHasDefault = false;
+		/** @var bool Field is defined as AUTOINCREMTN in the database */
+		$dbAi = false;
+		/** @var bool For blob fields: was the '___DELETEBLOB' checkbox for this field checked by the user.*/
+		$deleteBlobIsSet = false;
+		/** @var bool Specifies if we ulitmately want to include this field in the SQL INSERT statement. */
+		$includeInInsertStatement = false;
+		/** @var bool Specifies if we ulitmately want to include this field in the SQL UPDATE statement. */
+		$includeInUpdateStatement = false;
 
-		foreach($this->allColumns as $columnName => $column)
+		$this->table->fetchAllColumns(); //intensive workload
+		$columns = $this->table->getColumns();
+		$allColumns = $this->table->getAllColumns();
+		foreach($allColumns as $columnName => $column)
 		{	
+			//Prepare the necessarry infos for the matrix
 			$data = array_key_exists($columnName, $requestData) ? $requestData[$columnName] : null;
 
-			//Prepare some infos:
-			$isPk = in_array($columnName, $this->table->getPrimaryKeyColumns(true), true);
+			$datatype = isset($columns[$columnName]) ? $columns[$columnName]->type : $column['datatype'];
+			$datatype = SQLColumn::mapDatatype($datatype, $columnName);
 			$dataExists = array_key_exists($columnName, $requestData);
 			$dataIsNull = $data === null;
-			$dbHasDefault = $column['default'] !== null; //The default value is always provided as string from Doctrine DBAL
 			$dbNotNull = $column['notnull'] == true;
-			$isAi = $column['autoincrement'] == true; //auto increment
+			$dbHasDefault = $column['default'] !== null; //The default value is always provided as string from Doctrine DBAL
+			$dbAi = $column['autoincrement'] == true; //auto increment
 			$deleteBlobIsSet = isset($requestData[$columnName.'___DELETEBLOB']) && $requestData[$columnName.'___DELETEBLOB'] === 'on';
-			$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : $column['datatype'];
-			
-			//If the ___DELETEBLOB field is set, we preted there is no request data. It might happen, that someone clicks delete, and selects a file to upload(!)
+
+			$includeInInsertStatement = false;
+			$includeInUpdateStatement = false;
+
+			//If the ___DELETEBLOB field is set, we set the data to NULL and specify it its present in th request.
+			//This way we ensure it will be deleted. It might happen, that someone clicks delete, and selects a file to upload(!)
 			if($deleteBlobIsSet)
 			{
-				$dataExists = false;
+				$dataExists = true;
 				$data = null;
 			}
-
-			$i = false; //Include this column in the INSERT statement
-			$u = false; //Include this column in the UPDATE statement
 			
-			//Ah yes, the "Matrix". The core logic of preprocessing data:
-			//When data exists in request. (We do not care about Ai, when data exists)
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& $dbHasDefault	&& true) {$i=false; $u=true; $this->setEmpty($data, $datatype, $columnName); }
-			if($dataExists 	&& $dataIsNull 	&& $dbNotNull 	&& !$dbHasDefault	&& true) {$i=true; $u=true; $this->setEmpty($data, $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& $dbHasDefault	&& true) {$i=false; $u=true; $this->setNull($data, $datatype, $columnName);	}
-			if($dataExists 	&& $dataIsNull 	&& !$dbNotNull 	&& !$dbHasDefault	&& true) {$i=true; $u=true; $this->setNull($data, $datatype, $columnName); 	}
-			if($dataExists 	&& !$dataIsNull && true			&& true				&& true) {$i=true; $u=true; $this->setData($data, $datatype, $columnName); 	}
-			//When NO data exists in request, and columun is not Ai
-			if(!$dataExists && true 		&& $dbNotNull 	&& $dbHasDefault	&& !$isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
-			if(!$dataExists && true 		&& $dbNotNull 	&& !$dbHasDefault	&& !$isAi) {$i=true; $u=false; $this->setEmpty($data, $datatype, $columnName); }
-			if(!$dataExists && true 		&& !$dbNotNull 	&& $dbHasDefault	&& !$isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
-			if(!$dataExists && true 		&& !$dbNotNull 	&& !$dbHasDefault	&& !$isAi) {$i=true; $u=false; $this->setNull($data, $datatype, $columnName); }
-			//When NO data exists in request. When column is Ai, we definitly dont want it in insert or update
-			if(!$dataExists && true 		&& true			&& true				&& $isAi) {$i=false; $u=false; /*no data needed, no insert or update will happen*/ }
+			//Lets go
+			$this->matrix($data, $datatype, $dataExists, $dataIsNull, $dbNotNull, $dbHasDefault, $dbAi, $includeInInsertStatement, $includeInUpdateStatement);
 
 			//Finally add the data to the final record:
-			if(($isInsert && $i) || ($isUpdate && $u))
+			if(($isInsert && $includeInInsertStatement) || ($isUpdate && $includeInUpdateStatement))
 			{
 				$recordData[$columnName] = $data;
 			}
@@ -127,57 +118,98 @@ class DataProcessor
 
 		return($recordData);
 	}
+
+	/**
+	 * Ah yes, the "Matrix". The core logic of preprocessing data, based on the paramters.  
+	 * It decides if a field has its data, is null, empty of if its even included in the final SQL statement. 
+	 * 
+	 * The syntax of this code may not be the most efficent but its easier to oversee all possibilities.
+	 * 
+	 * @param mixed $data The field data
+	 * @param string $datatype The datatype of the field based on crudkit, or doctrine/dbal (there might be fields which are not defined in crudkit, but are still in the DB)
+	 * @param bool $d Per definition: data exist, if the field is present in request, even if NULL
+	 * @param bool $n Per definition: data === null. This doesnt indicate if its NULL in the request or set to NULL here, because is doesnt exist in the request.
+	 * @param bool $nn Field is defined as NOT NULL in the database
+	 * @param bool $df Field has a DEFAULT value in database
+	 * @param bool $ai Field is defined as AUTOINCREMTN in the database
+	 * @param bool $i Specifies if we ulitmately want to include this field in the SQL INSERT statement.
+	 * @param bool $u Specifies if we ulitmately want to include this field in the SQL UPDATE statement.
+	 * 
+	 * @return void
+	 * @internal
+	 */
+	private function matrix(&$data, string $datatype, bool $d, bool $n, bool $nn, bool $df, bool $ai, bool &$i, bool &$u)
+	{
+			//Some things to consider:
+			//DB DEFAULT is only applied by the db on INSERT, if we exclude that field
+			//DB AUTOINCREMENT is only applied by the db on INSERT, if we exclude that field (in some DBs also if null or so i think...)
+
+			$i = false;
+			$u = false;
+
+			//When data exists in request. (we dont care about Ai, when data exists, your fault when you try do set data to an ai column)
+			if($d 	&& $n 	&& $nn 	&& $df	&& true) {$i=false;	$u=true; $this->setEmpty($data, $datatype);	return;	}
+			if($d 	&& $n 	&& $nn 	&& !$df	&& true) {$i=true; 	$u=true; $this->setEmpty($data, $datatype); return;	}
+			if($d 	&& $n 	&& !$nn && $df	&& true) {$i=false; $u=true; $this->setNull($data, $datatype); 	return;	}
+			if($d 	&& $n 	&& !$nn && !$df	&& true) {$i=true; 	$u=true; $this->setNull($data, $datatype); 	return; }
+			if($d 	&& !$n 	&& true	&& true	&& true) {$i=true; 	$u=true; $this->setData($data, $datatype);	return; }
+			//When NO data exists in request, and columun is not Ai
+			if(!$d 	&& true && $nn 	&& $df	&& !$ai) {$i=false; $u=false; /*noop*/ 							return;	}
+			if(!$d 	&& true && $nn 	&& !$df	&& !$ai) {$i=true; 	$u=false; $this->setEmpty($data, $datatype);return;	}
+			if(!$d 	&& true && !$nn && $df	&& !$ai) {$i=false; $u=false; /*noop*/ 							return;	}
+			if(!$d 	&& true && !$nn && !$df	&& !$ai) {$i=true; 	$u=false; $this->setNull($data, $datatype); return;	}
+			//When NO data exists in request. When column is Ai, we definitly dont want it in insert or update
+			if(!$d 	&& true && true	&& true	&&	$ai) {$i=false; $u=false; /*noop*/ 							return;	}
+
+			//In case i miss something
+			throw new Exception('Undefined preprocessing matrix state.');
+	}
 	
 	/** 
-	 * Setting the empty or lets say database specific value for each datatype
+	 * Setting the empty or the DB specific value empty for some datatypes
 	 * 
 	 * @internal
 	 */
-	private function setEmpty(&$fieldValue, string $fieldDatatype, string $columnName = '')
+	private function setEmpty(&$data, string $datatype)
 	{
-		switch($fieldDatatype)
+		switch($datatype)
 		{
-			case 'string' 	: $fieldValue = ''; break;
-			case 'text' 	: $fieldValue = ''; break;
-			case 'integer' 	: $fieldValue = 0; break;
-			case 'decimal' 	: $fieldValue = 0.0; break;
-			case 'boolean' 	: $fieldValue = false; break;
-			case 'datetime' : $fieldValue = $this->dbconf['empty_values']['datetime']; break;
-			case 'date' 	: $fieldValue = $this->dbconf['empty_values']['date']; break;
-			case 'time' 	: $fieldValue = $this->dbconf['empty_values']['time']; break;
-			case 'blob' 	: $fieldValue = ''; break;
-			case 'binary' 	: $fieldValue = ''; break;
-			case 'enum' 	: $fieldValue = ''; break; //hmmm...
-			default 		: throw new Exception(sprintf('Unsupported SQL datatype "%s". (column "%s", table "%s")', $fieldDatatype, $columnName, $this->table->getName()));
+			case 'text' 	: $data = ''; break;
+			case 'integer' 	: $data = 0; break;
+			case 'decimal' 	: $data = 0.0; break;
+			case 'enum' 	: $data = ''; break;
+			case 'datetime' : $data = $this->dbconf['empty_values']['datetime']; break;
+			case 'date' 	: $data = $this->dbconf['empty_values']['date']; break;
+			case 'time' 	: $data = $this->dbconf['empty_values']['time']; break;
+			case 'boolean' 	: $data = false; break;
+			case 'blob' 	: $data = ''; break;
+			case 'image' 	: $data = ''; break;
+			default 		: throw new CException('Invalid datatype "%s".', $datatype) ;
 		}
 	}
 	
 	/** @internal */
-	private function setNull(&$fieldValue, string $fieldDatatype, string $columnName = '')
+	private function setNull(&$data)
 	{
-		$fieldValue = null;
+		$data = null;
 	}
 	
 	/** @internal */
-	private function setData(&$fieldValue, string $fieldDatatype, string $columnName = '')
+	private function setData(&$data, string $datatype)
 	{
-		
-		
-		switch($fieldDatatype)
+		switch($datatype)
 		{
-			case 'string' 	: $fieldValue = $fieldValue; break;
-			case 'text' 	: $fieldValue = $fieldValue; break;
-			case 'integer' 	: $fieldValue = intval($fieldValue); break;
-			case 'decimal' 	: $fieldValue = floatval($fieldValue); break;
-			case 'boolean' 	: $fieldValue = ($fieldValue == true); break;
-			case 'datetime' : $fieldValue = DateTime::createFromFormat($this->formatsUi['datetime'], $fieldValue)->format('Y-m-d H:i:s'); break;
-			case 'date' 	: $fieldValue = DateTime::createFromFormat($this->formatsUi['date'], $fieldValue)->format('Y-m-d'); break;
-			case 'time' 	: $fieldValue = DateTime::createFromFormat($this->formatsUi['time'], $fieldValue)->format('H:i:s'); break;
-			case 'blob' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
-			case 'binary' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
-			case 'image' 	: $fieldValue = $this->getUploadFileData($fieldValue); break;
-			case 'enum' 	: $fieldValue = $fieldValue; break;
-			default 		: throw new Exception(sprintf('Unsupported SQL datatype "%s". (column "%s", table "%s")', $fieldDatatype, $columnName, $this->table->getName()));
+			case 'text' 	: $data = $data; break;
+			case 'integer' 	: $data = intval($data); break;
+			case 'decimal' 	: $data = floatval($data); break;
+			case 'enum' 	: $data = $data; break;
+			case 'datetime' : $data = DateTime::createFromFormat($this->formatsUi['datetime'], $data)->format('Y-m-d H:i:s'); break;
+			case 'date' 	: $data = DateTime::createFromFormat($this->formatsUi['date'], $data)->format('Y-m-d'); break;
+			case 'time' 	: $data = DateTime::createFromFormat($this->formatsUi['time'], $data)->format('H:i:s'); break;
+			case 'boolean' 	: $data = ($data == true); break;
+			case 'blob' 	: $data = $this->getUploadFileData($data); break;
+			case 'image' 	: $data = $this->getUploadFileData($data); break;
+			default 		: throw new CException('Invalid datatype "%s".', $datatype) ;
 		}		
 	}
 	#endregion
@@ -199,29 +231,32 @@ class DataProcessor
 	{
 		$records = $singleRecord ? [$records] : $records;//Can now be used in foreach
 
+		$yes = CHelper::text('yes');
+		$no = CHelper::text('no');
+		$columns = $this->table->getColumns();
 		foreach($records as &$record)
 		{
 			foreach($record as $columnName => &$columnValue)
 			{
-				$datatype = isset($this->columns[$columnName]) ? $this->columns[$columnName]->type : '';
+				$datatype = isset($columns[$columnName]) ? $columns[$columnName]->type : '';
 
 				//Processing
 				if($formatBinary && ($datatype === 'blob' || $datatype === 'image'))		
 				{ 
-					$this->processBinaryData($columnName, $columnValue, $singleRecord, $datatype); 
+					$this->processBinaryData($columnValue, $singleRecord, $datatype); 
 				}
 				//$this->mapEnum($columnName, $columnValue); ???
 				if($formaDateAndTime && in_array($datatype, ['datetime', 'date', 'time'], true))	
 				{ 
-					$this->formatDateAndTime($columnName, $columnValue, $datatype); 
+					$this->formatDateAndTime($columnValue, $datatype); 
 				}
-				if($formatDec && $datatype === 'decimal' && !self::e($columnValue))			
+				if($formatDec && $datatype === 'decimal' && !CHelper::e($columnValue))			
 				{ 
 					$columnValue = number_format(floatval($columnValue), $this->formatsUi['decimal_places'], $this->formatsUi['decimal_separator'], $this->formatsUi['thousands_separator']); 
 				}
 				if($formatBool && $datatype === 'boolean')			
 				{ 
-					$columnValue = in_array($columnValue, [1, '1', true], true) ? [true, self::text('yes')] : [false, self::text('no')]; 
+					$columnValue = in_array($columnValue, [1, '1', true], true) ? 1 : 0; 
 				}
 			}
 			unset($columnValue);	
@@ -232,13 +267,13 @@ class DataProcessor
 	}
 	
 	/** @internal */
-	private function processBinaryData($columnName, &$columnValue, $singleRecord, string $datatype)
+	private function processBinaryData(&$columnValue, $singleRecord, string $datatype)
 	{
 		if($singleRecord)
 		{
 			if($datatype === 'image') //Single record and Image --> we got the blob data from DB, we will show the image.
 			{
-				$columnValue = self::e($columnValue) ? $columnValue : 'data:image;base64,'.base64_encode($columnValue);
+				$columnValue = CHelper::e($columnValue) ? $columnValue : 'data:image;base64,'.base64_encode($columnValue);
 			}
 			if($datatype === 'blob') //here we just got the size in kB from the DB
 			{
@@ -254,7 +289,7 @@ class DataProcessor
 	/** @internal */	
 	private function formatBytes($bytes, int $precision = 2) 
 	{ 
-		$bytes = self::e($bytes) ? 0 : $bytes;
+		$bytes = CHelper::e($bytes) ? 0 : $bytes;
 		
 		$units = array('B', 'KB', 'MB', 'GB', 'TB'); 
 
@@ -270,12 +305,12 @@ class DataProcessor
 	} 
 
 	/** @internal */
-	private function formatDateAndTime($columnName, &$columnValue, string $datatype)
+	private function formatDateAndTime(&$columnValue, string $datatype)
 	{		
 		$formatsDb = $this->dbconf['formats'];
 		$empty = $this->dbconf['empty_values'];
 		
-		if(!self::e($columnValue))
+		if(!CHelper::e($columnValue))
 		{		
 			//PHP SQL Zero Date Problem (0000-00-00...): 
 			switch($datatype)
@@ -299,7 +334,7 @@ class DataProcessor
 	 */
 	private function getUploadFileData($uploadedFile) // Parameter is \Illuminate\Http\UploadedFile Object or NULL
 	{
-		if(self::e($uploadedFile))
+		if(CHelper::e($uploadedFile))
 		{
 			return null;
 		}
@@ -317,558 +352,6 @@ class DataProcessor
 	#endregion
 	
 	#region HELPER FUNCTIONS ##########################################################################################################################################
-	/**
-	 * Gets a single text constant for the specified language form the config (crudkit-texts.php)
-	 * 
-	 * @param string $name The name of the test constant.
-	 * @param string $language The language code. If not set, the default language is used.
-	 * 
-	 * @return string
-	 * @internal
-	 */
-	public static function text(string $name, string $language = '')
-	{
-		$language = $language === '' ? config('crudkit.language', 'en') : $language;
-		if(isset(config('crudkit-texts', '')[$language][$name]))
-		{
-			return config('crudkit-texts')[$language][$name] ;
-		}
-		else
-		{
-			throw new Exception(sprintf('Text "%s" not found (language "%s").', $name, $language));
-		}		
-	}
-	
-	/** 
-	 * Gets all text constants for the specified language form the config (crudkit-texts.php)
-	 * 
-	 * @param string $language The language code. If not set, the default language is used.
-	 * 
-	 * @return string
-	 * @internal 
-	 */
-	public static function getTexts(string $language = '')
-	{
-		$language = $language === '' ? config('crudkit.language', 'en') : $language;
-		
-		if(isset(config('crudkit-texts', '')[$language]))
-		{
-			return config('crudkit-texts')[$language];
-		}
-		else
-		{
-			throw new Exception(sprintf('Text for language "%s" not found.', $language));
-		}
-	}
-	
-	/** @internal */
-	public static function noop()
-	{}
-	
-	/** 
-	 * A better implementation of PHP function empty();
-	 * 
-	 * @param mixed $var The variable to check
-	 * @param bool $zeroIsEmpty Indicates whether a int/doube zero is considered empty
-	 * @return boolean
-	 */
-	public static function e($var, bool $zeroIsEmpty = false)
-	{
-		return
-		(
-			($zeroIsEmpty && $var === 0) ||
-			($zeroIsEmpty && $var === 0.0) ||
-			$var === '' ||
-			$var === [] ||
-			$var === (object)[] ||
-			$var === null
-		);
-	}
-	
-	/** 
-	 * Shorthand call of throw new Exception(); with up to 8 placeholders 
-	 * 
-	 * ```
-	 * //Example usage:
-	 * DataProcessor::ex("%d errors while trying to delete user '%s'.", 4, "admin"); 
-	 * ```
-	 * 
-	 * @param string $message The Exception message to show
-	 * @param mixed $p1 (optional) placeholder
-	 * @param mixed $p2 (optional) placeholder
-	 * @param mixed $p3 (optional) placeholder
-	 * @param mixed $p4 (optional) placeholder
-	 * @param mixed $p5 (optional) placeholder
-	 * @param mixed $p6 (optional) placeholder
-	 * @param mixed $p7 (optional) placeholder
-	 * @param mixed $p8 (optional) placeholder
-	 */
-	public static function ex(string $message, $p1 = '', $p2 = '', $p3 = '', $p4 = '', $p5 = '', $p6 = '', $p7 = '', $p8 = '')
-	{
-		throw new Exception(sprintf($message, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8));
-	}
 
-	/** 
-	 * Shorthand call of throw new Exception(); with up to 8 placeholders, plus classname and method.
-	 * 
-	 * ```
-	 * //Example usage:
-	 * DataProcessor::crudkitException("%d errors while trying to delete user '%s'.", __CLASS__, __FUNCTION__ 4, "admin"); 
-	 * ```
-	 * 
-	 * @param string $message The Exception message to show
-	 * @param string $classOrFilename Classname or Filename
-	 * @param string $methodOrFunctionName Method or Function name
-	 * @param mixed $p1 (optional) placeholder
-	 * @param mixed $p2 (optional) placeholder
-	 * @param mixed $p3 (optional) placeholder
-	 * @param mixed $p4 (optional) placeholder
-	 * @param mixed $p5 (optional) placeholder
-	 * @param mixed $p6 (optional) placeholder
-	 * @param mixed $p7 (optional) placeholder
-	 * @param mixed $p8 (optional) placeholder
-	 * @internal
-	 */
-	public static function crudkitException(string $message, string $classOrFilename, string $methodOrFunctionName, $p1 = '', $p2 = '', $p3 = '', $p4 = '', $p5 = '', $p6 = '', $p7 = '', $p8 = '')
-	{
-		throw new Exception
-		(
-			sprintf("%s %s\n%s\n%s",
-				'Crudkit Error:',
-				sprintf($message, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8),
-				sprintf('Class/File name: %s', $classOrFilename),
-				sprintf('Method/Function name: %s', $methodOrFunctionName)
-			)
-		);
-	}
-
-	/** 
-	 * A better implementation of PHP function var_dump();
-	 * 
-	 * Provides syntax-highlighted insight even into nested objects,arrays, etc.
-	 * 
-	 * ```
-	 * //Example usage:
-	 * DataProcessor::xout(['cars' => ['audi','bmw'], 'nothing' => (object)['name' => 'Mario', 'age' => 34]]);  
-	 * ```
-	 * 
-	 * @param mixed $value The variable to print out
-	 * @param bool $dontDie Default = false. If set to true the script will not be aborted after execution of this function.
-	 * @param bool $initialCall dont change this parameter xout will use it as it calls itself
-	 */
-	public static function xout($value, bool $dontDie = false, bool $initCall = true)
-	{
-		//You can define your own syntax coloring here.
-		$baseColor = 'black';
-		$objectClassColor = 'gray';
-		$arrayTypeColor = 'blue';
-		$objectTypeColor = 'blue';
-		$stringTypeColor = 'red';
-		$integerTypeColor = 'orange';
-		$doubleTypeColor = 'teal';
-		$resourceTypeColor = 'purple';
-		$resourceClosedTypeColor = 'plum';
-		$booleanTypeColor = 'green';
-		$nullTypeColor = 'gray';
-	
-		$result = $initCall ? '<div id="xout-container" style="font-family: Courier New; font-weight: bold; font-size: 15px; color:'.$baseColor.';">' : '';
-	
-		$isSimpleVar = false;
-		$valueType = gettype($value);
-		switch($valueType)
-		{
-			case 'array' : $result .= '<span>ARRAY</span><br />'.htmlspecialchars('['); break;
-			case 'object' : $result .= '<span>OBJECT</span> <span style="color:'.$objectClassColor.';">' . get_class($value) . '</span><br />'.htmlspecialchars('('); break;
-			default : $value = [$value]; $isSimpleVar = true; break;
-		}
-	
-		$result .= '<ul style="list-style-type: none; margin: 0;">';
-	
-		foreach ($value as $key => $val)
-		{
-			$valType = gettype($val);
-			if ($valType === 'array' || $valType === 'object')
-			{
-				if ($valueType === 'array')
-				{
-					$result .= '<li><span style="color:'.$arrayTypeColor.';">[' . htmlspecialchars(strval($key)) . ']</span><b style="color:'.$baseColor.';"> '.htmlspecialchars('=>').' </b><span>' . self::xout($val, $dontDie, false) . '</span></li>';
-				}
-				if ($valueType === 'object')
-				{
-					$result .= '<li><span style="color:'.$objectTypeColor.';">' . htmlspecialchars(strval($key)) . '</span><b style="color:'.$baseColor.';"> '.htmlspecialchars('->').' </b><span>' . self::xout($val, $dontDie, false) . '</span></li>';
-				}
-			}
-			else
-			{
-				$color = 'black';
-				switch($valType)
-				{
-					case 'string' : $color = $stringTypeColor; $val = htmlspecialchars('\'').$val.htmlspecialchars('\''); break;
-					case 'integer' : $color = $integerTypeColor; $val = strval($val); break;
-					case 'double' : $color = $doubleTypeColor; $val = strval($val); break;
-					case 'resource' : $color = $resourceTypeColor; $val = 'resource ('.get_resource_type($val).')'; break;
-					case 'resource (closed)' : $color = $resourceClosedTypeColor; $val = 'resource (closed)'; break;
-					case 'boolean' : $color = $booleanTypeColor; $val = ($val === true) ? 'TRUE' : 'FALSE'; break;
-					case 'NULL' : $color = $nullTypeColor; $val = 'NULL'; break;
-				}
-	
-				$result .= '<li>';
-				if(!$isSimpleVar)
-				{
-					if($valueType === 'array')
-					{
-						$result .= '<span style="color:'.$arrayTypeColor.';">[' . htmlspecialchars(strval($key)) . ']</span><b style="color:'.$baseColor.';"> '.htmlspecialchars('=>').' </b>';
-					}
-					if($valueType === 'object')
-					{
-						$result .= '<span style="color:'.$objectTypeColor.';">' . htmlspecialchars(strval($key)) . '</span><b style="color:'.$baseColor.';"> '.htmlspecialchars('->').' </b>';
-					}
-				}
-				$result .= '<span style="color:'.$color.';">' . htmlspecialchars($val) . '</span></li>';
-			}
-		}
-	
-		$result .= '</ul>';
-	
-		if(!$isSimpleVar)
-		{
-			switch($valueType)
-			{
-				case 'array' : $result .= htmlspecialchars(']'); break;
-				case 'object' : $result .= htmlspecialchars(')'); break;
-			}
-		}
-	
-		$result .= $initCall ? '</div>' : '';
-	
-		if($initCall) //Finished
-		{
-			echo($result);
-			if(!$dontDie)
-			{
-				die();
-			}
-		}
-		else //End of recursive call
-		{
-			return $result; 
-		}
-	}
-
-	/** @ignore */
-	
-
-	/** @internal */
-	public static function getCrudkitDbConfig()
-	{
-		$dbtype = config('database.default','__default__');
-		$crudkitDbConfig = config('crudkit-db');
-		
-		return isset($crudkitDbConfig[$dbtype]) ? $crudkitDbConfig[$dbtype] : $crudkitDbConfig['__default__'];
-	}
-
-	/** 
-	 * Swaps the values of two variables.
-	 * @internal
-	*/
-	public static function swap(&$var1, &$var2) 
-	{
-		$helper=$var1;
-		$var1=$var2;
-		$var2=$helper;
-	}
-
-	/**
-	 * @param mixed $value The value to append
-	 * @param array $array The array (as reference)
-	 * @param bool $appendIfEmpty
-	 * 
-	 * @return void
-	 * @internal
-	 */
-	public static function appendToArray($value, array &$array, bool $appendIfEmpty = true)
-	{
-		if($appendIfEmpty || !self::e($value))
-		{
-			$array[] = $value;
-		}
-	}
-
-	/**
-	 * Formats 3620 seconds into 1h 0m 20s
-	 * @param int $seconds
-	 * 
-	 * @return string
-	 * @internal
-	 */
-	public static function formatSeconds(int $seconds)
-	{
-		$dt1 = new \DateTime();
-		$dt2 = clone $dt1;
-
-		$dt2->add(new \DateInterval('PT'.$seconds.'S'));
-		$i = $dt1->diff($dt2);
-
-		if($seconds >= 3600){return $i->format('%hh %im %ss');};
-		if($seconds >= 60){return $i->format('%im %ss');};
-		return $i->format('%ss');
-	}
-
-	/**
-	 * This is upt to 2000 times faster than array_merge().  
-	 * @param array $array the array which will be merged into $intoArray
-	 * @param array $intoArray the new "result" array (this one will be modified)
-	 * 
-	 * @return void
-	 * @internal
-	 */
-	public static function fastArrayMerge(array &$array, array &$intoArray) 
-	{
-		foreach($array as $i) 
-		{
-			$intoArray[] = $i;
-		}
-	}
-
-	
-	/**
-	 * Handy method for measuring execution time. Use DataProcessor::start() and DataProcessor::end() 
-	 * 
-	 * @param int $index Use different indexes if there are multiple DataProcessor::start() points, befor there is and DataProcessor::end().
-	 * 
-	 * @return void
-	 * @internal
-	 */
-	public static function start(int $index = 0)
-	{
-		self::$startTimes[$index] = microtime(true);
-	}
-
-	
-	/**
-	 * Retruns the time in seconds betweetn DataProcessor::start() and DataProcessor::end()
-	 * 
-	 * @param int $index The index for the corresponding DataProcessor::start()
-	 * 
-	 * @return float
-	 * @internal
-	 */
-	public static function end(int $index = 0)
-	{
-		return microtime(true) - self::$startTimes[$index];
-	}
-	
-	/** @ignore */
-	public static function getUrlParameters(string $pageId, int $pageNumber = null, string $searchText = '', string $searchColumnName = '', array $filters = [], array $primaryKeyValues = [], array $primaryKeyColumns = [], array $record = [])
-	{
-		$urlParameters = [];
-		$urlParameters['page-id'] = $pageId; 
-		if(!self::e($pageNumber))
-		{ 
-			$urlParameters['page-number'] = $pageNumber; 
-		}
-		if(!self::e($searchText))			
-		{ 
-			$urlParameters['st'] = $searchText; 
-		} 
-		if(!self::e($searchColumnName))
-		{ 
-			$urlParameters['sc'] = $searchColumnName; 
-		}
-		
-		if(!self::e($filters))
-		{
-			foreach($filters as $index => $filter)
-			{
-				$urlParameters['ff-'.$index] = $filter->field;
-				$urlParameters['fo-'.$index] = $filter->operator;
-				$urlParameters['fv-'.$index] = $filter->value;
-			}
-		}
-		
-		if(!self::e($primaryKeyValues))
-		{
-			foreach($primaryKeyValues as $primaryKeyNumber => $primaryKeyValue)
-			{
-				$urlParameters['pk-'.((int)$primaryKeyNumber)] = $primaryKeyValue;
-			}
-		}
-		
-		if(!self::e($primaryKeyColumns))
-		{
-			foreach($primaryKeyColumns as $primaryKeyNumber => $primaryKeyColumn)
-			{
-				$urlParameters['pk-'.((int)$primaryKeyNumber)] = $record[$primaryKeyColumn]; 
-			}
-		}
-		
-		return $urlParameters;
-	}
-
-	/**
-	 * Gets a JSON string which can be used for CRUDKit custom ajax error results.
-	 * 
-	 * @param mixed $data which will be logged by the JS console on the client: console.log(data);
-	 * @param string $message A simple message for the user
-	 * @param string $p1 p1 to p8 are placeholders for the message
-	 * 
-	 * @return string JSON string you can return to the client
-	 */
-	public static function getAjaxErrorResult($data, string $message = '', $p1 = '', $p2 = '', $p3 = '', $p4 = '', $p5 = '', $p6 = '', $p7 = '', $p8 = '')
-	{
-		$message = sprintf($message, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8);
-
-		return json_encode((object)['type' => 'error', 'message' => $message, 'data' => $data]);
-	}
-
-	/**
-	 * Gets a JSON string which can be used for CRUDKit custom ajax results.
-	 * 
-	 * @param array $data is an array of objects:
-	 * 
-	 * ```php
-	 * //Example 
-	 * $data =
-	 * [
-	 * 		(object)['id' => 1, 'text' => 'john doe', 'img' => 'data:image/png;base64,R0lG...'],
-	 * 		(object)['id' => 2, 'text' => 'jane doe', 'img' => 'data:image/png;base64,R0ax...']
-	 * ];
-	 * ```
-	 * 
-	 * @return string JSON string
-	 */
-	public static function getAjaxResult(array $data)
-	{
-		return json_encode((object)['type' => 'result', 'data' => (object)['results' => $data]]);
-	}
-
-	/**
-	 * @param string $data The binary image data as string (mostly it comes like this from the DB)
-	 * @param int $scaleWidthTo If you want to scale the image width
-	 * @return string The base64 encoded image as a string (PNG format)
-	 * @internal
-	 */
-	public static function binaryStringToBase64Png(string $data, int $scaleWidthTo = -1)
-	{
-		$image = imagecreatefromstring($data);
-		if($scaleWidthTo > 0)
-		{
-			$image = imagescale($image, $scaleWidthTo);
-		}
-
-		ob_start();
-		imagepng($image);
-		$imageBase64 = base64_encode(ob_get_clean());
-		imagedestroy($image);
-
-		return $imageBase64;
-	}
-	#endregion
-
-	/**
-	 * Gets an array of CRUDKit primary keys from the CRUDKit request
-	 * 
-	 * @param Request $request
-	 * @return array
-	 * @internal
-	 */
-	public static function getPrimaryKeyValuesFromRequest(Request $request)
-	{
-		$primaryKeyValues = [];
-		$index = 0;
-
-		while ($request->has('pk-' . $index)) {
-			$primaryKeyValues[] = $request->input(sprintf('pk-%d', $index));
-			$index = $index + 1;
-		}
-
-		return $primaryKeyValues;
-	}
-
-	
-	/**
-	 * Gets an array of filters from the CRUDKit request
-	 * 
-	 * @param Request $request
-	 * @return Filter[]
-	 * @internal
-	 */
-	public static function getFiltersFromRequest(Request $request)
-	{
-		$filters = [];
-		$index = 0;
-
-		while ($request->has('ff-' . $index)) 
-		{
-			$filters[] = new Filter(request('ff-' . $index), request('fo-' . $index), request('fv-' . $index));
-			$index += 1;
-		}
-
-		return $filters;
-	}
-
-	/**
-	 * Gets an array of filters from a given CRUDKit URL
-	 * 
-	 * @param string $url
-	 * @return Filter[]
-	 * @internal
-	 */
-	public static function getFiltersFromUrl(string $url)
-	{
-		$filters = [];
-		$params = self::getParamsFromUrl($url);
-
-		$index = 0;
-		while(isset($params['ff-'.$index]))
-		{
-			$filters[] = new Filter($params['ff-' . $index], $params['fo-' . $index], $params['fv-' . $index]);
-			$index += 1;
-		}
-
-		return $filters;
-	}
-
-	/**
-	 * Gets an array with primary key values from a given CRUDKit URL
-	 * @param string $url
-	 * @return array
-	 * @internal
-	 */
-	public static function getPrimaryKeyValuesFromUrl(string $url)
-	{
-		$primaryKeyValues = [];
-		$params = self::getParamsFromUrl($url);
-
-		$index = 0;
-		while(isset($params['pk-'.$index]))
-		{
-			$primaryKeyValues[] = $params['pk-'.$index];
-			$index += 1;
-		}
-
-		return $primaryKeyValues;
-	}
-
-	/**
-	 * Gets an array of the URL params $key => $value
-	 * @param string $url
-	 * 
-	 * @return array
-	 * @internal
-	 */
-	public static function getParamsFromUrl(string $url)
-	{
-		$parts = parse_url($url);
-		if(!$parts || !isset($parts['query']) || self::e($parts['query']))
-		{
-			return [];
-		}
-
-		$params = [];
-		parse_str($parts['query'], $params);
-
-		return $params;
-	}
 }
 

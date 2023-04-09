@@ -155,13 +155,13 @@ class Generator
 			
 			//Create Table
 			$this->i(3);
-			$this->l('\''.$table->getName().'\' => (new TableDescriptor(\''.$table->getName().'\', [\''.implode('\', \'', $primaryKeyColumns).'\'], '.$autoIncrementKey.'))');
+			$this->l(sprintf('\'%s\' => (new TableDescriptor(\'%s\', [\'%s\'], %s))', $table->getName(), $table->getName(), implode("', '", $primaryKeyColumns), $autoIncrementKey));
 
 			//Add Columns
 			$this->i(4);
 			foreach($table->getColumns() as $column)
 			{
-				$this->l('->addColumn(\''.$column->getName().'\', \''.Str::studly($column->getName()).'\', \''.$column->getType()->getName().'\', [])');
+				$this->l(sprintf('->addColumn(\'%s\', \'%s\', \'%s\', [])', $column->getName(), Str::studly($column->getName()), $column->getType()->getName()));
 			}
 			$this->l(',');
 		}
@@ -187,6 +187,7 @@ class Generator
 		foreach($tables as $table)
 		{
 			$columns = $table->getColumns();
+			$name = $table->getName();
 			if($table->hasPrimaryKey())
 			{
 				$primaryKeyColumns = $table->getPrimaryKeyColumns();
@@ -199,12 +200,12 @@ class Generator
 			
 			//Create Page
 			$this->i(3);
-			$this->l('\''.$table->getName().'\' => (new PageDescriptor(\''.Str::studly($table->getName()).'\', \''.$table->getName().'\', $this->tables[\''.$table->getName().'\']))');
+			$this->l(sprintf('\'%s\' => (new PageDescriptor(\'%s\', \'%s\', $this->tables[\'%s\']))', $name, $name, $name, $name));
 			
 			$this->i(4);
-			if(!dp::e($firstPrimaryKeyColumnName))
+			if(!CHelper::e($firstPrimaryKeyColumnName))
 			{
-				$this->l('->setCardLinkColumns([\''.$firstPrimaryKeyColumnName.'\'])');
+				$this->l(sprintf('->setCardLinkColumns([\'%s\'])', $firstPrimaryKeyColumnName));
 			}
 			$this->l(',');
 		}

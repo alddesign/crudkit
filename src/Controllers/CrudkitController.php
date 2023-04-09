@@ -1,8 +1,4 @@
 <?php
-/**
- * Class Controller
- */
-
 declare(strict_types=1);
 
 namespace Alddesign\Crudkit\Controllers;
@@ -11,10 +7,9 @@ use \Exception;
 use \DateTime;
 use Illuminate\Http\Request;
 use Alddesign\Crudkit\Classes\DataProcessor;
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use Alddesign\Crudkit\Classes\PageStore;
 use Alddesign\Crudkit\Classes\AuthHelper;
-use Alddesign\Crudkit\Classes\Backup;
+use Alddesign\Crudkit\Classes\CHelper;
 use Alddesign\Crudkit\Classes\Lookup;
 use Alddesign\Crudkit\Classes\SQLColumn;
 use Alddesign\Crudkit\Classes\SQLManyToOneColumn;
@@ -55,7 +50,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	public function __construct()
 	{
 		//Make these variables available in all views
-		View::share('texts', DataProcessor::getTexts());
+		View::share('texts', CHelper::getTexts());
 		View::share('version', $this->version);
 
 		$this->localTimeZone = new DateTimeZone(config('crudkit.local_timezone', 'UTC'));
@@ -70,7 +65,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	public function init(PageStore $pageStore, AuthHelper $authHelper = null)
 	{
 		$this->pageStore = $pageStore;
-		$this->authHelper = dp::e($authHelper) ? (new AuthHelper()) : $authHelper;
+		$this->authHelper = CHelper::e($authHelper) ? (new AuthHelper()) : $authHelper;
 	}
 
 	/** 
@@ -110,18 +105,18 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	{
 		//Load PageId and authenticate
 		$pageId 		= request('page-id', '');
-		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId); //Get Page per name, or first page
+		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true); //Get Page per name, or first page
 		$table = $pageDescriptor->getTable();
 		$pageId 		= $pageDescriptor->getId();
 		$itemsPerPage 	= $pageDescriptor->getItemsPerPage();
 		$this->authHelper->checkAuth('list', $pageId); //check-authentication
 
 		//Load Data from Request
-		$pageNumber 		= (int)request('page-number', 1) > 0 		? (int)request('page-number', 1) 	: 1;
-		$searchColumnName 	= !dp::e(request('sc', '')) ? request('sc', '') : '';
-		$searchText 		= !dp::e(request('st', '')) 		? request('st', '') 		: '';
+		$pageNumber 		= (int)request('page-number', 1) > 0 ? (int)request('page-number', 1) : 1;
+		$searchColumnName 	= !CHelper::e(request('sc', '')) ? request('sc', '') : '';
+		$searchText 		= !CHelper::e(request('st', '')) ? request('st', '') : '';
 		$resetSearch 		= request('sr', '') === '1';
-		$filters 			= dp::getFiltersFromRequest($request);
+		$filters 			= CHelper::getFiltersFromRequest($request);
 
 		//Process Request Data
 		if ($resetSearch) 
@@ -156,7 +151,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'actions' 				=> $pageDescriptor->getActions(),
 			'lookups'				=> $lookups,
 			'records' 				=> $records,
-			'hasFilters' 			=> !dp::e($filters),
+			'hasFilters' 			=> !CHelper::e($filters),
 			'filters' 				=> $filters,
 			'hasSearch' 			=> ($searchText !== ''),
 			'searchText' 			=> $searchText,
@@ -194,12 +189,12 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$this->authHelper->checkAuth('card', $pageId); //check-authentication
 
 		//Load Data from Request
-		$primaryKeyValues 	= dp::getPrimaryKeyValuesFromRequest($request);
-		$filters 			= dp::getFiltersFromRequest($request);
+		$primaryKeyValues 	= CHelper::getPrimaryKeyValuesFromRequest($request);
+		$filters 			= CHelper::getFiltersFromRequest($request);
 
 		//Process Reqest Data
-		$deleteUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@deleteRecord', dp::getUrlParameters($pageId, null, '', '', $filters, $primaryKeyValues));
-		$updateUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@updateView', dp::getUrlParameters($pageId, null, '', '', $filters, $primaryKeyValues));
+		$deleteUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@deleteRecord', CHelper::getUrlParameters($pageId, null, '', '', $filters, $primaryKeyValues));
+		$updateUrl				= URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@updateView', CHelper::getUrlParameters($pageId, null, '', '', $filters, $primaryKeyValues));
 
 		//Load record with raw data from DB, load Lookups, format record data
 		$record = $table->readRecordRaw($primaryKeyValues, $filters, true); //ok
@@ -254,8 +249,8 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 		//Load Data from Request
 		$pageId 			= request('page-id', '');
-		$primaryKeyValues 	= dp::getPrimaryKeyValuesFromRequest($request);
-		$filters 			= dp::getFiltersFromRequest($request);
+		$primaryKeyValues 	= CHelper::getPrimaryKeyValuesFromRequest($request);
+		$filters 			= CHelper::getFiltersFromRequest($request);
 
 		//Process Request Data
 		$columns 	= $table->getColumns();
@@ -351,7 +346,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$this->authHelper->checkAuth('chart', $pageId); //check-authentication
 
 		//Load Data from Request
-		$filters = dp::getFiltersFromRequest($request);
+		$filters = CHelper::getFiltersFromRequest($request);
 
 		//Process Request Data
 		$filterOperators =
@@ -360,11 +355,11 @@ class CrudkitController extends \App\Http\Controllers\Controller
 				'>' => '>',
 				'<' => '<',
 				'!=' => '!=',
-				'startswith' => dp::text('startswith'),
-				'endswith' => dp::text('endswith'),
-				'contains' => dp::text('contains')
+				'startswith' => CHelper::text('startswith'),
+				'endswith' => CHelper::text('endswith'),
+				'contains' => CHelper::text('contains')
 			];
-		$getChartDataUrlParamters 				= dp::getUrlParameters($pageId); //Dont include filters here - JS will load them from DOM. Search is disabled.
+		$getChartDataUrlParamters 				= CHelper::getUrlParameters($pageId); //Dont include filters here - JS will load them from DOM. Search is disabled.
 		$getChartDataUrlParamters['_token'] 	= csrf_token();
 		$getChartDataUrlParamters 				= json_encode((object)$getChartDataUrlParamters);
 
@@ -385,7 +380,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'primaryKeyColumns' 		=> $pageDescriptor->getTable()->getPrimaryKeyColumns(true),
 			'getChartDataUrl' 			=> URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@getChartData'),
 			'getChartDataUrlParamters' 	=> $getChartDataUrlParamters,
-			'hasFilters' 				=> !dp::e($filters),
+			'hasFilters' 				=> !CHelper::e($filters),
 			'filters' 					=> $filters,
 			'filterOperators' 			=> $filterOperators,
 			'pageMap' 					=> $this->pageStore->getPageMap(),
@@ -399,7 +394,12 @@ class CrudkitController extends \App\Http\Controllers\Controller
 	}
 
 	/**
-	 * Message page
+	 * View for displaying a message.  
+	 * These are the request parameters:
+	 * * title: The title for the message windows
+	 * * message: The text for message itself
+	 * * message-html: The text for message itself with html encluded
+	 * * type: For the theme of the message. Valid types are 'success', 'warning', 'info', 'danger'
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
@@ -502,7 +502,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$this->authHelper->checkAuth('delete', $pageId); //check-authentication
 
 		//Prepare Reqest Data
-		$primaryKeyValues = dp::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = CHelper::getPrimaryKeyValuesFromRequest($request);
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$table = $pageDescriptor->getTable();
 
@@ -556,7 +556,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$pageId = request('page-id', null);
 		$this->authHelper->checkAuth('update', $pageId); //check-authentication
 		$requestData = $request->all();
-		$primaryKeyValues = dp::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = CHelper::getPrimaryKeyValuesFromRequest($request);
 
 		//Prepare Reqest Data
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
@@ -646,7 +646,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$table = $pageDescriptor->getTable();
 		$action = $pageDescriptor->getActions($actionName);
-		$primaryKeyValues = dp::getPrimaryKeyValuesFromRequest($request);
+		$primaryKeyValues = CHelper::getPrimaryKeyValuesFromRequest($request);
 
 		//Read Data
 		$record = $table->readRecordRaw($primaryKeyValues); //ok
@@ -677,7 +677,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Prepare Request Data
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true); //Get Page per name, or first page
 		$table = $pageDescriptor->getTable();
-		$filters = dp::getFiltersFromRequest($request);
+		$filters = CHelper::getFiltersFromRequest($request);
 		/** @var SQLColumn[] */
 		$columns = $pageDescriptor->getTable()->getColumns();
 		$summaryColumns = $pageDescriptor->getSummaryColumns(true);
@@ -698,7 +698,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$exportAll = config('crudkit.export_all_columns', false);
 		$exportEnumLabel = config('crudkit.export_enum_label', false);
 		$exportLookups = config('crudkit.export_lookups', false);
-		$exportBooleanLabel = config('crudkit.export_boolean_label', false);
+		$s = config('crudkit.csv_export_field_separator', ';');
 
 		//Create File
 		$dateTimeUtc = new DateTime('now', new DateTimeZone('UTC'));
@@ -713,29 +713,29 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		{
 			fwrite($fileHandle, chr(239) . chr(187) . chr(191)); //Add BOM for Windows... https://stackoverflow.com/questions/5601904/encoding-a-string-as-utf-8-with-bom-in-php
 		}
-		fputcsv($fileHandle, ['src', 'crudkit_csv_export'], ';');
-		fputcsv($fileHandle, ['src_description', 'This XML file was exported from CRUDKit. Join us as Github: alddesign/crudkit'], ';');
-		fputcsv($fileHandle, ['exported_page', $pageDescriptor->getName()], ';');
-		fputcsv($fileHandle, ['exported_page_id', $pageDescriptor->getId()], ';');
-		fputcsv($fileHandle, ['export_datetime_utc', $dateTimeUtc->format('Y-m-d\TH:i:s')], ';');
-		fputcsv($fileHandle, ['export_datetime_local', $dateTimeLocal->format('Y-m-d\TH:i:s')], ';');
-		fputcsv($fileHandle, ['local_datetime', $this->localTimeZone->getName()], ';');
+		fputcsv($fileHandle, ['src', 'crudkit_csv_export'], $s);
+		fputcsv($fileHandle, ['src_description', 'This CSV file was exported from CRUDKit. Join us as Github: alddesign/crudkit'], $s);
+		fputcsv($fileHandle, ['exported_page', $pageDescriptor->getName()], $s);
+		fputcsv($fileHandle, ['exported_page_id', $pageDescriptor->getId()], $s);
+		fputcsv($fileHandle, ['export_datetime_utc', $dateTimeUtc->format('Y-m-d\TH:i:s')], $s);
+		fputcsv($fileHandle, ['export_datetime_local', $dateTimeLocal->format('Y-m-d\TH:i:s')], $s);
+		fputcsv($fileHandle, ['local_datetime', $this->localTimeZone->getName()], $s);
 		if ($searchText !== '') {
-			fputcsv($fileHandle, [''], ';');
-			fputcsv($fileHandle, ['restricted_by_search'], ';');
-			fputcsv($fileHandle, ['column', $searchColumnName], ';');
-			fputcsv($fileHandle, ['search_term', $searchText], ';');
+			fputcsv($fileHandle, [''], $s);
+			fputcsv($fileHandle, ['restricted_by_search'], $s);
+			fputcsv($fileHandle, ['column', $searchColumnName], $s);
+			fputcsv($fileHandle, ['search_term', $searchText], $s);
 		}
-		if (!dp::e($filters)) {
-			fputcsv($fileHandle, [''], ';');
-			fputcsv($fileHandle, ['restricted_by_filter', 'column', 'operator', 'value'], ';');
+		if (!CHelper::e($filters)) {
+			fputcsv($fileHandle, [''], $s);
+			fputcsv($fileHandle, ['restricted_by_filter', 'column', 'operator', 'value'], $s);
 			foreach ($filters as $index => $filter) 
 			{
-				fputcsv($fileHandle, ['filter' . '_' . $index, sprintf('%s (%s)', $columns[$filter->field]->label, $filter->field), $filter->operator, $filter->value], ';');
+				fputcsv($fileHandle, ['filter' . '_' . $index, sprintf('%s (%s)', $columns[$filter->field]->label, $filter->field), $filter->operator, $filter->value], $s);
 			}
 		}
 
-		fputcsv($fileHandle, ['{{{data-start}}}'], ';');
+		fputcsv($fileHandle, ['{{{data-start}}}'], $s);
 		#endregion
 
 		#region Write header row
@@ -749,7 +749,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 				$this->csvLookup(true, $exportLookups, $lookups, 'after-field', $name, $header); 
 			}	
 		}
-		fputcsv($fileHandle, $header, ';');
+		fputcsv($fileHandle, $header, $s);
 		#endregion
 
 		#region Write Lines
@@ -763,11 +763,10 @@ class CrudkitController extends \App\Http\Controllers\Controller
 				{
 					$this->csvLookup(false, $exportLookups, $lookups[$index], 'before-field', $name, $line); 
 					
-					$value = $record[$name];
 					switch($column->type)
 					{
-						case 'enum' : $value = ($exportEnumLabel && isset($column->options['enum'][$value])) ?  $column->options['enum'][$value] : $value; break;
-						case 'boolean' : $value = $exportBooleanLabel ? $value[1] : $value[0]; break;
+						case 'enum' : $value = $exportEnumLabel ?  $column->options['enum'][$record[$name]] : $record[$name]; break;
+						default		: $value = $record[$name];
 					}
 					$line[] = $value;
 
@@ -775,7 +774,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 				}
 			}
 
-			fputcsv($fileHandle, $line, ';');
+			fputcsv($fileHandle, $line, $s);
 		}
 		#endregion
 
@@ -825,7 +824,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$dateTimeLocal = new DateTime('now', $this->localTimeZone);
 		$pageDescriptor = $this->pageStore->getPageDescriptor($pageId, true);
 		$table = $pageDescriptor->getTable();
-		$filters = dp::getFiltersFromRequest($request);
+		$filters = CHelper::getFiltersFromRequest($request);
 		$columns = [];
 		if (config('crudkit.export_all_columns', false)) 
 		{
@@ -852,7 +851,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		if ($searchText !== '') {
 			$data['search'] = ['column' => $searchColumnName, 'search_term' => $searchText];
 		}
-		if (!dp::e($filters)) {
+		if (!CHelper::e($filters)) {
 			$data['filters'] = [];
 			foreach ($filters as $index => $filter) {
 				$data['filters']['filter' . $index] = $filter;
@@ -861,8 +860,6 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 		//Record data
 		$exportEnumLabels = config('crudkit.export_enum_label', false);
-		$exportBoolLabels = config('crudkit.export_boolean_label', false);
-		$exportBoolLabels = false;
 		foreach ($records as $index => $record) 
 		{
 			foreach ($columns as $column) 
@@ -870,7 +867,6 @@ class CrudkitController extends \App\Http\Controllers\Controller
 				switch($column->type)
 				{
 					case 'enum' : $records[$index][$column->name] =  $exportEnumLabels ?  $column->options['enum'][$record[$column->name]] : $record[$column->name]; break;
-					case 'boolean' : $records[$index][$column->name] = $exportBoolLabels ?  $record[$column->name][1] : (string)(int)$record[$column->name][0]; break;
 					default : $records[$index][$column->name] = $record[$column->name];
 				}
 			}
@@ -918,7 +914,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$this->authHelper->checkAuth('', $pageId); //check-authentication
 		$searchText = request('st', '');
 		$searchColumnName = request('sc', '');
-		$filters = dp::getFiltersFromRequest($request);
+		$filters = CHelper::getFiltersFromRequest($request);
 		$xAxisColumn = request('x-axis-column', '');
 		$yAxisColumn = request('y-axis-column', '');
 		$yAxisAggreation = request('y-axis-aggregation', '');
@@ -1001,7 +997,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$emptyPos = array_search('', $labels, true);
 
 		if ($emptyPos !== false && isset($labels[$emptyPos])) {
-			$labels[$emptyPos] = dp::text('x_axis_empty');
+			$labels[$emptyPos] = CHelper::text('x_axis_empty');
 		}
 
 
@@ -1009,19 +1005,19 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$axisLabels['x'] = $columns[$xAxisColumn]->label;
 		switch ($yAxisAggreation) {
 			case 'count':
-				$axisLabels['y'] = dp::text('aggregation_count');
+				$axisLabels['y'] = CHelper::text('aggregation_count');
 				break;
 			case 'sum':
-				$axisLabels['y'] = sprintf('%s (%s)', dp::text('aggregation_sum'), $columns[$yAxisColumn]->label);
+				$axisLabels['y'] = sprintf('%s (%s)', CHelper::text('aggregation_sum'), $columns[$yAxisColumn]->label);
 				break;
 			case 'avg':
-				$axisLabels['y'] = sprintf('%s (%s)', dp::text('aggregation_avg'), $columns[$yAxisColumn]->label);
+				$axisLabels['y'] = sprintf('%s (%s)', CHelper::text('aggregation_avg'), $columns[$yAxisColumn]->label);
 				break;
 			case 'min':
-				$axisLabels['y'] = sprintf('%s (%s)', dp::text('aggregation_min'), $columns[$yAxisColumn]->label);
+				$axisLabels['y'] = sprintf('%s (%s)', CHelper::text('aggregation_min'), $columns[$yAxisColumn]->label);
 				break;
 			case 'max':
-				$axisLabels['y'] = sprintf('%s (%s)', dp::text('aggregation_max'), $columns[$yAxisColumn]->label);
+				$axisLabels['y'] = sprintf('%s (%s)', CHelper::text('aggregation_max'), $columns[$yAxisColumn]->label);
 				break;
 		}
 
@@ -1030,7 +1026,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			'labels' => $labels,
 			'values' => $values,
 			'axisLabels' => ((object)$axisLabels),
-			'title' => dp::text('crudkit_diagram_view')
+			'title' => CHelper::text('crudkit_diagram_view')
 		]));
 	}
 	#endregion
@@ -1047,7 +1043,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$recordsPerPage = (int)config('crudkit.records_per_page', 8);
 
 		// ### Definie all Urls Parametres ###
-		$params = dp::getUrlParameters($pageId, ($pageNumber - 1), $searchText, $searchColumnName, $filters);
+		$params = CHelper::getUrlParameters($pageId, ($pageNumber - 1), $searchText, $searchColumnName, $filters);
 
 		// ### Create Urls ###
 		//Previous
@@ -1127,7 +1123,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Stop too much input
 		if(request('stop', '') === '1')
 		{
-			return dp::getAjaxResult([]);
+			return CHelper::getAjaxResult([]);
 		}
 
 		$pageId = request('pageId', '');
@@ -1136,19 +1132,19 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 		if(!isset($this->pageStore->getPageDescriptors()[$pageId]))
 		{
-			return dp::getAjaxErrorResult('Invalid pageId "%s".', $pageId);
+			return CHelper::getAjaxErrorResult('Invalid pageId "%s".', $pageId);
 		}
 		$page = $this->pageStore->getPageDescriptors()[$pageId];
 
 		if(!isset($page->getTable()->getColumns()[$columnName]))
 		{
-			return dp::getAjaxErrorResult('Invalid columnName "%s" (not found in talbe "%s").', $columnName, $page->getTable()->getName());
+			return CHelper::getAjaxErrorResult('Invalid columnName "%s" (not found in talbe "%s").', $columnName, $page->getTable()->getName());
 		}
 		/** @var SQLManyToOneColumn */
 		$manyToOneColumn = $page->getTable()->getColumns()[$columnName];
 		if(!$manyToOneColumn->isManyToOne || !$manyToOneColumn->ajax)
 		{
-			return dp::getAjaxErrorResult('Column "%s" is not a ManyToOne/Ajax column.', $columnName);
+			return CHelper::getAjaxErrorResult('Column "%s" is not a ManyToOne/Ajax column.', $columnName);
 		}
 		$ajaxOptions = $manyToOneColumn->getAjaxOptions();
 		
@@ -1169,7 +1165,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 		//Build result
 		$data = [];
-		$emptyImage = dp::binaryStringToBase64Png(base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII='), $ajaxOptions->maxImageWidth);
+		$emptyImage = CHelper::binaryStringToBase64Png(base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII='), $ajaxOptions->maxImageWidth);
 		foreach($records as $record)
 		{
 			$record = (array)$record;
@@ -1181,11 +1177,11 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			}
 			$text = implode(' ', $textparts);
 			$img = '';
-			if(!dp::e($ajaxOptions->imageFieldname))
+			if(!CHelper::e($ajaxOptions->imageFieldname))
 			{
-				if(isset($record[$ajaxOptions->imageFieldname]) && !dp::e($record[$ajaxOptions->imageFieldname]))
+				if(isset($record[$ajaxOptions->imageFieldname]) && !CHelper::e($record[$ajaxOptions->imageFieldname]))
 				{
-					$img = dp::binaryStringToBase64Png($record[$ajaxOptions->imageFieldname], $ajaxOptions->maxImageWidth);
+					$img = CHelper::binaryStringToBase64Png($record[$ajaxOptions->imageFieldname], $ajaxOptions->maxImageWidth);
 				}
 				else
 				{
@@ -1198,7 +1194,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 			$data[] = (object)['id' => $id, 'text' => $text, 'textparts' => $textparts, 'img' => $img];
 		}
 
-		return dp::getAjaxResult($data);
+		return CHelper::getAjaxResult($data);
 	}
 
 	public function ajaxCustom()
@@ -1206,7 +1202,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		//Stop too much input
 		if(request('stop', '') === '1')
 		{
-			return dp::getAjaxResult([]);
+			return CHelper::getAjaxResult([]);
 		}
 		
 		$pageId = request('pageId', '');
@@ -1215,13 +1211,13 @@ class CrudkitController extends \App\Http\Controllers\Controller
 
 		if(!isset($this->pageStore->getPageDescriptors()[$pageId]))
 		{
-			return dp::getAjaxErrorResult('','Invalid pageId "%s".', $pageId);
+			return CHelper::getAjaxErrorResult('','Invalid pageId "%s".', $pageId);
 		}
 		$page = $this->pageStore->getPageDescriptors()[$pageId];
 
 		if(!isset($page->getTable()->getColumns()[$columnName]))
 		{
-			return dp::getAjaxErrorResult('','Invalid columnName "%s" (not found in talbe "%s").', $columnName, $page->getTable()->getName());
+			return CHelper::getAjaxErrorResult('','Invalid columnName "%s" (not found in talbe "%s").', $columnName, $page->getTable()->getName());
 		}
 		$table = $page->getTable();
 
@@ -1230,7 +1226,7 @@ class CrudkitController extends \App\Http\Controllers\Controller
 		$column = $table->getColumns()[$columnName];
 		if(!$column->isCustomAjax)
 		{
-			return dp::getAjaxErrorResult('','Column "%s" is not a Custom Ajax column.', $columnName);
+			return CHelper::getAjaxErrorResult('','Column "%s" is not a Custom Ajax column.', $columnName);
 		}
 		
 		$results = [];

@@ -238,38 +238,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor",
             "name": "DataProcessor",
-            "summary": "Holds\u0020a\u0020set\u0020of\u0020usefull\u0020methods.",
+            "summary": "Entity\u0020for\u0020formatting\u0020and\u0020processing\u0020data\u0020coming\u0020eiter\u0020from,\u0020or\u0020going\u0020into\u0020the\u0020Database.",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003ApostProcess\u0028\u0029",
             "name": "postProcess",
             "summary": "Formats\u0020the\u0020data\u0020in\u0020record\u0028s\u0029\u0020so\u0020that\u0020they\u0020can\u0020be\u0020displayed\u0020to\u0020the\u0020user\u0020or\u0020consumed\u0020by\u0020views.",
             "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_postProcess"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Ae\u0028\u0029",
-            "name": "e",
-            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020empty\u0028\u0029\u003B",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_e"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Aex\u0028\u0029",
-            "name": "ex",
-            "summary": "Shorthand\u0020call\u0020of\u0020throw\u0020new\u0020Exception\u0028\u0029\u003B\u0020with\u0020up\u0020to\u00208\u0020placeholders",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_ex"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003Axout\u0028\u0029",
-            "name": "xout",
-            "summary": "A\u0020better\u0020implementation\u0020of\u0020PHP\u0020function\u0020var_dump\u0028\u0029\u003B",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_xout"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetAjaxErrorResult\u0028\u0029",
-            "name": "getAjaxErrorResult",
-            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020error\u0020results.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getAjaxErrorResult"
-        },                {
-            "fqsen": "\\Alddesign\\Crudkit\\Classes\\DataProcessor\u003A\u003AgetAjaxResult\u0028\u0029",
-            "name": "getAjaxResult",
-            "summary": "Gets\u0020a\u0020JSON\u0020string\u0020which\u0020can\u0020be\u0020used\u0020for\u0020CRUDKit\u0020custom\u0020ajax\u0020results.",
-            "url": "classes/Alddesign-Crudkit-Classes-DataProcessor.html#method_getAjaxResult"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\FilterDefinition",
             "name": "FilterDefinition",
@@ -938,7 +913,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\TableDescriptor\u003A\u003AgetEmptyRecord\u0028\u0029",
             "name": "getEmptyRecord",
-            "summary": "",
+            "summary": "Creates\u0020an\u0020empty\u0020records\u0020from\u0020this\u0020table\u0020for\u0020the\u0020create\u002Dupdate\u0020View.",
             "url": "classes/Alddesign-Crudkit-Classes-TableDescriptor.html#method_getEmptyRecord"
         },                {
             "fqsen": "\\Alddesign\\Crudkit\\Classes\\TableDescriptor\u003A\u003AdeleteRecord\u0028\u0029",

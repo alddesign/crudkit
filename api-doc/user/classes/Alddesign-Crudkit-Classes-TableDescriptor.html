@@ -231,7 +231,7 @@ Example code: see CrudkitServiceProvider doc</dd>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd></dd>
+<dd>Creates an empty records from this table for the create-update View.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Alddesign-Crudkit-Classes-TableDescriptor.html#method_getHasAutoincrementKey">getHasAutoincrementKey()</a>
@@ -560,9 +560,9 @@ Example code: see CrudkitServiceProvider doc</dd>
 {type : &quot;result&quot;, data : {results : [{'id' : '23', 'text' =&gt; 'Joe Smith', 'img' =&gt; 'base64imageData'}, {id : '...'}]}}
 //Example for $result object if error (Json encoded):
 {type : &quot;error&quot;, message : &quot;404 not found&quot; data : &quot;some error data which will be logged by the Javascript console...&quot;}
-//Helper methods in DataProcessor class:
-DataProcessor::getAjaxErrorResult();
-DataProcessor::getAjaxResult();
+//Helper methods in CHelper class:
+CHelper::getAjaxErrorResult();
+CHelper::getAjaxResult();
 </code></pre>
 </section>
 
@@ -872,7 +872,7 @@ Example code: see CrudkitServiceProvider doc</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/TableDescriptor.php"><a href="files/classes-tabledescriptor.html"><abbr title="Classes/TableDescriptor.php">TableDescriptor.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">781</span>
+    <span class="phpdocumentor-element-found-in__line">777</span>
 
     </aside>
 
@@ -1060,14 +1060,15 @@ Example code: see CrudkitServiceProvider doc</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/TableDescriptor.php"><a href="files/classes-tabledescriptor.html"><abbr title="Classes/TableDescriptor.php">TableDescriptor.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">711</span>
+    <span class="phpdocumentor-element-found-in__line">712</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Creates an empty records from this table for the create-update View.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getEmptyRecord</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$setDbDefaultValues</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allColumns</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getEmptyRecord</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$setDbDefaultValues</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1078,15 +1079,6 @@ Example code: see CrudkitServiceProvider doc</p>
                  = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Set the default values which are definded in the Database</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$allColumns</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Get all columns or just those definded in CRUDKit</p>
 </section>
 
             </dd>
@@ -1426,7 +1418,7 @@ Example code: see CrudkitServiceProvider doc</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/TableDescriptor.php"><a href="files/classes-tabledescriptor.html"><abbr title="Classes/TableDescriptor.php">TableDescriptor.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">809</span>
+    <span class="phpdocumentor-element-found-in__line">805</span>
 
     </aside>
 

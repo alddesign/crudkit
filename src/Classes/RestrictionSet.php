@@ -27,14 +27,14 @@ class RestrictionSet
     {
 		if(!in_array($type, self::ALLOWED_TYPES, true))
 		{
-			dp::crudkitException('Invalid restriction set type "%s".', __CLASS__, __FUNCTION__, $type);
+			throw new CException('Invalid restriction set type "%s".', $type);
 		}
 
 		foreach($entries as $entry)
 		{
 			if(gettype($entry) !== 'object' || get_class($entry) !== 'Alddesign\Crudkit\Classes\RestrictionSetEntry')
 			{
-				dp::crudkitException('Array of "Alddesign\Crudkit\Classes\RestrictionSetEntry" objects expected.', __CLASS__, __FUNCTION__);
+				throw new CException('Array of "Alddesign\Crudkit\Classes\RestrictionSetEntry" objects expected.');
 			}
 		}
 		

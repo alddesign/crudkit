@@ -112,7 +112,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -184,7 +184,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Alddesign-Crudkit-Classes-SQLColumn.html#constant_VALID_TYPES">VALID_TYPES</a>
     <span>
-        &nbsp;= [&#039;text&#039; =&gt; &#039;text&#039;, &#039;string&#039; =&gt; &#039;text&#039;, &#039;integer&#039; =&gt; &#039;integer&#039;, &#039;bigint&#039; =&gt; &#039;integer&#039;, &#039;smallint&#039; =&gt; &#039;integer&#039;, &#039;int&#039; =&gt; &#039;integer&#039;, &#039;decimal&#039; =&gt; &#039;decimal&#039;, &#039;dec&#039; =&gt; &#039;decimal&#039;, &#039;double&#039; =&gt; &#039;decimal&#039;, &#039;float&#039; =&gt; &#039;decimal&#039;, &#039;enum&#039; =&gt; &#039;enum&#039;, &#039;datetime&#039; =&gt; &#039;datetime&#039;, &#039;date&#039; =&gt; &#039;date&#039;, &#039;time&#039; =&gt; &#039;time&#039;, &#039;boolean&#039; =&gt; &#039;boolean&#039;, &#039;bool&#039; =&gt; &#039;boolean&#039;, &#039;tinying&#039; =&gt; &#039;boolean&#039;, &#039;blob&#039; =&gt; &#039;blob&#039;, &#039;binary&#039; =&gt; &#039;blob&#039;, &#039;bin&#039; =&gt; &#039;blob&#039;, &#039;image&#039; =&gt; &#039;image&#039;, &#039;picture&#039; =&gt; &#039;image&#039;]                            </span>
+        &nbsp;= [&#039;text&#039; =&gt; &#039;text&#039;, &#039;string&#039; =&gt; &#039;text&#039;, &#039;integer&#039; =&gt; &#039;integer&#039;, &#039;bigint&#039; =&gt; &#039;integer&#039;, &#039;biginteger&#039; =&gt; &#039;integer&#039;, &#039;smallint&#039; =&gt; &#039;integer&#039;, &#039;int&#039; =&gt; &#039;integer&#039;, &#039;decimal&#039; =&gt; &#039;decimal&#039;, &#039;dec&#039; =&gt; &#039;decimal&#039;, &#039;double&#039; =&gt; &#039;decimal&#039;, &#039;float&#039; =&gt; &#039;decimal&#039;, &#039;enum&#039; =&gt; &#039;enum&#039;, &#039;datetime&#039; =&gt; &#039;datetime&#039;, &#039;date&#039; =&gt; &#039;date&#039;, &#039;time&#039; =&gt; &#039;time&#039;, &#039;boolean&#039; =&gt; &#039;boolean&#039;, &#039;bool&#039; =&gt; &#039;boolean&#039;, &#039;tinyint&#039; =&gt; &#039;boolean&#039;, &#039;blob&#039; =&gt; &#039;blob&#039;, &#039;binary&#039; =&gt; &#039;blob&#039;, &#039;bin&#039; =&gt; &#039;blob&#039;, &#039;image&#039; =&gt; &#039;image&#039;, &#039;picture&#039; =&gt; &#039;image&#039;]                            </span>
 </dt>
 <dd></dd>
 
@@ -273,6 +273,13 @@
 <dd>Checks if the column is hidden (in general or on a specific page type.)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Alddesign-Crudkit-Classes-SQLColumn.html#method_mapDatatype">mapDatatype()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Maps various names for datatypes to a uniform name.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Alddesign-Crudkit-Classes-SQLColumn.html#method_setAjaxOptions">setAjaxOptions()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -348,7 +355,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -357,7 +364,7 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;</span>
     <span class="phpdocumentor-signature__name">VALID_TYPES</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;text&#039; =&gt; &#039;text&#039;, &#039;string&#039; =&gt; &#039;text&#039;, &#039;integer&#039; =&gt; &#039;integer&#039;, &#039;bigint&#039; =&gt; &#039;integer&#039;, &#039;smallint&#039; =&gt; &#039;integer&#039;, &#039;int&#039; =&gt; &#039;integer&#039;, &#039;decimal&#039; =&gt; &#039;decimal&#039;, &#039;dec&#039; =&gt; &#039;decimal&#039;, &#039;double&#039; =&gt; &#039;decimal&#039;, &#039;float&#039; =&gt; &#039;decimal&#039;, &#039;enum&#039; =&gt; &#039;enum&#039;, &#039;datetime&#039; =&gt; &#039;datetime&#039;, &#039;date&#039; =&gt; &#039;date&#039;, &#039;time&#039; =&gt; &#039;time&#039;, &#039;boolean&#039; =&gt; &#039;boolean&#039;, &#039;bool&#039; =&gt; &#039;boolean&#039;, &#039;tinying&#039; =&gt; &#039;boolean&#039;, &#039;blob&#039; =&gt; &#039;blob&#039;, &#039;binary&#039; =&gt; &#039;blob&#039;, &#039;bin&#039; =&gt; &#039;blob&#039;, &#039;image&#039; =&gt; &#039;image&#039;, &#039;picture&#039; =&gt; &#039;image&#039;]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;text&#039; =&gt; &#039;text&#039;, &#039;string&#039; =&gt; &#039;text&#039;, &#039;integer&#039; =&gt; &#039;integer&#039;, &#039;bigint&#039; =&gt; &#039;integer&#039;, &#039;biginteger&#039; =&gt; &#039;integer&#039;, &#039;smallint&#039; =&gt; &#039;integer&#039;, &#039;int&#039; =&gt; &#039;integer&#039;, &#039;decimal&#039; =&gt; &#039;decimal&#039;, &#039;dec&#039; =&gt; &#039;decimal&#039;, &#039;double&#039; =&gt; &#039;decimal&#039;, &#039;float&#039; =&gt; &#039;decimal&#039;, &#039;enum&#039; =&gt; &#039;enum&#039;, &#039;datetime&#039; =&gt; &#039;datetime&#039;, &#039;date&#039; =&gt; &#039;date&#039;, &#039;time&#039; =&gt; &#039;time&#039;, &#039;boolean&#039; =&gt; &#039;boolean&#039;, &#039;bool&#039; =&gt; &#039;boolean&#039;, &#039;tinyint&#039; =&gt; &#039;boolean&#039;, &#039;blob&#039; =&gt; &#039;blob&#039;, &#039;binary&#039; =&gt; &#039;blob&#039;, &#039;bin&#039; =&gt; &#039;blob&#039;, &#039;image&#039; =&gt; &#039;image&#039;, &#039;picture&#039; =&gt; &#039;image&#039;]</span>
 </code>
 
 
@@ -392,7 +399,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -424,7 +431,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -456,7 +463,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -488,7 +495,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -520,7 +527,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -552,7 +559,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -584,7 +591,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -618,7 +625,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -650,7 +657,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -752,7 +759,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">220</span>
 
     </aside>
 
@@ -784,7 +791,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">153</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -820,6 +827,88 @@
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_mapDatatype">
+        mapDatatype()
+        <a href="classes/Alddesign-Crudkit-Classes-SQLColumn.html#method_mapDatatype" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">140</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Maps various names for datatypes to a uniform name.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">mapDatatype</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$datatype</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$columnName</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"><p><code class="prettyprint">Example: string, text = text</code>
+<code class="prettyprint">Example: int, integer, bigint = integer</code></p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$datatype</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The name of the datatype</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$columnName</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The name of the column for a more precise exception message, if needed.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>if $datatype is not recognized as a valid datatype</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">internal</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>the uniform datatype name</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_setAjaxOptions">
@@ -829,7 +918,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -872,7 +961,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -948,7 +1037,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -1024,7 +1113,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Classes/SQLColumn.php"><a href="files/classes-sqlcolumn.html"><abbr title="Classes/SQLColumn.php">SQLColumn.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 

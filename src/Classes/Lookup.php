@@ -105,7 +105,7 @@ class Lookup
         }
 
         $filters = [];
-        if(!dp::e($this->filterDefinitions))
+        if(!CHelper::e($this->filterDefinitions))
         {
             foreach($this->filterDefinitions as $index => $filterDefinition)
             {
@@ -173,14 +173,14 @@ class Lookup
             return $this->drillDownLink;
         }
 
-        if(dp::e($this->pageId))
+        if(CHelper::e($this->pageId))
         {
             return '';
         }
 
         $urlParameters = [];
         $urlParameters['page-id'] = $this->pageId;
-        if(!dp::e($this->filterDefinitions))
+        if(!CHelper::e($this->filterDefinitions))
         {
             foreach($this->filterDefinitions as $index => $filterDefinition)
             {

@@ -4,10 +4,6 @@
  */
 namespace Alddesign\Crudkit\Classes;
 
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
-use \Exception;
-use Helper;
-
 /** 
  * Represents a filter definition on a record (no acutaly filter)
  */
@@ -36,11 +32,11 @@ class FilterDefinition
     {
 		if(!in_array($operator, self::VALID_OPERATORS, true))
 		{
-			throw new Exception(sprintf('Filter Definition: invalid operator "%s".', $operator));
+			throw new CException('Filter Definition: invalid operator "%s".', $operator);
 		}
 		if(!in_array($type, self::VALID_TYPES, true))
 		{
-			throw new Exception(sprintf('Filter Definition: invalid type "%s".', $type));
+			throw new CException('Filter Definition: invalid type "%s".', $type);
 		}
 		
 		$this->field = $field;
@@ -64,14 +60,14 @@ class FilterDefinition
 		
 		if($this->type === 'field')
 		{
-			if(dp::e($record))
+			if(CHelper::e($record))
 			{
-				dp::ex('Cannot convert FilterDefinition to Filter. Reference record needed for "field" typ filters.');
+				throw new CException('Cannot convert FilterDefinition to Filter. Reference record needed for "field" typ filters.');
 			}
 
 			if(!array_key_exists($this->fieldnameOrValue, $record))
 			{
-				dp::ex('Cannot convert FilterDefinition to Filter. Invalid field name "%s" in FilterDefinition.', $this->fieldnameOrValue);
+				throw new CException('Cannot convert FilterDefinition to Filter. Invalid field name "%s" in FilterDefinition.', $this->fieldnameOrValue);
 			}
 		
 			return new Filter($this->field, $this->operator, $record[$this->fieldnameOrValue]);

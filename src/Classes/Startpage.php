@@ -33,14 +33,14 @@ class Startpage
 	 */
     public function __construct(string $pageId, string $type, array $parameters = [])
     {
-		if(dp::e($pageId))
+		if(CHelper::e($pageId))
 		{
-			dp::crudkitException('No page id provided.', __CLASS__, __FUNCTION__);
+			throw new CException('No page id provided.');
 		}
 		
 		if(!in_array($type, self::ALLOWED_TYPES, true))
 		{
-			dp::crudkitException('Invalid type "%s".', __CLASS__, __FUNCTION__, $type);
+			throw new CException('Invalid type "%s".', $type);
 		}
 		
 		$this->pageId = $pageId;

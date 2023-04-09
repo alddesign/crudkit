@@ -13,6 +13,7 @@
 				$valueManyToOne = ($column->isManyToOne && isset($manyToOneValues[$column->name][0])) ? $manyToOneValues[$column->name][0] : [$value,''];
 				$customAjaxValue = ($column->isCustomAjax && isset($customAjaxValues[$columnName])) ? $customAjaxValues[$columnName] : [$value, ''];
 				$valueEnum = isset($options['enum'][$value]) ? $options['enum'][$value] : $value;
+				$valueBoolText = $value == true ? $texts['yes'] : $texts['no'];
 			@endphp
 			{{-- Section Start --}}
 			@foreach($sections as $section)
@@ -94,11 +95,11 @@
 							@include('crudkit::card_actions-field', ['position' => 'to-field'])
 							<span class="crudkit-card-field-wrapper3">
 							@if(!empty($column->link))
-								<a href="{!! $column->link !!}">{{$value[1]}} {{$suffix}}</a>
-							@elseif($value[0] === true)
-								<kbd class="bg-success fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
+								<a href="{!! $column->link !!}">{{$valueBoolText}} {{$suffix}}</a>
+							@elseif($value == true)
+								<kbd class="bg-success fg-black" style="font-size: 1.6rem;">{{$valueBoolText}}</kbd>
 							@else
-								<kbd class="bg-danger fg-black" style="font-size: 1.6rem;">{{$value[1]}}</kbd>
+								<kbd class="bg-danger fg-black" style="font-size: 1.6rem;">{{$valueBoolText}}</kbd>
 							@endif
 							</span>
 						</div>

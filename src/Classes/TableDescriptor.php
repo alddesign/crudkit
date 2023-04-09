@@ -32,7 +32,7 @@ class TableDescriptor
     /** @ignore */ private $name = null;
 	/** @ignore */ private $primaryKeyColumns = [];
 	/** @ignore */ private $hasAutoincrementKey = false;
-    /** @var array<SQLColumn> */ private $columns = [];
+    /** @var SQLColumn[] */ private $columns = [];
 	
 	/** @ignore */ private $allColumns = []; //Array of all table columns. Needed for inserts. Fetched by Doctrine DBAL.
 	/** @ignore */ private $allColumnsFetched 	= false;
@@ -62,7 +62,7 @@ class TableDescriptor
 		$this->hasAutoincrementKey = $hasAutoincrementKey;
 		
 		$this->primaryKeyColumns = $primaryKeyColumns;
-		$this->dbconf = DataProcessor::getCrudkitDbConfig();
+		$this->dbconf = CHelper::getCrudkitDbConfig();
 
 		$this->doctrineDbalCache = boolval(config('crudkit.doctrine_dbal_cache', true));
 		$this->doctrineDbalCacheTtl = intval(config('crudkit.doctrine_dbal_cache_ttl', 3600 * 24));
@@ -122,7 +122,7 @@ class TableDescriptor
 	{
 		if(!$this->allColumnsFetched)
 		{ 
-			DataProcessor::crudkitException('Please call fetchAllColumns() first. (Note: performance impact)', __CLASS__, __FUNCTION__);
+			throw new CException('Please call fetchAllColumns() first. (Note: performance impact)');
 		}
 	
 		if($namesOnly)
@@ -291,7 +291,7 @@ class TableDescriptor
     {
 		if(isset($this->columns[$name]) || $name === $this->softDeleteColumn)
 		{
-			DataProcessor::crudkitException('Cannot add column "%s" to talbe "%s". Column already exists.', __CLASS__, __FUNCTION__, $name, $this->name);
+			throw new CException('Cannot add column "%s" to talbe "%s". Column already exists.', $name, $this->name);
 		}
 		
         $this->columns[$name] = new SQLColumn($name, $label, $type, $options);
@@ -303,7 +303,7 @@ class TableDescriptor
 	{
 		if(!isset($this->columns[$columnName]))
 		{
-			DataProcessor::crudkitException('Cannot set orderBy. Column "%s" doesnt exist in table "%s".', __CLASS__, __FUNCTION__, $columnName, $this->name);
+			throw new CException('Cannot set orderBy. Column "%s" doesnt exist in table "%s".', $columnName, $this->name);
 		}	
 		
 		$this->orderBy = $columnName;
@@ -331,7 +331,7 @@ class TableDescriptor
 	{
 		if(!isset($this->columns[$name]))
 		{
-			DataProcessor::crudkitException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+			throw new CException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', $name, $this->name);
 		}
 		
 		$column = $this->columns[$name];
@@ -359,13 +359,13 @@ class TableDescriptor
 	{
 		if(!isset($this->columns[$name]))
 		{
-			DataProcessor::crudkitException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+			throw new CException('Cannot define column "%s" as many-to-one column. Column was not found in table "%s".', $name, $this->name);
 		}
 		$column = $this->columns[$name];
 
 		if(in_array($column->type, ['enum', 'image', 'blob', 'boolean'], true))
 		{
-			DataProcessor::crudkitException('Column of type "%s" cannot be defined as Custom Ajax Column.', __CLASS__, __FUNCTION__, $column->type);
+			throw new CException('Column of type "%s" cannot be defined as Custom Ajax Column.', $column->type);
 		}
 
 		
@@ -382,9 +382,9 @@ class TableDescriptor
 	 * {type : "result", data : {results : [{'id' : '23', 'text' => 'Joe Smith', 'img' => 'base64imageData'}, {id : '...'}]}}
 	 * //Example for $result object if error (Json encoded):
 	 * {type : "error", message : "404 not found" data : "some error data which will be logged by the Javascript console..."}
-	 * //Helper methods in DataProcessor class:
-	 * DataProcessor::getAjaxErrorResult();
-	 * DataProcessor::getAjaxResult();
+	 * //Helper methods in CHelper class:
+	 * CHelper::getAjaxErrorResult();
+	 * CHelper::getAjaxResult();
 	 * ```
 	 * 
 	 * @param string $name Name of the existing column. Cannot be a many to one column.
@@ -398,13 +398,13 @@ class TableDescriptor
 	{
 		if(!isset($this->columns[$name]))
 		{
-			DataProcessor::crudkitException('Cannot define column "%s" as custom column. Column was not found in table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+			throw new CException('Cannot define column "%s" as custom column. Column was not found in table "%s".', $name, $this->name);
 		}
 
 		$column = $this->columns[$name];
 		if($column->isManyToOne)
 		{
-			DataProcessor::crudkitException('Cannot define column "%s" as custom column. Column is already a Many To One Column.', __CLASS__, __FUNCTION__, $name);
+			throw new CException('Cannot define column "%s" as custom column. Column is already a Many To One Column.', $name);
 		}
 
 		$column->isCustomAjax = true;
@@ -430,7 +430,7 @@ class TableDescriptor
     {
 		if(isset($this->columns[$name]))
 		{
-			DataProcessor::crudkitException('Cannot set "%s" as soft delete column. It is already a normal column of table "%s".', __CLASS__, __FUNCTION__, $name, $this->name);
+			throw new CException('Cannot set "%s" as soft delete column. It is already a normal column of table "%s".', $name, $this->name);
 		}
 
         $this->softDeleteColumn = $name;
@@ -458,11 +458,11 @@ class TableDescriptor
 
 		if(!isset($this->columns[$columnName]))
 		{
-			DataProcessor::crudkitException('Column (to move) "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $columnName, $this->name);
+			throw new CException('Column (to move) "%s" was not found in table "%s".', $columnName, $this->name);
 		}
 		if(!isset($this->columns[$referenceColumnName]))
 		{
-			DataProcessor::crudkitException('Reference column "%s" was not found in table "%s".', __CLASS__, __FUNCTION__, $referenceColumnName, $this->name);
+			throw new CException('Reference column "%s" was not found in table "%s".', $referenceColumnName, $this->name);
 		}
 	
 		$helper = ($this->columns[$columnName]);
@@ -485,9 +485,9 @@ class TableDescriptor
 	public function readRecordRaw(array $primaryKeyValues, array $filters = [], $throwErrorIfNotFound = true)
 	{
 		//Test Parameters
-		if(DataProcessor::e($primaryKeyValues) && DataProcessor::e($filters))
+		if(CHelper::e($primaryKeyValues) && CHelper::e($filters))
 		{
-			DataProcessor::crudkitException('Please specify primary key values and/or filters. Table "%s".', __CLASS__, __FUNCTION__, $this->name);
+			throw new CException('Please specify primary key values and/or filters. Table "%s".', $this->name);
 		}
 		
 		$record = [];
@@ -509,14 +509,14 @@ class TableDescriptor
 			}
 		}
 		
-		if(!DataProcessor::e($primaryKeyValues)) //Use Primary Key Values
+		if(!CHelper::e($primaryKeyValues)) //Use Primary Key Values
 		{
 			foreach($primaryKeyValues as $index => $value)
 			{
 				$query->where($this->primaryKeyColumns[$index], $value);
 			}
 		}
-		if(!DataProcessor::e($filters)) //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
+		if(!CHelper::e($filters)) //Use Filters --> the have to result in a single record (mostly they are primary keys :) )
 		{
 			foreach($filters as $filter)
 			{
@@ -529,7 +529,7 @@ class TableDescriptor
 		$recordCount = count($record);
 		if($recordCount > 1 || ($recordCount === 0 && $throwErrorIfNotFound))
 		{
-			DataProcessor::crudkitException('Read record query returned %d records (only one expected). Check primary key and filter parameters. Table "%s".', __CLASS__, __FUNCTION__, $recordCount, $this->name);
+			throw new CException('Read record query returned %d records (only one expected). Check primary key and filter parameters. Table "%s".', $recordCount, $this->name);
 		}
 
 		if($recordCount === 0)
@@ -582,12 +582,12 @@ class TableDescriptor
 		$records = []; //Result
         $itemsPerPage = $itemsPerPage >= 0 ? $itemsPerPage : config('crudkit.records_per_page', 5);
 		$searchText = mb_strtolower($searchText,'UTF-8');
-		$searchColumn = !DataProcessor::e($searchColumnName) && isset($this->columns[$searchColumnName]) ? $this->columns[$searchColumnName] : '';
+		$searchColumn = !CHelper::e($searchColumnName) && isset($this->columns[$searchColumnName]) ? $this->columns[$searchColumnName] : '';
 
         //Build search term
         $searchTerm = '';
 		$searchType = '';
-        if(!DataProcessor::e($searchText) && !DataProcessor::e($searchColumn))
+        if(!CHelper::e($searchText) && !CHelper::e($searchColumn))
         {
 			switch($searchColumn->type)
 			{
@@ -596,7 +596,7 @@ class TableDescriptor
 					break;
 				case 'boolean' 	:
 					$searchType = 'boolean';
-					$searchTerm = in_array($searchText, [DataProcessor::text('yes'), 'yes', 'true', '1'], true) ? true : false;
+					$searchTerm = in_array($searchText, [CHelper::text('yes'), 'yes', 'true', '1'], true) ? true : false;
 					break;
 				case 'enum' :
 					$searchType = 'exact';
@@ -678,7 +678,7 @@ class TableDescriptor
 						return $query;
 					}
 				);
-		if(!DataProcessor::e($this->orderBy))
+		if(!CHelper::e($this->orderBy))
 		{
 			$query->orderBy($this->orderBy, $this->orderByDirection);
 		}
@@ -703,25 +703,21 @@ class TableDescriptor
 	}
 	
 	/**
+	 * Creates an empty records from this table for the create-update View.
+	 * 
 	 * @param bool $setDbDefaultValues Set the default values which are definded in the Database
-	 * @param bool $allColumns Get all columns or just those definded in CRUDKit
 	 * 
 	 * @return array
 	 */
-	public function getEmptyRecord($setDbDefaultValues = true, $allColumns = false)
+	public function getEmptyRecord(bool $setDbDefaultValues = true)
 	{
 		$record = [];
-		if($allColumns === true || $setDbDefaultValues === true)
-		{	
-			$this->fetchAllColumns();
-		}
+		$this->fetchAllColumns();
+	
 
-		foreach($this->allColumns as $columnName => $options)
+		foreach($this->columns as $column)
 		{
-			if($allColumns === true || $this->hasColumn($columnName))
-			{
-				$record[$columnName] = $setDbDefaultValues === true ? $options['default'] : null;
-			}
+			$record[$column->name] = $setDbDefaultValues  ? strval($this->allColumns[$column->name]['default']) : '';
 		}
 
 		return $record;
@@ -737,7 +733,7 @@ class TableDescriptor
     {
         $primaryKeyValues = [];
 
-		if(!DataProcessor::e($this->softDeleteColumn))
+		if(!CHelper::e($this->softDeleteColumn))
 		{
 			$recordData[$this->softDeleteColumn] = $this->softNotDeletedValue;
 		}
@@ -786,7 +782,7 @@ class TableDescriptor
 			$query->where($primaryKeyColumn, $primaryKeyValues[$index]);
 		}
 		
-        if(!DataProcessor::e($this->softDeleteColumn))
+        if(!CHelper::e($this->softDeleteColumn))
         {
 			$query->update([$this->softDeleteColumn => $this->softDeletedValue]);
         }

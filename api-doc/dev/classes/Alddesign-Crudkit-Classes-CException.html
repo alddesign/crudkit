@@ -96,8 +96,11 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ExceptionHandler
+    CException
 
+        <span class="phpdocumentor-element__extends">
+        extends <abbr title="\Exception">Exception</abbr>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -110,16 +113,14 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Classes/ExceptionHandler.php"><a href="files/classes-exceptionhandler.html"><abbr title="Classes/ExceptionHandler.php">ExceptionHandler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Classes/CException.php"><a href="files/classes-cexception.html"><abbr title="Classes/CException.php">CException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">11</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">I forgot the purpose of this class... Should replace default error handling or so.</p>
+            <p class="phpdocumentor-summary">Custom Exception which indicates its from CRUDKit itself. .</p>
 
-    <section class="phpdocumentor-description"><p>Take a look at /app/Exceptions/Handler.php -&gt; render(). Best way is to return a view.</p>
-</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -148,11 +149,11 @@
 
 <dl class="phpdocumentor-table-of-contents">
                         <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Alddesign-Crudkit-Classes-ExceptionHandler.html#method_render">render()</a>
+    <a href="classes/Alddesign-Crudkit-Classes-CException.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: <abbr title="\Illuminate\Http\Response">Response</abbr>    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd>Replaces Handler.php -&gt; render()</dd>
+<dd>Creates new CrudkitException. Can be usesd like `sprintf()`;</dd>
 
         </dl>
 
@@ -165,56 +166,56 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Alddesign-Crudkit-Classes-ExceptionHandler.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Alddesign-Crudkit-Classes-CException.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_render">
-        render()
-        <a href="classes/Alddesign-Crudkit-Classes-ExceptionHandler.html#method_render" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Alddesign-Crudkit-Classes-CException.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Classes/ExceptionHandler.php"><a href="files/classes-exceptionhandler.html"><abbr title="Classes/ExceptionHandler.php">ExceptionHandler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Classes/CException.php"><a href="files/classes-cexception.html"><abbr title="Classes/CException.php">CException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Replaces Handler.php -&gt; render()</p>
+        <p class="phpdocumentor-summary">Creates new CrudkitException. Can be usesd like `sprintf()`;</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">render</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Illuminate\Support\Facades\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Exception">Exception</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$exception</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Illuminate\Http\Response">Response</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$values</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Illuminate\Support\Facades\Request">Request</abbr></span>
+                <span class="phpdocumentor-signature__argument__name">$message</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>The message with placeholders like <code class="prettyprint">%s</code></p>
+</section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$exception</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Exception">Exception</abbr></span>
+                <span class="phpdocumentor-signature__argument__name">$values</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Illuminate\Http\Response">Response</abbr></span>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
             &mdash;
         
     
@@ -297,7 +298,7 @@
 </section>
             </div>
         </div>
-        <a href="classes/Alddesign-Crudkit-Classes-ExceptionHandler.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Alddesign-Crudkit-Classes-CException.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

@@ -55,7 +55,7 @@ class SQLManyToOneColumn extends SQLColumn
 		
 		if(in_array($this->type, ['enum', 'image', 'blob', 'boolean'], true))
 		{
-			dp::crudkitException('Column of type "%s" cannot be defined Many to One Column. (Foreign key)', __CLASS__, __FUNCTION__, $this->type);
+			throw new CException('Column of type "%s" cannot be defined Many to One Column. (Foreign key)', $this->type);
 		}
 		
 		$this->isManyToOne = true;
@@ -125,7 +125,7 @@ class SQLManyToOneColumn extends SQLColumn
 	 */
 	public function getCardUrl(array $record)
 	{	
-		if(dp::e($this->pageId))
+		if(CHelper::e($this->pageId))
 		{
 			return '';
 		}
@@ -139,22 +139,20 @@ class SQLManyToOneColumn extends SQLColumn
 			$filter->appendToUrlParams($urlParameters, $index);
 		}
 		return(URL::action('\Alddesign\Crudkit\Controllers\CrudkitController@cardView', $urlParameters));
-
-		dp::crudkitException('Table "%s" not found.', __CLASS__, __FUNCTION__, $this->foreignTableId);
 	}
 
 	/** @return string[] */
 	public function getColumnsForSelect(bool $includeAjaxColumns)
 	{
 		$columns = [];
-		dp::appendToArray($this->columnName, $columns, false);
+		CHelper::appendToArray($this->columnName, $columns, false);
 		foreach($this->secondaryColumnNames as $name)
 		{
-			dp::appendToArray($name, $columns, false);
+			CHelper::appendToArray($name, $columns, false);
 		}
 		if($includeAjaxColumns && $this->ajax && $this->getAjaxOptions() !== null)
 		{
-			dp::appendToArray($this->getAjaxOptions()->imageFieldname, $columns, false);
+			CHelper::appendToArray($this->getAjaxOptions()->imageFieldname, $columns, false);
 		}
 
 		return $columns;

@@ -1,12 +1,7 @@
 <?php
-/**
- * Class AuthHelper
- */
-
 declare(strict_types=1);
 namespace Alddesign\Crudkit\Classes;
 
-use Alddesign\Crudkit\Classes\DataProcessor as dp;
 use Illuminate\Support\Facades\Response;
 
 /** Provides functionality for user/permisson handling. */
@@ -37,7 +32,7 @@ class AuthHelper
 		{
 			if(gettype($user) !== 'object' || get_class($user) !== 'Alddesign\Crudkit\Classes\User')
 			{
-				dp::crudkitException('Array of "Alddesign\Crudkit\Classes\User" expected.', __CLASS__, __FUNCTION__);
+				throw new CException('Array of "Alddesign\Crudkit\Classes\User" expected.');
 			}
 		}
 
@@ -194,7 +189,7 @@ class AuthHelper
 		}
 		
 		//No Startpage
-		dp::crudkitException('No startpage defined.', __CLASS__, __FUNCTION__);
+		throw new CException('No startpage defined.');
 	}
 	#endregion
 
@@ -211,11 +206,11 @@ class AuthHelper
 			//Skiiiin
 			$skin = request()->cookie('crudkit-skin', '');
 			$accent = request()->cookie('crudkit-accent', '');
-			if(!dp::e($skin))
+			if(!CHelper::e($skin))
 			{
 				config(['crudkit.skin' => $skin]);
 			}
-			if(!dp::e($accent))
+			if(!CHelper::e($accent))
 			{
 				config(['crudkit.accent' => $accent]);
 			} 
@@ -238,13 +233,13 @@ class AuthHelper
 				$loginOk = $this->performLogin();
 				if(!$loginOk)
 				{
-					$this->loginFailed(dp::text('wrong_username_password'));
+					$this->loginFailed(CHelper::text('wrong_username_password'));
 					return false; //Wrong username/password
 				}
 			}
 			else
 			{
-				$this->loginFailed(dp::text('not_logged_in'));
+				$this->loginFailed(CHelper::text('not_logged_in'));
 				return false; //Not logged in.
 			}
 		}
@@ -255,8 +250,7 @@ class AuthHelper
 			$permissionsOk = $this->checkPermissions($action, $pageId);
 			if(!$permissionsOk)
 			{
-				dp::ex(dp::text('no_permisson'));
-				return false; //No. Permission
+				throw new CException(CHelper::text('no_permisson'));
 			}
 		}
 			
